@@ -23,7 +23,6 @@
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@ffprobe-installer/ffprobe": "^2.0.0",
     "@revideo/core": "0.11.0",
-    "@revideo/telemetry": "0.11.0",
     "fluent-ffmpeg": "^2.1.2",
     "uuid": "^14.0.1"
   },

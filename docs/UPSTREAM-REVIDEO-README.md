@@ -89,7 +89,7 @@ See the [documentation](https://docs.re.video/) for the full API.
 ## Telemetry
 
 Revideo anonymously counts how many videos are rendered, via
-[PostHog](https://github.com/PostHog/posthog). The implementation is in
+[PostHog](https://github.com/PostHog/posthog) (removed in Fantoche). The implementation is in
 [`packages/telemetry`](https://github.com/midrender/revideo/tree/main/packages/telemetry).
 Disable it with an environment variable:
 

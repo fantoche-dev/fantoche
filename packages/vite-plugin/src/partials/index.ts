@@ -3,7 +3,6 @@ export * from './editor';
 export * from './ffmpegBridge';
 export * from './imageExporter';
 export * from './meta';
-export * from './metrics';
 export * from './projects';
 export * from './rive';
 export * from './settings';

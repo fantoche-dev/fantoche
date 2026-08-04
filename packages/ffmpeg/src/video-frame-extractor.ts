@@ -1,4 +1,3 @@
-import {EventName, sendEvent} from '@revideo/telemetry';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
@@ -361,23 +360,14 @@ export class VideoFrameExtractor {
     }
 
     if (code === 'ENOENT') {
-      sendEvent(EventName.Error, {error: 'ffmpeg-not-found'});
       throw new Error(
         'Error: ffmpeg not found. Make sure ffmpeg is installed on your system.',
       );
     } else if (err.message.includes('SIGSEGV')) {
-      sendEvent(EventName.Error, {
-        error: 'ffmpeg-sigsegv',
-        message: err.message,
-      });
       throw new Error(
         `Error: Segmentation fault when running ffmpeg. This is a common issue on Linux, you might be able to fix it by installing nscd ('sudo apt-get install nscd'). For more information, see https://docs.re.video/common-issues/ffmpeg/`,
       );
     } else {
-      await sendEvent(EventName.Error, {
-        error: 'ffmpeg-error',
-        message: err.message,
-      });
       throw new Error(
         `An ffmpeg error occurred while fetching frames from source video ${this.filePath}: ${err}`,
       );

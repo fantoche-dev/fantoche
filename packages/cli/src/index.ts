@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import {EventName, sendEvent} from '@revideo/telemetry';
 import {Command} from 'commander';
 import {launchEditor} from './editor';
 import {createServer} from './server/index';
@@ -26,8 +25,6 @@ program
   )
   .option('--port <number>', 'Port on which to start the server', '4000')
   .action(async options => {
-    sendEvent(EventName.CLICommand);
-
     const {projectFile, port} = options;
     process.env.PROJECT_FILE = projectFile;
     process.env.REVIDEO_PORT = port;

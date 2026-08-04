@@ -3,7 +3,6 @@ import type {
   RendererResult,
   RendererSettings,
 } from '@revideo/core';
-import {EventName, sendEvent} from '@revideo/telemetry';
 import * as os from 'os';
 import * as path from 'path';
 import {ImageStream} from './image-stream';
@@ -98,8 +97,8 @@ export class FFmpegExporterServer {
       try {
         this.command.kill('SIGKILL');
         await this.promise;
-      } catch (err) {
-        sendEvent(EventName.Error, {message: (err as Error).message});
+      } catch {
+        // ignore errors caused by killing the ffmpeg process
       }
     } else {
       await this.promise;

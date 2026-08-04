@@ -6,7 +6,6 @@ import {
   exporterPlugin,
   ffmpegBridgePlugin,
   metaPlugin,
-  metricsPlugin,
   projectsPlugin,
   rivePlugin,
   settingsPlugin,
@@ -127,6 +126,5 @@ export default ({
     wasmExporterPlugin(),
     rivePlugin(),
     webglPlugin(),
-    metricsPlugin(),
   ];
 };

@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "@revideo/renderer": "0.11.0",
-    "@revideo/telemetry": "0.11.0",
     "@revideo/vite-plugin": "0.11.0",
     "axios": "^1.16.0",
     "commander": "^15.0.0",
