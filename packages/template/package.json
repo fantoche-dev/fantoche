@@ -2,8 +2,8 @@
   "name": "@fantoche/template",
   "private": true,
   "version": "0.0.0",
-  "description": "Basic project template for revideo",
-  "author": "revideo",
+  "description": "Basic project template for fantoche",
+  "author": "fantoche",
   "license": "MIT",
   "main": "src/project.ts",
   "scripts": {

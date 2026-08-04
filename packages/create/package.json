@@ -1,15 +1,15 @@
 {
   "name": "@fantoche/create",
   "version": "0.11.0",
-  "description": "Quickly scaffold revideo projects",
+  "description": "Quickly scaffold fantoche projects",
   "main": "index.js",
-  "author": "revideo",
+  "author": "fantoche",
   "homepage": "https://github.com/fantoche-dev/fantoche",
   "bugs": "https://github.com/fantoche-dev/fantoche/issues",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "create-revideo": "index.js"
+    "create-fantoche": "index.js"
   },
   "files": [
     "index.js",

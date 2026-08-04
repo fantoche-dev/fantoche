@@ -1,10 +1,10 @@
 {
   "name": "@fantoche/ui",
   "version": "0.11.0",
-  "description": "A visual editor for revideo",
+  "description": "A visual editor for fantoche",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
-  "author": "revideo",
+  "author": "fantoche",
   "homepage": "https://github.com/fantoche-dev/fantoche",
   "bugs": "https://github.com/fantoche-dev/fantoche/issues",
   "license": "MIT",

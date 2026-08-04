@@ -1,9 +1,9 @@
 {
   "name": "@fantoche/cli",
   "version": "0.11.0",
-  "description": "A CLI for revideo",
+  "description": "A CLI for fantoche",
   "main": "dist/index.js",
-  "author": "revideo",
+  "author": "fantoche",
   "homepage": "https://github.com/fantoche-dev/fantoche",
   "bugs": "https://github.com/fantoche-dev/fantoche/issues",
   "license": "MIT",

@@ -1,8 +1,8 @@
 {
   "name": "@fantoche/2d",
   "version": "0.11.0",
-  "description": "A 2D renderer for revideo",
-  "author": "revideo",
+  "description": "A 2D renderer for fantoche",
+  "author": "fantoche",
   "homepage": "https://github.com/fantoche-dev/fantoche",
   "bugs": "https://github.com/fantoche-dev/fantoche/issues",
   "license": "MIT",

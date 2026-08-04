@@ -10,7 +10,7 @@
     "build": "tsc && postcss src/**/*.css --dir dist"
   },
   "keywords": [],
-  "author": "revideo",
+  "author": "fantoche",
   "license": "MIT",
   "repository": {
     "type": "git",

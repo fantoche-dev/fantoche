@@ -1,9 +1,9 @@
 {
   "name": "@fantoche/ffmpeg",
   "version": "0.11.0",
-  "description": "Ffmpeg utilities for revideo",
+  "description": "Ffmpeg utilities for fantoche",
   "main": "dist/index.js",
-  "author": "revideo",
+  "author": "fantoche",
   "homepage": "https://github.com/fantoche-dev/fantoche",
   "bugs": "https://github.com/fantoche-dev/fantoche/issues",
   "license": "MIT",

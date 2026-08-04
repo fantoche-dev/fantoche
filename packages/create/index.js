@@ -10,15 +10,15 @@ import prompts from 'prompts';
 const templates = [
   {
     value: 'default',
-    title: 'Minimal, standalone Revideo project',
-    description: 'A minimal example to get started with Revideo.',
+    title: 'Minimal, standalone Fantoche project',
+    description: 'A minimal example to get started with Fantoche.',
     recommended: true,
     startcommands: 'default',
   },
   {
     value: 'saas-template',
-    title: 'Revideo with Next.js',
-    description: 'A minimal web app built with Revideo and Next.js.',
+    title: 'Fantoche with Next.js',
+    description: 'A minimal web app built with Fantoche and Next.js.',
     recommended: true,
     startcommands: 'readme',
   },
@@ -68,7 +68,7 @@ const templates = [
   {
     value: 'three-js-example',
     title: 'Three.js Example',
-    description: 'Integrate Three.js with Revideo for 3D animations.',
+    description: 'Integrate Three.js with Fantoche for 3D animations.',
     startcommands: 'default',
   },
   {
@@ -92,7 +92,7 @@ async function run() {
       type: 'text',
       name: 'name',
       message: 'Project name',
-      initial: 'my-revideo-project',
+      initial: 'my-fantoche-project',
       validate: value =>
         isValidPackageName(value)
           ? true
