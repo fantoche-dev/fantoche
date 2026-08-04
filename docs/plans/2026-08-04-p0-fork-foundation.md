@@ -384,6 +384,24 @@ git commit -m "feat!: rename npm scope @revideo -> @fantoche and rebrand repo id
 git push origin main
 ```
 
+> **Task 6 outcome + amendments (2026-08-04):** rename landed green (296
+> files; zero `@revideo` left in tracked sources; build/test/render/e2e all
+> pass post-reset). Three lessons recorded:
+> 1. **The global sed must exclude `docs/`** — it clobbered historical
+>    references in the research/ADR/plan record (restored wholesale from the
+>    last pre-rename commit in a follow-up commit). Anyone re-running the
+>    rename (e.g., after a name change): add `--exclude-dir=docs` to the file
+>    list and re-check.
+> 2. The system `grep` (ugrep) respects `.gitignore` — verification counts
+>    must use `git grep` (tracked files) plus a BSD `/usr/bin/grep` sweep for
+>    gitignored caches (`.nx/`, `dist/`, `lib/` were purged and rebuilt).
+>    Task 11's gate greps should use `git grep`.
+> 3. Identity leftovers found post-sed, fixed in a follow-up commit: the
+>    `create-revideo` bin name (→ `create-fantoche`) and bare-word `revideo`
+>    in `description`/`author` fields across package.jsons. Informational
+>    links to upstream's live docs site in 3 source files were kept
+>    deliberately (they document upstream behavior).
+
 ---
 
 ### Task 7: CI workflow (Linux + macOS)
