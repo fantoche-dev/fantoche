@@ -401,6 +401,28 @@ git push origin main
 >    in `description`/`author` fields across package.jsons. Informational
 >    links to upstream's live docs site in 3 source files were kept
 >    deliberately (they document upstream behavior).
+>
+> **Review findings recorded as P1 preconditions / deferred items:**
+> - **P1 publishing precondition — scaffolder templates:**
+>   `packages/create/examples` is a git submodule pinned to upstream
+>   `redotvideo/examples`; uninitialized, `create-fantoche` ENOENTs; if
+>   initialized, it scaffolds `@revideo/*`-scoped projects behind Fantoche
+>   branding. Before publishing `@fantoche/create`: fork/vendor the
+>   templates, rescope deps to `@fantoche/*`, and recreate submodule
+>   materialization (the deleted upstream `publish.yml` was the only place
+>   that did `submodules: true` + init/update). `RELEASING.md` is marked
+>   superseded pending the P1 release process (changesets).
+> - **Public-API bare-word rebrand queue (P1/P2, breaking, needs aliases or
+>   migration):** `<revideo-player>` custom element tag (defined in BOTH
+>   player and player-react — pre-existing upstream tag-collision quirk),
+>   `~/.revideo/settings.json` (needs settings migration), `revideo-*` temp
+>   dirs, `revideo:*` vite HMR channel names (internal, both-sides
+>   consistent — safe to leave indefinitely).
+> - **Lockfile guidance:** Task 6's `rm -rf package-lock.json` floated many
+>   transitive deps (verified green, accepted). Future renames should keep
+>   the lockfile and let `npm install` patch it.
+> - Runtime warnings in `2d/Video.ts` and `ffmpeg/video-frame-extractor.ts`
+>   still link `docs.re.video` — revisit when Fantoche docs exist (P2+).
 
 ---
 
