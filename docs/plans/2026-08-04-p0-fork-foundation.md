@@ -233,14 +233,16 @@ git push origin main
 
 ```bash
 grep -rn "revideo/telemetry\|sendEvent\|EventName\|posthog" packages \
-  --include="*.ts" --include="*.tsx" --include="*.json" -l | grep -v node_modules
+  --include="*.ts" --include="*.tsx" --include="*.js" --include="*.mjs" \
+  --include="*.cjs" --include="*.json" -l | grep -v node_modules
 find packages/docs -iname "*telemetry*"
 grep -rn "DISABLE_TELEMETRY" packages --include="*.mdx" --include="*.md" -l
 ```
 
 Known at plan time: imports/calls in `renderer/server/render-video.ts`,
 `ffmpeg/src/video-frame-extractor.ts`, `ffmpeg/src/ffmpeg-exporter-server.ts`,
-`vite-plugin/src/partials/metrics.ts`, `cli/src/index.ts`; dependency declared
+`vite-plugin/src/partials/metrics.ts`, `cli/src/index.ts`,
+`packages/create/index.js` (import + 2 call sites); dependency declared
 in `cli`, `create`, `ffmpeg`, `vite-plugin` package.jsons. Trust the grep over
 this list.
 
@@ -260,7 +262,7 @@ npm install    # regenerates package-lock without the package
 **Step 4: Verify zero references, then build + test + render**
 
 ```bash
-grep -rni "telemetry\|posthog" packages --include="*.ts" --include="*.tsx" --include="*.json" | grep -v node_modules
+grep -rni "telemetry\|posthog" packages --include="*.ts" --include="*.tsx" --include="*.js" --include="*.mjs" --include="*.cjs" --include="*.json" | grep -v node_modules
 # expect: no output
 npx lerna run build --ignore @revideo/docs && npx lerna run test
 npm run template:render && ls -la packages/template/output/video.mp4
@@ -291,6 +293,8 @@ git push origin main
 > cherry-pick candidate for upstream/canvas-commons. The template's network
 > font dependency itself is flagged for P1 (offline-first principle,
 > ADR 0004 §consequences).
+> Review caught a leftover in `packages/create/index.js` (plain JS — grep
+> blind spot); fixed and greps widened to `*.js`/`*.mjs`/`*.cjs`.
 
 ---
 
@@ -427,7 +431,8 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           ! grep -rni "telemetry\|posthog" packages \
-            --include="*.ts" --include="*.tsx" --include="*.json"
+            --include="*.ts" --include="*.tsx" --include="*.js" \
+            --include="*.mjs" --include="*.cjs" --include="*.json"
   build-test:
     name: Build & unit tests (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
@@ -802,7 +807,7 @@ Expected: `GATE-RENDER-OK`.
 **Step 4: Telemetry + scope checks**
 
 ```bash
-grep -rni "telemetry\|posthog" packages --include="*.ts" --include="*.tsx" --include="*.json" | grep -v node_modules | wc -l   # expect: 0
+grep -rni "telemetry\|posthog" packages --include="*.ts" --include="*.tsx" --include="*.js" --include="*.mjs" --include="*.cjs" --include="*.json" | grep -v node_modules | wc -l   # expect: 0
 grep -rn "@revideo" --exclude-dir=.git --exclude-dir=node_modules . | wc -l   # expect: 0
 ```
 
