@@ -61,7 +61,7 @@ de-facto IR), or (b) a new **display-list IR** emitted by nodes. See §3.2.
 ### 1.3 Render/export pipeline (working, worth keeping)
 
 Per worker: page renders frames → exporter encodes (default
-`@fantoche/core/wasm`, an in-browser mp4 encoder; alternative streams images to
+`@revideo/core/wasm`, an in-browser mp4 encoder; alternative streams images to
 ffmpeg) → per-worker `visuals.*` + `audio.wav` → server concatenates and
 merges via ffmpeg. Deployment guides exist (Docker/serverless). This is the
 "boring infra" that longform needs and that Motion Canvas never had — the core
@@ -78,7 +78,7 @@ compiler             ────────►  timeline IR (tracks, anchors, 
                                         │                                         declared duration)
 evaluator            ────────►  state(t)  — PURE function, O(1) seek
                                         │
-runtime              ────────►  scene graph (@fantoche 2d nodes, kept)
+runtime              ────────►  scene graph (@revideo 2d nodes, kept)
                                         │
 render backend seam  ────────►  Canvas2D (default)  |  ThorVG-WASM (gated)
                                         │

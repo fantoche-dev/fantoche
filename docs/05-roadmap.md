@@ -7,7 +7,7 @@
 ## P0 — Fork & foundation
 
 - Fork `midrender/revideo` with full history; add `upstream` remote.
-- Rename npm scope; single rename, then stable. Strip `@fantoche/telemetry`
+- Rename npm scope; single rename, then stable. Strip `@revideo/telemetry`
   and `sendEvent` calls.
 - CI: build + unit tests green on Linux/macOS; compat job renders one known
   Motion Canvas project and one known Revideo project (golden frames).

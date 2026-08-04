@@ -12,9 +12,9 @@
 - Design docs: `docs/01-research.md` … `docs/05-roadmap.md`, `docs/adr/0001…0005` (in this repo after Task 3; until then in `/Volumes/SSD EXTERNO/Projetos de Codigo/fantoche/docs/`).
 - Upstream repo: `https://github.com/midrender/revideo` (MIT; default branch `main`).
 - Monorepo layout: `packages/{2d,cli,core,create,docs,docs-redirect,e2e,examples,ffmpeg,player,player-react,renderer,telemetry,template,ui,vite-plugin}`.
-- Build orchestration: `npx lerna run build --ignore @fantoche/docs`; unit tests: `npx lerna run test`; e2e: `npm run e2e:test` (vitest + puppeteer + jest-image-snapshot; scenes in `packages/e2e/tests/scenes/`, registered in `packages/e2e/tests/project.ts`, goldens in `packages/e2e/src/__image_snapshots__/` — the harness renders **frame 0** of each scene as `output/project/<scene>/000000.png`).
+- Build orchestration: `npx lerna run build --ignore @revideo/docs`; unit tests: `npx lerna run test`; e2e: `npm run e2e:test` (vitest + puppeteer + jest-image-snapshot; scenes in `packages/e2e/tests/scenes/`, registered in `packages/e2e/tests/project.ts`, goldens in `packages/e2e/src/__image_snapshots__/` — the harness renders **frame 0** of each scene as `output/project/<scene>/000000.png`).
 - Template render smoke: `npm run template:render` → runs `packages/template/src/render.ts` → `renderVideo()` (puppeteer + in-browser WASM mp4 encoder) → `packages/template/output/video.mp4`.
-- Internal deps use exact versions (`"@fantoche/core": "0.11.0"`) in published packages and `"*"` in private ones — a global scope-rename sed keeps both consistent. Keep upstream version numbers at P0; first release versioning is a P1 decision (changesets).
+- Internal deps use exact versions (`"@revideo/core": "0.11.0"`) in published packages and `"*"` in private ones — a global scope-rename sed keeps both consistent. Keep upstream version numbers at P0; first release versioning is a P1 decision (changesets).
 
 **Decisions (resolved 2026-08-04 by Daniel):**
 1. Final name: **fantoche** / npm scope **@fantoche** — confirmed.
@@ -93,7 +93,7 @@ Expected: `npm ci` completes; chrome downloads. (`--no-save` keeps `package.json
 **Step 2: Build everything except docs**
 
 ```bash
-npx lerna run build --ignore @fantoche/docs
+npx lerna run build --ignore @revideo/docs
 ```
 
 Expected: all packages build. 
@@ -197,7 +197,7 @@ preserved at [docs/UPSTREAM-REVIDEO-README.md](docs/UPSTREAM-REVIDEO-README.md).
 MIT — see [LICENSE](LICENSE).
 ```
 
-(Note: until Task 6 the lerna ignore flag is still `@fantoche/docs`; the README is written for the end state — acceptable within P0.)
+(Note: until Task 6 the lerna ignore flag is still `@revideo/docs`; the README is written for the end state — acceptable within P0.)
 
 **Step 3: Update `LICENSE` (attribution chain, keep MIT text verbatim)**
 
@@ -248,13 +248,13 @@ this list.
 
 **Step 2: Remove the calls and imports**
 
-In each `.ts` file: delete the `import … from '@fantoche/telemetry'` line and every statement using `sendEvent`/`EventName` (e.g., `render-video.ts` has `sendEvent(EventName.RenderStarted)` inside `renderVideoOnPage`, guarded by `if (id === 0)` — delete the whole guarded block). If `vite-plugin/src/partials/metrics.ts` exists solely for telemetry, delete the file and remove its import site(s) (grep `metrics` inside `packages/vite-plugin/src`).
+In each `.ts` file: delete the `import … from '@revideo/telemetry'` line and every statement using `sendEvent`/`EventName` (e.g., `render-video.ts` has `sendEvent(EventName.RenderStarted)` inside `renderVideoOnPage`, guarded by `if (id === 0)` — delete the whole guarded block). If `vite-plugin/src/partials/metrics.ts` exists solely for telemetry, delete the file and remove its import site(s) (grep `metrics` inside `packages/vite-plugin/src`).
 
 **Step 3: Remove the package and dependency entries**
 
 ```bash
 git rm -r packages/telemetry
-# remove "@fantoche/telemetry" lines from the package.json files found in Step 1
+# remove "@revideo/telemetry" lines from the package.json files found in Step 1
 # remove telemetry docs pages + DISABLE_TELEMETRY mentions found in Step 1
 npm install    # regenerates package-lock without the package
 ```
@@ -264,7 +264,7 @@ npm install    # regenerates package-lock without the package
 ```bash
 grep -rni "telemetry\|posthog" packages --include="*.ts" --include="*.tsx" --include="*.js" --include="*.mjs" --include="*.cjs" --include="*.json" | grep -v node_modules
 # expect: no output
-npx lerna run build --ignore @fantoche/docs && npx lerna run test
+npx lerna run build --ignore @revideo/docs && npx lerna run test
 npm run template:render && ls -la packages/template/output/video.mp4
 ```
 
@@ -301,7 +301,7 @@ git push origin main
 ### Task 5: Remove upstream-specific packages and workflows
 
 **Files:**
-- Delete: `packages/docs-redirect/` (midrender.com redirect service), `.github/workflows/publish.yml` (publishes to `@fantoche` scope), `.github/workflows/docs.yml` (deploys their docs site)
+- Delete: `packages/docs-redirect/` (midrender.com redirect service), `.github/workflows/publish.yml` (publishes to `@revideo` scope), `.github/workflows/docs.yml` (deploys their docs site)
 
 **Step 1: Confirm nothing depends on docs-redirect**
 
@@ -320,7 +320,7 @@ git rm .github/workflows/publish.yml .github/workflows/docs.yml
 **Step 3: Verify install/build still green**
 
 ```bash
-npm install && npx lerna run build --ignore @fantoche/docs
+npm install && npx lerna run build --ignore @revideo/docs
 ```
 
 **Step 4: Commit**
@@ -333,20 +333,20 @@ git push origin main
 
 ---
 
-### Task 6: Rename npm scope `@fantoche` → `@fantoche` (single rename — needs FINAL_NAME confirmed)
+### Task 6: Rename npm scope `@revideo` → `@fantoche` (single rename — needs FINAL_NAME confirmed)
 
 **Files:** every `package.json`, every `*.ts/*.tsx` import, `packages/cli` bin name, root `package.json` name, repository/homepage URLs. ~All packages.
 
 **Step 1: Global scope rename (macOS sed)**
 
 ```bash
-grep -rl --exclude-dir=.git --exclude-dir=node_modules -- "@fantoche" . | while read -r f; do
-  sed -i '' 's|@fantoche|@fantoche|g' "$f"
+grep -rl --exclude-dir=.git --exclude-dir=node_modules -- "@revideo" . | while read -r f; do
+  sed -i '' 's|@revideo|@fantoche|g' "$f"
 done
-grep -rn "@fantoche" --exclude-dir=.git --exclude-dir=node_modules . | wc -l   # expect: 0
+grep -rn "@revideo" --exclude-dir=.git --exclude-dir=node_modules . | wc -l   # expect: 0
 ```
 
-This intentionally also rewrites runtime strings like the exporter name `'@fantoche/core/wasm'` → `'@fantoche/core/wasm'` (the registration and the reference rename together, staying consistent).
+This intentionally also rewrites runtime strings like the exporter name `'@revideo/core/wasm'` → `'@fantoche/core/wasm'` (the registration and the reference rename together, staying consistent).
 
 **Step 2: Rename the CLI binary and root package name**
 
@@ -380,7 +380,7 @@ Expected: all green. The e2e snapshots must still pass — the rename must not c
 
 ```bash
 git add -A
-git commit -m "feat!: rename npm scope @fantoche -> @fantoche and rebrand repo identity"
+git commit -m "feat!: rename npm scope @revideo -> @fantoche and rebrand repo identity"
 git push origin main
 ```
 
@@ -808,7 +808,7 @@ Expected: `GATE-RENDER-OK`.
 
 ```bash
 grep -rni "telemetry\|posthog" packages --include="*.ts" --include="*.tsx" --include="*.js" --include="*.mjs" --include="*.cjs" --include="*.json" | grep -v node_modules | wc -l   # expect: 0
-grep -rn "@fantoche" --exclude-dir=.git --exclude-dir=node_modules . | wc -l   # expect: 0
+grep -rn "@revideo" --exclude-dir=.git --exclude-dir=node_modules . | wc -l   # expect: 0
 ```
 
 **Step 5: e2e goldens**
