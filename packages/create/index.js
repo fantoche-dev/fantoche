@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 //@ts-check
-import {EventName, sendEvent} from '@revideo/telemetry';
 import fs from 'fs';
 import kleur from 'kleur';
 import minimist from 'minimist';
@@ -169,11 +168,6 @@ async function run() {
   );
   copyDirectory(templateDir, response.path);
 
-  sendEvent(EventName.CreateCommand, {
-    name: response.name,
-    starter: response.starter,
-  });
-
   // Read package.json and modify name
   try {
     const manifest = JSON.parse(
@@ -255,6 +249,5 @@ function getTemplate(value) {
 
 void run().catch(e => {
   console.error(e);
-  sendEvent(EventName.Error, {error: e});
   process.exit(1);
 });

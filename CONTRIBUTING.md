@@ -58,7 +58,6 @@ Revideo consists of the following packages, which you can find in the
   browser.
 - `player`: A non-React Player the browser.
 - `renderer`: A headless renderer for Revideo projects
-- `telemetry`: Anonymous telemetry for understanding usage
 - `template`: A template project included for developer's convenience.
 - `ui`: The user interface used for editing.
 - `vite-plugin`: A plugin for Vite used for developing and bundling animations
