@@ -276,6 +276,22 @@ git commit -m "feat!: remove telemetry (no phone-home in the community fork)"
 git push origin main
 ```
 
+> **Task 4 outcome + amendment (2026-08-04):** telemetry fully stripped
+> (commit `d5dd5454`; grep-clean, build/test/e2e green). During verification a
+> **pre-existing upstream race** surfaced: `renderVideoOnPage` awaits
+> `page.goto(url)` with the default `waitUntil: 'load'`, which blocks on the
+> template's Google-Fonts CSS; when the render finishes first,
+> `onRenderComplete` closes the browser while `goto` is pending →
+> "Navigating frame was detached". Proven pre-existing via stash A/B (fails
+> identically with telemetry intact); the mp4 is written completely every run.
+> **Amendment:** one-line fix in `packages/renderer/server/render-video.ts` —
+> `page.goto(url, {waitUntil: 'domcontentloaded'})` (module scripts execute
+> before DOMContentLoaded, so app bootstrap is still guaranteed; completion is
+> signaled explicitly by `onRenderComplete`, never by `load`). First
+> cherry-pick candidate for upstream/canvas-commons. The template's network
+> font dependency itself is flagged for P1 (offline-first principle,
+> ADR 0004 §consequences).
+
 ---
 
 ### Task 5: Remove upstream-specific packages and workflows
