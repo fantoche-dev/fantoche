@@ -9,8 +9,8 @@ const program = new Command();
 const VERSION = '0.11.0';
 
 program
-  .name('revideo')
-  .description('CLI to interact with the revideo service')
+  .name('fantoche')
+  .description('CLI to interact with the fantoche service')
   .version(VERSION);
 
 program
@@ -37,7 +37,7 @@ program
 
 program
   .command('editor')
-  .description('Start the revideo editor')
+  .description('Start the fantoche editor')
   .option(
     '--projectFile <path>',
     'Path to the project file',

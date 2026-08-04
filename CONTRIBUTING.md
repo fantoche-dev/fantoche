@@ -9,7 +9,7 @@ help us by spreading the word about Revideo online or offline.
 ## What to work on
 
 You can find features or bugs to work on by checking out our
-[issues](https://github.com/redotvideo/revideo/issues). If you have ideas for
+[issues](https://github.com/fantoche-dev/fantoche/issues). If you have ideas for
 larger new features yourself, please open an issue first to discuss it. You can
 also join our [Discord server](https://discord.com/invite/JDjbfp6q2G) to talk to
 Revideo users and developers and learn about how the project can be improved.

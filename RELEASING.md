@@ -1,3 +1,11 @@
+> ⚠️ **Superseded.** This documents upstream Revideo's release flow via the
+> `publish.yml` workflow, which was removed at P0. Fantoche's release
+> process will be defined at P1 (changesets). Kept for reference only.
+> Note for the P1 releaser: publishing `@fantoche/create` first requires
+> vendoring and rescoping the `packages/create/examples` submodule
+> templates — see docs/plans/2026-08-04-p0-fork-foundation.md (Task 6
+> review findings).
+
 # Releasing
 
 Packages are published by `.github/workflows/publish.yml` (`workflow_dispatch`,
