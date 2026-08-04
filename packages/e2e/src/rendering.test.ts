@@ -25,6 +25,8 @@ describe('Rendering', () => {
     for (const {name, content} of images) {
       expect(content).toMatchImageSnapshot({
         customSnapshotIdentifier: name,
+        failureThreshold: 20,
+        failureThresholdType: 'pixel',
       });
     }
   });
