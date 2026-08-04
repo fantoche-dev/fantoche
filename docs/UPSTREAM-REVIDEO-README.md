@@ -55,11 +55,11 @@ export default makeScene2D('scramble', function* (view) {
 ```
 
 The cube is a single self-contained component
-([`rubiks-cube.tsx`](./packages/template/src/rubiks-cube.tsx)): 54 stickers in
+([`rubiks-cube.tsx`](../packages/template/src/rubiks-cube.tsx)): 54 stickers in
 3D, orthographically projected in a custom `draw()`, with each quarter-turn
 animated by interpolating a rotation about the turning layer's axis.
 
-![A Rubik's cube scrambling itself](./packages/template/scramble.gif)
+![A Rubik's cube scrambling itself](../packages/template/scramble.gif)
 
 Render it from the command line with
 [`renderVideo()`](https://docs.re.video/renderer/renderVideo/).
@@ -99,7 +99,7 @@ DISABLE_TELEMETRY=true
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+MIT — see [LICENSE](../LICENSE).
 
 ## Links
 
