@@ -1,4 +1,4 @@
-import {Vector2} from '@revideo/core';
+import {Vector2} from '@fantoche/core';
 import type {CurveProfile} from './CurveProfile';
 import {LineSegment} from './LineSegment';
 import {getPointAtDistance} from './getPointAtDistance';

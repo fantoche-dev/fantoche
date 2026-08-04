@@ -1,5 +1,5 @@
 'use client';
-import type {Player as CorePlayer, Project} from '@revideo/core';
+import type {Player as CorePlayer, Project} from '@fantoche/core';
 import type * as React from 'react';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {Controls} from './controls';

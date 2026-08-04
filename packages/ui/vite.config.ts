@@ -7,9 +7,9 @@ export default defineConfig({
   resolve: {
     alias: {
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      '@revideo/ui': '/src/main.tsx',
+      '@fantoche/ui': '/src/main.tsx',
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      '@revideo/2d/editor': '@revideo/2d/src/editor',
+      '@fantoche/2d/editor': '@fantoche/2d/src/editor',
     },
   },
   build: {
@@ -22,7 +22,7 @@ export default defineConfig({
       cssFileName: 'style',
     },
     rollupOptions: {
-      external: [/^@revideo\/core/, /^@?preact/],
+      external: [/^@fantoche\/core/, /^@?preact/],
     },
   },
   plugins: [

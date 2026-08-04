@@ -44,7 +44,7 @@ export function projectsPlugin({
         oxc: {
           jsx: {
             runtime: 'automatic',
-            importSource: '@revideo/2d/lib',
+            importSource: '@fantoche/2d/lib',
           },
         },
         optimizeDeps: {

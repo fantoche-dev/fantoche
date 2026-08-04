@@ -1,4 +1,4 @@
-import {createComputed} from '@revideo/core';
+import {createComputed} from '@fantoche/core';
 import {addInitializer} from './initializers';
 
 /**

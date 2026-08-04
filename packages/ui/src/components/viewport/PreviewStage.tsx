@@ -1,4 +1,4 @@
-import {Stage} from '@revideo/core';
+import {Stage} from '@fantoche/core';
 import type {HTMLAttributes} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
 import {useApplication} from '../../contexts';

@@ -173,8 +173,8 @@ nodes. In this documentation, we'll be referring to this process as _querying_.
 Consider the following animation:
 
 ```tsx editor
-import {makeScene2D, Layout, Txt, Circle, Rect, is} from '@revideo/2d';
-import {all} from '@revideo/core';
+import {makeScene2D, Layout, Txt, Circle, Rect, is} from '@fantoche/2d';
+import {all} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   view.add(
@@ -218,7 +218,7 @@ But Revideo comes with a helpful utility function called
 [`is`](/api-reference/2d/utils/functions/is) that can create this predicate for us:
 
 ```ts
-import {is} from '@revideo/2d';
+import {is} from '@fantoche/2d';
 // ...
 const texts = view.findAll(is(Txt));
 ```

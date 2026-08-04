@@ -1,5 +1,5 @@
-import {Circle, Layout, Rect, makeScene2D} from '@revideo/2d';
-import {all, createRef} from '@revideo/core';
+import {Circle, Layout, Rect, makeScene2D} from '@fantoche/2d';
+import {all, createRef} from '@fantoche/core';
 
 const RED = '#ff6470';
 

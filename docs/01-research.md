@@ -14,7 +14,7 @@ unmaintained, and no community successor exists. The fork window is open.**
   renamed July 2026; old URL 301-redirects). 3,955 stars, ~202 forks, not
   archived. <https://github.com/midrender/revideo>
 - ✅ **MIT everywhere**: LICENSE (still "Copyright (c) 2022 motion-canvas"),
-  GitHub API, and npm `@revideo/*` all MIT.
+  GitHub API, and npm `@fantoche/*` all MIT.
 - ✅ **Activity**: zero commits June 2025 → June 2026; a 19-commit burst
   July 9–15 2026 (rebrand plumbing, npm OIDC, one headless-render fix), all by
   one maintainer; nothing since. Release 0.10.4 (2025-02-24) → 0.11.0
@@ -32,7 +32,7 @@ unmaintained, and no community successor exists. The fork window is open.**
   for Claude Code/Cursor. They validated our architectural thesis
   (document-editable engine + GUI + agents) — commercially and closed.
 - ✅ **Community**: Discord ~878 members; npm ~7.5k weekly downloads of
-  `@revideo/core`; Show HN 2024 got 298 points; no marquee users.
+  `@fantoche/core`; Show HN 2024 got 298 points; no marquee users.
 - ✅ **No active fork**: highest-starred fork has 1 star; most-recent forks are
   0 commits ahead. Nobody has claimed the successor role.
 - ✅ **Telemetry**: PostHog-based render-count telemetry, `DISABLE_TELEMETRY=true`

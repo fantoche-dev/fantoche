@@ -3,10 +3,10 @@ import path from 'path';
 
 export function getVersions() {
   return {
-    core: loadVersion('@revideo/core'),
-    two: loadVersion('@revideo/2d'),
-    ui: loadVersion('@revideo/ui'),
-    vitePlugin: loadVersion('@revideo/vite-plugin'),
+    core: loadVersion('@fantoche/core'),
+    two: loadVersion('@fantoche/2d'),
+    ui: loadVersion('@fantoche/ui'),
+    vitePlugin: loadVersion('@fantoche/vite-plugin'),
   };
 }
 

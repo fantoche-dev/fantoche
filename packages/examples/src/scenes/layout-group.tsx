@@ -1,5 +1,5 @@
-import {Layout, Node, Rect, makeScene2D} from '@revideo/2d';
-import {createRef} from '@revideo/core';
+import {Layout, Node, Rect, makeScene2D} from '@fantoche/2d';
+import {createRef} from '@fantoche/core';
 
 export default makeScene2D('layout-group', function* (view) {
   const group = createRef<Node>();

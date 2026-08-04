@@ -5,7 +5,7 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://www.npmjs.com/package/@revideo/core"><img src="https://img.shields.io/npm/v/@revideo/core?style=flat" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/@fantoche/core"><img src="https://img.shields.io/npm/v/@fantoche/core?style=flat" alt="npm version"></a>
   <a href="https://github.com/midrender/revideo/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat" alt="MIT license"></a>
   <a href="https://discord.com/invite/JDjbfp6q2G"><img src="https://img.shields.io/discord/1071029581009657896?style=flat&logo=discord&logoColor=fff&color=404eed" alt="discord"></a>
 </p>
@@ -31,15 +31,15 @@ It's the engine behind [Midrender](https://midrender.com).
 Create a project:
 
 ```bash
-npm init @revideo@latest
+npm init @fantoche@latest
 ```
 
 A scene is a generator function. The example below adds a `<RubiksCube/>`
 component and animates a scramble:
 
 ```tsx
-import {makeScene2D} from '@revideo/2d';
-import {createRef, waitFor} from '@revideo/core';
+import {makeScene2D} from '@fantoche/2d';
+import {createRef, waitFor} from '@fantoche/core';
 
 import {RubiksCube} from './rubiks-cube';
 

@@ -1,5 +1,5 @@
-import type {SerializedVector2, Vector2} from '@revideo/core';
-import {BBox, transformVectorAsPoint} from '@revideo/core';
+import type {SerializedVector2, Vector2} from '@fantoche/core';
+import {BBox, transformVectorAsPoint} from '@fantoche/core';
 import type {CurveProfile} from '../curves';
 import type {PolynomialSegment} from '../curves/PolynomialSegment';
 import {computed} from '../decorators';

@@ -16,7 +16,7 @@ export function Versions() {
 
   useEffect(() => {
     const abort = new AbortController();
-    fetch('https://registry.npmjs.org/@revideo/core/latest', {
+    fetch('https://registry.npmjs.org/@fantoche/core/latest', {
       signal: abort.signal,
     })
       .then(response => response.json())

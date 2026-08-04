@@ -14,9 +14,9 @@ export default [
     plugins: [
       {
         resolveId(id) {
-          if (id.startsWith('@revideo/core')) {
+          if (id.startsWith('@fantoche/core')) {
             return {
-              id: '@revideo/core',
+              id: '@fantoche/core',
               external: true,
             };
           }

@@ -3,7 +3,7 @@ import type {
   SerializedVector2,
   SignalValue,
   SimpleSignal,
-} from '@revideo/core';
+} from '@fantoche/core';
 import {
   BBox,
   Color,
@@ -11,7 +11,7 @@ import {
   DetailedError,
   Vector2,
   useLogger,
-} from '@revideo/core';
+} from '@fantoche/core';
 import {computed, initial, nodeName, signal} from '../decorators';
 import type {DesiredLength} from '../partials';
 import {drawImage} from '../utils';
@@ -58,10 +58,10 @@ export interface ImgProps extends RectProps {
  *
  * @preview
  * ```tsx editor
- * import {Img} from '@revideo/2d';
- * import {all, waitFor} from '@revideo/core';
- * import {createRef} from '@revideo/core';
- * import {makeScene2D} from '@revideo/2d';
+ * import {Img} from '@fantoche/2d';
+ * import {all, waitFor} from '@fantoche/core';
+ * import {createRef} from '@fantoche/core';
+ * import {makeScene2D} from '@fantoche/2d';
  *
  * export default makeScene2D('scene', function* (view) {
  *   const ref = createRef<Img>();

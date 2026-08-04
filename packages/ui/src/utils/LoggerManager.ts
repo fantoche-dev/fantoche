@@ -1,5 +1,5 @@
-import type {LogPayload, Logger} from '@revideo/core';
-import {EventDispatcher, LogLevel, ValueDispatcher} from '@revideo/core';
+import type {LogPayload, Logger} from '@fantoche/core';
+import {EventDispatcher, LogLevel, ValueDispatcher} from '@fantoche/core';
 
 export class LoggerManager {
   public get onInspected() {

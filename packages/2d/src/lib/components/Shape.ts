@@ -1,11 +1,11 @@
-import type {BBox, SignalValue, SimpleSignal} from '@revideo/core';
+import type {BBox, SignalValue, SimpleSignal} from '@fantoche/core';
 import {
   createSignal,
   easeOutExpo,
   linear,
   map,
   threadable,
-} from '@revideo/core';
+} from '@fantoche/core';
 import {computed, initial, nodeName, signal} from '../decorators';
 import type {CanvasStyleSignal} from '../decorators/canvasStyleSignal';
 import {canvasStyleSignal} from '../decorators/canvasStyleSignal';

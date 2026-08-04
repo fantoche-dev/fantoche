@@ -1,4 +1,4 @@
-import {Vector2, clamp} from '@revideo/core';
+import {Vector2, clamp} from '@fantoche/core';
 import type {CurvePoint} from './CurvePoint';
 import type {CurveProfile} from './CurveProfile';
 

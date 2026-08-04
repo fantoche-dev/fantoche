@@ -1,4 +1,4 @@
-import {renderVideo} from '@revideo/renderer';
+import {renderVideo} from '@fantoche/renderer';
 
 async function render() {
   console.log('Rendering video...');
@@ -9,7 +9,7 @@ async function render() {
       logProgress: true,
       projectSettings: {
         exporter: {
-          name: '@revideo/core/wasm',
+          name: '@fantoche/core/wasm',
         },
       },
     },

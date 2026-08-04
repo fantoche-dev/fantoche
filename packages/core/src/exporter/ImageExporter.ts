@@ -26,7 +26,7 @@ interface ServerResponse {
  * @internal
  */
 export class ImageExporter implements Exporter {
-  public static readonly id = '@revideo/core/image-sequence';
+  public static readonly id = '@fantoche/core/image-sequence';
   public static readonly displayName = 'Image sequence';
 
   public static async create(

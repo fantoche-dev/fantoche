@@ -1,5 +1,5 @@
-import type {SimpleSignal} from '@revideo/core';
-import {PlaybackState, lazy} from '@revideo/core';
+import type {SimpleSignal} from '@fantoche/core';
+import {PlaybackState, lazy} from '@fantoche/core';
 import {initial, signal} from '../decorators';
 import {nodeName} from '../decorators/nodeName';
 import {useScene2D} from '../scenes/useScene2D';

@@ -1,5 +1,5 @@
 /**
- * Copies the ESM bundles of @revideo/core and @revideo/2d into public/modules
+ * Copies the ESM bundles of @fantoche/core and @fantoche/2d into public/modules
  * so the interactive fiddles can import them at runtime through the import
  * map injected in src/app/layout.tsx.
  *
@@ -19,11 +19,11 @@ const modulesDir = path.join(docsRoot, 'public', 'modules');
 const manifestPath = path.join(docsRoot, 'src', 'generated', 'modules.json');
 
 const packages = [
-  {name: 'core', specifier: '@revideo/core', buildScript: 'core:build'},
-  {name: '2d', specifier: '@revideo/2d', buildScript: '2d:build'},
+  {name: 'core', specifier: '@fantoche/core', buildScript: 'core:build'},
+  {name: '2d', specifier: '@fantoche/2d', buildScript: '2d:build'},
 ];
 
-// The fiddle components import @revideo/core and @revideo/2d types, which
+// The fiddle components import @fantoche/core and @fantoche/2d types, which
 // resolve to each package's lib/ output. Build them when missing so the docs
 // type-check passes in a fresh checkout.
 for (const {name, buildScript} of packages) {

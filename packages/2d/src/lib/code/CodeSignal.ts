@@ -3,14 +3,14 @@ import type {
   SignalValue,
   ThreadGenerator,
   TimingFunction,
-} from '@revideo/core';
+} from '@fantoche/core';
 import {
   createSignal,
   deepLerp,
   DependencyContext,
   SignalContext,
   unwrap,
-} from '@revideo/core';
+} from '@fantoche/core';
 import {addInitializer, getPropertyMetaOrCreate} from '../decorators';
 import {defaultDiffer} from './CodeDiffer';
 import {insert, replace} from './CodeFragment';

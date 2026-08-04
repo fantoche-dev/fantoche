@@ -10,7 +10,7 @@ import {makePlugin} from './makePlugin';
  * @internal
  */
 export default makePlugin({
-  name: '@revideo/core/default',
+  name: '@fantoche/core/default',
   exporters() {
     return [WasmExporter, FFmpegExporterClient, ImageExporter];
   },

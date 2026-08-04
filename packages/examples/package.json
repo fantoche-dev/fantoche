@@ -1,5 +1,5 @@
 {
-  "name": "@revideo/examples",
+  "name": "@fantoche/examples",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -7,12 +7,12 @@
     "build": "tsc && vite build --base /examples/"
   },
   "dependencies": {
-    "@revideo/2d": "*",
-    "@revideo/core": "*",
-    "@revideo/ffmpeg": "*"
+    "@fantoche/2d": "*",
+    "@fantoche/core": "*",
+    "@fantoche/ffmpeg": "*"
   },
   "devDependencies": {
-    "@revideo/ui": "*",
-    "@revideo/vite-plugin": "*"
+    "@fantoche/ui": "*",
+    "@fantoche/vite-plugin": "*"
   }
 }

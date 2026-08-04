@@ -24,15 +24,15 @@ export function createVersionObject(version: string) {
 
 export type ExporterSettings =
   | {
-      name: '@revideo/core/image-sequence';
+      name: '@fantoche/core/image-sequence';
       options: ImageExporterOptions;
     }
   | {
-      name: '@revideo/core/ffmpeg';
+      name: '@fantoche/core/ffmpeg';
       options: FfmpegExporterOptions;
     }
   | {
-      name: '@revideo/core/wasm';
+      name: '@fantoche/core/wasm';
     };
 
 // Project settings that are used internally

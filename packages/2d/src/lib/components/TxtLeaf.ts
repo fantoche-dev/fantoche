@@ -1,5 +1,5 @@
-import type {SignalValue, SimpleSignal} from '@revideo/core';
-import {BBox, capitalize, lazy, textLerp} from '@revideo/core';
+import type {SignalValue, SimpleSignal} from '@fantoche/core';
+import {BBox, capitalize, lazy, textLerp} from '@fantoche/core';
 import {
   computed,
   initial,

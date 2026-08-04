@@ -24,10 +24,10 @@ export function editorPlugin({editor, projects}: EditorPluginConfig): Plugin {
    * Generate the editor entry module for a single project.
    *
    * Editor plugins are declared per-scene as module specifiers (e.g.
-   * `'@revideo/2d/editor'`). We load them here, in the dev-server-only entry,
+   * `'@fantoche/2d/editor'`). We load them here, in the dev-server-only entry,
    * and inject them into the project before handing it to the editor. This
    * keeps the dynamic import — and the Vite-internal `/@id/` prefix used to
-   * resolve it — out of `@revideo/core`, so it never leaks into a headless
+   * resolve it — out of `@fantoche/core`, so it never leaks into a headless
    * render bundle.
    *
    * The real package versions (resolved from the installed `package.json`

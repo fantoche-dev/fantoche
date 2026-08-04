@@ -1,4 +1,4 @@
-import type {SubscribableValueEvent} from '@revideo/core';
+import type {SubscribableValueEvent} from '@fantoche/core';
 import {useEffect, useState} from 'react';
 
 export function useSubscribableValue<TValue>(

@@ -1,11 +1,11 @@
-import {Rect, Txt, makeScene2D} from '@revideo/2d';
+import {Rect, Txt, makeScene2D} from '@fantoche/2d';
 import {
   Direction,
   all,
   createRef,
   slideTransition,
   waitFor,
-} from '@revideo/core';
+} from '@fantoche/core';
 
 export default makeScene2D('transitions-second', function* (view) {
   const rect = createRef<Rect>();

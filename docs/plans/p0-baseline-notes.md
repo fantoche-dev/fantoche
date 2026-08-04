@@ -25,7 +25,7 @@ Environment: macOS (Darwin 24.6.0, arm64), Node v24.18.0, Chrome for Testing 150
 | Step | Result |
 |---|---|
 | 1. `npm ci` + `npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe` + `npx puppeteer browsers install chrome` | PASS (chrome 150.0.7871.24) |
-| 2. `npx lerna run build --ignore @revideo/docs` | PASS — "Successfully ran target build for 10 projects" |
+| 2. `npx lerna run build --ignore @fantoche/docs` | PASS — "Successfully ran target build for 10 projects" |
 | 3. `npx lerna run test` | PASS — core: 204/204 tests (17 files); 2d: 52/52 tests (10 files) |
 | 4. `npm run template:render` | PASS — "Rendered video to output/video.mp4"; artifact at `packages/template/output/video.mp4`, 2,036,259 bytes (> 100 KB). NOTE: plan says `packages/template/out/`; upstream actually writes `packages/template/output/`. |
 | 5. `npm run e2e:test` | **FAIL** — see below |

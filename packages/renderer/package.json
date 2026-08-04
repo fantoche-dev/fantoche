@@ -1,15 +1,15 @@
 {
-  "name": "@revideo/renderer",
+  "name": "@fantoche/renderer",
   "version": "0.11.0",
   "description": "A headless renderer for revideo",
   "main": "lib/server/index.js",
   "author": "revideo",
-  "homepage": "https://re.video/",
-  "bugs": "https://github.com/midrender/revideo/issues",
+  "homepage": "https://github.com/fantoche-dev/fantoche",
+  "bugs": "https://github.com/fantoche-dev/fantoche/issues",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/midrender/revideo.git",
+    "url": "https://github.com/fantoche-dev/fantoche.git",
     "directory": "packages/renderer"
   },
   "scripts": {
@@ -25,13 +25,13 @@
     "types"
   ],
   "dependencies": {
-    "@revideo/ffmpeg": "0.11.0",
+    "@fantoche/ffmpeg": "0.11.0",
     "puppeteer": "^25.3.0",
     "uuid": "^14.0.1",
     "vite": "^8.1.2"
   },
   "devDependencies": {
-    "@revideo/core": "0.11.0",
+    "@fantoche/core": "0.11.0",
     "ncp": "^2.0.0"
   }
 }

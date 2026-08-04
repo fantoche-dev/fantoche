@@ -4,8 +4,8 @@ import type {
   SimpleSignal,
   ThreadGenerator,
   TimingFunction,
-} from '@revideo/core';
-import {DEFAULT, all, capitalize, threadable} from '@revideo/core';
+} from '@fantoche/core';
+import {DEFAULT, all, capitalize, threadable} from '@fantoche/core';
 import {computed, initial, nodeName, signal} from '../decorators';
 import {is} from '../utils';
 import type {Node} from './Node';

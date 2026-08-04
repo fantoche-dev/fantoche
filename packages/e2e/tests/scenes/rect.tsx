@@ -1,4 +1,4 @@
-import {makeScene2D, Rect} from '@revideo/2d';
+import {makeScene2D, Rect} from '@fantoche/2d';
 
 export default makeScene2D('rect', function* (view) {
   view.add(

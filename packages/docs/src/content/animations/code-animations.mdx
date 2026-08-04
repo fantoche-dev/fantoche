@@ -1,8 +1,8 @@
 # Code Animations
 
 ```tsx editor mode=preview
-import {makeScene2D, Code} from '@revideo/2d';
-import {all, createRef, DEFAULT, waitFor} from '@revideo/core';
+import {makeScene2D, Code} from '@fantoche/2d';
+import {all, createRef, DEFAULT, waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const code = createRef<Code>();
@@ -58,11 +58,11 @@ Then, in your project configuration, instantiate a new `LezerHighlighter` using
 the imported grammar, and set it as the default highlighter:
 
 ```ts
-import {makeProject} from '@revideo/core';
+import {makeProject} from '@fantoche/core';
 import example from './scenes/example?scene';
 
 // highlight-start
-import {Code, LezerHighlighter} from '@revideo/2d';
+import {Code, LezerHighlighter} from '@fantoche/2d';
 import {parser} from '@lezer/javascript';
 
 Code.defaultHighlighter = new LezerHighlighter(parser);
@@ -100,7 +100,7 @@ The code to display is set via the [`code`](/api-reference/2d/components/classes
 property. In the simplest case, you can just use a string:
 
 ```tsx editor
-import {makeScene2D, Code} from '@revideo/2d';
+import {makeScene2D, Code} from '@fantoche/2d';
 
 export default makeScene2D('scene', function* (view) {
   view.add(
@@ -204,8 +204,8 @@ work as expected. Invoking a signal inside a template string uses its current
 value and then never updates the snippet again, even if the signal changes:
 
 ```tsx editor mode=code
-import {makeScene2D, Code} from '@revideo/2d';
-import {waitFor} from '@revideo/core';
+import {makeScene2D, Code} from '@fantoche/2d';
+import {waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const nameSignal = Code.createSignal('number');
@@ -228,8 +228,8 @@ Trying to pass the signal without invoking it is even worse. Since each signal
 is a function, it will be stringified and included in the snippet:
 
 ```tsx editor
-import {makeScene2D, Code} from '@revideo/2d';
-import {waitFor} from '@revideo/core';
+import {makeScene2D, Code} from '@fantoche/2d';
+import {waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const nameSignal = Code.createSignal('number');
@@ -254,8 +254,8 @@ template string in a custom way and correctly support signals. It's really easy
 to use, simply put the `CODE` tag function before your template string:
 
 ```tsx editor
-import {makeScene2D, Code, CODE} from '@revideo/2d';
-import {waitFor} from '@revideo/core';
+import {makeScene2D, Code, CODE} from '@fantoche/2d';
+import {waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const nameSignal = Code.createSignal('number');
@@ -318,8 +318,8 @@ The default method for animating code is diffing. It's used whenever you tween
 the `code` property:
 
 ```tsx editor
-import {makeScene2D, Code} from '@revideo/2d';
-import {createRef} from '@revideo/core';
+import {makeScene2D, Code} from '@fantoche/2d';
+import {createRef} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const code = createRef<Code>();
@@ -352,8 +352,8 @@ snippet, you can use the [`append`](/api-reference/2d/code/classes/CodeSignalCon
 modify the code immediately or animate the changes over time:
 
 ```tsx editor
-import {makeScene2D, Code} from '@revideo/2d';
-import {createRef, waitFor} from '@revideo/core';
+import {makeScene2D, Code} from '@fantoche/2d';
+import {createRef, waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const code = createRef<Code>();
@@ -395,8 +395,8 @@ points. Check out [Code Ranges](#code-ranges) for more information on how to
 specify points in your code snippets.
 
 ```tsx editor
-import {makeScene2D, Code, word, lines} from '@revideo/2d';
-import {all, createRef, waitFor} from '@revideo/core';
+import {makeScene2D, Code, word, lines} from '@fantoche/2d';
+import {all, createRef, waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const code = createRef<Code>();
@@ -443,8 +443,8 @@ template string. They let you specify the changes in a more visual way, without
 having to know the exact positions in the code:
 
 ```tsx editor
-import {makeScene2D, Code, replace, insert, remove} from '@revideo/2d';
-import {createRef, waitFor} from '@revideo/core';
+import {makeScene2D, Code, replace, insert, remove} from '@fantoche/2d';
+import {createRef, waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const code = createRef<Code>();
@@ -480,8 +480,8 @@ the ones created by
 all the animation methods are also available on your own signals:
 
 ```tsx editor
-import {makeScene2D, Code, CODE} from '@revideo/2d';
-import {all, waitFor} from '@revideo/core';
+import {makeScene2D, Code, CODE} from '@fantoche/2d';
+import {all, waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const message = Code.createSignal(`Hello, world!`);
@@ -513,8 +513,8 @@ Code signals can also be nested in the template strings passed to the animation
 methods:
 
 ```tsx editor mode=code
-import {makeScene2D, Code, CODE} from '@revideo/2d';
-import {createRef, waitFor} from '@revideo/core';
+import {makeScene2D, Code, CODE} from '@fantoche/2d';
+import {createRef, waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const code = createRef<Code>();
@@ -599,8 +599,8 @@ Once you create a `Code` node, you can use its
 ranges that contain a specific string or match the given regular expression:
 
 ```tsx editor mode=code
-import {makeScene2D, Code} from '@revideo/2d';
-import {createRef, waitFor} from '@revideo/core';
+import {makeScene2D, Code} from '@fantoche/2d';
+import {createRef, waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const code = createRef<Code>();
@@ -636,8 +636,8 @@ to visually distinguish a part of the code snippet. The selection is specified
 using an individual [`code range`](#code-ranges) or an array of ranges:
 
 ```tsx editor
-import {makeScene2D, Code, lines} from '@revideo/2d';
-import {createRef, DEFAULT, waitFor} from '@revideo/core';
+import {makeScene2D, Code, lines} from '@fantoche/2d';
+import {createRef, DEFAULT, waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const code = createRef<Code>();
@@ -681,8 +681,8 @@ The following example uses `getSelectionBBox` to draw a rectangle around the
 word `log`:
 
 ```tsx editor
-import {Code, Rect, makeScene2D} from '@revideo/2d';
-import {createRef, createSignal} from '@revideo/core';
+import {Code, Rect, makeScene2D} from '@fantoche/2d';
+import {createRef, createSignal} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const code = createRef<Code>();
@@ -733,7 +733,7 @@ specify your own style by passing it as the second argument to the
 `LezerHighlighter` constructor:
 
 ```ts
-import {Code, LezerHighlighter} from '@revideo/2d';
+import {Code, LezerHighlighter} from '@fantoche/2d';
 import {HighlightStyle} from '@codemirror/language';
 import {tags} from '@lezer/highlight';
 import {parser} from '@lezer/javascript';
@@ -756,7 +756,7 @@ You can configure highlighters on a per-node basis using the
 override the default highlighter set in the project configuration file:
 
 ```tsx
-import {Code, LezerHighlighter} from '@revideo/2d';
+import {Code, LezerHighlighter} from '@fantoche/2d';
 import {parser} from '@lezer/rust';
 
 const RustHighlighter = new LezerHighlighter(parser);
@@ -796,7 +796,7 @@ You can use the [`withDefaults`](/api-reference/2d/utils) helper function to
 quickly extend any node with your own defaults:
 
 ```ts
-import {Code, LezerHighlighter, withDefaults} from '@revideo/2d';
+import {Code, LezerHighlighter, withDefaults} from '@fantoche/2d';
 import {parser} from '@lezer/rust';
 
 const RustHighlighter = new LezerHighlighter(parser);

@@ -1,6 +1,6 @@
-import type {RenderVideoUserProjectSettings} from '@revideo/core';
-import type {FfmpegSettings} from '@revideo/ffmpeg';
-import {ffmpegSettings} from '@revideo/ffmpeg';
+import type {RenderVideoUserProjectSettings} from '@fantoche/core';
+import type {FfmpegSettings} from '@fantoche/ffmpeg';
+import {ffmpegSettings} from '@fantoche/ffmpeg';
 import * as fs from 'fs';
 import * as path from 'path';
 import type {Plugin} from 'vite';
@@ -57,8 +57,8 @@ export function rendererPlugin(
     async load(id) {
       if (id.startsWith('\x00virtual:renderer')) {
         return `\
-            import {render} from '@revideo/renderer/lib/client/render';
-            import {Vector2} from '@revideo/core';
+            import {render} from '@fantoche/renderer/lib/client/render';
+            import {Vector2} from '@fantoche/core';
             import project from '${projectFile}';
 
             // Read video variables

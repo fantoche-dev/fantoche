@@ -6,18 +6,18 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: '@revideo/ui',
-        replacement: '@revideo/ui/src/main.tsx',
+        find: '@fantoche/ui',
+        replacement: '@fantoche/ui/src/main.tsx',
       },
       {
-        find: '@revideo/2d/editor',
-        replacement: '@revideo/2d/src/editor',
+        find: '@fantoche/2d/editor',
+        replacement: '@fantoche/2d/src/editor',
       },
       {
-        find: /@revideo\/2d(\/lib)?/,
-        replacement: '@revideo/2d/src/lib',
+        find: /@fantoche\/2d(\/lib)?/,
+        replacement: '@fantoche/2d/src/lib',
       },
-      {find: '@revideo/core', replacement: '@revideo/core/src'},
+      {find: '@fantoche/core', replacement: '@fantoche/core/src'},
     ],
   },
   plugins: [

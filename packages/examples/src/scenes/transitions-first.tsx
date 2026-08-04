@@ -1,5 +1,5 @@
-import {Rect, Txt, makeScene2D} from '@revideo/2d';
-import {waitFor} from '@revideo/core';
+import {Rect, Txt, makeScene2D} from '@fantoche/2d';
+import {waitFor} from '@fantoche/core';
 
 export default makeScene2D('transitions-first', function* (view) {
   view.add(

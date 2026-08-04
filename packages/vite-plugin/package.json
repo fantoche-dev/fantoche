@@ -1,11 +1,11 @@
 {
-  "name": "@revideo/vite-plugin",
+  "name": "@fantoche/vite-plugin",
   "version": "0.11.0",
   "description": "A Vite plugin for revideo projects",
   "main": "lib/index.js",
   "author": "revideo",
-  "homepage": "https://re.video/",
-  "bugs": "https://github.com/midrender/revideo/issues",
+  "homepage": "https://github.com/fantoche-dev/fantoche",
+  "bugs": "https://github.com/fantoche-dev/fantoche/issues",
   "license": "MIT",
   "scripts": {
     "dev": "tsc -w",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/midrender/revideo.git"
+    "url": "git+https://github.com/fantoche-dev/fantoche.git"
   },
   "files": [
     "lib"
@@ -24,7 +24,7 @@
     "@types/mime-types": "^3.0.1"
   },
   "dependencies": {
-    "@revideo/ffmpeg": "0.11.0",
+    "@fantoche/ffmpeg": "0.11.0",
     "fast-glob": "^3.3.1",
     "follow-redirects": "^1.15.2",
     "formidable": "^3.5.1",

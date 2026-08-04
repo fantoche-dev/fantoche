@@ -4,8 +4,8 @@ To render videos with dynamic inputs or to build video apps, you can use video
 parameters. Consider this example video:
 
 ```tsx editor
-import {Txt, makeScene2D} from '@revideo/2d';
-import {useScene, createRef} from '@revideo/core';
+import {Txt, makeScene2D} from '@fantoche/2d';
+import {useScene, createRef} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const textRef = createRef<Txt>();
@@ -26,8 +26,8 @@ Instead of using the generic `"new user"` string, we might want to use a real
 name - we can do this using a project variable:
 
 ```tsx
-import {Txt, makeScene2D} from '@revideo/2d';
-import {useScene, createRef} from '@revideo/core';
+import {Txt, makeScene2D} from '@fantoche/2d';
+import {useScene, createRef} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const textRef = createRef<Txt>();
@@ -53,7 +53,7 @@ use, and the second assigns a default value if no variable is provided. Here,
 You can pass variables to `renderVideo()` as follows:
 
 ```ts
-import {renderVideo} from '@revideo/renderer';
+import {renderVideo} from '@fantoche/renderer';
 
 renderVideo({
   projectFile: './src/project.ts',
@@ -67,7 +67,7 @@ To use variables in the visual editor, you can pass them to `makeProject` in
 `src/project.ts`.
 
 ```ts
-import {makeProject} from '@revideo/core';
+import {makeProject} from '@fantoche/core';
 import example from './scenes/example?scene';
 
 export default makeProject({

@@ -4,8 +4,8 @@ import type {
   SignalValue,
   SimpleSignal,
   SpacingSignal,
-} from '@revideo/core';
-import {BBox} from '@revideo/core';
+} from '@fantoche/core';
+import {BBox} from '@fantoche/core';
 import {getRectProfile} from '../curves/getRectProfile';
 import {computed, initial, nodeName, signal} from '../decorators';
 import {spacingSignal} from '../decorators/spacingSignal';

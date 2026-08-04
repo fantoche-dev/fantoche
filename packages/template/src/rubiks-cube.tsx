@@ -1,8 +1,8 @@
-/** @jsxImportSource @revideo/2d/lib */
-import type {NodeProps} from '@revideo/2d';
-import {Node, initial, signal} from '@revideo/2d';
-import type {SignalValue, SimpleSignal} from '@revideo/core';
-import {Random, all, createSignal, easeInOutCubic} from '@revideo/core';
+/** @jsxImportSource @fantoche/2d/lib */
+import type {NodeProps} from '@fantoche/2d';
+import {Node, initial, signal} from '@fantoche/2d';
+import type {SignalValue, SimpleSignal} from '@fantoche/core';
+import {Random, all, createSignal, easeInOutCubic} from '@fantoche/core';
 
 type Vec3 = [number, number, number];
 

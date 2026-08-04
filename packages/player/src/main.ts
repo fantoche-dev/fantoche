@@ -1,7 +1,7 @@
-import type {Project} from '@revideo/core';
-import {Player, Stage, getFullPreviewSettings} from '@revideo/core';
+import type {Project} from '@fantoche/core';
+import {Player, Stage, getFullPreviewSettings} from '@fantoche/core';
 
-import {Vector2} from '@revideo/core';
+import {Vector2} from '@fantoche/core';
 import styles from './styles.scss?inline';
 import html from './template.html?raw';
 

@@ -1,4 +1,4 @@
-import {renderVideo} from '@revideo/renderer';
+import {renderVideo} from '@fantoche/renderer';
 import axios from 'axios';
 import type {Request, Response} from 'express';
 import path from 'path';

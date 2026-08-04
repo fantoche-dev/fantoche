@@ -6,7 +6,7 @@ import type {
   ThreadGenerator,
   TimingFunction,
   Vector2,
-} from '@revideo/core';
+} from '@fantoche/core';
 import {
   BBox,
   createSignal,
@@ -15,7 +15,7 @@ import {
   unwrap,
   useLogger,
   useScene,
-} from '@revideo/core';
+} from '@fantoche/core';
 import type {
   CodeFragmentDrawingInfo,
   CodeHighlighter,
@@ -100,8 +100,8 @@ export interface CodeProps extends ShapeProps {
  * @preview
  * ```tsx editor
  * import {parser} from '@lezer/javascript';
- * import {Code, LezerHighlighter, makeScene2D} from '@revideo/2d';
- * import {createRef} from '@revideo/core';
+ * import {Code, LezerHighlighter, makeScene2D} from '@fantoche/2d';
+ * import {createRef} from '@fantoche/core';
  *
  * export default makeScene2D('scene', function* (view) {
  *   LezerHighlighter.registerParser(parser);

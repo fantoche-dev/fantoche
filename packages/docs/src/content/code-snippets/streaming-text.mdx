@@ -6,8 +6,8 @@ of it appear at once.
 One way to achieve this is by using the `.text()` method of the `<Txt>` tag.
 
 ```tsx editor
-import {Txt, makeScene2D} from '@revideo/2d';
-import {createRef, waitFor} from '@revideo/core';
+import {Txt, makeScene2D} from '@fantoche/2d';
+import {createRef, waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const textRef = createRef<Txt>();
@@ -26,8 +26,8 @@ If you want more control over when words appear (for instance for captions with
 exact timestamps), you can repeatedly `.add()` text to your `<Txt>` node:
 
 ```tsx editor
-import {Txt, makeScene2D} from '@revideo/2d';
-import {createRef, waitFor} from '@revideo/core';
+import {Txt, makeScene2D} from '@fantoche/2d';
+import {createRef, waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const textRef = createRef<Txt>();

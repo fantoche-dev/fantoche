@@ -1,4 +1,4 @@
-import type {Stage} from '@revideo/core';
+import type {Stage} from '@fantoche/core';
 import clsx from 'clsx';
 import type {HTMLAttributes} from 'preact';
 import type {MutableRef} from 'preact/hooks';

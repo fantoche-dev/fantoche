@@ -1,5 +1,5 @@
-import {Circle, makeScene2D} from '@revideo/2d';
-import {Vector2, createRef, easeInOutCubic, tween} from '@revideo/core';
+import {Circle, makeScene2D} from '@fantoche/2d';
+import {Vector2, createRef, easeInOutCubic, tween} from '@fantoche/core';
 
 export default makeScene2D('tweening-vector', function* (view) {
   const circle = createRef<Circle>();

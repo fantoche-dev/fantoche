@@ -1,6 +1,6 @@
 // @ts-check
 /*
- * Generates the API reference for @revideo/core and @revideo/2d.
+ * Generates the API reference for @fantoche/core and @fantoche/2d.
  *
  * This replaces the old Docusaurus custom TypeDoc plugin (packages/docs/typedoc.js)
  * with a Nextra-native approach: TypeDoc + typedoc-plugin-markdown emit MDX pages

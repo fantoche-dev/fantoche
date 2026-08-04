@@ -19,7 +19,7 @@ your `<Txt/>` nodes:
 **src/project.ts:**
 
 ```tsx
-import {makeProject} from '@revideo/core';
+import {makeProject} from '@fantoche/core';
 import example from './scenes/example?scene';
 import './global.css';
 
@@ -31,8 +31,8 @@ export default makeProject({
 **src/scenes/example.tsx:**
 
 ```tsx
-import {Txt, makeScene2D} from '@revideo/2d';
-import {waitFor} from '@revideo/core';
+import {Txt, makeScene2D} from '@fantoche/2d';
+import {waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   yield view.add(

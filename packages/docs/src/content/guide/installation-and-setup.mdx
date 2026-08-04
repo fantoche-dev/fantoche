@@ -16,7 +16,7 @@ Run the following command to create a new revideo project (If this fails, check
 out the [troubleshooting](#troubleshooting) section):
 
 ```bash
-npm init @revideo@latest
+npm init @fantoche@latest
 ```
 
 Now, select the **default project**, navigate to its folder and install all
@@ -46,8 +46,8 @@ shown below.
 </video>
 
 ```tsx
-import {Audio, Img, Video, makeScene2D} from '@revideo/2d';
-import {all, chain, createRef, waitFor} from '@revideo/core';
+import {Audio, Img, Video, makeScene2D} from '@fantoche/2d';
+import {all, chain, createRef, waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const logoRef = createRef<Img>();
@@ -97,7 +97,7 @@ npm run render
 This will call the `./src/render.ts` script in your code:
 
 ```ts
-import {renderVideo} from '@revideo/renderer';
+import {renderVideo} from '@fantoche/renderer';
 
 async function render() {
   console.log('Rendering video...');
@@ -140,8 +140,8 @@ Our animation is defined within a generator function that is passed to
 video:
 
 ```tsx
-import {Audio, Img, Video, makeScene2D} from '@revideo/2d';
-import {all, chain, createRef, waitFor} from '@revideo/core';
+import {Audio, Img, Video, makeScene2D} from '@fantoche/2d';
+import {all, chain, createRef, waitFor} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
 // your animation flow here
@@ -262,7 +262,7 @@ Each video in Revideo is represented by a project configuration object. In
 our example, this configuration is declared in `src/project.ts`:
 
 ```ts
-import {makeProject} from '@revideo/core';
+import {makeProject} from '@fantoche/core';
 
 import example from './scenes/example?scene';
 
@@ -279,7 +279,7 @@ A scene is a set of elements displayed on the screen and an animation that
 governs them. The most basic scene looks as follows:
 
 ```tsx
-import {makeScene2D} from '@revideo/2d';
+import {makeScene2D} from '@fantoche/2d';
 
 export default makeScene2D('scene', function* (view) {
   // animation
@@ -441,7 +441,7 @@ This brings us back to our initial example:
 
 <details>
   <summary>
-    <code>npm init @revideo@latest</code> fails to execute.
+    <code>npm init @fantoche@latest</code> fails to execute.
   </summary>
 
 There was [a bug in npm](https://github.com/npm/cli/issues/5175) causing the
@@ -450,7 +450,7 @@ above command to fail. It got fixed in version `8.15.1`. You can follow
 update your npm. Alternatively, you can use the following command instead:
 
 ```bash
-npm exec @revideo/create@latest
+npm exec @fantoche/create@latest
 ```
 
 </details>

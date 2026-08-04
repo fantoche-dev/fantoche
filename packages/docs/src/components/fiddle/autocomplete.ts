@@ -22,10 +22,10 @@ function loadModule(module: Record<string, unknown>) {
 }
 
 if (typeof window !== 'undefined') {
-  import(/* webpackIgnore: true */ '@revideo/core')
+  import(/* webpackIgnore: true */ '@fantoche/core')
     .then(loadModule)
     .catch(() => {});
-  import(/* webpackIgnore: true */ '@revideo/2d')
+  import(/* webpackIgnore: true */ '@fantoche/2d')
     .then(loadModule)
     .catch(() => {});
 }

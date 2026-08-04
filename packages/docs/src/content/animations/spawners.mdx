@@ -39,8 +39,8 @@ dependencies and recompute its value whenever they change. We can animate our
 `count` signal to see if it works:
 
 ```tsx editor
-import {makeScene2D, Layout, Circle} from '@revideo/2d';
-import {createSignal, linear, range} from '@revideo/core';
+import {makeScene2D, Layout, Circle} from '@fantoche/2d';
+import {createSignal, linear, range} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const count = createSignal(10);

@@ -1,12 +1,12 @@
 {
-  "name": "@revideo/player",
+  "name": "@fantoche/player",
   "version": "0.11.0",
   "description": "A custom element for displaying animations made with revideo",
   "main": "dist/main.js",
   "types": "types/main.d.ts",
   "author": "revideo",
-  "homepage": "https://re.video/",
-  "bugs": "https://github.com/midrender/revideo/issues",
+  "homepage": "https://github.com/fantoche-dev/fantoche",
+  "bugs": "https://github.com/fantoche-dev/fantoche/issues",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/midrender/revideo.git"
+    "url": "https://github.com/fantoche-dev/fantoche.git"
   },
   "files": [
     "dist",
     "types"
   ],
   "devDependencies": {
-    "@revideo/core": "0.11.0",
+    "@fantoche/core": "0.11.0",
     "sass": "^1.58.0",
     "terser": "^5.16.1"
   }

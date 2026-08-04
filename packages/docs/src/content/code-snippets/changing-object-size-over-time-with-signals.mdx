@@ -4,8 +4,8 @@ You can use signals to change values in your animation over time. Below you can
 find a example that uses signals to change the size of a circle over time.
 
 ```tsx editor
-import {Circle, Txt, makeScene2D} from '@revideo/2d';
-import {createSignal} from '@revideo/core';
+import {Circle, Txt, makeScene2D} from '@fantoche/2d';
+import {createSignal} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const circleSize = createSignal(50); // initial size of 50

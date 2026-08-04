@@ -1,11 +1,11 @@
 {
-  "name": "@revideo/core",
+  "name": "@fantoche/core",
   "version": "0.11.0",
   "description": "A web-based framework for creating videos programmatically",
   "main": "lib/index.js",
   "author": "revideo",
-  "homepage": "https://re.video/",
-  "bugs": "https://github.com/midrender/revideo/issues",
+  "homepage": "https://github.com/fantoche-dev/fantoche",
+  "bugs": "https://github.com/fantoche-dev/fantoche/issues",
   "license": "MIT",
   "scripts": {
     "dev": "tsc -p tsconfig.build.json -w",
@@ -16,7 +16,7 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/midrender/revideo.git"
+    "url": "https://github.com/fantoche-dev/fantoche.git"
   },
   "files": [
     "lib",

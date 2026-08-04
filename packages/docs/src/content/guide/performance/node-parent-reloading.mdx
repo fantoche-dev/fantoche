@@ -4,8 +4,8 @@ A common use case for Revideo is adding subtitles to a video. Often, this gets
 handled like this:
 
 ```tsx editor
-import {Txt, Video, makeScene2D} from '@revideo/2d';
-import {useScene, waitFor, createRef} from '@revideo/core';
+import {Txt, Video, makeScene2D} from '@fantoche/2d';
+import {useScene, waitFor, createRef} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const words = [
@@ -64,8 +64,8 @@ directly, but to a child container of `view` that is not a parent of our
 `<Txt/>` change:
 
 ```tsx editor
-import {Txt, Video, Layout, makeScene2D} from '@revideo/2d';
-import {useScene, waitFor, createRef} from '@revideo/core';
+import {Txt, Video, Layout, makeScene2D} from '@fantoche/2d';
+import {useScene, waitFor, createRef} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const textContainer = createRef<Layout>();

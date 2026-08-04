@@ -1,11 +1,11 @@
 {
-  "name": "@revideo/create",
+  "name": "@fantoche/create",
   "version": "0.11.0",
   "description": "Quickly scaffold revideo projects",
   "main": "index.js",
   "author": "revideo",
-  "homepage": "https://re.video/",
-  "bugs": "https://github.com/midrender/revideo/issues",
+  "homepage": "https://github.com/fantoche-dev/fantoche",
+  "bugs": "https://github.com/fantoche-dev/fantoche/issues",
   "license": "MIT",
   "type": "module",
   "bin": {
@@ -17,15 +17,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/midrender/revideo.git"
+    "url": "https://github.com/fantoche-dev/fantoche.git"
   },
   "devDependencies": {
-    "@revideo/2d": "0.11.0",
-    "@revideo/core": "0.11.0",
-    "@revideo/ffmpeg": "0.11.0",
-    "@revideo/renderer": "0.11.0",
-    "@revideo/ui": "0.11.0",
-    "@revideo/vite-plugin": "0.11.0"
+    "@fantoche/2d": "0.11.0",
+    "@fantoche/core": "0.11.0",
+    "@fantoche/ffmpeg": "0.11.0",
+    "@fantoche/renderer": "0.11.0",
+    "@fantoche/ui": "0.11.0",
+    "@fantoche/vite-plugin": "0.11.0"
   },
   "dependencies": {
     "minimist": "^1.2.8",

@@ -15,7 +15,7 @@ Revideo already solved the longform infra Motion Canvas lacks, verified in
 source: server-side `renderVideo()`/`renderPartialVideo()` with N parallel
 (headless Chromium + Vite) workers and ffmpeg concat/merge; audio pipeline
 (extraction, mixing, silent-track fill); in-browser WASM mp4 exporter;
-`@revideo/player-react`; deployment guides. All MIT. Node ≥ 22 toolchain.
+`@fantoche/player-react`; deployment guides. All MIT. Node ≥ 22 toolchain.
 
 ## Why not from scratch
 
@@ -26,7 +26,7 @@ layer *above* them (document → evaluator) or *beside* them (render backend).
 
 ## Amendments at fork time (P0)
 
-1. **Remove `@revideo/telemetry`** (PostHog-based, opt-out via
+1. **Remove `@fantoche/telemetry`** (PostHog-based, opt-out via
    `DISABLE_TELEMETRY=true`) and the `sendEvent` calls
    (`renderer/server/render-video.ts`) — no phone-home in a community fork.
 2. Keep generator scenes running untouched (compat CI job renders a known

@@ -55,7 +55,7 @@ For instance, we could extract the flickering code from the above example to a
 separate generator and delegate our scene function to it:
 
 ```tsx
-import {ThreadGenerator} from '@revideo/core';
+import {ThreadGenerator} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const circle = createRef<Circle>();
@@ -139,8 +139,8 @@ There are many ways to animate multiple objects. Here are some examples. Try
 using them in the below editor.
 
 ```tsx editor ratio=2
-import {makeScene2D, Rect} from '@revideo/2d';
-import {all, waitFor, makeRef, range} from '@revideo/core';
+import {makeScene2D, Rect} from '@fantoche/2d';
+import {all, waitFor, makeRef, range} from '@fantoche/core';
 
 export default makeScene2D('scene', function* (view) {
   const rects: Rect[] = [];

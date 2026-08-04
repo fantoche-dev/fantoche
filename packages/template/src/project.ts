@@ -1,4 +1,4 @@
-import {makeProject} from '@revideo/core';
+import {makeProject} from '@fantoche/core';
 
 import example from './example';
 
@@ -19,7 +19,7 @@ export const project = makeProject({
     },
     rendering: {
       exporter: {
-        name: '@revideo/core/wasm',
+        name: '@fantoche/core/wasm',
       },
       fps: 30,
       resolutionScale: 1,

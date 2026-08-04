@@ -1,10 +1,10 @@
-import type {Project, RenderVideoUserProjectSettings} from '@revideo/core';
+import type {Project, RenderVideoUserProjectSettings} from '@fantoche/core';
 import {
   Color,
   Renderer,
   Vector2,
   getFullRenderingSettings,
-} from '@revideo/core';
+} from '@fantoche/core';
 
 declare global {
   interface Window {

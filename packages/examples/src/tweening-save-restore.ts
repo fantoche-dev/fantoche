@@ -1,4 +1,4 @@
-import {makeProject} from '@revideo/core';
+import {makeProject} from '@fantoche/core';
 
 import scene from './scenes/tweening-save-restore';
 

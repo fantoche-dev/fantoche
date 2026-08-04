@@ -1,6 +1,6 @@
-/** @jsxImportSource @revideo/2d/lib */
-import {makeScene2D} from '@revideo/2d';
-import {createRef, waitFor} from '@revideo/core';
+/** @jsxImportSource @fantoche/2d/lib */
+import {makeScene2D} from '@fantoche/2d';
+import {createRef, waitFor} from '@fantoche/core';
 
 import {RubiksCube} from './rubiks-cube';
 

@@ -1,4 +1,4 @@
-import type {PluginTabConfig, PluginTabProps} from '@revideo/ui';
+import type {PluginTabConfig, PluginTabProps} from '@fantoche/ui';
 import {
   AccountTree,
   emphasize,
@@ -7,7 +7,7 @@ import {
   useApplication,
   usePanels,
   useReducedMotion,
-} from '@revideo/ui';
+} from '@fantoche/ui';
 
 import {useSignalEffect} from '@preact/signals';
 import {useEffect, useRef} from 'preact/hooks';

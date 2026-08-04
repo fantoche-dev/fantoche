@@ -2,7 +2,7 @@ import type {
   FfmpegExporterOptions,
   RendererResult,
   RendererSettings,
-} from '@revideo/core';
+} from '@fantoche/core';
 import * as os from 'os';
 import * as path from 'path';
 import {ImageStream} from './image-stream';
@@ -39,7 +39,7 @@ export class FFmpegExporterServer {
   private readonly format: FfmpegExporterOptions['format'];
 
   public constructor(settings: FFmpegExporterSettings) {
-    if (settings.exporter.name !== '@revideo/core/ffmpeg') {
+    if (settings.exporter.name !== '@fantoche/core/ffmpeg') {
       throw new Error('Invalid exporter');
     }
 

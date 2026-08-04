@@ -1,5 +1,5 @@
-import type {SignalValue} from '@revideo/core';
-import {unwrap} from '@revideo/core';
+import type {SignalValue} from '@fantoche/core';
+import {unwrap} from '@fantoche/core';
 import type {PossibleCodeFragment} from './CodeFragment';
 import {isCodeMetrics} from './CodeMetrics';
 

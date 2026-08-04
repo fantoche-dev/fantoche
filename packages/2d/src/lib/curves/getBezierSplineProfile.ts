@@ -1,4 +1,4 @@
-import {Vector2, clamp} from '@revideo/core';
+import {Vector2, clamp} from '@fantoche/core';
 import {CubicBezierSegment} from './CubicBezierSegment';
 import type {CurveProfile} from './CurveProfile';
 import type {KnotInfo} from './KnotInfo';

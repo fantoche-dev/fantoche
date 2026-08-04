@@ -11,7 +11,7 @@ Previously, scenes were imported using a `?scene` query parameter, and
 
 ```tsx
 // scenes/example.tsx (0.5.x)
-import {makeScene2D} from '@revideo/2d';
+import {makeScene2D} from '@fantoche/2d';
 
 export default makeScene2D(function* (view) {
   // ...
@@ -29,8 +29,8 @@ without the `?scene` query:
 
 ```tsx
 // example.tsx (0.10.x)
-/** @jsxImportSource @revideo/2d/lib */
-import {makeScene2D} from '@revideo/2d';
+/** @jsxImportSource @fantoche/2d/lib */
+import {makeScene2D} from '@fantoche/2d';
 
 export default makeScene2D('example', function* (view) {
   // ...
@@ -50,7 +50,7 @@ live in separate `.meta` files. In 0.10.x they are passed directly to
 
 ```tsx
 // project.ts (0.10.x)
-import {makeProject} from '@revideo/core';
+import {makeProject} from '@fantoche/core';
 
 import example from './example';
 
@@ -69,7 +69,7 @@ export const project = makeProject({
     },
     rendering: {
       exporter: {
-        name: '@revideo/core/wasm',
+        name: '@fantoche/core/wasm',
       },
       fps: 30,
       resolutionScale: 1,
@@ -130,14 +130,14 @@ served bundle. Instead, you import your project and pass the object directly:
 
 ```tsx
 // 0.5.x
-import {Player} from '@revideo/player-react';
+import {Player} from '@fantoche/player-react';
 
 <Player src="http://localhost:4000/player" />;
 ```
 
 ```tsx
 // 0.10.x
-import {Player} from '@revideo/player-react';
+import {Player} from '@fantoche/player-react';
 import project from './project';
 
 <Player project={project} />;

@@ -1,6 +1,6 @@
 import styles from './Sidebar.module.scss';
 
-import {getTaskName, isThreadable, type Thread} from '@revideo/core';
+import {getTaskName, isThreadable, type Thread} from '@fantoche/core';
 import {
   useCurrentFrame,
   useCurrentScene,

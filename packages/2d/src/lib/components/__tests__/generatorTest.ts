@@ -1,5 +1,5 @@
-import type {ThreadGeneratorFactory} from '@revideo/core';
-import {threads} from '@revideo/core';
+import type {ThreadGeneratorFactory} from '@fantoche/core';
+import {threads} from '@fantoche/core';
 import {useScene2D} from '../../scenes';
 import type {View2D} from '../View2D';
 
