@@ -1,107 +1,41 @@
-<br/>
-<p align="center">
-  <a href="https://midrender.com/revideo">
-    <img width="600" alt="Revideo" src="./logo.svg">
-  </a>
-</p>
-<p align="center">
-  <a href="https://www.npmjs.com/package/@revideo/core"><img src="https://img.shields.io/npm/v/@revideo/core?style=flat" alt="npm version"></a>
-  <a href="https://github.com/midrender/revideo/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat" alt="MIT license"></a>
-  <a href="https://discord.com/invite/JDjbfp6q2G"><img src="https://img.shields.io/discord/1071029581009657896?style=flat&logo=discord&logoColor=fff&color=404eed" alt="discord"></a>
-</p>
-<br/>
+# Fantoche *(working title)*
 
-# Revideo
+**Anyone — or any agent — can make a vector character explain something on
+video.** Open source (MIT), open document format, local-first, video-first.
 
-Revideo is a rendering engine for creating videos in code. You describe a scene
-in TypeScript — shapes, text, media, and animation — and Revideo renders it to a
-video file. It ships a headless render API for generating videos
-programmatically and a React player for previewing scenes in the browser.
+> **Status: P0 — fork & foundation.** This is a community fork of
+> [Revideo](https://github.com/midrender/revideo) (itself an MIT fork of
+> [Motion Canvas](https://github.com/motion-canvas/motion-canvas)). At this
+> stage it is Revideo with telemetry removed and a new identity; the product
+> layers (declarative document, characters, narration timeline, editor) land
+> in later phases — see [docs/05-roadmap.md](docs/05-roadmap.md).
 
-A scene is plain TypeScript, so Claude or Codex can produce one from a prompt.
+## Why this exists
 
-Revideo borrows concepts from Remotion and Rive, but is, in its core, zero dep.
+The design rationale, verified research, and founding decisions live in
+[docs/](docs/): research (`01`), vision (`02`), architecture (`03`),
+roadmap (`05`), and ADRs (`docs/adr/`).
 
-It's the engine behind [Midrender](https://midrender.com).
+## Development
 
-<br/>
-
-## Getting Started
-
-Create a project:
+Requires Node ≥ 22.12.
 
 ```bash
-npm init @revideo@latest
+npm ci
+npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
+npx puppeteer browsers install chrome     # for rendering/e2e
+npx lerna run build --ignore @fantoche/docs
+npx lerna run test
+npm run template:render                   # renders packages/template to mp4
 ```
 
-A scene is a generator function. The example below adds a `<RubiksCube/>`
-component and animates a scramble:
+## Attribution
 
-```tsx
-import {makeScene2D} from '@revideo/2d';
-import {createRef, waitFor} from '@revideo/core';
-
-import {RubiksCube} from './rubiks-cube';
-
-export default makeScene2D('scramble', function* (view) {
-  view.fill('#0d0d12');
-
-  const cube = createRef<RubiksCube>();
-  view.add(<RubiksCube ref={cube} size={620} />);
-
-  yield* waitFor(0.5);
-  yield* cube().scramble(18); // 18 animated quarter-turns
-});
-```
-
-The cube is a single self-contained component
-([`rubiks-cube.tsx`](./packages/template/src/rubiks-cube.tsx)): 54 stickers in
-3D, orthographically projected in a custom `draw()`, with each quarter-turn
-animated by interpolating a rotation about the turning layer's axis.
-
-![A Rubik's cube scrambling itself](./packages/template/scramble.gif)
-
-Render it from the command line with
-[`renderVideo()`](https://docs.re.video/renderer/renderVideo/).
-
-<br/>
-
-## Capabilities
-
-- **Headless rendering** — render a project to a file with `renderVideo()`, or
-  expose a rendering endpoint from your project with the
-  [CLI](https://docs.re.video/render-endpoint). It runs anywhere Node and a
-  headless browser run, including serverless platforms like Google Cloud Run
-  ([example](https://github.com/midrender/examples/tree/main/google-cloud-run)).
-- **Parallelized rendering** — split a render across workers to cut wall-clock
-  time ([details](https://github.com/midrender/revideo/pull/74)).
-- **Browser preview** — the React
-  [`<Player/>`](https://docs.re.video/preview-with-player) renders scenes in the
-  browser and accepts dynamic inputs, so the same project drives both preview
-  and final render.
-- **Media and audio** — `<Video/>` and `<Audio/>` components with audio export
-  and frame-accurate synchronization.
-
-See the [documentation](https://docs.re.video/) for the full API.
-
-<br/>
-
-## Telemetry
-
-Revideo anonymously counts how many videos are rendered, via
-[PostHog](https://github.com/PostHog/posthog). The implementation is in
-[`packages/telemetry`](https://github.com/midrender/revideo/tree/main/packages/telemetry).
-Disable it with an environment variable:
-
-```bash
-DISABLE_TELEMETRY=true
-```
+Fantoche stands on two excellent MIT projects: **Motion Canvas** by Jacob
+Bielecki and contributors, and **Revideo** by Haven Technologies (Justus
+Mattern, Konstantin Höhne) and contributors. The original Revideo README is
+preserved at [docs/UPSTREAM-REVIDEO-README.md](docs/UPSTREAM-REVIDEO-README.md).
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
-
-## Links
-
-[Documentation](https://docs.re.video/) · [Midrender](https://midrender.com) ·
-[Discord](https://discord.com/invite/JDjbfp6q2G)
+MIT — see [LICENSE](LICENSE).
