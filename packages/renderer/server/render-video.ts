@@ -212,7 +212,10 @@ async function renderVideoOnPage(
     });
   });
 
-  await page.goto(url);
+  // Completion is signaled via onRenderComplete/onRenderFailed, never the page's
+  // 'load' event, which can hang behind slow external assets (e.g. font CSS)
+  // until browser.close() detaches the frame and kills the pending goto.
+  await page.goto(url, {waitUntil: 'domcontentloaded'});
 
   return renderingComplete;
 }
