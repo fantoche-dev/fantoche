@@ -1,0 +1,46 @@
+name: Publish Packages to NPM
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseType:
+        type: choice
+        description: Release type
+        required: true
+        options:
+          - release
+          - canary
+      version:
+        type: string
+        description: Version (required for release; ignored for canary)
+        required: false
+
+env:
+  HUSKY: 0
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write # Required for npm OIDC trusted publishing
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+          cache: npm
+      # Trusted publishing requires npm >= 11.5.1; Node 22 ships npm 10.x
+      - run: npm install -g npm@latest
+      - run: git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - run: git config --global user.name "github-actions[bot]"
+      - run: npm ci
+      - run: npx lerna run build --ignore @fantoche-dev/docs
+      - if: ${{ inputs.releaseType == 'release' }}
+        run: npx lerna publish --yes --force-publish --exact ${{ inputs.version }}
+      - if: ${{ inputs.releaseType == 'canary' }}
+        run: npx lerna publish --yes --canary --force-publish
