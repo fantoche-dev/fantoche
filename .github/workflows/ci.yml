@@ -62,6 +62,8 @@ jobs:
       - run: npm ci
       - run: npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
       - run: npx puppeteer browsers install chrome
+      - name: Allow Chrome user-namespace sandbox (ubuntu-24.04 AppArmor)
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
       - run: npx lerna run build --ignore @fantoche-dev/docs
       - run: npm run template:render
       - name: Assert mp4 exists and is non-trivial
