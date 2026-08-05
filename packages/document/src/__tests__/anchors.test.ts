@@ -81,7 +81,9 @@ describe('resolveTimeRef', () => {
     );
   });
 
-  test('negative resolved times are clamped to 0', () => {
-    expect(resolveTimeRef('intro.start-5', index).seconds).toBe(0);
+  test('negative resolved times are clamped to 0, with a warning', () => {
+    const result = resolveTimeRef('intro.start-5', index);
+    expect(result.seconds).toBe(0);
+    expect(result.warnings[0]).toMatch(/clamped/);
   });
 });

@@ -42,7 +42,7 @@ export interface TrackKey {
 export interface Track {
   target: string;
   prop: string;
-  /** Value before the first key; falls back to the first key's value. */
+  /** Value before the first key; undefined = the prop is not driven yet. */
   initial: PropValue | undefined;
   /** Sorted by tF, strictly increasing. */
   keys: TrackKey[];
@@ -53,23 +53,21 @@ export type CodePoint = [number, number];
 /** [from, to], end-exclusive. */
 export type CodeRange = [CodePoint, CodePoint];
 
-export type CodeOp =
-  | {
-      kind: 'edit';
-      t0F: number;
-      t1F: number;
-      easing: EasingName;
-      before: string;
-      after: string;
-    }
-  | {
-      kind: 'select';
-      t0F: number;
-      t1F: number;
-      easing: EasingName;
-      before: CodeRange[];
-      after: CodeRange[];
-    };
+export interface EditOp {
+  t0F: number;
+  t1F: number;
+  easing: EasingName;
+  before: string;
+  after: string;
+}
+
+export interface SelectOp {
+  t0F: number;
+  t1F: number;
+  easing: EasingName;
+  before: CodeRange[];
+  after: CodeRange[];
+}
 
 export interface CodeTrack {
   target: string;
@@ -77,8 +75,9 @@ export interface CodeTrack {
   initialCode: string;
   /** Initial selection; null = everything (no dimming). */
   initialSelection: CodeRange[] | null;
-  /** Sorted by t0F; edit intervals never overlap each other. */
-  ops: CodeOp[];
+  /** Both sorted by t0F; edit intervals never overlap each other. */
+  edits: EditOp[];
+  selects: SelectOp[];
 }
 
 export interface BlockIR {

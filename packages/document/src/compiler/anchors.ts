@@ -114,5 +114,10 @@ export function resolveTimeRef(
     );
   }
 
-  return {seconds: Math.max(0, base + anchor.offset), warnings};
+  const seconds = base + anchor.offset;
+  if (seconds < 0) {
+    warnings.push(`"${ref}" resolves to ${seconds}s — clamped to 0`);
+  }
+
+  return {seconds: Math.max(0, seconds), warnings};
 }

@@ -30,11 +30,12 @@ export {DEFAULT_EASING, EASING_NAMES} from './easings.js';
 export type {EasingName} from './easings.js';
 export type {
   BlockIR,
-  CodeOp,
   CodePoint,
   CodeRange,
   CodeTrack,
   CompiledElement,
+  EditOp,
+  SelectOp,
   TimelineIR,
   Track,
   TrackKey,

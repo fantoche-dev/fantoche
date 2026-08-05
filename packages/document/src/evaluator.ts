@@ -110,13 +110,9 @@ export function lerpValue(
   to: PropValue,
   value: number,
 ): PropValue {
-  if (value <= 0) {
-    return from;
-  }
-  if (value >= 1) {
-    return to;
-  }
   if (typeof from === 'number' && typeof to === 'number') {
+    // Numbers extrapolate: back/elastic/bounce easings deliberately leave
+    // [0,1] and their overshoot must survive.
     return map(from, to, value);
   }
   if (Array.isArray(from) && Array.isArray(to) && from.length === to.length) {
@@ -124,14 +120,41 @@ export function lerpValue(
       lerpValue(entry as PropValue, (to as unknown[])[i] as PropValue, value),
     ) as PropValue;
   }
+  // Non-numeric values cannot extrapolate — clamp the eased progress.
+  const clamped = value <= 0 ? 0 : value >= 1 ? 1 : value;
+  if (clamped === 0) {
+    return from;
+  }
+  if (clamped === 1) {
+    return to;
+  }
   if (typeof from === 'string' && typeof to === 'string') {
+    // Any pair of color-parseable strings interpolates as color (right for
+    // fill/stroke; a text prop tweened between color words would too).
     try {
-      return Color.lerp(from, to, value).serialize() as string;
+      return Color.lerp(from, to, clamped).serialize() as string;
     } catch {
-      return value >= 0.5 ? to : from;
+      return clamped >= 0.5 ? to : from;
     }
   }
-  return value >= 0.5 ? to : from;
+  return clamped >= 0.5 ? to : from;
+}
+
+/** Deep-clone array values so callers can never mutate (or alias) the IR. */
+function cloneValue(value: PropValue): PropValue {
+  if (Array.isArray(value)) {
+    return value.map(entry =>
+      Array.isArray(entry) ? ([...entry] as [number, number]) : entry,
+    ) as PropValue;
+  }
+  return value;
+}
+
+function cloneRanges(ranges: CodeRange[]): CodeRange[] {
+  return ranges.map(([from, to]) => [
+    [...from] as [number, number],
+    [...to] as [number, number],
+  ]);
 }
 
 /** Index of the last entry with time ≤ frame, or -1. */
@@ -161,12 +184,12 @@ function evaluateTrack(track: Track, frame: number): PropValue | undefined {
   if (index === -1) {
     // Before the first key the prop is not driven by the track: fall back to
     // the element's own initial prop (undefined = leave the node alone).
-    return initial;
+    return initial === undefined ? undefined : cloneValue(initial);
   }
   const current = keys[index];
   const next = keys[index + 1];
   if (next === undefined || next.easing === 'hold') {
-    return current.value;
+    return cloneValue(current.value);
   }
   const span = next.tF - current.tF;
   const progress = span === 0 ? 1 : (frame - current.tF) / span;
@@ -195,13 +218,10 @@ export function evaluate(ir: TimelineIR, tSeconds: number): FrameState {
 
   const code = new Map<string, CodeFrameState>();
   for (const track of ir.codeTracks) {
-    const edits = track.ops.filter(op => op.kind === 'edit');
-    const selects = track.ops.filter(op => op.kind === 'select');
-
     let codeState: CodeFrameState['code'] = track.initialCode;
-    const editIndex = lastAtOrBefore(edits, frame, op => op.t0F);
+    const editIndex = lastAtOrBefore(track.edits, frame, op => op.t0F);
     if (editIndex !== -1) {
-      const op = edits[editIndex];
+      const op = track.edits[editIndex];
       if (frame >= op.t1F) {
         codeState = op.after;
       } else {
@@ -215,25 +235,27 @@ export function evaluate(ir: TimelineIR, tSeconds: number): FrameState {
     }
 
     let selection: CodeFrameState['selection'] = {
-      ranges: track.initialSelection ?? [
-        [
-          [0, 0],
-          [Infinity, Infinity],
+      ranges: cloneRanges(
+        track.initialSelection ?? [
+          [
+            [0, 0],
+            [Infinity, Infinity],
+          ],
         ],
-      ],
+      ),
       from: null,
       progress: null,
     };
-    const selectIndex = lastAtOrBefore(selects, frame, op => op.t0F);
+    const selectIndex = lastAtOrBefore(track.selects, frame, op => op.t0F);
     if (selectIndex !== -1) {
-      const op = selects[selectIndex];
+      const op = track.selects[selectIndex];
       if (frame >= op.t1F) {
-        selection = {ranges: op.after, from: null, progress: null};
+        selection = {ranges: cloneRanges(op.after), from: null, progress: null};
       } else {
         const progress = (frame - op.t0F) / (op.t1F - op.t0F);
         selection = {
-          ranges: op.after,
-          from: op.before,
+          ranges: cloneRanges(op.after),
+          from: cloneRanges(op.before),
           progress: EASINGS[op.easing](progress),
         };
       }

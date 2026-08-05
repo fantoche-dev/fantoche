@@ -179,10 +179,12 @@ describe('compileDocument', () => {
       ],
     });
     const track = ir.codeTracks[0];
-    expect(track.ops.map(op => (op.kind === 'edit' ? op.after : null))).toEqual(
-      ['let x = 10;\nlet y = 2;', 'let x = 100;\nlet y = 2;', 'let x = 100;\n'],
-    );
-    expect(track.ops[1]).toMatchObject({t0F: 60, t1F: 75});
+    expect(track.edits.map(op => op.after)).toEqual([
+      'let x = 10;\nlet y = 2;',
+      'let x = 100;\nlet y = 2;',
+      'let x = 100;\n',
+    ]);
+    expect(track.edits[1]).toMatchObject({t0F: 60, t1F: 75});
   });
 
   test('selection ops carry before/after resolved ranges', () => {
@@ -191,17 +193,14 @@ describe('compileDocument', () => {
       elements: [{id: 'c', type: 'code', props: {code: 'a\nb\nc'}}],
       timeline: [{at: 1, target: 'c', select: {lines: [1, 1]}, dur: 0.4}],
     });
-    const op = ir.codeTracks[0].ops[0];
-    expect(op.kind).toBe('select');
-    if (op.kind === 'select') {
-      expect(op.before).toEqual(FULL_SELECTION);
-      expect(op.after).toEqual([
-        [
-          [1, 0],
-          [1, Infinity],
-        ],
-      ]);
-    }
+    const op = ir.codeTracks[0].selects[0];
+    expect(op.before).toEqual(FULL_SELECTION);
+    expect(op.after).toEqual([
+      [
+        [1, 0],
+        [1, Infinity],
+      ],
+    ]);
   });
 
   test('a match pattern that no longer exists is a CompileError with the item path', () => {
