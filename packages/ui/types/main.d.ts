@@ -1,4 +1,4 @@
-import type {Project} from '@fantoche/core';
+import type {Project} from '@fantoche-dev/core';
 
 export function editor(project: Project): void;
 

@@ -1,4 +1,4 @@
-import type {SubscribableValueEvent} from '@fantoche/core';
+import type {SubscribableValueEvent} from '@fantoche-dev/core';
 import {useEffect, useState} from 'react';
 
 export function useSubscribableValue<TValue>(

@@ -1,4 +1,4 @@
-import {RendererState} from '@fantoche/core';
+import {RendererState} from '@fantoche-dev/core';
 import {useApplication} from '../contexts';
 import {useRendererState} from './useRendererState';
 import {usePreviewSettings, useRenderingSettings} from './useSettings';

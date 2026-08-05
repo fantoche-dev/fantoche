@@ -4,8 +4,8 @@ import type {
   SignalValue,
   SimpleSignal,
   SpacingSignal,
-} from '@fantoche/core';
-import {BBox} from '@fantoche/core';
+} from '@fantoche-dev/core';
+import {BBox} from '@fantoche-dev/core';
 import {getRectProfile} from '../curves/getRectProfile';
 import {computed, initial, nodeName, signal} from '../decorators';
 import {spacingSignal} from '../decorators/spacingSignal';

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import * as Babel from '@babel/standalone';
-import type {View2D} from '@fantoche/2d';
-import type {SceneDescription, ThreadGeneratorFactory} from '@fantoche/core';
+import type {View2D} from '@fantoche-dev/2d';
+import type {SceneDescription, ThreadGeneratorFactory} from '@fantoche-dev/core';
 
 export class TransformError extends Error {
   public constructor(
@@ -27,7 +27,7 @@ export function transform(code: string, name: string): string {
           'react',
           {
             runtime: 'automatic',
-            importSource: '@fantoche/2d',
+            importSource: '@fantoche-dev/2d',
           },
         ],
       ],
@@ -35,11 +35,11 @@ export function transform(code: string, name: string): string {
         (({types}: {types: any}) => ({
           visitor: {
             ImportDeclaration(path: any) {
-              if (path.node.source.value.startsWith('@fantoche/core')) {
-                path.node.source.value = '@fantoche/core';
+              if (path.node.source.value.startsWith('@fantoche-dev/core')) {
+                path.node.source.value = '@fantoche-dev/core';
               }
-              if (path.node.source.value.startsWith('@fantoche/2d')) {
-                path.node.source.value = '@fantoche/2d';
+              if (path.node.source.value.startsWith('@fantoche-dev/2d')) {
+                path.node.source.value = '@fantoche-dev/2d';
               }
             },
             ReferencedIdentifier(path: any) {

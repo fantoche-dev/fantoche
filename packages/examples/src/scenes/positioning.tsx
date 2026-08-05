@@ -1,5 +1,5 @@
-import {Circle, Grid, Line, Node, makeScene2D} from '@fantoche/2d';
-import {Vector2, all, createRef, createSignal} from '@fantoche/core';
+import {Circle, Grid, Line, Node, makeScene2D} from '@fantoche-dev/2d';
+import {Vector2, all, createRef, createSignal} from '@fantoche-dev/core';
 
 const RED = '#ff6470';
 const GREEN = '#99C47A';

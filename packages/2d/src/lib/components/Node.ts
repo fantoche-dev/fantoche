@@ -13,7 +13,7 @@ import type {
   ThreadGenerator,
   TimingFunction,
   Vector2Signal,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {
   BBox,
   DependencyContext,
@@ -34,7 +34,7 @@ import {
   transformVectorAsPoint,
   unwrap,
   useLogger,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {
   NODE_NAME,
   cloneable,

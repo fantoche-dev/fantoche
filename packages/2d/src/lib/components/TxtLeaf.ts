@@ -1,5 +1,5 @@
-import type {SignalValue, SimpleSignal} from '@fantoche/core';
-import {BBox, capitalize, lazy, textLerp} from '@fantoche/core';
+import type {SignalValue, SimpleSignal} from '@fantoche-dev/core';
+import {BBox, capitalize, lazy, textLerp} from '@fantoche-dev/core';
 import {
   computed,
   initial,

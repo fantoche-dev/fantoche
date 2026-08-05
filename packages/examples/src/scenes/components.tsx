@@ -1,6 +1,6 @@
-import {makeScene2D} from '@fantoche/2d';
-import {createRef, waitFor} from '@fantoche/core';
-import {Switch} from '@fantoche/examples/src/components/Switch';
+import {makeScene2D} from '@fantoche-dev/2d';
+import {createRef, waitFor} from '@fantoche-dev/core';
+import {Switch} from '@fantoche-dev/examples/src/components/Switch';
 // see this import for the component ^
 
 // usage of the component:

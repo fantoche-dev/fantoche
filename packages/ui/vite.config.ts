@@ -7,9 +7,9 @@ export default defineConfig({
   resolve: {
     alias: {
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      '@fantoche/ui': '/src/main.tsx',
+      '@fantoche-dev/ui': '/src/main.tsx',
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      '@fantoche/2d/editor': '@fantoche/2d/src/editor',
+      '@fantoche-dev/2d/editor': '@fantoche-dev/2d/src/editor',
     },
   },
   build: {
@@ -22,7 +22,7 @@ export default defineConfig({
       cssFileName: 'style',
     },
     rollupOptions: {
-      external: [/^@fantoche\/core/, /^@?preact/],
+      external: [/^@fantoche-dev\/core/, /^@?preact/],
     },
   },
   plugins: [

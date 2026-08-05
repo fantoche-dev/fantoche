@@ -1,4 +1,4 @@
-import type {Vector2} from '@fantoche/core';
+import type {Vector2} from '@fantoche-dev/core';
 
 export interface CurvePoint {
   position: Vector2;

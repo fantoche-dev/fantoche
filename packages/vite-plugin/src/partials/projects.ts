@@ -44,7 +44,7 @@ export function projectsPlugin({
         oxc: {
           jsx: {
             runtime: 'automatic',
-            importSource: '@fantoche/2d/lib',
+            importSource: '@fantoche-dev/2d/lib',
           },
         },
         optimizeDeps: {

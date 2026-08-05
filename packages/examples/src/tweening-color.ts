@@ -1,4 +1,4 @@
-import {makeProject} from '@fantoche/core';
+import {makeProject} from '@fantoche-dev/core';
 
 import scene from './scenes/tweening-color';
 

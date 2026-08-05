@@ -1,1 +1,1 @@
-/// <reference types="@fantoche/core/project" />
+/// <reference types="@fantoche-dev/core/project" />

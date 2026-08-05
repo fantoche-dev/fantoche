@@ -1,7 +1,7 @@
-import {Video, makeScene2D} from '@fantoche/2d';
-import {createRef} from '@fantoche/core';
+import {Video, makeScene2D} from '@fantoche-dev/2d';
+import {createRef} from '@fantoche-dev/core';
 
-import exampleMp4 from '@fantoche/examples/assets/example.mp4';
+import exampleMp4 from '@fantoche-dev/examples/assets/example.mp4';
 
 export default makeScene2D('media-video', function* (view) {
   const videoRef = createRef<Video>();

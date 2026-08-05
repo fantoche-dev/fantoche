@@ -2,8 +2,8 @@ import type {
   InterpolationFunction,
   SignalValue,
   TimingFunction,
-} from '@fantoche/core';
-import {capitalize, deepLerp, SignalContext, useLogger} from '@fantoche/core';
+} from '@fantoche-dev/core';
+import {capitalize, deepLerp, SignalContext, useLogger} from '@fantoche-dev/core';
 import {makeSignalExtensions} from '../utils/makeSignalExtensions';
 import {addInitializer, initialize} from './initializers';
 
@@ -26,7 +26,7 @@ export interface PropertyMetadata<T> {
   compoundEntries: [string, string][];
 }
 
-const PROPERTIES = Symbol.for('@fantoche/2d/decorators/properties');
+const PROPERTIES = Symbol.for('@fantoche-dev/2d/decorators/properties');
 
 export function getPropertyMeta<T>(
   object: any,

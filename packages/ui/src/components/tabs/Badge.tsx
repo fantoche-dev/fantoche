@@ -1,4 +1,4 @@
-import {LogLevel} from '@fantoche/core';
+import {LogLevel} from '@fantoche-dev/core';
 import clsx from 'clsx';
 import type {ComponentChildren, Ref} from 'preact';
 import styles from './Tabs.module.scss';

@@ -1,17 +1,17 @@
 import {parser as javascript} from '@lezer/javascript';
-import type {View2D} from '@fantoche/2d';
+import type {View2D} from '@fantoche-dev/2d';
 import type {
   Player as PlayerType,
   Project,
   SceneDescription,
   Stage as StageType,
   ThreadGeneratorFactory,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 
 type Setter = (value: PlayerType | null) => void;
 type FiddleScene = SceneDescription<ThreadGeneratorFactory<View2D>>;
 
-let CoreModule: typeof import('@fantoche/core') | null = null;
+let CoreModule: typeof import('@fantoche-dev/core') | null = null;
 let ProjectInstance: Project | null = null;
 let PlayerInstance: PlayerType | null = null;
 let StageInstance: StageType | null = null;
@@ -56,9 +56,9 @@ export async function borrowPlayer(
     // The revideo runtime is intentionally not bundled with the docs. It is
     // loaded at runtime through the import map injected in the root layout,
     // which points at the ESM bundles copied into public/modules.
-    CoreModule = await import(/* webpackIgnore: true */ '@fantoche/core');
+    CoreModule = await import(/* webpackIgnore: true */ '@fantoche-dev/core');
     const {makeScene2D, Code, LezerHighlighter} = await import(
-      /* webpackIgnore: true */ '@fantoche/2d'
+      /* webpackIgnore: true */ '@fantoche-dev/2d'
     );
     const {Player, Stage, makeProject} = CoreModule;
 

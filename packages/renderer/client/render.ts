@@ -1,10 +1,10 @@
-import type {Project, RenderVideoUserProjectSettings} from '@fantoche/core';
+import type {Project, RenderVideoUserProjectSettings} from '@fantoche-dev/core';
 import {
   Color,
   Renderer,
   Vector2,
   getFullRenderingSettings,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 
 declare global {
   interface Window {

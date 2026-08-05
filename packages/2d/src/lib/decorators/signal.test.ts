@@ -1,5 +1,5 @@
-import type {SimpleSignal} from '@fantoche/core';
-import {DEFAULT} from '@fantoche/core';
+import type {SimpleSignal} from '@fantoche-dev/core';
+import {DEFAULT} from '@fantoche-dev/core';
 import {beforeEach, describe, expect, test, vi} from 'vitest';
 import {initial, initializeSignals, parser, signal} from './signal';
 

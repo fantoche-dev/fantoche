@@ -24,15 +24,15 @@ export function createVersionObject(version: string) {
 
 export type ExporterSettings =
   | {
-      name: '@fantoche/core/image-sequence';
+      name: '@fantoche-dev/core/image-sequence';
       options: ImageExporterOptions;
     }
   | {
-      name: '@fantoche/core/ffmpeg';
+      name: '@fantoche-dev/core/ffmpeg';
       options: FfmpegExporterOptions;
     }
   | {
-      name: '@fantoche/core/wasm';
+      name: '@fantoche-dev/core/wasm';
     };
 
 // Project settings that are used internally

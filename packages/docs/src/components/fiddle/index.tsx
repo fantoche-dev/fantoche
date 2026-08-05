@@ -5,7 +5,7 @@ import {javascript} from '@codemirror/lang-javascript';
 import {syntaxHighlighting} from '@codemirror/language';
 import {EditorState, Text} from '@codemirror/state';
 import {EditorView, keymap} from '@codemirror/view';
-import type {Player} from '@fantoche/core';
+import type {Player} from '@fantoche-dev/core';
 import clsx from 'clsx';
 import {basicSetup} from 'codemirror';
 import {usePathname} from 'next/navigation';

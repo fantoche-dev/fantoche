@@ -1,6 +1,6 @@
 import styles from './Playback.module.scss';
 
-import {getFullRenderingSettings} from '@fantoche/core';
+import {getFullRenderingSettings} from '@fantoche-dev/core';
 import {useCallback} from 'preact/hooks';
 import {useApplication} from '../../contexts';
 import {useDocumentEvent, usePlayerState} from '../../hooks';

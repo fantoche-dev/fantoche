@@ -1,4 +1,4 @@
-import type {AssetInfo, FfmpegExporterOptions} from '@fantoche/core';
+import type {AssetInfo, FfmpegExporterOptions} from '@fantoche-dev/core';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';

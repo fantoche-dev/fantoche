@@ -12,7 +12,7 @@ export const defaultUserProjectSettings: UserProjectSettings = {
   },
   rendering: {
     exporter: {
-      name: '@fantoche/core/wasm',
+      name: '@fantoche-dev/core/wasm',
     },
     fps: 30,
     resolutionScale: 1,

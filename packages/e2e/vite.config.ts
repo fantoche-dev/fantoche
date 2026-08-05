@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 
-import motionCanvas from '@fantoche/vite-plugin';
+import motionCanvas from '@fantoche-dev/vite-plugin';
 import {defineConfig} from 'vite';
 
 export default defineConfig({

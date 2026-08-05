@@ -1,5 +1,5 @@
-import {Circle, makeScene2D} from '@fantoche/2d';
-import {useLogger, waitFor} from '@fantoche/core';
+import {Circle, makeScene2D} from '@fantoche-dev/2d';
+import {useLogger, waitFor} from '@fantoche-dev/core';
 
 export default makeScene2D('logging', function* (view) {
   const logger = useLogger();

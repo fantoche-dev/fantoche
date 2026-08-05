@@ -3,7 +3,7 @@
   "compilerOptions": {
     "types": ["node"],
     "jsx": "react-jsx",
-    "jsxImportSource": "@fantoche/2d/src/lib"
+    "jsxImportSource": "@fantoche-dev/2d/src/lib"
   },
   "include": ["**/*"],
   "exclude": []

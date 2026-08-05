@@ -1,4 +1,4 @@
-import {createComputed} from '@fantoche/core';
+import {createComputed} from '@fantoche-dev/core';
 import {addInitializer} from './initializers';
 
 /**

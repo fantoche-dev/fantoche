@@ -1,4 +1,4 @@
-import {createSignal, join, waitFor} from '@fantoche/core';
+import {createSignal, join, waitFor} from '@fantoche-dev/core';
 import {describe, expect, it} from 'vitest';
 import {Circle} from '../Circle';
 import {generatorTest} from './generatorTest';

@@ -1,6 +1,6 @@
 import styles from './Timeline.module.scss';
 
-import type {Scene} from '@fantoche/core';
+import type {Scene} from '@fantoche-dev/core';
 import {useMemo} from 'preact/hooks';
 import {useTimelineContext} from '../../contexts';
 import {useScenes, useSubscribableValue} from '../../hooks';

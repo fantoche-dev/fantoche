@@ -5,7 +5,7 @@ import type {
   SimpleSignal,
   ThreadGenerator,
   TimingFunction,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {
   BBox,
   Matrix2D,
@@ -19,7 +19,7 @@ import {
   threadable,
   tween,
   useLogger,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {computed, signal} from '../decorators';
 import type {DesiredLength, PossibleCanvasStyle} from '../partials';
 import {applyTransformDiff, getTransformDiff} from '../utils/diff';

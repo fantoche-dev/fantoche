@@ -6,14 +6,14 @@ import type {
   InspectedElement,
   Scene,
   ThreadGeneratorFactory,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {
   GeneratorScene,
   SceneRenderEvent,
   Vector2,
   transformVectorAsPoint,
   useLogger,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import type {Node} from '../components';
 import {Audio, Media, Video, View2D} from '../components';
 

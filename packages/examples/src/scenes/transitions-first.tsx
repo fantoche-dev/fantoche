@@ -1,5 +1,5 @@
-import {Rect, Txt, makeScene2D} from '@fantoche/2d';
-import {waitFor} from '@fantoche/core';
+import {Rect, Txt, makeScene2D} from '@fantoche-dev/2d';
+import {waitFor} from '@fantoche-dev/core';
 
 export default makeScene2D('transitions-first', function* (view) {
   view.add(

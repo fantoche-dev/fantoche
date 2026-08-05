@@ -1,4 +1,4 @@
-import {isInspectable, transformVectorAsPoint, Vector2} from '@fantoche/core';
+import {isInspectable, transformVectorAsPoint, Vector2} from '@fantoche-dev/core';
 import {useCallback} from 'preact/hooks';
 import {useEffect, useState} from 'react';
 import {useViewportContext} from '../../contexts';

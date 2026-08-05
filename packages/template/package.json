@@ -1,5 +1,5 @@
 {
-  "name": "@fantoche/template",
+  "name": "@fantoche-dev/template",
   "private": true,
   "version": "0.0.0",
   "description": "Basic project template for fantoche",
@@ -12,13 +12,13 @@
     "render": "tsc && node dist/render.js"
   },
   "dependencies": {
-    "@fantoche/2d": "*",
-    "@fantoche/core": "*",
-    "@fantoche/ffmpeg": "*",
-    "@fantoche/renderer": "*"
+    "@fantoche-dev/2d": "*",
+    "@fantoche-dev/core": "*",
+    "@fantoche-dev/ffmpeg": "*",
+    "@fantoche-dev/renderer": "*"
   },
   "devDependencies": {
-    "@fantoche/ui": "*",
-    "@fantoche/vite-plugin": "*"
+    "@fantoche-dev/ui": "*",
+    "@fantoche-dev/vite-plugin": "*"
   }
 }

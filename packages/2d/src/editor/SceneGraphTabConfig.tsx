@@ -1,4 +1,4 @@
-import type {PluginTabConfig, PluginTabProps} from '@fantoche/ui';
+import type {PluginTabConfig, PluginTabProps} from '@fantoche-dev/ui';
 import {
   AccountTree,
   emphasize,
@@ -7,7 +7,7 @@ import {
   useApplication,
   usePanels,
   useReducedMotion,
-} from '@fantoche/ui';
+} from '@fantoche-dev/ui';
 
 import {useSignalEffect} from '@preact/signals';
 import {useEffect, useRef} from 'preact/hooks';

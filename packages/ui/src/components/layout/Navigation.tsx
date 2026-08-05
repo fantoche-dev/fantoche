@@ -1,4 +1,4 @@
-import {LogLevel} from '@fantoche/core';
+import {LogLevel} from '@fantoche-dev/core';
 import {useEffect, useRef, useState} from 'preact/hooks';
 import {useApplication, usePanels} from '../../contexts';
 import {useReducedMotion} from '../../hooks';

@@ -3,8 +3,8 @@ import type {
   SerializedVector2,
   SignalValue,
   SimpleSignal,
-} from '@fantoche/core';
-import {Vector2, clamp} from '@fantoche/core';
+} from '@fantoche-dev/core';
+import {Vector2, clamp} from '@fantoche-dev/core';
 import type {CurveDrawingInfo} from '../curves/CurveDrawingInfo';
 import type {CurvePoint} from '../curves/CurvePoint';
 import type {CurveProfile} from '../curves/CurveProfile';

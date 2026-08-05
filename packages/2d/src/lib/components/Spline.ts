@@ -3,14 +3,14 @@ import type {
   SerializedVector2,
   SignalValue,
   SimpleSignal,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {
   BBox,
   Vector2,
   transformVectorAsPoint,
   unwrap,
   useLogger,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import type {CurveProfile, KnotInfo} from '../curves';
 import {CubicBezierSegment, getBezierSplineProfile} from '../curves';
 import type {PolynomialSegment} from '../curves/PolynomialSegment';

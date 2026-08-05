@@ -1,5 +1,5 @@
-import type {LogPayload, Logger} from '@fantoche/core';
-import {EventDispatcher, LogLevel, ValueDispatcher} from '@fantoche/core';
+import type {LogPayload, Logger} from '@fantoche-dev/core';
+import {EventDispatcher, LogLevel, ValueDispatcher} from '@fantoche-dev/core';
 
 export class LoggerManager {
   public get onInspected() {

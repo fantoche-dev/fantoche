@@ -1,8 +1,8 @@
-/** @jsxImportSource @fantoche/2d/lib */
-import type {NodeProps} from '@fantoche/2d';
-import {Node, initial, signal} from '@fantoche/2d';
-import type {SignalValue, SimpleSignal} from '@fantoche/core';
-import {Random, all, createSignal, easeInOutCubic} from '@fantoche/core';
+/** @jsxImportSource @fantoche-dev/2d/lib */
+import type {NodeProps} from '@fantoche-dev/2d';
+import {Node, initial, signal} from '@fantoche-dev/2d';
+import type {SignalValue, SimpleSignal} from '@fantoche-dev/core';
+import {Random, all, createSignal, easeInOutCubic} from '@fantoche-dev/core';
 
 type Vec3 = [number, number, number];
 

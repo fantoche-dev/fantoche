@@ -1,4 +1,4 @@
-import {Color} from '@fantoche/core';
+import {Color} from '@fantoche-dev/core';
 import {signal, wrapper} from './signal';
 
 export function colorSignal(): PropertyDecorator {

@@ -10,8 +10,8 @@ Revideo lets you define your scene code as a generator function wrapped in
 seconds:
 
 ```tsx
-import {Img, makeScene2D, View2D} from '@fantoche/2d';
-import {waitFor} from '@fantoche/core';
+import {Img, makeScene2D, View2D} from '@fantoche-dev/2d';
+import {waitFor} from '@fantoche-dev/core';
 
 export default makeScene2D('scene', function* (view) {
   yield view.add(
@@ -31,8 +31,8 @@ export default makeScene2D('scene', function* (view) {
 Let's say that you additionally want to display some text:
 
 ```tsx
-import {Img, Txt, makeScene2D} from '@fantoche/2d';
-import {waitFor} from '@fantoche/core';
+import {Img, Txt, makeScene2D} from '@fantoche-dev/2d';
+import {waitFor} from '@fantoche-dev/core';
 
 export default makeScene2D('scene', function* (view) {
   yield view.add(
@@ -56,8 +56,8 @@ separate generator function that does so and is called within your main
 generator function:
 
 ```tsx
-import {Img, Txt, makeScene2D} from '@fantoche/2d';
-import {waitFor} from '@fantoche/core';
+import {Img, Txt, makeScene2D} from '@fantoche-dev/2d';
+import {waitFor} from '@fantoche-dev/core';
 
 export default makeScene2D('scene', function* (view) {
   yield view.add(

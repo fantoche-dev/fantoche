@@ -1,5 +1,5 @@
 {
-  "name": "@fantoche/cli",
+  "name": "@fantoche-dev/cli",
   "version": "0.11.0",
   "description": "A CLI for fantoche",
   "main": "dist/index.js",
@@ -30,8 +30,8 @@
     "typescript": "^6.0.3"
   },
   "dependencies": {
-    "@fantoche/renderer": "0.11.0",
-    "@fantoche/vite-plugin": "0.11.0",
+    "@fantoche-dev/renderer": "0.11.0",
+    "@fantoche-dev/vite-plugin": "0.11.0",
     "axios": "^1.16.0",
     "commander": "^15.0.0",
     "cors": "^2.8.5",

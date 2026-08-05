@@ -1,4 +1,4 @@
-import type {Spacing} from '@fantoche/core';
+import type {Spacing} from '@fantoche-dev/core';
 import {Field, FieldSet, FieldValue, NumericField} from './Layout';
 
 export interface SpacingFieldProps {

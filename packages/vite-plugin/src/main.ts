@@ -76,7 +76,7 @@ export interface MotionCanvasPluginConfig {
    * - `index` - Receives a list of all projects as its first argument and
    *             creates the initial page for selecting a project.
    *
-   * @defaultValue '\@fantoche/ui'
+   * @defaultValue '\@fantoche-dev/ui'
    */
   editor?: string;
 
@@ -90,7 +90,7 @@ export default ({
   project = './src/project.ts',
   output = './output',
   bufferedAssets = /^$/,
-  editor = '@fantoche/ui',
+  editor = '@fantoche-dev/ui',
   buildForEditor,
 }: MotionCanvasPluginConfig = {}): Plugin[] => {
   const plugins: PluginOptions[] = [];

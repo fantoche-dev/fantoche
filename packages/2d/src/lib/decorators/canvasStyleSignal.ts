@@ -1,5 +1,5 @@
-import type {Signal} from '@fantoche/core';
-import {Color} from '@fantoche/core';
+import type {Signal} from '@fantoche-dev/core';
+import {Color} from '@fantoche-dev/core';
 import type {CanvasStyle, PossibleCanvasStyle} from '../partials';
 import {canvasStyleParser} from '../utils';
 import {initial, interpolation, parser, signal} from './signal';

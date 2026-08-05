@@ -1,4 +1,4 @@
-import {BBox, Vector2} from '@fantoche/core';
+import {BBox, Vector2} from '@fantoche-dev/core';
 
 import {Polynomial} from './Polynomial';
 

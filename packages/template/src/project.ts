@@ -1,4 +1,4 @@
-import {makeProject} from '@fantoche/core';
+import {makeProject} from '@fantoche-dev/core';
 
 import example from './example';
 
@@ -19,7 +19,7 @@ export const project = makeProject({
     },
     rendering: {
       exporter: {
-        name: '@fantoche/core/wasm',
+        name: '@fantoche-dev/core/wasm',
       },
       fps: 30,
       resolutionScale: 1,

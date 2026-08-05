@@ -1,7 +1,7 @@
-import {Img, makeScene2D} from '@fantoche/2d';
-import {all, createRef} from '@fantoche/core';
+import {Img, makeScene2D} from '@fantoche-dev/2d';
+import {all, createRef} from '@fantoche-dev/core';
 
-import logoSvg from '@fantoche/examples/assets/logo.svg';
+import logoSvg from '@fantoche-dev/examples/assets/logo.svg';
 
 export default makeScene2D('media-image', function* (view) {
   const imageRef = createRef<Img>();

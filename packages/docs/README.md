@@ -1,4 +1,4 @@
-# @fantoche/docs
+# @fantoche-dev/docs
 
 The documentation site for Revideo, powering [docs.re.video](https://docs.re.video).
 It is a [Next.js](https://nextjs.org) app built with [Nextra 4](https://nextra.site).

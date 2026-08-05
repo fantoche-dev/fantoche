@@ -1,10 +1,10 @@
-import type {FFmpegExporterSettings} from '@fantoche/ffmpeg';
+import type {FFmpegExporterSettings} from '@fantoche-dev/ffmpeg';
 import {
   FFmpegExporterServer,
   VideoFrameExtractor,
   generateAudio,
   mergeMedia,
-} from '@fantoche/ffmpeg';
+} from '@fantoche-dev/ffmpeg';
 import {existsSync, unlinkSync} from 'fs';
 import type {IncomingMessage, ServerResponse} from 'http';
 import type {Plugin, WebSocketServer} from 'vite';

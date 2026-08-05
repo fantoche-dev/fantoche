@@ -1,5 +1,5 @@
-import type {SerializedVector2, Vector2} from '@fantoche/core';
-import {BBox, transformVectorAsPoint} from '@fantoche/core';
+import type {SerializedVector2, Vector2} from '@fantoche-dev/core';
+import {BBox, transformVectorAsPoint} from '@fantoche-dev/core';
 import type {CurveProfile} from '../curves';
 import type {PolynomialSegment} from '../curves/PolynomialSegment';
 import {computed} from '../decorators';

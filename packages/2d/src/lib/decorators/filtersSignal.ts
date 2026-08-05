@@ -4,14 +4,14 @@ import type {
   SimpleSignal,
   ThreadGenerator,
   TimingFunction,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {
   SignalContext,
   all,
   deepLerp,
   easeInOutCubic,
   unwrap,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import type {FilterName} from '../partials';
 import {FILTERS, Filter} from '../partials';
 import {addInitializer} from './initializers';

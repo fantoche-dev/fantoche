@@ -10,8 +10,8 @@ filters on
 [MDN](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter).
 
 ```tsx editor mode=preview
-import {Img, Txt, makeScene2D} from '@fantoche/2d';
-import {all, createRef, createSignal, linear} from '@fantoche/core';
+import {Img, Txt, makeScene2D} from '@fantoche-dev/2d';
+import {all, createRef, createSignal, linear} from '@fantoche-dev/core';
 
 export default makeScene2D('scene', function* (view) {
   view.fill('#141414');
@@ -62,8 +62,8 @@ individual filters. Both ways are shown in the following example:
 
 ```tsx editor
 // snippet Filters Property
-import {Img, makeScene2D} from '@fantoche/2d';
-import {createRef} from '@fantoche/core';
+import {Img, makeScene2D} from '@fantoche-dev/2d';
+import {createRef} from '@fantoche-dev/core';
 
 export default makeScene2D('scene', function* (view) {
   view.fill('#141414');
@@ -80,8 +80,8 @@ export default makeScene2D('scene', function* (view) {
 });
 
 // snippet Filters Array
-import {makeScene2D, Img, blur} from '@fantoche/2d';
-import {createSignal} from '@fantoche/core';
+import {makeScene2D, Img, blur} from '@fantoche-dev/2d';
+import {createSignal} from '@fantoche-dev/core';
 
 export default makeScene2D('scene', function* (view) {
   view.fill('#141414');
@@ -113,8 +113,8 @@ import {
   contrast,
   makeScene2D,
   saturate,
-} from '@fantoche/2d';
-import {createSignal, linear, map, waitFor} from '@fantoche/core';
+} from '@fantoche-dev/2d';
+import {createSignal, linear, map, waitFor} from '@fantoche-dev/core';
 
 export default makeScene2D('scene', function* (view) {
   view.fontFamily('monospace').fontSize(20).fill('#141414');
@@ -203,7 +203,7 @@ layer will be visible or not. The value layer will be what's actually visible in
 the end.
 
 ```tsx editor mode=preview ratio=3
-import {Grid, Img, Layout, makeScene2D, Node, Rect, Txt} from '@fantoche/2d';
+import {Grid, Img, Layout, makeScene2D, Node, Rect, Txt} from '@fantoche-dev/2d';
 import {
   all,
   createRef,
@@ -211,7 +211,7 @@ import {
   Origin,
   Vector2,
   waitFor,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 
 const ImageSource =
   'https://images.unsplash.com/photo-1685901088371-f498db7f8c46';
@@ -368,8 +368,8 @@ hide each other on overlap. Use the dropdown below to browse all examples.
 
 ```tsx editor
 // snippet source-in
-import {Img, Node, makeScene2D} from '@fantoche/2d';
-import {createRef, linear} from '@fantoche/core';
+import {Img, Node, makeScene2D} from '@fantoche-dev/2d';
+import {createRef, linear} from '@fantoche-dev/core';
 
 // Image by Marek Piwnicki (https://unsplash.com/photos/_4o-1pr2oqU)
 const ImageSource =
@@ -400,8 +400,8 @@ export default makeScene2D('scene', function* (view) {
   yield* valueRef().x(-100, 1.5).wait(0.5).to(100, 1.5).wait(0.5);
 });
 // snippet source-out
-import {Img, Node, makeScene2D} from '@fantoche/2d';
-import {createRef, linear} from '@fantoche/core';
+import {Img, Node, makeScene2D} from '@fantoche-dev/2d';
+import {createRef, linear} from '@fantoche-dev/core';
 
 // Image by Marek Piwnicki (https://unsplash.com/photos/_4o-1pr2oqU)
 const ImageSource =
@@ -432,8 +432,8 @@ export default makeScene2D('scene', function* (view) {
   yield* valueRef().x(-100, 1.5).wait(0.5).to(100, 1.5).wait(0.5);
 });
 // snippet destination-in
-import {Img, Node, makeScene2D} from '@fantoche/2d';
-import {createRef, linear} from '@fantoche/core';
+import {Img, Node, makeScene2D} from '@fantoche-dev/2d';
+import {createRef, linear} from '@fantoche-dev/core';
 
 // Image by Marek Piwnicki (https://unsplash.com/photos/_4o-1pr2oqU)
 const ImageSource =
@@ -466,8 +466,8 @@ export default makeScene2D('scene', function* (view) {
   yield* valueRef().x(-100, 1.5).wait(0.5).to(100, 1.5).wait(0.5);
 });
 // snippet destination-out
-import {Img, Node, makeScene2D} from '@fantoche/2d';
-import {createRef, linear} from '@fantoche/core';
+import {Img, Node, makeScene2D} from '@fantoche-dev/2d';
+import {createRef, linear} from '@fantoche-dev/core';
 
 // Image by Marek Piwnicki (https://unsplash.com/photos/_4o-1pr2oqU)
 const ImageSource =
@@ -500,8 +500,8 @@ export default makeScene2D('scene', function* (view) {
   yield* valueRef().x(-100, 1.5).wait(0.5).to(100, 1.5).wait(0.5);
 });
 // snippet xor
-import {Circle, Img, Node, makeScene2D} from '@fantoche/2d';
-import {createRef, easeInOutSine, linear} from '@fantoche/core';
+import {Circle, Img, Node, makeScene2D} from '@fantoche-dev/2d';
+import {createRef, easeInOutSine, linear} from '@fantoche-dev/core';
 
 export default makeScene2D('scene', function* (view) {
   view.fill('#141414');
@@ -531,8 +531,8 @@ export default makeScene2D('scene', function* (view) {
     .wait(0.5);
 });
 // snippet xor and source-in
-import {Circle, Img, Node, makeScene2D} from '@fantoche/2d';
-import {createRef, easeInOutSine, linear} from '@fantoche/core';
+import {Circle, Img, Node, makeScene2D} from '@fantoche-dev/2d';
+import {createRef, easeInOutSine, linear} from '@fantoche-dev/core';
 
 /*
  * This example shows you that you can also nest composite operations.

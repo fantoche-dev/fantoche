@@ -1,5 +1,5 @@
-import type {Vector2} from '@fantoche/core';
-import {clamp} from '@fantoche/core';
+import type {Vector2} from '@fantoche-dev/core';
+import {clamp} from '@fantoche-dev/core';
 import {CircleSegment} from './CircleSegment';
 import type {CurveProfile} from './CurveProfile';
 import {LineSegment} from './LineSegment';

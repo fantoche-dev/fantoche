@@ -1,4 +1,4 @@
-import {DependencyContext, PlaybackState} from '@fantoche/core';
+import {DependencyContext, PlaybackState} from '@fantoche-dev/core';
 import {computed, nodeName} from '../decorators';
 import type {MediaProps} from './Media';
 import {Media} from './Media';

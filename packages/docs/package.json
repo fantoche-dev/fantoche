@@ -1,5 +1,5 @@
 {
-  "name": "@fantoche/docs",
+  "name": "@fantoche-dev/docs",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -36,8 +36,8 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@fantoche/2d": "*",
-    "@fantoche/core": "*",
+    "@fantoche-dev/2d": "*",
+    "@fantoche-dev/core": "*",
     "@tailwindcss/postcss": "^4",
     "@types/babel__standalone": "^7.1.9",
     "@tailwindcss/typography": "^0.5.19",

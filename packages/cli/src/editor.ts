@@ -1,4 +1,4 @@
-import motionCanvas from '@fantoche/vite-plugin';
+import motionCanvas from '@fantoche-dev/vite-plugin';
 import {createServer} from 'vite';
 
 export async function launchEditor(projectPath: string, port: string) {

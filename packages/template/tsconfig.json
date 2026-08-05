@@ -1,5 +1,5 @@
 {
-  "extends": "@fantoche/2d/tsconfig.project.json",
+  "extends": "@fantoche-dev/2d/tsconfig.project.json",
   "compilerOptions": {
     "types": ["node"],
     "noEmit": false,

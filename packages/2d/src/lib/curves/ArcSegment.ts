@@ -5,7 +5,7 @@ import {
   Vector2,
   lazy,
   transformVector,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {View2D} from '../components/View2D';
 import type {CurvePoint} from './CurvePoint';
 import {Segment} from './Segment';

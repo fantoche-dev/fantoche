@@ -24,7 +24,7 @@ export function metaPlugin(): Plugin {
 
       /* language=typescript */
       return `\
-import {MetaFile} from '@fantoche/core';
+import {MetaFile} from '@fantoche-dev/core';
 let meta;
 if (import.meta.hot) {
   meta = import.meta.hot.data.meta;

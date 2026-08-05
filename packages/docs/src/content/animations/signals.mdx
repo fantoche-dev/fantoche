@@ -11,7 +11,7 @@ Signals for primitive types are created using the
 argument specifies their initial value:
 
 ```ts
-import {createSignal} from '@fantoche/core';
+import {createSignal} from '@fantoche-dev/core';
 
 const signal = createSignal(0);
 ```
@@ -20,7 +20,7 @@ Additionally, each complex type has a static `createSignal()` method that can be
 used to create a signal for said type:
 
 ```ts
-import {Vector2} from '@fantoche/core';
+import {Vector2} from '@fantoche-dev/core';
 
 const signal = Vector2.createSignal(Vector2.up);
 ```
@@ -115,7 +115,7 @@ we can reset a signal to its initial value by passing the
 [`DEFAULT`](/api-reference/core/signals/variables/DEFAULT) symbol to it:
 
 ```ts
-import {DEFAULT, createSignal} from '@fantoche/core';
+import {DEFAULT, createSignal} from '@fantoche-dev/core';
 
 const signal = createSignal(3); // <- initial value is 3
 signal(2);

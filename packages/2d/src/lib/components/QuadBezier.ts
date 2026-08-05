@@ -1,4 +1,4 @@
-import type {PossibleVector2, SignalValue, Vector2Signal} from '@fantoche/core';
+import type {PossibleVector2, SignalValue, Vector2Signal} from '@fantoche-dev/core';
 import {QuadBezierSegment} from '../curves';
 import type {PolynomialSegment} from '../curves/PolynomialSegment';
 import {computed, vector2Signal} from '../decorators';
@@ -26,8 +26,8 @@ export interface QuadBezierProps extends CurveProps {
  *
  * @preview
  * ```tsx editor
- * import {makeScene2D, QuadBezier} from '@fantoche/2d';
- * import {createRef} from '@fantoche/core';
+ * import {makeScene2D, QuadBezier} from '@fantoche-dev/2d';
+ * import {createRef} from '@fantoche-dev/core';
  *
  * export default makeScene2D('scene', function* (view) {
  *   const bezier = createRef<QuadBezier>();

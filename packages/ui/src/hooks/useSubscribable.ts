@@ -2,7 +2,7 @@ import type {
   EventHandler,
   Subscribable,
   SubscribableValueEvent,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import type {Inputs} from 'preact/hooks';
 import {useEffect, useState} from 'preact/hooks';
 

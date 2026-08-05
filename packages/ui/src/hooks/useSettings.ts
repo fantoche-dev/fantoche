@@ -1,4 +1,4 @@
-import {getFullPreviewSettings, getFullRenderingSettings} from '@fantoche/core';
+import {getFullPreviewSettings, getFullRenderingSettings} from '@fantoche-dev/core';
 import {useApplication} from '../contexts';
 
 export function useSharedSettings() {

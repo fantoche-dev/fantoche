@@ -1,4 +1,4 @@
-import {Vector2, clamp} from '@fantoche/core';
+import {Vector2, clamp} from '@fantoche-dev/core';
 import type {CurvePoint} from './CurvePoint';
 import {Segment} from './Segment';
 

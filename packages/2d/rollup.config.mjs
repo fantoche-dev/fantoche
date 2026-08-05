@@ -14,9 +14,9 @@ export default [
     plugins: [
       {
         resolveId(id) {
-          if (id.startsWith('@fantoche/core')) {
+          if (id.startsWith('@fantoche-dev/core')) {
             return {
-              id: '@fantoche/core',
+              id: '@fantoche-dev/core',
               external: true,
             };
           }

@@ -1,5 +1,5 @@
-import type {BBox, Spacing} from '@fantoche/core';
-import {Color, Vector2} from '@fantoche/core';
+import type {BBox, Spacing} from '@fantoche-dev/core';
+import {Color, Vector2} from '@fantoche-dev/core';
 import type {CanvasStyle, PossibleCanvasStyle} from '../partials';
 import {Gradient, Pattern} from '../partials';
 

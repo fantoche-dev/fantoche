@@ -4,7 +4,7 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
     "paths": {
-      "@fantoche/2d": ["../lib"]
+      "@fantoche-dev/2d": ["../lib"]
     }
   },
   "references": [{"path": "../lib/tsconfig.json"}],

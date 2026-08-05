@@ -14,8 +14,8 @@ which might show up correctly in the preview through the ui or inside the
 player, which will lose their transparency when rendering.
 
 ```tsx editor
-import {Img, Video, makeScene2D} from '@fantoche/2d';
-import {waitFor, createRef, useScene} from '@fantoche/core';
+import {Img, Video, makeScene2D} from '@fantoche-dev/2d';
+import {waitFor, createRef, useScene} from '@fantoche-dev/core';
 
 export default makeScene2D('scene', function* (view) {
   const avatarRef = createRef<Video>();

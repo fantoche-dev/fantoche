@@ -24,7 +24,7 @@ Requires Node ≥ 22.12.
 npm ci
 npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
 npx puppeteer browsers install chrome     # for rendering/e2e
-npx lerna run build --ignore @fantoche/docs
+npx lerna run build --ignore @fantoche-dev/docs
 npx lerna run test
 npm run template:render                   # renders packages/template to mp4
 ```

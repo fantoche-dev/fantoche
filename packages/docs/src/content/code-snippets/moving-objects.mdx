@@ -5,8 +5,8 @@ Here, we move a square along with some text around the screen, make it larger,
 and finally turn it into a circle:
 
 ```tsx editor
-import {Rect, Txt, makeScene2D} from '@fantoche/2d';
-import {all, waitFor, createRef, easeInBounce, easeInExpo} from '@fantoche/core';
+import {Rect, Txt, makeScene2D} from '@fantoche-dev/2d';
+import {all, waitFor, createRef, easeInBounce, easeInExpo} from '@fantoche-dev/core';
 
 export default makeScene2D('scene', function* (view) {
   const rectRef = createRef<Rect>();

@@ -1,5 +1,5 @@
-import type {SignalValue, SimpleSignal} from '@fantoche/core';
-import {BBox, useThread} from '@fantoche/core';
+import type {SignalValue, SimpleSignal} from '@fantoche-dev/core';
+import {BBox, useThread} from '@fantoche-dev/core';
 import type {
   Artboard,
   File,

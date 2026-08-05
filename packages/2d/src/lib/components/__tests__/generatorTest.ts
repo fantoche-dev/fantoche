@@ -1,5 +1,5 @@
-import type {ThreadGeneratorFactory} from '@fantoche/core';
-import {threads} from '@fantoche/core';
+import type {ThreadGeneratorFactory} from '@fantoche-dev/core';
+import {threads} from '@fantoche-dev/core';
 import {useScene2D} from '../../scenes';
 import type {View2D} from '../View2D';
 

@@ -1,5 +1,5 @@
 {
-  "name": "@fantoche/create",
+  "name": "@fantoche-dev/create",
   "version": "0.11.0",
   "description": "Quickly scaffold fantoche projects",
   "main": "index.js",
@@ -20,12 +20,12 @@
     "url": "https://github.com/fantoche-dev/fantoche.git"
   },
   "devDependencies": {
-    "@fantoche/2d": "0.11.0",
-    "@fantoche/core": "0.11.0",
-    "@fantoche/ffmpeg": "0.11.0",
-    "@fantoche/renderer": "0.11.0",
-    "@fantoche/ui": "0.11.0",
-    "@fantoche/vite-plugin": "0.11.0"
+    "@fantoche-dev/2d": "0.11.0",
+    "@fantoche-dev/core": "0.11.0",
+    "@fantoche-dev/ffmpeg": "0.11.0",
+    "@fantoche-dev/renderer": "0.11.0",
+    "@fantoche-dev/ui": "0.11.0",
+    "@fantoche-dev/vite-plugin": "0.11.0"
   },
   "dependencies": {
     "minimist": "^1.2.8",

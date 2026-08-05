@@ -1,4 +1,4 @@
-import type {Vector2} from '@fantoche/core';
+import type {Vector2} from '@fantoche-dev/core';
 import {useFormattedNumber} from '../../hooks';
 import {Field, FieldSet, FieldValue, NumericField} from './Layout';
 

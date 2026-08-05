@@ -3,8 +3,8 @@ import type {
   PossibleColor,
   SignalValue,
   SimpleSignal,
-} from '@fantoche/core';
-import {useLogger} from '@fantoche/core';
+} from '@fantoche-dev/core';
+import {useLogger} from '@fantoche-dev/core';
 import {colorSignal, computed, initial, signal} from '../decorators';
 import type {ImgProps} from './Img';
 import {Img} from './Img';

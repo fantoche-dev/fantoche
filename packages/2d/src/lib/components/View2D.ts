@@ -1,5 +1,5 @@
-import type {SimpleSignal} from '@fantoche/core';
-import {PlaybackState, lazy} from '@fantoche/core';
+import type {SimpleSignal} from '@fantoche-dev/core';
+import {PlaybackState, lazy} from '@fantoche-dev/core';
 import {initial, signal} from '../decorators';
 import {nodeName} from '../decorators/nodeName';
 import {useScene2D} from '../scenes/useScene2D';

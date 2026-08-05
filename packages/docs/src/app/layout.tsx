@@ -70,7 +70,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
 				)}
 			>
 				{/* Must come before any module script so the fiddles' dynamic
-				    import('@fantoche/core') resolves through the import map. */}
+				    import('@fantoche-dev/core') resolves through the import map. */}
 				<RevideoImportMap />
 				{/* Marketing-style framed column: a centered max-w-7xl page with a thin
 				    border all around and a margin to the viewport edge. The left/right

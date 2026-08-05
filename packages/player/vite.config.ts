@@ -9,7 +9,7 @@ export default defineConfig({
       fileName: 'main',
     },
     rollupOptions: {
-      external: ['@fantoche/core'],
+      external: ['@fantoche-dev/core'],
     },
   },
   plugins: [

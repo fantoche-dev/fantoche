@@ -1,6 +1,6 @@
-/** @jsxImportSource @fantoche/2d/lib */
-import {makeScene2D} from '@fantoche/2d';
-import {createRef, waitFor} from '@fantoche/core';
+/** @jsxImportSource @fantoche-dev/2d/lib */
+import {makeScene2D} from '@fantoche-dev/2d';
+import {createRef, waitFor} from '@fantoche-dev/core';
 
 import {RubiksCube} from './rubiks-cube';
 

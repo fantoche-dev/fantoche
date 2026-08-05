@@ -1,4 +1,4 @@
-import type {SimpleSignal} from '@fantoche/core';
+import type {SimpleSignal} from '@fantoche-dev/core';
 import {computed} from '../decorators/computed';
 import {initial, initializeSignals, signal} from '../decorators/signal';
 

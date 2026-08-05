@@ -1,5 +1,5 @@
-import {Circle, makeScene2D} from '@fantoche/2d';
-import {Color, createRef, easeInOutCubic, tween} from '@fantoche/core';
+import {Circle, makeScene2D} from '@fantoche-dev/2d';
+import {Color, createRef, easeInOutCubic, tween} from '@fantoche-dev/core';
 
 export default makeScene2D('tweening-color', function* (view) {
   const circle = createRef<Circle>();

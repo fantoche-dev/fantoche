@@ -1,5 +1,5 @@
-import type {PossibleVector2, SignalValue, Vector2Signal} from '@fantoche/core';
-import {BBox, transformVectorAsPoint} from '@fantoche/core';
+import type {PossibleVector2, SignalValue, Vector2Signal} from '@fantoche-dev/core';
+import {BBox, transformVectorAsPoint} from '@fantoche-dev/core';
 import type {CurveProfile} from '../curves';
 import {LineSegment} from '../curves';
 import {nodeName, vector2Signal} from '../decorators';
@@ -28,9 +28,9 @@ export interface RayProps extends CurveProps {
  *
  * @preview
  * ```tsx editor
- * import {makeScene2D} from '@fantoche/2d';
- * import {Ray} from '@fantoche/2d';
- * import {createRef} from '@fantoche/core';
+ * import {makeScene2D} from '@fantoche-dev/2d';
+ * import {Ray} from '@fantoche-dev/2d';
+ * import {createRef} from '@fantoche-dev/core';
  *
  * export default makeScene2D('scene', function* (view) {
  *   const ray = createRef<Ray>();

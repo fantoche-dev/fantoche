@@ -1,4 +1,4 @@
-import {getFullRenderingSettings, RendererState} from '@fantoche/core';
+import {getFullRenderingSettings, RendererState} from '@fantoche-dev/core';
 import clsx from 'clsx';
 import {useEffect, useState} from 'preact/hooks';
 import {useApplication} from '../../contexts';

@@ -1,5 +1,5 @@
-import type {BBox, Spacing} from '@fantoche/core';
-import {Vector2} from '@fantoche/core';
+import type {BBox, Spacing} from '@fantoche-dev/core';
+import {Vector2} from '@fantoche-dev/core';
 import {adjustRectRadius} from '../utils';
 import {CircleSegment} from './CircleSegment';
 import {CubicBezierSegment} from './CubicBezierSegment';

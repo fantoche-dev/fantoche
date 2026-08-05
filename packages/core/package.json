@@ -1,5 +1,5 @@
 {
-  "name": "@fantoche/core",
+  "name": "@fantoche-dev/core",
   "version": "0.11.0",
   "description": "A web-based framework for creating videos programmatically",
   "main": "lib/index.js",

@@ -1,11 +1,11 @@
-import type {NodeProps} from '@fantoche/2d';
-import {Circle, Node, Rect, colorSignal, initial, signal} from '@fantoche/2d';
+import type {NodeProps} from '@fantoche-dev/2d';
+import {Circle, Node, Rect, colorSignal, initial, signal} from '@fantoche-dev/2d';
 import type {
   ColorSignal,
   PossibleColor,
   SignalValue,
   SimpleSignal,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {
   Color,
   all,
@@ -13,7 +13,7 @@ import {
   createSignal,
   easeInOutCubic,
   tween,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 
 export interface SwitchProps extends NodeProps {
   initialState?: SignalValue<boolean>;

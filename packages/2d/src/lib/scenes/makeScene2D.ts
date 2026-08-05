@@ -1,4 +1,4 @@
-import type {DescriptionOf, ThreadGeneratorFactory} from '@fantoche/core';
+import type {DescriptionOf, ThreadGeneratorFactory} from '@fantoche-dev/core';
 import type {View2D} from '../components';
 import {Scene2D} from './Scene2D';
 
@@ -11,6 +11,6 @@ export function makeScene2D(
     name,
     config: runner,
     stack: new Error().stack,
-    plugins: ['@fantoche/2d/editor'],
+    plugins: ['@fantoche-dev/2d/editor'],
   };
 }

@@ -1,5 +1,5 @@
-import type {SerializedVector2, SignalValue, SimpleSignal} from '@fantoche/core';
-import {BBox, Vector2} from '@fantoche/core';
+import type {SerializedVector2, SignalValue, SimpleSignal} from '@fantoche-dev/core';
+import {BBox, Vector2} from '@fantoche-dev/core';
 import type {CurveProfile} from '../curves';
 import {getPolylineProfile} from '../curves';
 import {computed, initial, signal} from '../decorators';
@@ -38,8 +38,8 @@ export interface PolygonProps extends CurveProps {
  * @preview
  * ```tsx editor
  * // snippet Polygon
- * import {makeScene2D, Polygon} from '@fantoche/2d';
- * import {createRef} from '@fantoche/core';
+ * import {makeScene2D, Polygon} from '@fantoche-dev/2d';
+ * import {createRef} from '@fantoche-dev/core';
  *
  * export default makeScene2D('scene', function* (view) {
  *   const ref = createRef<Polygon>();
@@ -56,7 +56,7 @@ export interface PolygonProps extends CurveProps {
  * });
  *
  * // snippet Pentagon outline
- * import {makeScene2D, Polygon} from '@fantoche/2d';
+ * import {makeScene2D, Polygon} from '@fantoche-dev/2d';
  *
  * export default makeScene2D('scene', function* (view) {
  *   view.add(

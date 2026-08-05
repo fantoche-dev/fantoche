@@ -1,4 +1,4 @@
-import {capitalize} from '@fantoche/core';
+import {capitalize} from '@fantoche-dev/core';
 import type {Layout} from '../components';
 
 export function defaultStyle<T>(

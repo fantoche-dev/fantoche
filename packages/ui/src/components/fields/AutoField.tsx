@@ -1,4 +1,4 @@
-import {Spacing, Vector2, isType} from '@fantoche/core';
+import {Spacing, Vector2, isType} from '@fantoche-dev/core';
 import type {FunctionComponent} from 'preact';
 import {ArrayField} from './ArrayField';
 import {NumberField} from './NumberField';

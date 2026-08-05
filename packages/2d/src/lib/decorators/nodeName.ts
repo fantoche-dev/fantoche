@@ -1,7 +1,7 @@
 /**
  * @internal
  */
-export const NODE_NAME = Symbol.for('@fantoche/2d/nodeName');
+export const NODE_NAME = Symbol.for('@fantoche-dev/2d/nodeName');
 
 /**
  * @internal

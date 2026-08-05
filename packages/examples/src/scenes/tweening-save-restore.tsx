@@ -1,5 +1,5 @@
-import {Circle, makeScene2D} from '@fantoche/2d';
-import {all, createRef} from '@fantoche/core';
+import {Circle, makeScene2D} from '@fantoche-dev/2d';
+import {all, createRef} from '@fantoche-dev/core';
 
 export default makeScene2D('tweening-save-restore', function* (view) {
   const circle = createRef<Circle>();

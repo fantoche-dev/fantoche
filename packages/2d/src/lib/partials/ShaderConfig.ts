@@ -1,5 +1,5 @@
-import type {SignalValue, WebGLConvertible} from '@fantoche/core';
-import {experimentalLog, useLogger, useScene} from '@fantoche/core';
+import type {SignalValue, WebGLConvertible} from '@fantoche-dev/core';
+import {experimentalLog, useLogger, useScene} from '@fantoche-dev/core';
 import type {Node} from '../components';
 
 /**
@@ -16,7 +16,7 @@ export interface ShaderConfig {
    * #version 300 es
    * precision highp float;
    *
-   * #include "@fantoche/core/shaders/common.glsl"
+   * #include "@fantoche-dev/core/shaders/common.glsl"
    *
    * void main() {
    *     out_color = texture(core_source_tx, source_uv);

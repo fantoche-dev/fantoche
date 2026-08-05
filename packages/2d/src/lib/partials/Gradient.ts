@@ -4,8 +4,8 @@ import type {
   SignalValue,
   SimpleSignal,
   Vector2Signal,
-} from '@fantoche/core';
-import {Color, unwrap} from '@fantoche/core';
+} from '@fantoche-dev/core';
+import {Color, unwrap} from '@fantoche-dev/core';
 import {computed} from '../decorators/computed';
 import {initial, initializeSignals, signal} from '../decorators/signal';
 import {vector2Signal} from '../decorators/vector2Signal';

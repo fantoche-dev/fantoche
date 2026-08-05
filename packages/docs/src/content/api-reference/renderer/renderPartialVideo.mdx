@@ -17,12 +17,12 @@ full audio and video to obtain your final mp4 file.
 
 To do this, you can use the `concatenateMedia()`
 ([docs](/api-reference/revideo-ffmpeg/concatenate-media)) and `mergeAudioWithVideo()`
-([docs](/api-reference/revideo-ffmpeg/merge-audio-with-video)) functions from `@fantoche/ffmpeg`.
+([docs](/api-reference/revideo-ffmpeg/merge-audio-with-video)) functions from `@fantoche-dev/ffmpeg`.
 
 ## Example Usage
 
 ```tsx
-import {renderPartialVideo} from '@fantoche/renderer';
+import {renderPartialVideo} from '@fantoche-dev/renderer';
 
 const {audioFile, videoFile} = renderPartialVideo({
   projectFile: './src/project.ts',
@@ -123,7 +123,7 @@ your project by default.
 ##### exporter?
 
 The exporter to use. Defaults to the WebAssembly exporter
-(`{name: '@fantoche/core/wasm'}`).
+(`{name: '@fantoche-dev/core/wasm'}`).
 
 #### logProgress?
 

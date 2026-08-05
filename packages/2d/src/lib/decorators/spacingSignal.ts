@@ -1,4 +1,4 @@
-import {Spacing} from '@fantoche/core';
+import {Spacing} from '@fantoche-dev/core';
 import {compound} from './compound';
 import {wrapper} from './signal';
 

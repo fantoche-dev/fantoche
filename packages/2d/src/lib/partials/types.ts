@@ -1,4 +1,4 @@
-import type {Color, PossibleColor} from '@fantoche/core';
+import type {Color, PossibleColor} from '@fantoche-dev/core';
 import type {Gradient} from './Gradient';
 import type {Pattern} from './Pattern';
 

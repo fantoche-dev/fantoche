@@ -1,5 +1,5 @@
-import type {SerializedVector2} from '@fantoche/core';
-import {clampRemap, Color, map, unwrap, Vector2} from '@fantoche/core';
+import type {SerializedVector2} from '@fantoche-dev/core';
+import {clampRemap, Color, map, unwrap, Vector2} from '@fantoche-dev/core';
 import type {Code} from '../components';
 import type {CodeFragment} from './CodeFragment';
 import {parseCodeFragment} from './CodeFragment';

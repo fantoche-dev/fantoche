@@ -32,7 +32,7 @@ export interface PluginConfig {
   output: string;
 }
 
-export const PLUGIN_OPTIONS = Symbol.for('@fantoche/vite-plugin/PLUGIN_OPTIONS');
+export const PLUGIN_OPTIONS = Symbol.for('@fantoche-dev/vite-plugin/PLUGIN_OPTIONS');
 
 export interface PluginOptions {
   /**

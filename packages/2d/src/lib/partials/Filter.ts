@@ -1,5 +1,5 @@
-import type {SignalValue, SimpleSignal} from '@fantoche/core';
-import {createSignal, map, transformScalar} from '@fantoche/core';
+import type {SignalValue, SimpleSignal} from '@fantoche-dev/core';
+import {createSignal, map, transformScalar} from '@fantoche-dev/core';
 
 /**
  * All possible CSS filter names.

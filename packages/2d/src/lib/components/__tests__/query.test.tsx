@@ -1,4 +1,4 @@
-import {createRef, createRefArray} from '@fantoche/core';
+import {createRef, createRefArray} from '@fantoche-dev/core';
 import {describe, expect, it} from 'vitest';
 import {useScene2D} from '../../scenes';
 import {is} from '../../utils';

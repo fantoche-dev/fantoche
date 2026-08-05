@@ -3,14 +3,14 @@ import type {
   SignalValue,
   ThreadGenerator,
   TimingFunction,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {
   createSignal,
   deepLerp,
   DependencyContext,
   SignalContext,
   unwrap,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {addInitializer, getPropertyMetaOrCreate} from '../decorators';
 import {defaultDiffer} from './CodeDiffer';
 import {insert, replace} from './CodeFragment';

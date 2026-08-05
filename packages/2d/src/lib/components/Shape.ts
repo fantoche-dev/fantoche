@@ -1,11 +1,11 @@
-import type {BBox, SignalValue, SimpleSignal} from '@fantoche/core';
+import type {BBox, SignalValue, SimpleSignal} from '@fantoche-dev/core';
 import {
   createSignal,
   easeOutExpo,
   linear,
   map,
   threadable,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {computed, initial, nodeName, signal} from '../decorators';
 import type {CanvasStyleSignal} from '../decorators/canvasStyleSignal';
 import {canvasStyleSignal} from '../decorators/canvasStyleSignal';

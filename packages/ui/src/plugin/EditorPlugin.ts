@@ -1,4 +1,4 @@
-import type {Plugin} from '@fantoche/core';
+import type {Plugin} from '@fantoche-dev/core';
 import type {FunctionComponent} from 'preact';
 
 /**

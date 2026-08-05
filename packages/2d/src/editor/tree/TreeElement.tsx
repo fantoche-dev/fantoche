@@ -1,5 +1,5 @@
 import type {Signal} from '@preact/signals';
-import {Collapse, Toggle} from '@fantoche/ui';
+import {Collapse, Toggle} from '@fantoche-dev/ui';
 import {clsx} from 'clsx';
 import type {ComponentChildren, HTMLAttributes, Ref} from 'preact';
 import styles from './index.module.scss';

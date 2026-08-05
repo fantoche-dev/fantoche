@@ -1,4 +1,4 @@
-import type {FullSceneDescription, ThreadGeneratorFactory} from '@fantoche/core';
+import type {FullSceneDescription, ThreadGeneratorFactory} from '@fantoche-dev/core';
 import {
   PlaybackManager,
   PlaybackStatus,
@@ -7,7 +7,7 @@ import {
   endScene,
   startPlayback,
   startScene,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {afterAll, beforeAll, beforeEach} from 'vitest';
 import {Scene2D, makeScene2D} from '../../scenes';
 import type {View2D} from '../View2D';

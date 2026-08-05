@@ -1,7 +1,7 @@
 {
-  "extends": "@fantoche/core/tsconfig.project.json",
+  "extends": "@fantoche-dev/core/tsconfig.project.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "@fantoche/2d/lib"
+    "jsxImportSource": "@fantoche-dev/2d/lib"
   }
 }

@@ -1,5 +1,5 @@
-import type {SignalExtensions} from '@fantoche/core';
-import {capitalize} from '@fantoche/core';
+import type {SignalExtensions} from '@fantoche-dev/core';
+import {capitalize} from '@fantoche-dev/core';
 import type {PropertyMetadata} from '../decorators';
 
 export function makeSignalExtensions<TSetterValue, TValue extends TSetterValue>(

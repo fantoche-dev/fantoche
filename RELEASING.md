@@ -1,7 +1,7 @@
 > ⚠️ **Superseded.** This documents upstream Revideo's release flow via the
 > `publish.yml` workflow, which was removed at P0. Fantoche's release
 > process will be defined at P1 (changesets). Kept for reference only.
-> Note for the P1 releaser: publishing `@fantoche/create` first requires
+> Note for the P1 releaser: publishing `@fantoche-dev/create` first requires
 > vendoring and rescoping the `packages/create/examples` submodule
 > templates — see docs/plans/2026-08-04-p0-fork-foundation.md (Task 6
 > review findings).
@@ -36,9 +36,9 @@ disposable, so cut as many as you need.
 [smoke test](#smoke-test):
 
 ```
-npm create @fantoche@canary -- --default
+npm create @fantoche-dev@canary -- --default
 cd my-revideo-project
-npx npm-check-updates '/@fantoche/' --target newest --install   # or hand-edit deps to @canary
+npx npm-check-updates '/@fantoche-dev/' --target newest --install   # or hand-edit deps to @canary
 ```
 
 Note the exact canary version from the workflow log (e.g. `0.11.1-alpha.1187`)
@@ -52,20 +52,20 @@ cannot push its version commit directly to `main`. Release from a dedicated
 branch instead and merge back via PR.
 
 1. **Examples submodule.** `packages/create/examples` is a git submodule
-   (`midrender/examples`) whose example `package.json`s pin exact `@fantoche/*`
-   versions. `@fantoche/create` ships this directory in its npm tarball
+   (`midrender/examples`) whose example `package.json`s pin exact `@fantoche-dev/*`
+   versions. `@fantoche-dev/create` ships this directory in its npm tarball
    (`files: ["index.js", "examples"]`), so scaffolded projects install whatever
    these files pin. `lerna` does **not** touch the submodule (separate repo), so
    bump it by hand or `npm create` installs the old versions.
 
    In `packages/create/examples`, branch off the previous release branch and
-   bump every pinned `@fantoche/*` dep to `X.Y.Z`:
+   bump every pinned `@fantoche-dev/*` dep to `X.Y.Z`:
 
    ```
    git checkout -b release-X.Y.Z origin/release-<prev>
-   # every "0.10.4" in these files is an @fantoche dep — safe to replace wholesale
+   # every "0.10.4" in these files is an @fantoche-dev dep — safe to replace wholesale
    perl -pi -e 's/"<prev>"/"X.Y.Z"/g' $(git ls-files '*package.json')
-   git commit -am "chore: bump @fantoche deps to X.Y.Z" && git push -u origin release-X.Y.Z
+   git commit -am "chore: bump @fantoche-dev deps to X.Y.Z" && git push -u origin release-X.Y.Z
    ```
 
    Note the resulting commit SHA — the superproject pointer is updated to it in
@@ -110,11 +110,11 @@ npm run render                     # → output/video.mp4 (non-empty, a few seco
 npm start                          # editor dev server boots
 ```
 
-- **Install** — `npm ls @fantoche/core` reports the expected version, no
+- **Install** — `npm ls @fantoche-dev/core` reports the expected version, no
   peer/resolution errors.
 - **Render** — `npm run render` exits 0 and writes a playable
   `output/video.mp4`. This is the headless path (Puppeteer + Vite + ffmpeg); a
   hang here means editor-only code leaked into the render bundle.
 - **Editor** — `npm start` serves the editor (`http://localhost:9000`, HTTP 200)
-  and the per-scene plugins resolve (`/@id/@fantoche/2d/editor` → HTTP 200). The
+  and the per-scene plugins resolve (`/@id/@fantoche-dev/2d/editor` → HTTP 200). The
   footer should show the version under test.

@@ -1,5 +1,5 @@
-import type {SignalValue} from '@fantoche/core';
-import {unwrap} from '@fantoche/core';
+import type {SignalValue} from '@fantoche-dev/core';
+import {unwrap} from '@fantoche-dev/core';
 import type {PossibleCodeFragment} from './CodeFragment';
 import {isCodeMetrics} from './CodeMetrics';
 

@@ -1,4 +1,4 @@
-import {Rect, Txt, makeScene2D} from '@fantoche/2d';
+import {Rect, Txt, makeScene2D} from '@fantoche-dev/2d';
 import {
   Color,
   all,
@@ -8,7 +8,7 @@ import {
   createSignal,
   easeInOutCubic,
   loop,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 
 const YELLOW = '#FFC66D';
 const RED = '#FF6470';

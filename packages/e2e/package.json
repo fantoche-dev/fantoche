@@ -1,5 +1,5 @@
 {
-  "name": "@fantoche/e2e",
+  "name": "@fantoche-dev/e2e",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,14 +8,14 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@fantoche/2d": "*",
-    "@fantoche/core": "*",
-    "@fantoche/ffmpeg": "*",
+    "@fantoche-dev/2d": "*",
+    "@fantoche-dev/core": "*",
+    "@fantoche-dev/ffmpeg": "*",
     "jest-image-snapshot": "^6.2.0",
     "puppeteer": "^25.3.0"
   },
   "devDependencies": {
-    "@fantoche/ui": "*",
-    "@fantoche/vite-plugin": "*"
+    "@fantoche-dev/ui": "*",
+    "@fantoche-dev/vite-plugin": "*"
   }
 }

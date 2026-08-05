@@ -10,7 +10,7 @@ export default [
       sourcemap: true,
       dir: './editor',
     },
-    external: [/^@fantoche/, /^@?preact/, './index.css'],
+    external: [/^@fantoche-dev/, /^@?preact/, './index.css'],
     plugins: [
       resolve(),
       postcss({

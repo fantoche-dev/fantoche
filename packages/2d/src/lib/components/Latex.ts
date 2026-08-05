@@ -1,5 +1,5 @@
-import type {SignalValue, SimpleSignal} from '@fantoche/core';
-import {DependencyContext, useLogger} from '@fantoche/core';
+import type {SignalValue, SimpleSignal} from '@fantoche-dev/core';
+import {DependencyContext, useLogger} from '@fantoche-dev/core';
 import type {LiteAdaptor} from 'mathjax-full/js/adaptors/liteAdaptor';
 import {liteAdaptor} from 'mathjax-full/js/adaptors/liteAdaptor';
 import type {MathDocument} from 'mathjax-full/js/core/MathDocument';
@@ -23,7 +23,7 @@ export interface LatexProps extends ImgProps {
  *
  * @preview
  * ```tsx editor
- * import {Latex, makeScene2D} from '@fantoche/2d';
+ * import {Latex, makeScene2D} from '@fantoche-dev/2d';
  *
  * export default makeScene2D('scene', function* (view) {
  *   view.add(

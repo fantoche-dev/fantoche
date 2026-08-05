@@ -1,11 +1,11 @@
-import {transformVectorAsPoint, Vector2} from '@fantoche/core';
-import type {PluginOverlayConfig} from '@fantoche/ui';
+import {transformVectorAsPoint, Vector2} from '@fantoche-dev/core';
+import type {PluginOverlayConfig} from '@fantoche-dev/ui';
 import {
   MouseButton,
   OverlayWrapper,
   useViewportContext,
   useViewportMatrix,
-} from '@fantoche/ui';
+} from '@fantoche-dev/ui';
 import type {ComponentChildren} from 'preact';
 import {usePluginState} from './Provider';
 

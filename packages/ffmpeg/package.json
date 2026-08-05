@@ -1,5 +1,5 @@
 {
-  "name": "@fantoche/ffmpeg",
+  "name": "@fantoche-dev/ffmpeg",
   "version": "0.11.0",
   "description": "Ffmpeg utilities for fantoche",
   "main": "dist/index.js",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@ffprobe-installer/ffprobe": "^2.0.0",
-    "@fantoche/core": "0.11.0",
+    "@fantoche-dev/core": "0.11.0",
     "fluent-ffmpeg": "^2.1.2",
     "uuid": "^14.0.1"
   },

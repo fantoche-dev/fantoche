@@ -7,14 +7,14 @@ import {
   Rect,
   Txt,
   makeScene2D,
-} from '@fantoche/2d';
+} from '@fantoche-dev/2d';
 import {
   all,
   createSignal,
   easeInOutBounce,
   linear,
   waitFor,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 
 export default makeScene2D('tweening-visualizer', function* (view) {
   // Signals

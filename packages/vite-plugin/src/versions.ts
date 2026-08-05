@@ -3,10 +3,10 @@ import path from 'path';
 
 export function getVersions() {
   return {
-    core: loadVersion('@fantoche/core'),
-    two: loadVersion('@fantoche/2d'),
-    ui: loadVersion('@fantoche/ui'),
-    vitePlugin: loadVersion('@fantoche/vite-plugin'),
+    core: loadVersion('@fantoche-dev/core'),
+    two: loadVersion('@fantoche-dev/2d'),
+    ui: loadVersion('@fantoche-dev/ui'),
+    vitePlugin: loadVersion('@fantoche-dev/vite-plugin'),
   };
 }
 

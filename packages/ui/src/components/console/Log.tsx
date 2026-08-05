@@ -1,7 +1,7 @@
 import styles from './Console.module.scss';
 
-import type {LogPayload} from '@fantoche/core';
-import {LogLevel} from '@fantoche/core';
+import type {LogPayload} from '@fantoche-dev/core';
+import {LogLevel} from '@fantoche-dev/core';
 import clsx from 'clsx';
 import {useEffect, useMemo, useState} from 'preact/hooks';
 import {useApplication} from '../../contexts';

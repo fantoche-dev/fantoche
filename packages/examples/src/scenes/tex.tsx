@@ -1,5 +1,5 @@
-import {Latex, makeScene2D} from '@fantoche/2d';
-import {createRef, waitFor} from '@fantoche/core';
+import {Latex, makeScene2D} from '@fantoche-dev/2d';
+import {createRef, waitFor} from '@fantoche-dev/core';
 
 export default makeScene2D('tex', function* (view) {
   const tex = createRef<Latex>();

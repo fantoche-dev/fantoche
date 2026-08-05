@@ -39,8 +39,8 @@ In Revideo, your code can be translated in a relatively straightforward way -
 you can read your scene code from top to bottom to understand what is happening:
 
 ```tsx editor
-import {Circle, makeScene2D} from '@fantoche/2d';
-import {createRef, waitFor} from '@fantoche/core';
+import {Circle, makeScene2D} from '@fantoche-dev/2d';
+import {createRef, waitFor} from '@fantoche-dev/core';
 
 export default makeScene2D('scene', function* (view) {
   const circleRef = createRef<Circle>();

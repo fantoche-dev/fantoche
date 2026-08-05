@@ -1,4 +1,4 @@
-import type {SignalValue, SimpleSignal} from '@fantoche/core';
+import type {SignalValue, SimpleSignal} from '@fantoche-dev/core';
 import {
   DependencyContext,
   PlaybackState,
@@ -6,7 +6,7 @@ import {
   isReactive,
   useLogger,
   useThread,
-} from '@fantoche/core';
+} from '@fantoche-dev/core';
 import {computed, initial, nodeName, signal} from '../decorators';
 import type {RectProps} from './Rect';
 import {Rect} from './Rect';

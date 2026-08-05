@@ -1,5 +1,5 @@
 {
-  "name": "@fantoche/player",
+  "name": "@fantoche-dev/player",
   "version": "0.11.0",
   "description": "A custom element for displaying animations made with fantoche",
   "main": "dist/main.js",
@@ -22,7 +22,7 @@
     "types"
   ],
   "devDependencies": {
-    "@fantoche/core": "0.11.0",
+    "@fantoche-dev/core": "0.11.0",
     "sass": "^1.58.0",
     "terser": "^5.16.1"
   }

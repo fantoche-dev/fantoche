@@ -1,8 +1,8 @@
 import type {
   FfmpegExporterOptions,
   RenderVideoUserProjectSettings,
-} from '@fantoche/core';
-import type {FfmpegSettings} from '@fantoche/ffmpeg';
+} from '@fantoche-dev/core';
+import type {FfmpegSettings} from '@fantoche-dev/ffmpeg';
 import {
   audioCodecs,
   concatenateMedia,
@@ -11,8 +11,8 @@ import {
   extensions,
   getVideoDuration,
   mergeAudioWithVideo,
-} from '@fantoche/ffmpeg';
-import motionCanvas from '@fantoche/vite-plugin';
+} from '@fantoche-dev/ffmpeg';
+import motionCanvas from '@fantoche-dev/vite-plugin';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
@@ -369,7 +369,7 @@ async function cleanup(
 const defaultSettings: RenderSettings = {
   projectSettings: {
     exporter: {
-      name: '@fantoche/core/wasm',
+      name: '@fantoche-dev/core/wasm',
     },
   },
 };

@@ -6,18 +6,18 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: '@fantoche/ui',
-        replacement: '@fantoche/ui/src/main.tsx',
+        find: '@fantoche-dev/ui',
+        replacement: '@fantoche-dev/ui/src/main.tsx',
       },
       {
-        find: '@fantoche/2d/editor',
-        replacement: '@fantoche/2d/src/editor',
+        find: '@fantoche-dev/2d/editor',
+        replacement: '@fantoche-dev/2d/src/editor',
       },
       {
-        find: /@fantoche\/2d(\/lib)?/,
-        replacement: '@fantoche/2d/src/lib',
+        find: /@fantoche-dev\/2d(\/lib)?/,
+        replacement: '@fantoche-dev/2d/src/lib',
       },
-      {find: '@fantoche/core', replacement: '@fantoche/core/src'},
+      {find: '@fantoche-dev/core', replacement: '@fantoche-dev/core/src'},
     ],
   },
   plugins: [

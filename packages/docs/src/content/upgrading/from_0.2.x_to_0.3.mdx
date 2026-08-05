@@ -9,8 +9,8 @@ On 0.2.x versions, your `vite.config.ts` might look like this:
 
 ```ts
 import {defineConfig} from 'vite';
-import motionCanvas from '@fantoche/vite-plugin';
-import ffmpeg from '@fantoche/ffmpeg';
+import motionCanvas from '@fantoche-dev/vite-plugin';
+import ffmpeg from '@fantoche-dev/ffmpeg';
 
 export default defineConfig({
   plugins: [motionCanvas(), ffmpeg()],
@@ -21,7 +21,7 @@ On 0.3.x versions, you can safely remove the `ffmpeg` plugin:
 
 ```ts
 import {defineConfig} from 'vite';
-import motionCanvas from '@fantoche/vite-plugin';
+import motionCanvas from '@fantoche-dev/vite-plugin';
 
 export default defineConfig({
   plugins: [motionCanvas()],

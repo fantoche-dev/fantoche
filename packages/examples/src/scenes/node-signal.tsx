@@ -1,5 +1,5 @@
-import {Circle, Line, Txt, makeScene2D} from '@fantoche/2d';
-import {Vector2, createSignal, waitFor} from '@fantoche/core';
+import {Circle, Line, Txt, makeScene2D} from '@fantoche-dev/2d';
+import {Vector2, createSignal, waitFor} from '@fantoche-dev/core';
 
 export default makeScene2D('node-signal', function* (view) {
   // highlight-start

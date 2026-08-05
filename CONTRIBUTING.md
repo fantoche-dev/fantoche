@@ -21,7 +21,7 @@ Node ≥ 22.12 required.
 npm ci
 npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
 npx puppeteer browsers install chrome
-npx lerna run build --ignore @fantoche/docs
+npx lerna run build --ignore @fantoche-dev/docs
 npx lerna run test          # unit tests
 npm run e2e:test            # golden-frame tests (linux is the reference env)
 npm run template:render     # end-to-end render smoke

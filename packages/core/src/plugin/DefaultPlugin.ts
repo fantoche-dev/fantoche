@@ -10,7 +10,7 @@ import {makePlugin} from './makePlugin';
  * @internal
  */
 export default makePlugin({
-  name: '@fantoche/core/default',
+  name: '@fantoche-dev/core/default',
   exporters() {
     return [WasmExporter, FFmpegExporterClient, ImageExporter];
   },

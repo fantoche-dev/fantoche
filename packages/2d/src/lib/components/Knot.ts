@@ -3,8 +3,8 @@ import type {
   Signal,
   SignalValue,
   Vector2Signal,
-} from '@fantoche/core';
-import {transformVectorAsPoint, Vector2} from '@fantoche/core';
+} from '@fantoche-dev/core';
+import {transformVectorAsPoint, Vector2} from '@fantoche-dev/core';
 import type {KnotInfo} from '../curves';
 import {
   cloneable,

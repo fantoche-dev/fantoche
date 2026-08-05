@@ -4,8 +4,8 @@ import type {
   SimpleSignal,
   ThreadGenerator,
   TimingFunction,
-} from '@fantoche/core';
-import {DEFAULT, all, capitalize, threadable} from '@fantoche/core';
+} from '@fantoche-dev/core';
+import {DEFAULT, all, capitalize, threadable} from '@fantoche-dev/core';
 import {computed, initial, nodeName, signal} from '../decorators';
 import {is} from '../utils';
 import type {Node} from './Node';

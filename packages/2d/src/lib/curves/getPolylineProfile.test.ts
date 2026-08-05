@@ -1,4 +1,4 @@
-import {Vector2} from '@fantoche/core';
+import {Vector2} from '@fantoche-dev/core';
 import {describe, expect, test} from 'vitest';
 import {getPolylineProfile} from './getPolylineProfile';
 

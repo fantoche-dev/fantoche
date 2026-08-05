@@ -1,4 +1,4 @@
-import {linear, waitFor} from '@fantoche/core';
+import {linear, waitFor} from '@fantoche-dev/core';
 import {describe, expect, it, vi} from 'vitest';
 import {Txt} from './Txt';
 import {TxtLeaf} from './TxtLeaf';
