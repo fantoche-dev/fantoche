@@ -22,7 +22,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "vitest run"
+    "test": "vitest run",
+    "schema:emit": "tsc && node scripts/emit-json-schema.mjs"
   },
   "files": [
     "dist",
