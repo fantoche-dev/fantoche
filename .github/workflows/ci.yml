@@ -1,0 +1,98 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+  workflow_dispatch: {}
+
+env:
+  HUSKY: 0
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm}
+      - run: npm ci
+      - run: npx eslint "**/*.ts?(x)"
+  prettier:
+    name: Code style
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm}
+      - run: npm ci
+      - run: npm run prettier
+  no-telemetry:
+    name: No telemetry guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          ! grep -rni "telemetry\|posthog" packages \
+            --include="*.ts" --include="*.tsx" --include="*.js" \
+            --include="*.mjs" --include="*.cjs" --include="*.json"
+  build-test:
+    name: Build & unit tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm}
+      - run: npm ci
+      - run: npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
+      - run: npx lerna run build --ignore @fantoche-dev/docs
+      - run: npx lerna run test
+  render-smoke:
+    name: Template renders to mp4
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm}
+      - run: npm ci
+      - run: npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
+      - run: npx puppeteer browsers install chrome
+      - run: npx lerna run build --ignore @fantoche-dev/docs
+      - run: npm run template:render
+      - name: Assert mp4 exists and is non-trivial
+        run: |
+          test -s packages/template/output/video.mp4
+          ls -la packages/template/output/video.mp4
+  e2e:
+    name: E2E golden frames
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm}
+      - run: npm ci
+      - run: npx puppeteer browsers install chrome
+      - run: npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
+      - run: npx lerna run build --ignore @fantoche-dev/docs
+      - run: npm run e2e:test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: image-diffs
+          path: packages/e2e/src/__image_snapshots__/__diff_output__
+  commitlint:
+    name: Commit names
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm}
+      - run: npm ci
+      - run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --verbose
