@@ -13,7 +13,7 @@ export default tseslint.config(
       '**/lib/**',
       '**/editor/**',
       'packages/template/**',
-      'packages/create/template-*/**',
+      'packages/create/templates/**',
       'packages/docs/**',
     ],
   },
