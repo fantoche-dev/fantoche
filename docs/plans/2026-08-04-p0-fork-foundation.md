@@ -26,6 +26,16 @@ If the `fantoche-dev` org does not exist yet when Task 1 runs, skip the
 `gh repo create`/push steps, report it, and complete them as soon as the org
 exists. Everything else is decided (see ADRs).
 
+> **Amendment (2026-08-05):** GitHub org `fantoche-dev` and the npm org were
+> created today (browser flow, Daniel + Claude). The npm name `fantoche` is
+> **not available** on the registry, so the npm org/scope is
+> **`fantoche-dev`/`@fantoche-dev`** (Daniel's call — matches the GitHub org).
+> The Task 6 rename was re-run as `@fantoche` → `@fantoche-dev` (commit
+> `e061ea15`; 291 files, git-grep-based file list excluding root `docs/` only,
+> lockfile kept and patched by `npm install`, `node_modules/@fantoche` purged
+> so stale imports fail loudly). Unscoped bin names (`fantoche`,
+> `create-fantoche`) unchanged. Project/repo name stays **fantoche**.
+
 ---
 
 ### Task 1: Full-history clone + GitHub repo
