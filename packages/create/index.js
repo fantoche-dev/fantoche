@@ -15,68 +15,6 @@ const templates = [
     recommended: true,
     startcommands: 'default',
   },
-  {
-    value: 'saas-template',
-    title: 'Fantoche with Next.js',
-    description: 'A minimal web app built with Fantoche and Next.js.',
-    recommended: true,
-    startcommands: 'readme',
-  },
-  {
-    value: 'avatar-with-background',
-    title: 'Avatar with Background',
-    description: 'Create an avatar with a custom background.',
-    startcommands: 'default',
-  },
-  {
-    value: 'github-stars-celebration',
-    title: 'GitHub Stars Celebration',
-    description: 'Animate a celebration of GitHub repository stars.',
-    startcommands: 'default',
-  },
-  {
-    value: 'marketing-templates',
-    title: 'Marketing Templates',
-    description: 'A collection of templates for marketing videos.',
-    startcommands: 'readme',
-  },
-  {
-    value: 'minimal-drag-drop',
-    title: 'Drag and Drop Example',
-    description:
-      'A minimal example of an editor with drag-and-drop editing functionality.',
-    startcommands: 'readme',
-  },
-  {
-    value: 'parallelized-aws-lambda',
-    title: 'Parallelized AWS Lambda',
-    description: 'Example of parallelized rendering using AWS Lambda.',
-    startcommands: 'readme',
-  },
-  {
-    value: 'rive-explanation-video',
-    title: 'Rive Explanation Video',
-    description: 'Create a code explanation video along with Rive animations.',
-    startcommands: 'default',
-  },
-  {
-    value: 'stitching-videos',
-    title: 'Stitching Videos',
-    description: 'Example of how to concatenate multiple videos together.',
-    startcommands: 'default',
-  },
-  {
-    value: 'three-js-example',
-    title: 'Three.js Example',
-    description: 'Integrate Three.js with Fantoche for 3D animations.',
-    startcommands: 'default',
-  },
-  {
-    value: 'youtube-shorts',
-    title: 'YouTube Shorts',
-    description: 'Template for creating YouTube Shorts videos.',
-    startcommands: 'default',
-  },
 ];
 
 async function run() {
@@ -164,7 +102,7 @@ async function run() {
   const templateDir = path.resolve(
     fileURLToPath(import.meta.url),
     '..',
-    `examples/${response.starter}`,
+    `templates/${response.starter}`,
   );
   copyDirectory(templateDir, response.path);
 
