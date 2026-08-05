@@ -7,6 +7,5 @@
   - https://cdn.jsdelivr.net/npm/@fontsource/roboto@5.2.8/files/roboto-latin-400-normal.woff2
   - https://cdn.jsdelivr.net/npm/@fontsource/roboto@5.2.8/files/roboto-latin-700-normal.woff2
 
-Bundled locally so the template render path works fully offline
-(offline-first principle — see docs/adr/0004 consequences and the P1 plan
-Task 3).
+Bundled locally so the template render path works fully offline (offline-first
+principle — see docs/adr/0004 consequences and the P1 plan Task 3).

@@ -53,11 +53,12 @@ otherwise mask the change you're verifying.
 ## Full release
 
 If `main` is protected (PR-only), lerna cannot push its version commit directly
-to `main` — release from a dedicated branch and merge back via PR. (Until
-branch protection is enabled, dispatching from `main` also works; prefer the
-branch flow anyway for the clean squash.)
+to `main` — release from a dedicated branch and merge back via PR. (Until branch
+protection is enabled, dispatching from `main` also works; prefer the branch
+flow anyway for the clean squash.)
 
 1. **Prep commit** — branch `release-X.Y.Z` off `main`, one commit:
+
    - `packages/cli/src/index.ts` → `const VERSION = 'X.Y.Z'`
    - `packages/create/templates/default/package.json` → bump the pinned
      `@fantoche-dev/*` deps to `X.Y.Z` (the scaffolder template pins exact
