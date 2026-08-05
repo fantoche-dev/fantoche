@@ -645,15 +645,17 @@ git status packages/e2e/src/__image_snapshots__
 # expect: new file mc-compat.png (locally generated — macOS)
 ```
 
-> **Amendment (2026-08-05):** Step 4's premise is wrong — jest-image-snapshot
-> does NOT write missing snapshots when it detects CI (it fails instead), so
-> "e2e writes the missing snapshot and passes" cannot happen. Mechanism used
-> instead: the harness renders every scene to
-> `packages/e2e/output/project/<scene>/000000.png` *before* comparing, so the
-> temporary step uploads that rendered-frames directory with `if: always()`;
-> the generation run's e2e job fails as expected (missing golden), the
-> Linux-rendered frame is committed as the golden, the temp step removed, and
-> the next run compares green.
+> **Amendment + outcome (2026-08-05):** executed with a sturdier mechanism
+> than Step 4's: instead of uploading `__image_snapshots__` (which relies on
+> jest-image-snapshot's write-on-missing behavior — under plain Jest that is
+> disabled on CI; under this vitest harness it happened to write and pass),
+> the temporary `if: always()` step uploaded the harness's *rendered frames*
+> (`packages/e2e/output/project`), which exist regardless of snapshot
+> semantics. The Linux `mc-compat/000000.png` was committed as the golden and
+> the temp step removed. Note: the scene animates, so the harness renders 32
+> frames for it; only frame 0 is compared. Also confirmed: with `if the
+> golden is missing` this harness silently regenerates and passes on CI —
+> one more reason goldens must always be committed.
 
 **Step 4: Regenerate the golden on Linux (CI is the reference environment)**
 
