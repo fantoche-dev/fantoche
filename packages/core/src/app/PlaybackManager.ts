@@ -1,5 +1,6 @@
 import {ValueDispatcher} from '../events';
 import type {Scene, SceneDescriptionReload, Slide} from '../scenes';
+import {isSeekable} from '../scenes';
 
 export enum PlaybackState {
   Playing,
@@ -98,6 +99,22 @@ export class PlaybackManager {
         this.frame = this.currentScene.firstFrame;
         await this.currentScene.reset();
       }
+    }
+
+    // O(1) fast path for scenes with direct time addressing. Skipped
+    // mid-transition (previousScene set) so transition frames still step.
+    if (
+      this.previousScene === null &&
+      isSeekable(this.currentScene) &&
+      this.currentScene.isCached() &&
+      frame >= this.currentScene.firstFrame &&
+      frame <= this.currentScene.lastFrame
+    ) {
+      // Assign the frame BEFORE seeking: PlaybackStatus.time reads it.
+      this.frame = frame;
+      await this.currentScene.seekToFrame(frame);
+      this.finished = this.currentScene.isFinished();
+      return this.finished;
     }
 
     this.finished = false;

@@ -11,6 +11,7 @@ export * from './LifecycleEvents';
 export * from './Random';
 export * from './Scene';
 export * from './SceneState';
+export * from './Seekable';
 export * from './Shaders';
 export * from './Slides';
 export * from './Threadable';
