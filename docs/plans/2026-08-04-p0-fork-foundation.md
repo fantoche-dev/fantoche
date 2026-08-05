@@ -556,6 +556,21 @@ gh run watch --exit-status
 
 Expected: all jobs green. Known risk: macOS runner and ffmpeg installers — if `@ffmpeg-installer` fails on macos-latest (arm64), add a step `brew install ffmpeg` and set `FFMPEG_PATH`/`FFPROBE_PATH` env instead; document whichever was needed.
 
+> **Task 7 outcome (2026-08-05):** run 2 fully green (Linux+macOS build/test,
+> render smoke, e2e goldens, no-telemetry, lint, prettier). The anticipated
+> ffmpeg/macOS risk did not materialize. Two unanticipated failures on run 1:
+> 1. **Prettier:** the scope renames changed the alphabetical position of our
+>    imports relative to others, so prettier-plugin-organize-imports demanded
+>    reordering in ~20 source files (upstream was green because `@revideo`
+>    sorted differently); renamed string literals also crossed print width.
+>    Fixed with `prettier --write`; root `docs/` added to `.prettierignore`
+>    (historical record stays byte-stable).
+> 2. **Render smoke:** ubuntu-24.04 runners restrict unprivileged user
+>    namespaces via AppArmor → Chrome fails to launch inside `renderVideo()`
+>    (e2e was unaffected only because its harness passes `--no-sandbox`).
+>    Fixed with the documented workaround, a CI-only step:
+>    `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0`.
+
 ---
 
 ### Task 8: Compat golden scene (Motion Canvas-heritage generator features)
@@ -629,6 +644,16 @@ npm run e2e:test
 git status packages/e2e/src/__image_snapshots__
 # expect: new file mc-compat.png (locally generated — macOS)
 ```
+
+> **Amendment (2026-08-05):** Step 4's premise is wrong — jest-image-snapshot
+> does NOT write missing snapshots when it detects CI (it fails instead), so
+> "e2e writes the missing snapshot and passes" cannot happen. Mechanism used
+> instead: the harness renders every scene to
+> `packages/e2e/output/project/<scene>/000000.png` *before* comparing, so the
+> temporary step uploads that rendered-frames directory with `if: always()`;
+> the generation run's e2e job fails as expected (missing golden), the
+> Linux-rendered frame is committed as the golden, the temp step removed, and
+> the next run compares green.
 
 **Step 4: Regenerate the golden on Linux (CI is the reference environment)**
 

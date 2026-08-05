@@ -1,11 +1,12 @@
 import {Color, makeProject, Vector2} from '@fantoche-dev/core';
 
 import circle from './scenes/circle';
+import mcCompat from './scenes/mc-compat';
 import rect from './scenes/rect';
 
 export default makeProject({
   name: 'project',
-  scenes: [circle, rect],
+  scenes: [circle, rect, mcCompat],
   settings: {
     shared: {
       background: new Color('#FFFFFF'),
