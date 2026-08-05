@@ -1,0 +1,39 @@
+{
+  "name": "@fantoche-dev/document",
+  "version": "0.11.0",
+  "description": "Versioned document format, compiler and evaluator for fantoche",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "fantoche",
+  "homepage": "https://github.com/fantoche-dev/fantoche",
+  "bugs": "https://github.com/fantoche-dev/fantoche/issues",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fantoche-dev/fantoche.git",
+    "directory": "packages/document"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "files": [
+    "dist",
+    "schema"
+  ],
+  "dependencies": {
+    "@fantoche-dev/core": "0.11.0",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.10"
+  }
+}
