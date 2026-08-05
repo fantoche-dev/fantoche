@@ -900,6 +900,19 @@ Expected: pass (3 snapshots: circle, rect, mc-compat).
 
 Append a dated "P0 gate passed" entry with the fresh-clone commit hash to `docs/plans/2026-08-04-p0-fork-foundation.md` (this file), commit, push.
 
+> **✅ P0 GATE PASSED — 2026-08-05, fresh clone @ `b0d0354886`.**
+> Clean clone of `fantoche-dev/fantoche` → `npm ci` → build (9 packages) →
+> unit tests → `GATE-RENDER-OK` (template mp4) → `GATE-GREP-OK` (0 telemetry
+> refs; 0 `@revideo` and 0 stray non-dev `@fantoche` outside the historical
+> `docs/`) → e2e passes on macOS against the 3 Linux goldens (circle, rect,
+> mc-compat) — the 20px pixel threshold absorbed cross-platform AA variance
+> as designed. CI at the same commit: all jobs green on Linux + macOS
+> (run 31047808787). Scope-check note: the original Step 4 expectation
+> "`grep @revideo` = 0 repo-wide" predates the Task 6 lesson that root
+> `docs/` deliberately preserves historical `@revideo` references; the gate
+> therefore excludes `docs/` and additionally proves 0 stray `@fantoche`
+> (pre-`-dev`) references.
+
 ---
 
 ### Task 12: Manual follow-ups for Daniel (not executable by the engineer)
