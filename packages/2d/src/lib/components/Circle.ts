@@ -1,4 +1,8 @@
-import type {SerializedVector2, SignalValue, SimpleSignal} from '@fantoche-dev/core';
+import type {
+  SerializedVector2,
+  SignalValue,
+  SimpleSignal,
+} from '@fantoche-dev/core';
 import {BBox, DEG2RAD} from '@fantoche-dev/core';
 import type {CurveProfile} from '../curves';
 import {getCircleProfile} from '../curves';

@@ -13,3 +13,6 @@ CHANGELOG.md
 
 # The docs app is a self-contained Next.js project with its own prettier config
 /packages/docs
+
+# Historical design/research record — kept byte-stable, never reformatted
+/docs

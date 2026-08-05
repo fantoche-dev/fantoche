@@ -1,6 +1,6 @@
-import {useComputed, useSignal, useSignalEffect} from '@preact/signals';
 import type {Node} from '@fantoche-dev/2d';
 import {NODE_NAME} from '@fantoche-dev/2d';
+import {useComputed, useSignal, useSignalEffect} from '@preact/signals';
 import {useRef} from 'preact/hooks';
 import {usePluginState} from '../Provider';
 import {IconMap} from '../icons/IconMap';

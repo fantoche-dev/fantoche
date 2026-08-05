@@ -1,4 +1,8 @@
-import type {SerializedVector2, SignalValue, SimpleSignal} from '@fantoche-dev/core';
+import type {
+  SerializedVector2,
+  SignalValue,
+  SimpleSignal,
+} from '@fantoche-dev/core';
 import {BBox, DependencyContext, PlaybackState} from '@fantoche-dev/core';
 import Hls from 'hls.js';
 import {computed, initial, nodeName, signal} from '../decorators';

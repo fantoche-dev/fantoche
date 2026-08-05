@@ -1,4 +1,3 @@
-import {useComputed} from '@preact/signals';
 import type {PluginInspectorConfig} from '@fantoche-dev/ui';
 import {
   AutoField,
@@ -11,6 +10,7 @@ import {
   findAndOpenFirstUserFile,
   useApplication,
 } from '@fantoche-dev/ui';
+import {useComputed} from '@preact/signals';
 import {NodeInspectorKey, usePluginState} from './Provider';
 
 function Component() {

@@ -1,6 +1,6 @@
+import type {Player, Project, Renderer} from '@fantoche-dev/core';
 import type {Signal} from '@preact/signals';
 import {useSignal} from '@preact/signals';
-import type {Player, Project, Renderer} from '@fantoche-dev/core';
 import type {ComponentChildren} from 'preact';
 import {createContext} from 'preact';
 import {useContext, useRef} from 'preact/hooks';

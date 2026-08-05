@@ -1,10 +1,9 @@
 > ⚠️ **Superseded.** This documents upstream Revideo's release flow via the
-> `publish.yml` workflow, which was removed at P0. Fantoche's release
-> process will be defined at P1 (changesets). Kept for reference only.
-> Note for the P1 releaser: publishing `@fantoche-dev/create` first requires
-> vendoring and rescoping the `packages/create/examples` submodule
-> templates — see docs/plans/2026-08-04-p0-fork-foundation.md (Task 6
-> review findings).
+> `publish.yml` workflow, which was removed at P0. Fantoche's release process
+> will be defined at P1 (changesets). Kept for reference only. Note for the P1
+> releaser: publishing `@fantoche-dev/create` first requires vendoring and
+> rescoping the `packages/create/examples` submodule templates — see
+> docs/plans/2026-08-04-p0-fork-foundation.md (Task 6 review findings).
 
 # Releasing
 
@@ -52,11 +51,12 @@ cannot push its version commit directly to `main`. Release from a dedicated
 branch instead and merge back via PR.
 
 1. **Examples submodule.** `packages/create/examples` is a git submodule
-   (`midrender/examples`) whose example `package.json`s pin exact `@fantoche-dev/*`
-   versions. `@fantoche-dev/create` ships this directory in its npm tarball
-   (`files: ["index.js", "examples"]`), so scaffolded projects install whatever
-   these files pin. `lerna` does **not** touch the submodule (separate repo), so
-   bump it by hand or `npm create` installs the old versions.
+   (`midrender/examples`) whose example `package.json`s pin exact
+   `@fantoche-dev/*` versions. `@fantoche-dev/create` ships this directory in
+   its npm tarball (`files: ["index.js", "examples"]`), so scaffolded projects
+   install whatever these files pin. `lerna` does **not** touch the submodule
+   (separate repo), so bump it by hand or `npm create` installs the old
+   versions.
 
    In `packages/create/examples`, branch off the previous release branch and
    bump every pinned `@fantoche-dev/*` dep to `X.Y.Z`:
@@ -116,5 +116,5 @@ npm start                          # editor dev server boots
   `output/video.mp4`. This is the headless path (Puppeteer + Vite + ffmpeg); a
   hang here means editor-only code leaked into the render bundle.
 - **Editor** — `npm start` serves the editor (`http://localhost:9000`, HTTP 200)
-  and the per-scene plugins resolve (`/@id/@fantoche-dev/2d/editor` → HTTP 200). The
-  footer should show the version under test.
+  and the per-scene plugins resolve (`/@id/@fantoche-dev/2d/editor` → HTTP 200).
+  The footer should show the version under test.

@@ -1,4 +1,8 @@
-import type {PossibleVector2, SignalValue, Vector2Signal} from '@fantoche-dev/core';
+import type {
+  PossibleVector2,
+  SignalValue,
+  Vector2Signal,
+} from '@fantoche-dev/core';
 import {CubicBezierSegment} from '../curves';
 import type {PolynomialSegment} from '../curves/PolynomialSegment';
 import {computed, vector2Signal} from '../decorators';

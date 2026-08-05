@@ -1,8 +1,8 @@
-import type {ReadonlySignal, Signal} from '@preact/signals';
-import {computed, signal, useSignalEffect} from '@preact/signals';
 import type {Scene2D} from '@fantoche-dev/2d';
 import {SceneRenderEvent} from '@fantoche-dev/core';
 import {useApplication, useCurrentScene} from '@fantoche-dev/ui';
+import type {ReadonlySignal, Signal} from '@preact/signals';
+import {computed, signal, useSignalEffect} from '@preact/signals';
 import type {ComponentChildren} from 'preact';
 import {createContext} from 'preact';
 import {useContext, useMemo} from 'preact/hooks';

@@ -3,7 +3,12 @@ import type {
   SignalValue,
   TimingFunction,
 } from '@fantoche-dev/core';
-import {capitalize, deepLerp, SignalContext, useLogger} from '@fantoche-dev/core';
+import {
+  capitalize,
+  deepLerp,
+  SignalContext,
+  useLogger,
+} from '@fantoche-dev/core';
 import {makeSignalExtensions} from '../utils/makeSignalExtensions';
 import {addInitializer, initialize} from './initializers';
 

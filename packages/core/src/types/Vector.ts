@@ -32,7 +32,9 @@ export type SimpleVector2Signal<T> = Signal<PossibleVector2, Vector2, T>;
  * Represents a two-dimensional vector.
  */
 export class Vector2 implements Type, WebGLConvertible {
-  public static readonly symbol = Symbol.for('@fantoche-dev/core/types/Vector2');
+  public static readonly symbol = Symbol.for(
+    '@fantoche-dev/core/types/Vector2',
+  );
 
   public static readonly zero = new Vector2();
   public static readonly one = new Vector2(1, 1);

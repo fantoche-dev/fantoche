@@ -23,7 +23,8 @@ export function getParamDefaultsAndCheckValidity(settings: RenderSettings): {
 
   // Image sequence exporter is not supported in renderVideo or renderPartialVideo
   if (
-    settings.projectSettings?.exporter?.name === '@fantoche-dev/core/image-sequence'
+    settings.projectSettings?.exporter?.name ===
+    '@fantoche-dev/core/image-sequence'
   ) {
     throw Error(
       'You cannot use the image sequence exporter with renderVideo or renderPartialVideo. Please use the editor to export images',

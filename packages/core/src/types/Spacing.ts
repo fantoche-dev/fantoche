@@ -27,7 +27,9 @@ export type SpacingSignal<T> = CompoundSignal<
 >;
 
 export class Spacing implements Type, WebGLConvertible {
-  public static readonly symbol = Symbol.for('@fantoche-dev/core/types/Spacing');
+  public static readonly symbol = Symbol.for(
+    '@fantoche-dev/core/types/Spacing',
+  );
 
   public top = 0;
   public right = 0;

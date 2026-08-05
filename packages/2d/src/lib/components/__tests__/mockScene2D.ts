@@ -1,4 +1,7 @@
-import type {FullSceneDescription, ThreadGeneratorFactory} from '@fantoche-dev/core';
+import type {
+  FullSceneDescription,
+  ThreadGeneratorFactory,
+} from '@fantoche-dev/core';
 import {
   PlaybackManager,
   PlaybackStatus,

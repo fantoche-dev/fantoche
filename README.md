@@ -1,4 +1,4 @@
-# Fantoche *(working title)*
+# Fantoche _(working title)_
 
 **Anyone — or any agent — can make a vector character explain something on
 video.** Open source (MIT), open document format, local-first, video-first.
@@ -7,14 +7,14 @@ video.** Open source (MIT), open document format, local-first, video-first.
 > [Revideo](https://github.com/midrender/revideo) (itself an MIT fork of
 > [Motion Canvas](https://github.com/motion-canvas/motion-canvas)). At this
 > stage it is Revideo with telemetry removed and a new identity; the product
-> layers (declarative document, characters, narration timeline, editor) land
-> in later phases — see [docs/05-roadmap.md](docs/05-roadmap.md).
+> layers (declarative document, characters, narration timeline, editor) land in
+> later phases — see [docs/05-roadmap.md](docs/05-roadmap.md).
 
 ## Why this exists
 
 The design rationale, verified research, and founding decisions live in
-[docs/](docs/): research (`01`), vision (`02`), architecture (`03`),
-roadmap (`05`), and ADRs (`docs/adr/`).
+[docs/](docs/): research (`01`), vision (`02`), architecture (`03`), roadmap
+(`05`), and ADRs (`docs/adr/`).
 
 ## Development
 

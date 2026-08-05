@@ -1,4 +1,8 @@
-import {transformVectorAsPoint, type BBox, type Vector2} from '@fantoche-dev/core';
+import {
+  transformVectorAsPoint,
+  type BBox,
+  type Vector2,
+} from '@fantoche-dev/core';
 import {moveTo} from '../utils';
 import type {CurvePoint} from './CurvePoint';
 import type {Polynomial2D} from './Polynomial2D';

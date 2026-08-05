@@ -1,5 +1,12 @@
 import type {NodeProps} from '@fantoche-dev/2d';
-import {Circle, Node, Rect, colorSignal, initial, signal} from '@fantoche-dev/2d';
+import {
+  Circle,
+  Node,
+  Rect,
+  colorSignal,
+  initial,
+  signal,
+} from '@fantoche-dev/2d';
 import type {
   ColorSignal,
   PossibleColor,

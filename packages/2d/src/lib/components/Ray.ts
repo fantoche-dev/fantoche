@@ -1,4 +1,8 @@
-import type {PossibleVector2, SignalValue, Vector2Signal} from '@fantoche-dev/core';
+import type {
+  PossibleVector2,
+  SignalValue,
+  Vector2Signal,
+} from '@fantoche-dev/core';
 import {BBox, transformVectorAsPoint} from '@fantoche-dev/core';
 import type {CurveProfile} from '../curves';
 import {LineSegment} from '../curves';
