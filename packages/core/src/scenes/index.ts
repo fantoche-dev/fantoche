@@ -4,6 +4,7 @@
  * @packageDocumentation
  */
 
+export * from './AbstractScene';
 export * from './GeneratorScene';
 export * from './Inspectable';
 export * from './LifecycleEvents';
