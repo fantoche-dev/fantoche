@@ -18,6 +18,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./evaluator": {
+      "types": "./dist/evaluator.d.ts",
+      "default": "./dist/evaluator.js"
     }
   },
   "scripts": {

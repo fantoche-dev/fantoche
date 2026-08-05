@@ -58,7 +58,7 @@ export function buildNarrationIndex(
 
 export interface ResolvedTime {
   seconds: number;
-  warning?: string;
+  warnings: string[];
 }
 
 export function resolveTimeRef(
@@ -66,7 +66,7 @@ export function resolveTimeRef(
   index: NarrationIndex,
 ): ResolvedTime {
   if (typeof ref === 'number') {
-    return {seconds: ref};
+    return {seconds: ref, warnings: []};
   }
   const anchor = parseAnchor(ref);
   if (anchor === null) {
@@ -80,7 +80,7 @@ export function resolveTimeRef(
   }
 
   let base: number;
-  let warning: string | undefined;
+  const warnings: string[] = [];
   if (anchor.kind === 'start') {
     base = segment.start;
   } else if (anchor.kind === 'end') {
@@ -100,11 +100,19 @@ export function resolveTimeRef(
     }
     base = starts[0];
     if (starts.length > 1) {
-      warning =
+      warnings.push(
         `"${ref}" is ambiguous — "${anchor.word}" occurs ${starts.length} ` +
-        `times in "${anchor.segment}"; using the first occurrence`;
+          `times in "${anchor.segment}"; using the first occurrence`,
+      );
     }
   }
+  if (anchor.kind === 'word' && anchor.offset !== 0) {
+    warnings.push(
+      `"${ref}": trailing ${anchor.offset > 0 ? '+' : ''}${anchor.offset} was ` +
+        `parsed as a seconds offset on word "${anchor.word}" — if the word ` +
+        `itself ends in +/-<digits>, word anchors cannot express it`,
+    );
+  }
 
-  return {seconds: Math.max(0, base + anchor.offset), warning};
+  return {seconds: Math.max(0, base + anchor.offset), warnings};
 }

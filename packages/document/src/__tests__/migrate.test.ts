@@ -2,6 +2,7 @@ import {describe, expect, test} from 'vitest';
 import {DOCUMENT_FORMAT_VERSION} from '../index.js';
 import {MigrationError, migrateDocument} from '../migrate.js';
 import {validateDocument} from '../validate.js';
+import {fullDocument} from './fixtures.js';
 
 const current = {
   version: DOCUMENT_FORMAT_VERSION,
@@ -32,9 +33,14 @@ describe('migrateDocument', () => {
   });
 
   test('migrated output round-trips through validate + JSON serialization', () => {
-    const {doc} = migrateDocument(current);
-    const reparsed = JSON.parse(JSON.stringify(doc));
-    const result = validateDocument(reparsed);
-    expect(result.ok).toBe(true);
+    for (const fixture of [current, fullDocument]) {
+      const {doc} = migrateDocument(fixture);
+      const reparsed = JSON.parse(JSON.stringify(doc));
+      const result = validateDocument(reparsed);
+      expect(result.ok).toBe(true);
+      if (result.ok) {
+        expect(JSON.parse(JSON.stringify(result.doc))).toEqual(reparsed);
+      }
+    }
   });
 });

@@ -1,11 +1,12 @@
 /**
- * The versioned document format, compiler and evaluator.
+ * The versioned document format and compiler.
  *
- * Pure and DOM-free: everything exported here runs in node and the browser.
- * The scene runtime (DocumentScene) lives under the `./scene` subpath export.
+ * Pure, DOM-free and node-safe: nothing here imports `@fantoche-dev/core`
+ * (whose built lib is not plain-node-ESM-resolvable). The evaluator lives
+ * under the `./evaluator` subpath; the scene runtime under `./scene`.
  */
 
-export const DOCUMENT_FORMAT_VERSION = '0.1';
+export {DOCUMENT_FORMAT_VERSION} from './version.js';
 
 export {
   applyInsert,
@@ -27,8 +28,6 @@ export {
 export type {CompileResult} from './compiler/compile.js';
 export {DEFAULT_EASING, EASING_NAMES} from './easings.js';
 export type {EasingName} from './easings.js';
-export {EASINGS, evaluate, lerpValue} from './evaluator.js';
-export type {ActiveBlock, CodeFrameState, FrameState} from './evaluator.js';
 export type {
   BlockIR,
   CodeOp,

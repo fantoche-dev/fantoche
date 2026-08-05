@@ -73,7 +73,8 @@ flow anyway for the clean squash.)
 
    Runs `lerna publish --force-publish --exact X.Y.Z`: versions all packages,
    commits `ci(release): X.Y.Z`, tags `vX.Y.Z`, pushes to the release branch,
-   and publishes to the `latest` dist-tag with provenance.
+   and publishes to the `latest` dist-tag (npm attaches provenance automatically
+   when publishing via a trusted publisher).
 
 3. **Merge** — squash-merge `release-X.Y.Z` → `main`. The squash folds the prep
    and `ci(release)` commits into one; `vX.Y.Z` still points at the published

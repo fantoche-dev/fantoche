@@ -40,6 +40,21 @@ jobs:
       - run: git config --global user.name "github-actions[bot]"
       - run: npm ci
       - run: npx lerna run build --ignore @fantoche-dev/docs
+      - run: npx lerna run test
+      - name: Guard scaffolder template pins against lerna version drift
+        if: ${{ inputs.releaseType == 'release' }}
+        run: |
+          node -e '
+            const lerna = require("./lerna.json").version;
+            const tpl = require("./packages/create/templates/default/package.json");
+            const pins = {...tpl.dependencies, ...tpl.devDependencies};
+            const stale = Object.entries(pins).filter(([name, v]) =>
+              name.startsWith("@fantoche-dev/") && v !== "${{ inputs.version }}");
+            if (stale.length) {
+              console.error("Template pins not bumped to ${{ inputs.version }}:", stale);
+              process.exit(1);
+            }
+          '
       - if: ${{ inputs.releaseType == 'release' }}
         run: npx lerna publish --yes --force-publish --exact ${{ inputs.version }}
       - if: ${{ inputs.releaseType == 'canary' }}

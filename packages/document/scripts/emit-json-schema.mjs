@@ -3,8 +3,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {DOCUMENT_FORMAT_VERSION} from '../dist/index.js';
 import {documentJsonSchema} from '../dist/json-schema.js';
+import {DOCUMENT_FORMAT_VERSION} from '../dist/version.js';
 
 const outDir = path.resolve(
   fileURLToPath(import.meta.url),

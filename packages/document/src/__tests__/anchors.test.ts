@@ -61,7 +61,7 @@ describe('resolveTimeRef', () => {
   test('ambiguous word resolves to first occurrence with a warning', () => {
     const result = resolveTimeRef('repeat.word:busca', index);
     expect(result.seconds).toBe(5.0);
-    expect(result.warning).toMatch(/ambiguous/i);
+    expect(result.warnings[0]).toMatch(/ambiguous/i);
   });
 
   test('missing segment is an AnchorError naming the ref', () => {

@@ -7,8 +7,8 @@
  * `-<number>` is parsed as an offset; no escaping mechanism yet.
  */
 
-const ANCHOR_RE =
-  /^([A-Za-z_][A-Za-z0-9_-]*)\.(start|end|word:(.+?))([+-]\d+(?:\.\d+)?)?$/;
+export const ANCHOR_RE =
+  /^([A-Za-z_][A-Za-z0-9_-]*)\.(start|end|word:(\S+?))([+-]\d+(?:\.\d+)?)?$/;
 
 export interface ParsedAnchor {
   segment: string;
@@ -27,7 +27,7 @@ export function parseAnchor(ref: string): ParsedAnchor | null {
   return {
     segment,
     kind: selector === 'start' || selector === 'end' ? selector : 'word',
-    word: word === undefined ? undefined : word,
+    word,
     offset: offset === undefined ? 0 : Number(offset),
   };
 }

@@ -162,7 +162,12 @@ function copyDirectory(src, dest) {
   fs.mkdirSync(dest, {recursive: true});
   for (const file of fs.readdirSync(src)) {
     const srcFile = path.resolve(src, file);
-    const destFile = path.resolve(dest, file);
+    // npm packing mangles literal .gitignore files inside tarballs, so the
+    // template ships it as _gitignore and we rename on scaffold.
+    const destFile = path.resolve(
+      dest,
+      file === '_gitignore' ? '.gitignore' : file,
+    );
     copy(srcFile, destFile);
   }
 }

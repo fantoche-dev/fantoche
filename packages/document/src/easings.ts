@@ -4,11 +4,11 @@
  * timingFunctions.ts) — non-parametrized exports plus the pre-instantiated
  * back/bounce/elastic defaults. Springs are deliberately absent: they are
  * iterative, not closed-form, and cannot live behind a pure state(t).
+ * Core's `sin`/`cos` are also excluded: they are waveform remappers, not
+ * easings (they violate f(0)=0 / f(1)=1).
  */
 export const EASING_NAMES = [
   'linear',
-  'sin',
-  'cos',
   'easeInSine',
   'easeOutSine',
   'easeInOutSine',

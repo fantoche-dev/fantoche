@@ -1,6 +1,5 @@
 import {
   Color,
-  cos,
   easeInBack,
   easeInBounce,
   easeInCirc,
@@ -33,7 +32,6 @@ import {
   easeOutSine,
   linear,
   map,
-  sin,
   type TimingFunction,
 } from '@fantoche-dev/core';
 import type {EasingName} from './easings.js';
@@ -42,8 +40,6 @@ import type {PropValue} from './schema.js';
 
 export const EASINGS: Record<EasingName, TimingFunction> = {
   linear,
-  sin,
-  cos,
   easeInSine,
   easeOutSine,
   easeInOutSine,

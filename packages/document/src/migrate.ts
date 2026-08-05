@@ -1,4 +1,4 @@
-import {DOCUMENT_FORMAT_VERSION} from './index.js';
+import {DOCUMENT_FORMAT_VERSION} from './version.js';
 
 export class MigrationError extends Error {
   public constructor(message: string) {
@@ -29,6 +29,7 @@ export function migrateDocument(input: unknown): MigrateResult {
   }
   let doc = input as RawDocument;
   const applied: string[] = [];
+  const visited = new Set<string>();
   for (;;) {
     const version = doc.version;
     if (typeof version !== 'string') {
@@ -37,6 +38,12 @@ export function migrateDocument(input: unknown): MigrateResult {
     if (version === DOCUMENT_FORMAT_VERSION) {
       return {doc, applied};
     }
+    if (visited.has(version)) {
+      throw new MigrationError(
+        `migration cycle detected at version "${version}"`,
+      );
+    }
+    visited.add(version);
     const migration = MIGRATIONS[version];
     if (migration === undefined) {
       throw new MigrationError(

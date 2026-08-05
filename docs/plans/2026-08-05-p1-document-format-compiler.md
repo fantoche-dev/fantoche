@@ -67,6 +67,20 @@
 
 **Step 6:** Update `CONTRIBUTING.md`/`RELEASING.md` mentions of the submodule. Commit: `feat(create)!: vendor default template in-tree, drop examples submodule`
 
+> **Task 2 outcome + amendment (2026-08-05):** the upstream `default` template
+> turned out to depend on remote S3 assets (`revideo-example-assets.s3…`:
+> mp4/mp3/logo) — offline-first violation on a bucket we don't control. The
+> vendored template was therefore derived from our own `packages/template`
+> (post-Task-3, so fonts ship local) instead of the upstream example. Lessons:
+> a standalone scaffolded project must NOT have `"type": "module"` (NodeNext
+> then demands explicit import extensions; the monorepo template is CJS-typed)
+> and MUST declare `@types/node` explicitly (hoisted in the monorepo, absent
+> standalone) — both were real bugs caught by the file:-override build
+> acceptance (`smoke-test.mjs` scaffold → `npm install` → `tsc` green, zero
+> upstream refs). Registry-based install remains verifiable only after first
+> publish. Executed after Task 3 (order swapped so the template is born
+> offline-first).
+
 ### Task 3: Offline fonts for the template (render path)
 
 **Files:**
@@ -80,6 +94,37 @@
 **Step 3:** Verify offline: `npm run template:render` still green; then re-run with network blocked for fonts.googleapis.com (e.g. `127.0.0.1 fonts.googleapis.com` via a temporary `/etc/hosts` entry, or assert via devtools/network log that no fonts request leaves) — record method used. e2e + template goldens unchanged (text scene uses the same Roboto binary — if pixels shift, regenerate goldens on CI per the P0 Task 8 mechanism and explain in the commit).
 
 **Step 4:** Commit: `fix(template): bundle Roboto locally — offline-first render path (ADR 0004 consequence)`
+
+> **Task 3 outcome (2026-08-05):** executed before Task 2 (order swapped so the
+> vendored template is born offline-first). Offline verification method: the
+> template scene renders no text (Rubik's cube only), so pixel comparison is
+> vacuous — verification was (a) `git grep fonts.googleapis` = 0 across
+> template+create, (b) `npm run template:render` green with the local
+> `@font-face` files in place. `packages/ui`'s Google-Fonts import remains
+> (editor-only) — recorded as P2+ debt.
+
+> **Batch A+B Opus review outcomes (2026-08-05):** applied — `sin`/`cos`
+> dropped from `EASING_NAMES` (waveform remappers, violate f(0)=0/f(1)=1);
+> elements became a `z.discriminatedUnion` with a hand-written recursive
+> `DocumentElement` type (only the layout node is hand-typed); union
+> validation errors now report only the fewest-issues branch (one typo = one
+> error, was 28); the anchor grammar moved from `.refine` to `.regex` so the
+> JSON Schema artifact carries the `pattern`; the artifact emitter
+> post-processes exact tuple lengths, svg/edit exactly-one-of `oneOf`s,
+> stable `$id`/`title`/`$defs.element`, with a drift test pinning the
+> committed file to the zod schema; `DOCUMENT_FORMAT_VERSION` moved to
+> `version.ts` (import cycle) and the migration walker gained a cycle guard;
+> word anchors with offsets warn about the `word:step-1` ambiguity, with a
+> table-driven grammar test. **Structural discovery:** core's built `lib/` is
+> not plain-node-ESM-resolvable (directory imports) — the root barrel of
+> `@fantoche-dev/document` is therefore kept node-safe (no core imports) and
+> the evaluator lives under the `./evaluator` subpath, guarded by a
+> node-safety test; fixing core's lib for node ESM is recorded as a
+> candidate upstream-style fix. Deviation note: element/timeline types live
+> in `schema.ts` (no separate `types.ts`). Hygiene: publish workflow gained
+> a test gate + template-pin drift guard; scaffolded projects get a
+> `.gitignore` (shipped as `_gitignore`); scaffolder smoke test promoted to
+> `npm run test:smoke`.
 
 ### Task 4: Restore publish workflow (dispatch-only) + rewrite RELEASING.md
 

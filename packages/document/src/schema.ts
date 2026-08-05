@@ -1,6 +1,6 @@
 import {z} from 'zod';
 import {EASING_NAMES} from './easings.js';
-import {isAnchorString} from './timeref.js';
+import {ANCHOR_RE} from './timeref.js';
 
 /** Entity ids: usable as node keys and anchor segment names. */
 export const idSchema = z
@@ -15,7 +15,7 @@ const positiveSeconds = z.number().finite().positive();
 
 export const timeRefSchema = z.union([
   seconds,
-  z.string().refine(isAnchorString, {
+  z.string().regex(ANCHOR_RE, {
     message:
       'not a valid anchor — expected "segment.start", "segment.end" or "segment.word:<word>", optionally followed by +/-<seconds>',
   }),
@@ -35,7 +35,8 @@ const propValueSchema = z.union([
 
 // ---------------------------------------------------------------------------
 // Code ranges (mirrors @fantoche-dev/2d code/CodeRange.ts semantics:
-// 0-based lines and columns, exclusive end; `null` means "to the end").
+// 0-based lines and columns; columns are end-exclusive but the `lines` end
+// line is included in full; `null` means "to the end").
 // ---------------------------------------------------------------------------
 
 const lineNumber = z.number().int().min(0);
@@ -190,24 +191,23 @@ const imageElement = z.strictObject({
   }),
 });
 
-const svgElement = z
-  .strictObject({
-    id: idSchema,
-    type: z.literal('svg'),
-    props: z.strictObject({
+const svgElement = z.strictObject({
+  id: idSchema,
+  type: z.literal('svg'),
+  props: z
+    .strictObject({
       /** Inline SVG markup… */
       svg: z.string().min(1).optional(),
       /** …or an asset id of type "svg". Exactly one of the two. */
       src: z.string().min(1).optional(),
       ...sizeProps,
       ...transformProps,
+    })
+    .refine(props => (props.svg === undefined) !== (props.src === undefined), {
+      message:
+        'svg elements need exactly one of svg (inline markup) or src (asset id)',
     }),
-  })
-  .refine(el => (el.props.svg === undefined) !== (el.props.src === undefined), {
-    message:
-      'svg elements need exactly one of props.svg (inline markup) or props.src (asset id)',
-    path: ['props'],
-  });
+});
 
 const latexElement = z.strictObject({
   id: idSchema,
@@ -226,42 +226,65 @@ const codeElement = z.strictObject({
     code: z.string(),
     fontSize: z.number().finite().positive().optional(),
     fontFamily: z.string().optional(),
-    selection: rangeSpecSchema.optional(),
+    selection: z.union([rangeSpecSchema, z.array(rangeSpecSchema)]).optional(),
     ...transformProps,
   }),
 });
+
+const layoutPropsSchema = z.strictObject({
+  direction: z
+    .enum(['row', 'row-reverse', 'column', 'column-reverse'])
+    .optional(),
+  gap: z.number().finite().min(0).optional(),
+  padding: z.number().finite().min(0).optional(),
+  alignItems: z
+    .enum(['center', 'start', 'end', 'stretch', 'baseline'])
+    .optional(),
+  justifyContent: z
+    .enum([
+      'center',
+      'start',
+      'end',
+      'space-between',
+      'space-around',
+      'space-evenly',
+    ])
+    .optional(),
+  ...sizeProps,
+  ...transformProps,
+});
+
+/** The one hand-written type: layout recursion breaks zod's inference. */
+export interface LayoutElement {
+  id: string;
+  type: 'layout';
+  props: z.infer<typeof layoutPropsSchema>;
+  children: DocumentElement[];
+}
+
+export type DocumentElement =
+  | z.infer<typeof textElement>
+  | z.infer<typeof rectElement>
+  | z.infer<typeof circleElement>
+  | z.infer<typeof lineElement>
+  | z.infer<typeof pathElement>
+  | z.infer<typeof polygonElement>
+  | z.infer<typeof imageElement>
+  | z.infer<typeof svgElement>
+  | z.infer<typeof latexElement>
+  | z.infer<typeof codeElement>
+  | LayoutElement;
 
 const layoutElement = z.strictObject({
   id: idSchema,
   type: z.literal('layout'),
-  props: z.strictObject({
-    direction: z
-      .enum(['row', 'row-reverse', 'column', 'column-reverse'])
-      .optional(),
-    gap: z.number().finite().min(0).optional(),
-    padding: z.number().finite().min(0).optional(),
-    alignItems: z
-      .enum(['center', 'start', 'end', 'stretch', 'baseline'])
-      .optional(),
-    justifyContent: z
-      .enum([
-        'center',
-        'start',
-        'end',
-        'space-between',
-        'space-around',
-        'space-evenly',
-      ])
-      .optional(),
-    ...sizeProps,
-    ...transformProps,
-  }),
-  get children() {
-    return z.array(elementSchema);
+  props: layoutPropsSchema,
+  get children(): z.ZodType<DocumentElement[]> {
+    return z.array(elementSchema) as unknown as z.ZodType<DocumentElement[]>;
   },
 });
 
-export const elementSchema: z.ZodType<unknown> = z.union([
+export const elementSchema = z.discriminatedUnion('type', [
   textElement,
   rectElement,
   circleElement,
@@ -310,16 +333,24 @@ const assetSchema = z.strictObject({
 const setItem = z.strictObject({
   at: timeRefSchema,
   target: idSchema,
-  set: z.record(z.string().min(1), propValueSchema),
+  set: z
+    .record(z.string().min(1), propValueSchema)
+    .refine(record => Object.keys(record).length > 0, {
+      message: 'set needs at least one property',
+    }),
 });
 
 const tweenItem = z.strictObject({
   at: timeRefSchema,
   target: idSchema,
-  tween: z.record(
-    z.string().min(1),
-    z.strictObject({to: propValueSchema, from: propValueSchema.optional()}),
-  ),
+  tween: z
+    .record(
+      z.string().min(1),
+      z.strictObject({to: propValueSchema, from: propValueSchema.optional()}),
+    )
+    .refine(record => Object.keys(record).length > 0, {
+      message: 'tween needs at least one property',
+    }),
   dur: positiveSeconds,
   easing: easingSchema.optional(),
 });
