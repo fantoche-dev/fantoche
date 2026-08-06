@@ -1,0 +1,31 @@
+{
+  "version": "0.1",
+  "meta": {
+    "fps": 30,
+    "size": [320, 320],
+    "background": "#0d0d12",
+    "duration": 1
+  },
+  "elements": [
+    {
+      "id": "snippet",
+      "type": "code",
+      "props": {
+        "code": "let total = a + b;\nreturn total;",
+        "fontSize": 22,
+        "fontFamily": "JetBrains Mono",
+        "fill": "#e6e6e6"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "at": 0.2,
+      "target": "snippet",
+      "edit": {
+        "to": "let total = a * b;\nreturn total * 2;"
+      },
+      "dur": 0.6
+    }
+  ]
+}

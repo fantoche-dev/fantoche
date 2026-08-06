@@ -1,0 +1,37 @@
+
+> @fantoche-dev/document@0.11.0 build
+> tsc
+
+[96msrc/schema.ts[0m:[93m20[0m:[93m29[0m - [91merror[0m[90m TS7006: [0mParameter 'ref' implicitly has an 'any' type.
+
+[7m20[0m     .refine(isAnchorString, ref => ({
+[7m  [0m [91m                            ~~~[0m
+
+[96msrc/schema.ts[0m:[93m20[0m:[93m29[0m - [91merror[0m[90m TS2345: [0mArgument of type '(ref: any) => { message: string; }' is not assignable to parameter of type 'string | { abort?: boolean | undefined; when?: ((payload: ParsePayload<unknown>) => boolean) | undefined; path?: PropertyKey[] | undefined; params?: Record<string, any> | undefined; error?: string | ... 1 more ... | undefined; message?: string | undefined; } | undefined'.
+
+[7m20[0m     .refine(isAnchorString, ref => ({
+[7m  [0m [91m                            ~~~~~~~~~[0m
+[7m21[0m       message: `"${ref}" is not a valid anchor — expected "segment.start", "segment.end" or "segment.word:<word>", optionally followed by +/-<seconds>`,
+[7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m22[0m     })),
+[7m  [0m [91m~~~~~~[0m
+
+  [96msrc/schema.ts[0m:[93m20[0m:[93m29[0m
+    [7m20[0m     .refine(isAnchorString, ref => ({
+    [7m  [0m [96m                            ~~~~~~~~~[0m
+    [7m21[0m       message: `"${ref}" is not a valid anchor — expected "segment.start", "segment.end" or "segment.word:<word>", optionally followed by +/-<seconds>`,
+    [7m  [0m [96m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    [7m22[0m     })),
+    [7m  [0m [96m~~~~~~[0m
+    Did you mean to call this expression?
+
+
+Found 2 errors in the same file, starting at: src/schema.ts[90m:20[0m
+
+npm error Lifecycle script `build` failed with error:
+npm error code 2
+npm error path /Volumes/SSD EXTERNO/Projetos de Codigo/fantoche/packages/document
+npm error workspace @fantoche-dev/document@0.11.0
+npm error location /Volumes/SSD EXTERNO/Projetos de Codigo/fantoche/packages/document
+npm error command failed
+npm error command sh -c tsc

@@ -91,9 +91,11 @@ export function buildElement(element: CompiledElement, assets: AssetMap): Node {
  */
 export function applyProp(node: Node, prop: string, value: unknown): boolean {
   const signal = (node as unknown as Record<string, unknown>)[prop];
-  if (typeof signal !== 'function') {
+  // Signals are invokable objects carrying a context — plain methods
+  // (dispose, remove, …) are not, and must never be callable from documents.
+  if (typeof signal !== 'function' || !('context' in signal)) {
     return false;
   }
-  (signal as (value: unknown) => void).call(node, value);
+  (signal as unknown as (value: unknown) => void).call(node, value);
   return true;
 }

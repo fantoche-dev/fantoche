@@ -93,6 +93,7 @@ export class BlockHost {
           const value = await result.value;
           result = this.exec(() => runner.next(value));
         } else {
+          this.warn(`block "${targetKey}" yielded an invalid value`);
           result = this.exec(() => runner.next(result.value));
         }
       }

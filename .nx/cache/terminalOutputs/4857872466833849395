@@ -1,0 +1,16 @@
+
+> @fantoche-dev/renderer@0.11.0 build
+> npm run client:build && npm run server:build
+
+
+> @fantoche-dev/renderer@0.11.0 client:build
+> tsc --project client/tsconfig.json
+
+
+> @fantoche-dev/renderer@0.11.0 server:build
+> tsc --project server/tsconfig.json
+
+
+> @fantoche-dev/renderer@0.11.0 postbuild
+> ncp renderer.html lib/renderer.html
+

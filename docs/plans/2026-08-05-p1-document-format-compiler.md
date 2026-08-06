@@ -470,7 +470,9 @@ Roadmap criteria (docs/05-roadmap.md P1) with evidence:
   declared windows in both jsdom tests and real Chromium golden renders.
 - **Explainer elements first-class, narration-anchored**: text, shapes,
   image, svg, latex, code (highlight + diff edits), layout — all in the
-  corpus; `anchors-narration.json` pins word-anchor timing on frames.
+  corpus with non-degenerate goldens (svg/latex/code-diff coverage was
+  fixed post-review — see the E+F outcome note below); `anchors-narration`
+  pins word-anchor timing mid-motion.
 - **CI**: full matrix green at the goldens commit (run 31060821283); three
   Opus review rounds (batches A+B, C, D) applied in full, including three
   critical semantic fixes caught before goldens were recorded.
@@ -478,3 +480,36 @@ Roadmap criteria (docs/05-roadmap.md P1) with evidence:
 Post-gate known items: CLI renders don't load page fonts (documents
 referencing bundled fonts fall back — v0.2, add to issue drafts);
 remaining Daniel-manual list in Task 5.
+
+> **Batch E+F Opus review outcomes (2026-08-05, post-gate):** the review
+> caught that two corpus goldens were degenerate — `doc-image-svg` pinned the
+> ABSENCE of svg rendering and `doc-latex` was a blank white frame
+> (white-on-white fixture bug). Root cause of the svg one was a real runtime
+> bug: `DocumentScene.draw` ran without the scene context, so lazy computeds
+> that construct nodes (SVG parsing) threw on `useScene2D()` and the node was
+> silently dropped — fixed by running the whole draw under
+> `startScene`/`startPlayback` (safe: draw performs no document-driven sets).
+> Both goldens regenerated with real content; previously-green goldens stayed
+> pixel-identical. Also applied: shim strings are JSON-escaped with a
+> docDir-escape guard (schema-valid documents could inject expressions into
+> the generated module — verified breakout in review); document-relative
+> assets get `fs.allow` + existence checks (off-workspace documents rendered
+> with silently-missing images); golden thresholds are platform-gated (Linux
+> strict 20px everywhere; darwin-only 0.8% on text scenes — worst measured
+> divergence 0.6%); `applyProp` now truly requires a signal (`context`
+> check — the batch D commit message claimed it but the code hadn't landed);
+> compile-guard tests (animatable allow-list, svg src, block overlap) and a
+> BlockHost promise-stepping unit test added; O(1) measurement re-probed at
+> the SAME frame in both docs (isolating the search term); tracked mp4
+> artifacts removed and `/output` gitignored.
+>
+> **Task 18/19 deviations, recorded:** `code-diff.json` (planned, initially
+> folded into gate.json where no golden touched it) now exists with a
+> mid-morph golden; `doc-anchors-narration`'s pinned frame was retimed off
+> the tween-start boundary to mid-motion; the gate doc is 8s, not the
+> planned ≥20s (non-triviality comes from content; 240 frames × every CI run
+> was the cost driver); scrub-vs-export identity is verified at the SIGNAL
+> level (jsdom) + Linux goldens pin pixels from those signals — the planned
+> pixel-level exporter-vs-seek comparison in the browser harness remains
+> future work (recorded, not claimed); O(1) timing used 2 points (8s/600s),
+> not the planned 3.

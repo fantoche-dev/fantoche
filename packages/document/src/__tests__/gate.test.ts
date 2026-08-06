@@ -88,6 +88,9 @@ function elementStates(scene: DocumentScene): Record<string, unknown> {
 }
 
 describe('P1 gate', () => {
+  // Scope note: the props comparison shares evaluateFrame between both paths
+  // (true by construction); the REAL coverage is the Code signal state and
+  // the block-created nodes, which take genuinely different code paths.
   test('random access equals a monotone sweep at every probe frame (incl. block interior)', async () => {
     // Probes: initial, mid-selection, mid-tween, mid-edit, block interior, last.
     const probes = [0, 68, 128, 172, 214, 239];
@@ -145,8 +148,10 @@ describe('P1 gate', () => {
       return (performance.now() - start) / 50;
     };
 
+    // Same probe frame in both docs: content is identical there, so the
+    // long doc's 300 extra keyframes isolate the binary-search term.
     const shortMs = await time(short.scene, 230);
-    const longMs = await time(long.scene, 17990);
+    const longMs = await time(long.scene, 230);
     console.log(
       `gate seek: 8s doc=${shortMs.toFixed(3)}ms 600s doc=${longMs.toFixed(3)}ms`,
     );

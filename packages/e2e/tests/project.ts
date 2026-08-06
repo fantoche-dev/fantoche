@@ -5,6 +5,7 @@ import './fonts.css';
 
 import anchorsNarrationDoc from '../documents/anchors-narration.json';
 import blockEscapeDoc from '../documents/block-escape.json';
+import codeDiffDoc from '../documents/code-diff.json';
 import codeHighlightDoc from '../documents/code-highlight.json';
 import gateDoc from '../documents/gate.json';
 import imageSvgDoc from '../documents/image-svg.json';
@@ -30,6 +31,7 @@ export default makeProject({
     makeDocumentScene('doc-shapes-draw-on', shapesDrawOnDoc),
     makeDocumentScene('doc-layout-flex', layoutFlexDoc),
     makeDocumentScene('doc-code-highlight', codeHighlightDoc),
+    makeDocumentScene('doc-code-diff', codeDiffDoc),
     makeDocumentScene('doc-latex', latexDoc),
     makeDocumentScene('doc-image-svg', imageSvgDoc),
     makeDocumentScene('doc-anchors-narration', anchorsNarrationDoc),

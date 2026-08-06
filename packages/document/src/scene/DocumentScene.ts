@@ -12,7 +12,15 @@ import type {
   Scene,
   Seekable,
 } from '@fantoche-dev/core';
-import {AbstractScene, SceneRenderEvent, SceneState} from '@fantoche-dev/core';
+import {
+  AbstractScene,
+  SceneRenderEvent,
+  SceneState,
+  endPlayback,
+  endScene,
+  startPlayback,
+  startScene,
+} from '@fantoche-dev/core';
 import type {CodeFrameState} from '../evaluator.js';
 import {evaluateFrame} from '../evaluator.js';
 import type {TimelineIR} from '../ir.js';
@@ -105,7 +113,8 @@ export class DocumentScene
         this.logger.error(error as Error);
       }
     }
-    this.registeredNodes.clear();
+    // Reassign (not clear): stale unregister closures must not touch the
+    // live map — mirrors Scene2D.reset().
     this.registeredNodes = new Map();
     this.nodeCounters.clear();
     this.nodesById.clear();
@@ -130,19 +139,30 @@ export class DocumentScene
   }
 
   protected async draw(context: CanvasRenderingContext2D): Promise<void> {
-    context.save();
-    this.renderLifecycle.dispatch([SceneRenderEvent.BeforeRender, context]);
-    context.save();
-    this.renderLifecycle.dispatch([SceneRenderEvent.BeginRender, context]);
-    this.getView()
-      .playbackState(this.playback.state)
-      .globalTime(this.playback.time)
-      .fps(this.playback.fps);
-    await this.getView().render(context);
-    this.renderLifecycle.dispatch([SceneRenderEvent.FinishRender, context]);
-    context.restore();
-    this.renderLifecycle.dispatch([SceneRenderEvent.AfterRender, context]);
-    context.restore();
+    // The whole draw runs under the scene context: lazy computeds that build
+    // nodes (SVG parsing, code measurement) first fire during rendering, and
+    // node construction requires useScene2D(). Safe here — draw performs no
+    // document-driven signal sets. (Async, so execute() cannot wrap it.)
+    startScene(this as unknown as Parameters<typeof startScene>[0]);
+    startPlayback(this.playback);
+    try {
+      context.save();
+      this.renderLifecycle.dispatch([SceneRenderEvent.BeforeRender, context]);
+      context.save();
+      this.renderLifecycle.dispatch([SceneRenderEvent.BeginRender, context]);
+      this.getView()
+        .playbackState(this.playback.state)
+        .globalTime(this.playback.time)
+        .fps(this.playback.fps);
+      await this.getView().render(context);
+      this.renderLifecycle.dispatch([SceneRenderEvent.FinishRender, context]);
+      context.restore();
+      this.renderLifecycle.dispatch([SceneRenderEvent.AfterRender, context]);
+      context.restore();
+    } finally {
+      endPlayback(this.playback);
+      endScene(this as unknown as Parameters<typeof endScene>[0]);
+    }
   }
 
   // -- Scene2D-compatible node registry (duck-typed via useScene2D) ---------

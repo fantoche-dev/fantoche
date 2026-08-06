@@ -1,0 +1,4 @@
+
+> @fantoche-dev/core@0.11.0 build
+> tsc -p tsconfig.build.json
+

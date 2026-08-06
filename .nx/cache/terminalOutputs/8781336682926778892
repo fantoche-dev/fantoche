@@ -1,0 +1,13 @@
+
+> @fantoche-dev/document@0.11.0 test
+> vitest run
+
+
+ RUN  v4.1.10 /Volumes/SSD EXTERNO/Projetos de Codigo/fantoche/packages/document
+
+
+ Test Files  12 passed (12)
+      Tests  90 passed (90)
+   Start at  21:02:40
+   Duration  5.69s (transform 11.33s, setup 0ms, import 15.49s, tests 691ms, environment 4.97s)
+

@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.scheduleCleanup = scheduleCleanup;
+const fs_1 = require("fs");
+function scheduleCleanup(filePath) {
+    const clean = async () => {
+        try {
+            await fs_1.promises.unlink(filePath);
+            console.log(`Successfully deleted file: ${filePath}`);
+        }
+        catch (error) {
+            console.error(`Error deleting file ${filePath}: ${error}`);
+        }
+    };
+    // Wait 10 minutes before removing file.
+    setTimeout(clean, 10 * 60 * 1000);
+}

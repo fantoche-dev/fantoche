@@ -1,0 +1,3940 @@
+{
+  "version": "6.0",
+  "nxVersion": "22.7.8",
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": "docs/UPSTREAM-REVIDEO-README.md",
+        "hash": "6397365505415359281"
+      },
+      {
+        "file": "output/smoke-doc.mp4",
+        "hash": "11617515886715249743"
+      },
+      {
+        "file": "docs/adr/0002-declarative-document-as-source-of-truth.md",
+        "hash": "14469539307301304346"
+      },
+      {
+        "file": ".github/ISSUE_TEMPLATE/bug_report.yml",
+        "hash": "2104552158366746699"
+      },
+      {
+        "file": ".nvmrc",
+        "hash": "541564060168964990"
+      },
+      {
+        "file": "docs/adr/0003-render-backend-seam-thorvg-gated.md",
+        "hash": "5995533931348065731"
+      },
+      {
+        "file": "RELEASING.md",
+        "hash": "1996984377634523004"
+      },
+      {
+        "file": "docs/plans/2026-08-04-p0-fork-foundation.md",
+        "hash": "13973857295186431958"
+      },
+      {
+        "file": ".github/PULL_REQUEST_TEMPLATE.md",
+        "hash": "11179466777742087615"
+      },
+      {
+        "file": "package.json",
+        "hash": "4950412577725921909"
+      },
+      {
+        "file": ".prettierignore",
+        "hash": "4762293964454057653"
+      },
+      {
+        "file": "nx.json",
+        "hash": "16700121181516240406"
+      },
+      {
+        "file": ".github/ISSUE_TEMPLATE/feature_request.yml",
+        "hash": "6398260476518657357"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "2864859572514033"
+      },
+      {
+        "file": "lerna.json",
+        "hash": "1479160298020411561"
+      },
+      {
+        "file": "docs/adr/0004-narration-as-timeline-spine.md",
+        "hash": "12846228097423826261"
+      },
+      {
+        "file": ".github/workflows/ci.yml",
+        "hash": "6666745067655994156"
+      },
+      {
+        "file": ".husky/pre-commit",
+        "hash": "444416824409591539"
+      },
+      {
+        "file": "commitlint.config.js",
+        "hash": "6074132285081135293"
+      },
+      {
+        "file": "docs/02-vision.md",
+        "hash": "18174081902693888873"
+      },
+      {
+        "file": ".husky/commit-msg",
+        "hash": "1407302808277523102"
+      },
+      {
+        "file": "docs/01-research.md",
+        "hash": "841374168983003745"
+      },
+      {
+        "file": "CONTRIBUTING.md",
+        "hash": "11815529948845427648"
+      },
+      {
+        "file": "docs/adr/0001-fork-revideo-not-motion-canvas.md",
+        "hash": "8004938884648794446"
+      },
+      {
+        "file": ".npmrc",
+        "hash": "5964661627714477260"
+      },
+      {
+        "file": "docs/plans/2026-08-05-p1-document-format-compiler.md",
+        "hash": "6445186165824899540"
+      },
+      {
+        "file": "tsdoc.json",
+        "hash": "12628890711072505940"
+      },
+      {
+        "file": "eslint.config.mjs",
+        "hash": "5549120341188195827"
+      },
+      {
+        "file": "LICENSE",
+        "hash": "1933137410681415199"
+      },
+      {
+        "file": "docs/05-roadmap.md",
+        "hash": "15513956535246088164"
+      },
+      {
+        "file": "SECURITY.md",
+        "hash": "15447837573104065048"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "1420692287463724572"
+      },
+      {
+        "file": "docs/plans/p0-baseline-notes.md",
+        "hash": "3233272925477117338"
+      },
+      {
+        "file": "docs/03-architecture.md",
+        "hash": "6649630114808034222"
+      },
+      {
+        "file": "CODE_OF_CONDUCT.md",
+        "hash": "7286592317437896763"
+      },
+      {
+        "file": "README.md",
+        "hash": "3298802519634972899"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "2336539028556209413"
+      },
+      {
+        "file": "logo.svg",
+        "hash": "16832236824878004377"
+      },
+      {
+        "file": "docs/adr/0005-no-state-machines-in-v1.md",
+        "hash": "813537579413218200"
+      },
+      {
+        "file": ".github/workflows/publish.yml",
+        "hash": "13729169549803491484"
+      }
+    ],
+    "projectFileMap": {
+      "@fantoche-dev/vite-plugin": [
+        {
+          "file": "packages/vite-plugin/package.json",
+          "hash": "3689108892926886390",
+          "deps": [
+            "npm:@types/follow-redirects",
+            "npm:@types/formidable",
+            "npm:@types/mime-types",
+            "@fantoche-dev/ffmpeg",
+            "npm:fast-glob",
+            "npm:follow-redirects",
+            "npm:formidable",
+            "npm:mime-types@3.0.2",
+            "npm:source-map@0.7.6"
+          ]
+        },
+        {
+          "file": "packages/vite-plugin/src/index.ts",
+          "hash": "64837297195625555"
+        },
+        {
+          "file": "packages/vite-plugin/src/main.ts",
+          "hash": "16061024898939073882"
+        },
+        {
+          "file": "packages/vite-plugin/src/openInExplorer.ts",
+          "hash": "3317978723597520030"
+        },
+        {
+          "file": "packages/vite-plugin/src/partials/assets.ts",
+          "hash": "14350722179923255516"
+        },
+        {
+          "file": "packages/vite-plugin/src/partials/editor.ts",
+          "hash": "1565381966380773743"
+        },
+        {
+          "file": "packages/vite-plugin/src/partials/ffmpegBridge.ts",
+          "hash": "5205192611949244540"
+        },
+        {
+          "file": "packages/vite-plugin/src/partials/imageExporter.ts",
+          "hash": "10964723019265453368"
+        },
+        {
+          "file": "packages/vite-plugin/src/partials/index.ts",
+          "hash": "7805572844225485931"
+        },
+        {
+          "file": "packages/vite-plugin/src/partials/meta.ts",
+          "hash": "13266358691427623505"
+        },
+        {
+          "file": "packages/vite-plugin/src/partials/projects.ts",
+          "hash": "4061114381990631145"
+        },
+        {
+          "file": "packages/vite-plugin/src/partials/rive.ts",
+          "hash": "8438852339807918401"
+        },
+        {
+          "file": "packages/vite-plugin/src/partials/settings.ts",
+          "hash": "2037125867477223774"
+        },
+        {
+          "file": "packages/vite-plugin/src/partials/wasmExporter.ts",
+          "hash": "16009998925941468545"
+        },
+        {
+          "file": "packages/vite-plugin/src/partials/webgl.ts",
+          "hash": "17654058302279743812"
+        },
+        {
+          "file": "packages/vite-plugin/src/plugins.ts",
+          "hash": "15561207238693621619"
+        },
+        {
+          "file": "packages/vite-plugin/src/utils.ts",
+          "hash": "6478255713900256009"
+        },
+        {
+          "file": "packages/vite-plugin/src/versions.ts",
+          "hash": "14771045755273459949"
+        },
+        {
+          "file": "packages/vite-plugin/tsconfig.json",
+          "hash": "2322096325004419702"
+        },
+        {
+          "file": "packages/vite-plugin/tsdoc.json",
+          "hash": "12825950522565728370"
+        }
+      ],
+      "@fantoche-dev/document": [
+        {
+          "file": "packages/document/package.json",
+          "hash": "496249512627584955",
+          "deps": [
+            "npm:typescript",
+            "npm:vitest",
+            "npm:jsdom@25.0.1",
+            "@fantoche-dev/core",
+            "npm:zod",
+            "@fantoche-dev/2d"
+          ]
+        },
+        {
+          "file": "packages/document/schema/document-0.1.schema.json",
+          "hash": "5917125568957618912"
+        },
+        {
+          "file": "packages/document/scripts/emit-json-schema.mjs",
+          "hash": "10515129432817257192"
+        },
+        {
+          "file": "packages/document/src/__tests__/anchors.test.ts",
+          "hash": "10590411026197893428"
+        },
+        {
+          "file": "packages/document/src/__tests__/blocks.test.ts",
+          "hash": "11338313582340801122"
+        },
+        {
+          "file": "packages/document/src/__tests__/compile.test.ts",
+          "hash": "5869599474688185940"
+        },
+        {
+          "file": "packages/document/src/__tests__/document-scene.test.ts",
+          "hash": "11924535982838333831"
+        },
+        {
+          "file": "packages/document/src/__tests__/evaluator.test.ts",
+          "hash": "986880915984968441"
+        },
+        {
+          "file": "packages/document/src/__tests__/fixtures.ts",
+          "hash": "17866961667299331898"
+        },
+        {
+          "file": "packages/document/src/__tests__/json-schema.test.ts",
+          "hash": "6531265018204050621"
+        },
+        {
+          "file": "packages/document/src/__tests__/migrate.test.ts",
+          "hash": "888917753243100308"
+        },
+        {
+          "file": "packages/document/src/__tests__/node-safety.test.ts",
+          "hash": "10277005637360134986"
+        },
+        {
+          "file": "packages/document/src/__tests__/review-regressions.test.ts",
+          "hash": "10774848022823406159"
+        },
+        {
+          "file": "packages/document/src/__tests__/schema.test.ts",
+          "hash": "10337983506918750058"
+        },
+        {
+          "file": "packages/document/src/__tests__/smoke.test.ts",
+          "hash": "13059021586856684661"
+        },
+        {
+          "file": "packages/document/src/__tests__/timeref.test.ts",
+          "hash": "6674122452647065868"
+        },
+        {
+          "file": "packages/document/src/code-text.ts",
+          "hash": "13783094563936236624"
+        },
+        {
+          "file": "packages/document/src/compiler/anchors.ts",
+          "hash": "2784083456593659576"
+        },
+        {
+          "file": "packages/document/src/compiler/compile.ts",
+          "hash": "14037157303110024928"
+        },
+        {
+          "file": "packages/document/src/easings.ts",
+          "hash": "8818847701824960497"
+        },
+        {
+          "file": "packages/document/src/evaluator.ts",
+          "hash": "8290265867132604824"
+        },
+        {
+          "file": "packages/document/src/index.ts",
+          "hash": "5456048321451877531"
+        },
+        {
+          "file": "packages/document/src/ir.ts",
+          "hash": "6547371145184975824"
+        },
+        {
+          "file": "packages/document/src/json-schema.ts",
+          "hash": "16539256198803295578"
+        },
+        {
+          "file": "packages/document/src/migrate.ts",
+          "hash": "12420388648597390484"
+        },
+        {
+          "file": "packages/document/src/scene/DocumentScene.ts",
+          "hash": "12498847947859755423"
+        },
+        {
+          "file": "packages/document/src/scene/blocks.ts",
+          "hash": "15023369675378595785"
+        },
+        {
+          "file": "packages/document/src/scene/builders.ts",
+          "hash": "8445525628143946266"
+        },
+        {
+          "file": "packages/document/src/scene/index.ts",
+          "hash": "16374258671367853284"
+        },
+        {
+          "file": "packages/document/src/scene/makeDocumentProject.ts",
+          "hash": "185602397209628561"
+        },
+        {
+          "file": "packages/document/src/scene/makeDocumentScene.ts",
+          "hash": "15190083858076783683"
+        },
+        {
+          "file": "packages/document/src/schema.ts",
+          "hash": "14127462626898412953"
+        },
+        {
+          "file": "packages/document/src/timeref.ts",
+          "hash": "5379461215681098200"
+        },
+        {
+          "file": "packages/document/src/validate.ts",
+          "hash": "8905846840012300190"
+        },
+        {
+          "file": "packages/document/src/version.ts",
+          "hash": "13690088119573866824"
+        },
+        {
+          "file": "packages/document/tsconfig.json",
+          "hash": "3602991788199132577"
+        },
+        {
+          "file": "packages/document/vitest.config.ts",
+          "hash": "9780669437976862802"
+        }
+      ],
+      "@fantoche-dev/renderer": [
+        {
+          "file": "packages/renderer/client/global.d.ts",
+          "hash": "12946363841406869089"
+        },
+        {
+          "file": "packages/renderer/client/render.ts",
+          "hash": "1411796955911191648"
+        },
+        {
+          "file": "packages/renderer/client/revideo.d.ts",
+          "hash": "7372366011553449461"
+        },
+        {
+          "file": "packages/renderer/client/tsconfig.json",
+          "hash": "13432301984419863581"
+        },
+        {
+          "file": "packages/renderer/package.json",
+          "hash": "12816496034224372289",
+          "deps": [
+            "@fantoche-dev/core",
+            "npm:ncp",
+            "@fantoche-dev/ffmpeg",
+            "npm:puppeteer",
+            "npm:uuid",
+            "npm:vite"
+          ]
+        },
+        {
+          "file": "packages/renderer/renderer.html",
+          "hash": "3728691366327414710"
+        },
+        {
+          "file": "packages/renderer/server/global.d.ts",
+          "hash": "5176225422505782991"
+        },
+        {
+          "file": "packages/renderer/server/index.ts",
+          "hash": "17227361215962542132"
+        },
+        {
+          "file": "packages/renderer/server/render-video.ts",
+          "hash": "11604695359093781981"
+        },
+        {
+          "file": "packages/renderer/server/renderer-plugin.ts",
+          "hash": "14976546486900826664"
+        },
+        {
+          "file": "packages/renderer/server/revideo.d.ts",
+          "hash": "7372366011553449461"
+        },
+        {
+          "file": "packages/renderer/server/tsconfig.json",
+          "hash": "15523456517247199177"
+        },
+        {
+          "file": "packages/renderer/server/validate-settings.ts",
+          "hash": "9012095496518971432"
+        }
+      ],
+      "@fantoche-dev/examples": [
+        {
+          "file": "packages/examples/assets/example.mp4",
+          "hash": "16750220861786761702"
+        },
+        {
+          "file": "packages/examples/assets/logo.svg",
+          "hash": "5508899372099656872"
+        },
+        {
+          "file": "packages/examples/package.json",
+          "hash": "18284642793823081804",
+          "deps": [
+            "@fantoche-dev/ui",
+            "@fantoche-dev/vite-plugin",
+            "@fantoche-dev/2d",
+            "@fantoche-dev/core",
+            "@fantoche-dev/ffmpeg"
+          ]
+        },
+        {
+          "file": "packages/examples/src/code-block.meta",
+          "hash": "1517267562734749512"
+        },
+        {
+          "file": "packages/examples/src/code-block.ts",
+          "hash": "16210462635363650986"
+        },
+        {
+          "file": "packages/examples/src/components.ts",
+          "hash": "1768957173472048242"
+        },
+        {
+          "file": "packages/examples/src/components/Switch.tsx",
+          "hash": "11872914039564591971"
+        },
+        {
+          "file": "packages/examples/src/layout-group.ts",
+          "hash": "6066352885938228001"
+        },
+        {
+          "file": "packages/examples/src/layout.ts",
+          "hash": "17498478403166914187"
+        },
+        {
+          "file": "packages/examples/src/logging.ts",
+          "hash": "4109873019355356788"
+        },
+        {
+          "file": "packages/examples/src/media-image.ts",
+          "hash": "13300508555974219658"
+        },
+        {
+          "file": "packages/examples/src/media-video.ts",
+          "hash": "6823751040071069335"
+        },
+        {
+          "file": "packages/examples/src/node-signal.ts",
+          "hash": "2233126923304816560"
+        },
+        {
+          "file": "packages/examples/src/positioning.ts",
+          "hash": "9932847037487875553"
+        },
+        {
+          "file": "packages/examples/src/presentation.ts",
+          "hash": "7400282958473291369"
+        },
+        {
+          "file": "packages/examples/src/quickstart.ts",
+          "hash": "6033273234266880571"
+        },
+        {
+          "file": "packages/examples/src/revideo.d.ts",
+          "hash": "7372366011553449461"
+        },
+        {
+          "file": "packages/examples/src/scenes/code-block.tsx",
+          "hash": "8077579502756585107"
+        },
+        {
+          "file": "packages/examples/src/scenes/components.tsx",
+          "hash": "10084966065406441306"
+        },
+        {
+          "file": "packages/examples/src/scenes/layout-group.tsx",
+          "hash": "12529601676123602091"
+        },
+        {
+          "file": "packages/examples/src/scenes/layout.tsx",
+          "hash": "5322576634546510792"
+        },
+        {
+          "file": "packages/examples/src/scenes/logging.tsx",
+          "hash": "1987071518401309270"
+        },
+        {
+          "file": "packages/examples/src/scenes/media-image.tsx",
+          "hash": "7673961369539414017"
+        },
+        {
+          "file": "packages/examples/src/scenes/media-video.tsx",
+          "hash": "8973595969859094758"
+        },
+        {
+          "file": "packages/examples/src/scenes/node-signal.tsx",
+          "hash": "5441981266145831462"
+        },
+        {
+          "file": "packages/examples/src/scenes/positioning.tsx",
+          "hash": "6536748967688843164"
+        },
+        {
+          "file": "packages/examples/src/scenes/presentation.tsx",
+          "hash": "13595006924378048494"
+        },
+        {
+          "file": "packages/examples/src/scenes/quickstart.tsx",
+          "hash": "10268270301559417259"
+        },
+        {
+          "file": "packages/examples/src/scenes/tex.tsx",
+          "hash": "16429966033554892943"
+        },
+        {
+          "file": "packages/examples/src/scenes/transitions-first.tsx",
+          "hash": "13929104951252692623"
+        },
+        {
+          "file": "packages/examples/src/scenes/transitions-second.tsx",
+          "hash": "948081144859715287"
+        },
+        {
+          "file": "packages/examples/src/scenes/tweening-color.tsx",
+          "hash": "1882188698687290446"
+        },
+        {
+          "file": "packages/examples/src/scenes/tweening-cubic.tsx",
+          "hash": "14753726175018440961"
+        },
+        {
+          "file": "packages/examples/src/scenes/tweening-linear.tsx",
+          "hash": "6263908590627017000"
+        },
+        {
+          "file": "packages/examples/src/scenes/tweening-save-restore.tsx",
+          "hash": "16130592230203052143"
+        },
+        {
+          "file": "packages/examples/src/scenes/tweening-spring.tsx",
+          "hash": "4134762139122604320"
+        },
+        {
+          "file": "packages/examples/src/scenes/tweening-vector.tsx",
+          "hash": "4383897255421253732"
+        },
+        {
+          "file": "packages/examples/src/scenes/tweening-visualiser.tsx",
+          "hash": "849189512131915437"
+        },
+        {
+          "file": "packages/examples/src/tex.ts",
+          "hash": "7858305634888899301"
+        },
+        {
+          "file": "packages/examples/src/transitions.ts",
+          "hash": "13188179285726444966"
+        },
+        {
+          "file": "packages/examples/src/tweening-color.ts",
+          "hash": "15105719020127103962"
+        },
+        {
+          "file": "packages/examples/src/tweening-cubic.ts",
+          "hash": "18152493045394929150"
+        },
+        {
+          "file": "packages/examples/src/tweening-linear.ts",
+          "hash": "13798522740769491477"
+        },
+        {
+          "file": "packages/examples/src/tweening-save-restore.ts",
+          "hash": "10828204759440545448"
+        },
+        {
+          "file": "packages/examples/src/tweening-spring.ts",
+          "hash": "16520100124528114154"
+        },
+        {
+          "file": "packages/examples/src/tweening-vector.ts",
+          "hash": "2340492584615262793"
+        },
+        {
+          "file": "packages/examples/src/tweening-visualiser.ts",
+          "hash": "17291265546046989570"
+        },
+        {
+          "file": "packages/examples/tsconfig.json",
+          "hash": "10857461073111834550"
+        },
+        {
+          "file": "packages/examples/vite.config.ts",
+          "hash": "10229406976147524549"
+        }
+      ],
+      "@fantoche-dev/create": [
+        {
+          "file": "packages/create/index.js",
+          "hash": "1996576453486379812"
+        },
+        {
+          "file": "packages/create/package.json",
+          "hash": "12565217197258991897",
+          "deps": [
+            "@fantoche-dev/2d",
+            "@fantoche-dev/core",
+            "@fantoche-dev/ffmpeg",
+            "@fantoche-dev/renderer",
+            "@fantoche-dev/ui",
+            "@fantoche-dev/vite-plugin",
+            "npm:kleur@4.1.5",
+            "npm:minimist",
+            "npm:prompts"
+          ]
+        },
+        {
+          "file": "packages/create/scripts/smoke-test.mjs",
+          "hash": "15368418210988818336"
+        },
+        {
+          "file": "packages/create/templates/default/README.md",
+          "hash": "2288388084471144560"
+        },
+        {
+          "file": "packages/create/templates/default/_gitignore",
+          "hash": "1617772902666124276"
+        },
+        {
+          "file": "packages/create/templates/default/package.json",
+          "hash": "6252378085612526442"
+        },
+        {
+          "file": "packages/create/templates/default/src/example.tsx",
+          "hash": "13366583387397120424"
+        },
+        {
+          "file": "packages/create/templates/default/src/fantoche.d.ts",
+          "hash": "7372366011553449461"
+        },
+        {
+          "file": "packages/create/templates/default/src/fonts/README.md",
+          "hash": "4801692133334578651"
+        },
+        {
+          "file": "packages/create/templates/default/src/fonts/roboto-latin-400-normal.woff2",
+          "hash": "10734632019286081677"
+        },
+        {
+          "file": "packages/create/templates/default/src/fonts/roboto-latin-700-normal.woff2",
+          "hash": "6831153279083575447"
+        },
+        {
+          "file": "packages/create/templates/default/src/global.css",
+          "hash": "12444294495539798246"
+        },
+        {
+          "file": "packages/create/templates/default/src/project.ts",
+          "hash": "15189959887074276390"
+        },
+        {
+          "file": "packages/create/templates/default/src/render.ts",
+          "hash": "277734780357843688"
+        },
+        {
+          "file": "packages/create/templates/default/src/rubiks-cube.tsx",
+          "hash": "14063020703549473095"
+        },
+        {
+          "file": "packages/create/templates/default/tsconfig.json",
+          "hash": "6694265520569208456"
+        }
+      ],
+      "@fantoche-dev/core": [
+        {
+          "file": "packages/core/package.json",
+          "hash": "779749321353691054",
+          "deps": [
+            "npm:@rollup/plugin-commonjs",
+            "npm:@rollup/plugin-node-resolve",
+            "npm:@rollup/plugin-terser",
+            "npm:@rollup/plugin-typescript",
+            "npm:@types/culori",
+            "npm:jsdom",
+            "npm:rollup",
+            "npm:culori",
+            "npm:mp4-wasm"
+          ]
+        },
+        {
+          "file": "packages/core/project.d.ts",
+          "hash": "3114969524430111824"
+        },
+        {
+          "file": "packages/core/rollup.config.mjs",
+          "hash": "8134235271807604321"
+        },
+        {
+          "file": "packages/core/shaders/common.glsl",
+          "hash": "13463962437441157709"
+        },
+        {
+          "file": "packages/core/shaders/fragment.glsl",
+          "hash": "16397754269444736919"
+        },
+        {
+          "file": "packages/core/src/app/Logger.ts",
+          "hash": "5640401194462556021"
+        },
+        {
+          "file": "packages/core/src/app/PlaybackManager.test.ts",
+          "hash": "2601387944187429713"
+        },
+        {
+          "file": "packages/core/src/app/PlaybackManager.ts",
+          "hash": "5829987230376318107"
+        },
+        {
+          "file": "packages/core/src/app/PlaybackStatus.ts",
+          "hash": "2871862053693852732"
+        },
+        {
+          "file": "packages/core/src/app/Player.ts",
+          "hash": "3752927882996705563"
+        },
+        {
+          "file": "packages/core/src/app/Project.ts",
+          "hash": "2630139185082246980"
+        },
+        {
+          "file": "packages/core/src/app/Renderer.ts",
+          "hash": "11493323531195679041"
+        },
+        {
+          "file": "packages/core/src/app/SharedWebGLContext.ts",
+          "hash": "10546897718926937866"
+        },
+        {
+          "file": "packages/core/src/app/Stage.ts",
+          "hash": "13867740416149414531"
+        },
+        {
+          "file": "packages/core/src/app/TimeEstimator.ts",
+          "hash": "3502926564288707036"
+        },
+        {
+          "file": "packages/core/src/app/index.ts",
+          "hash": "4231971346188993447"
+        },
+        {
+          "file": "packages/core/src/app/makeProject.ts",
+          "hash": "292143169795137522"
+        },
+        {
+          "file": "packages/core/src/app/project-settings.ts",
+          "hash": "11467588997637606759"
+        },
+        {
+          "file": "packages/core/src/decorators/decorate.ts",
+          "hash": "11797689937000504584"
+        },
+        {
+          "file": "packages/core/src/decorators/deprecated.ts",
+          "hash": "3491305218271951673"
+        },
+        {
+          "file": "packages/core/src/decorators/index.ts",
+          "hash": "12759755869118823418"
+        },
+        {
+          "file": "packages/core/src/decorators/lazy.ts",
+          "hash": "9099941146069529387"
+        },
+        {
+          "file": "packages/core/src/decorators/threadable.ts",
+          "hash": "12361009091021643855"
+        },
+        {
+          "file": "packages/core/src/events/AsyncEventDispatcher.ts",
+          "hash": "14561105754807122596"
+        },
+        {
+          "file": "packages/core/src/events/EventDispatcher.ts",
+          "hash": "2840537908937173210"
+        },
+        {
+          "file": "packages/core/src/events/EventDispatcherBase.ts",
+          "hash": "15903376013714931532"
+        },
+        {
+          "file": "packages/core/src/events/FlagDispatcher.ts",
+          "hash": "2469913671502734699"
+        },
+        {
+          "file": "packages/core/src/events/ValueDispatcher.ts",
+          "hash": "17640239405932528549"
+        },
+        {
+          "file": "packages/core/src/events/index.ts",
+          "hash": "7471429286891041120"
+        },
+        {
+          "file": "packages/core/src/exporter/Exporter.ts",
+          "hash": "1253597146759792508"
+        },
+        {
+          "file": "packages/core/src/exporter/FFmpegExporter.ts",
+          "hash": "17208690736538254035"
+        },
+        {
+          "file": "packages/core/src/exporter/ImageExporter.ts",
+          "hash": "10201831506755796713"
+        },
+        {
+          "file": "packages/core/src/exporter/WasmExporter.ts",
+          "hash": "10875614436912243239"
+        },
+        {
+          "file": "packages/core/src/exporter/declarations.d.ts",
+          "hash": "2473494614668686018"
+        },
+        {
+          "file": "packages/core/src/exporter/download-videos.ts",
+          "hash": "8506467670518397263"
+        },
+        {
+          "file": "packages/core/src/exporter/index.ts",
+          "hash": "6291802363058368196"
+        },
+        {
+          "file": "packages/core/src/flow/all.ts",
+          "hash": "16232731698881131874"
+        },
+        {
+          "file": "packages/core/src/flow/any.ts",
+          "hash": "17510067876213483243"
+        },
+        {
+          "file": "packages/core/src/flow/chain.ts",
+          "hash": "15170527900228946669"
+        },
+        {
+          "file": "packages/core/src/flow/delay.ts",
+          "hash": "7920762033166472612"
+        },
+        {
+          "file": "packages/core/src/flow/every.ts",
+          "hash": "14130037039473676282"
+        },
+        {
+          "file": "packages/core/src/flow/index.ts",
+          "hash": "12576425649000451835"
+        },
+        {
+          "file": "packages/core/src/flow/join.test.ts",
+          "hash": "17360527323330037430"
+        },
+        {
+          "file": "packages/core/src/flow/join.ts",
+          "hash": "10263443851779737399"
+        },
+        {
+          "file": "packages/core/src/flow/loop.ts",
+          "hash": "3223049758528767669"
+        },
+        {
+          "file": "packages/core/src/flow/loopFor.ts",
+          "hash": "7894949031771657602"
+        },
+        {
+          "file": "packages/core/src/flow/names.ts",
+          "hash": "16154079805978413967"
+        },
+        {
+          "file": "packages/core/src/flow/run.ts",
+          "hash": "3307078554569061434"
+        },
+        {
+          "file": "packages/core/src/flow/scheduling.test.ts",
+          "hash": "2786142945466433845"
+        },
+        {
+          "file": "packages/core/src/flow/scheduling.ts",
+          "hash": "8385688389065678111"
+        },
+        {
+          "file": "packages/core/src/flow/sequence.ts",
+          "hash": "4045927182458135082"
+        },
+        {
+          "file": "packages/core/src/globals.d.ts",
+          "hash": "15344272787570162226"
+        },
+        {
+          "file": "packages/core/src/index.ts",
+          "hash": "15125180892254621782"
+        },
+        {
+          "file": "packages/core/src/media/index.ts",
+          "hash": "14927345229083019606"
+        },
+        {
+          "file": "packages/core/src/media/loadImage.ts",
+          "hash": "877290399659454610"
+        },
+        {
+          "file": "packages/core/src/plugin/DefaultPlugin.ts",
+          "hash": "6229012318514673794"
+        },
+        {
+          "file": "packages/core/src/plugin/Plugin.ts",
+          "hash": "3282937231426204812"
+        },
+        {
+          "file": "packages/core/src/plugin/index.ts",
+          "hash": "7618193634826392644"
+        },
+        {
+          "file": "packages/core/src/plugin/makePlugin.ts",
+          "hash": "5112061566883506268"
+        },
+        {
+          "file": "packages/core/src/scenes/AbstractScene.ts",
+          "hash": "11688516558274302530"
+        },
+        {
+          "file": "packages/core/src/scenes/GeneratorScene.ts",
+          "hash": "5455022533697206952"
+        },
+        {
+          "file": "packages/core/src/scenes/Inspectable.ts",
+          "hash": "1522247725130451305"
+        },
+        {
+          "file": "packages/core/src/scenes/LifecycleEvents.ts",
+          "hash": "13351012904631251081"
+        },
+        {
+          "file": "packages/core/src/scenes/Random.ts",
+          "hash": "16089176053599356738"
+        },
+        {
+          "file": "packages/core/src/scenes/Scene.ts",
+          "hash": "13373906857284754361"
+        },
+        {
+          "file": "packages/core/src/scenes/SceneState.ts",
+          "hash": "17634493420152271078"
+        },
+        {
+          "file": "packages/core/src/scenes/Seekable.ts",
+          "hash": "12363275354060097249"
+        },
+        {
+          "file": "packages/core/src/scenes/Shaders.ts",
+          "hash": "15821728356987373527"
+        },
+        {
+          "file": "packages/core/src/scenes/Slides.ts",
+          "hash": "3671021335261187044"
+        },
+        {
+          "file": "packages/core/src/scenes/Threadable.ts",
+          "hash": "16296841725279000902"
+        },
+        {
+          "file": "packages/core/src/scenes/Variables.ts",
+          "hash": "16483896917639684416"
+        },
+        {
+          "file": "packages/core/src/scenes/index.ts",
+          "hash": "17760804669330439690"
+        },
+        {
+          "file": "packages/core/src/signals/CompoundSignalContext.ts",
+          "hash": "3075592254291430532"
+        },
+        {
+          "file": "packages/core/src/signals/ComputedContext.ts",
+          "hash": "10035732273335314892"
+        },
+        {
+          "file": "packages/core/src/signals/DependencyContext.ts",
+          "hash": "13425555061659231597"
+        },
+        {
+          "file": "packages/core/src/signals/SignalContext.ts",
+          "hash": "13080813138794329663"
+        },
+        {
+          "file": "packages/core/src/signals/createComputed.test.ts",
+          "hash": "13542608485668362847"
+        },
+        {
+          "file": "packages/core/src/signals/createComputed.ts",
+          "hash": "1124919087316659378"
+        },
+        {
+          "file": "packages/core/src/signals/createComputedAsync.test.ts",
+          "hash": "9569917777148087259"
+        },
+        {
+          "file": "packages/core/src/signals/createComputedAsync.ts",
+          "hash": "16181154623489565292"
+        },
+        {
+          "file": "packages/core/src/signals/createSignal.test.ts",
+          "hash": "13013141704632671824"
+        },
+        {
+          "file": "packages/core/src/signals/createSignal.ts",
+          "hash": "8027259150882214012"
+        },
+        {
+          "file": "packages/core/src/signals/index.ts",
+          "hash": "14926443480823135249"
+        },
+        {
+          "file": "packages/core/src/signals/symbols.ts",
+          "hash": "17455886036079896937"
+        },
+        {
+          "file": "packages/core/src/signals/types.ts",
+          "hash": "17812352543539659831"
+        },
+        {
+          "file": "packages/core/src/signals/utils.ts",
+          "hash": "5180964105337185467"
+        },
+        {
+          "file": "packages/core/src/threading/Thread.ts",
+          "hash": "5663050495428312633"
+        },
+        {
+          "file": "packages/core/src/threading/ThreadGenerator.ts",
+          "hash": "6913090632268264331"
+        },
+        {
+          "file": "packages/core/src/threading/cancel.test.ts",
+          "hash": "14759821006194501847"
+        },
+        {
+          "file": "packages/core/src/threading/cancel.ts",
+          "hash": "15268649250772068579"
+        },
+        {
+          "file": "packages/core/src/threading/index.ts",
+          "hash": "5742638415920895180"
+        },
+        {
+          "file": "packages/core/src/threading/spawn.ts",
+          "hash": "18332965404685493201"
+        },
+        {
+          "file": "packages/core/src/threading/threads.test.ts",
+          "hash": "2074111279719668734"
+        },
+        {
+          "file": "packages/core/src/threading/threads.ts",
+          "hash": "5611519121359289935"
+        },
+        {
+          "file": "packages/core/src/transitions/fadeTransition.ts",
+          "hash": "15555357301841405426"
+        },
+        {
+          "file": "packages/core/src/transitions/index.ts",
+          "hash": "5672594870923012413"
+        },
+        {
+          "file": "packages/core/src/transitions/slideTransition.ts",
+          "hash": "4705568197255927929"
+        },
+        {
+          "file": "packages/core/src/transitions/useTransition.ts",
+          "hash": "1319542254708707945"
+        },
+        {
+          "file": "packages/core/src/transitions/zoomInTransition.ts",
+          "hash": "566500684711988034"
+        },
+        {
+          "file": "packages/core/src/transitions/zoomOutTransition.ts",
+          "hash": "15158818989727899782"
+        },
+        {
+          "file": "packages/core/src/tweening/helpers.ts",
+          "hash": "16798193899065310364"
+        },
+        {
+          "file": "packages/core/src/tweening/index.ts",
+          "hash": "10030187042771477640"
+        },
+        {
+          "file": "packages/core/src/tweening/interpolationFunctions.test.ts",
+          "hash": "1785202889929106338"
+        },
+        {
+          "file": "packages/core/src/tweening/interpolationFunctions.ts",
+          "hash": "2989065241075329720"
+        },
+        {
+          "file": "packages/core/src/tweening/spring.test.ts",
+          "hash": "9243760203874217267"
+        },
+        {
+          "file": "packages/core/src/tweening/spring.ts",
+          "hash": "12710754441558738576"
+        },
+        {
+          "file": "packages/core/src/tweening/timingFunctions.ts",
+          "hash": "16141512960612510164"
+        },
+        {
+          "file": "packages/core/src/tweening/tween.test.ts",
+          "hash": "13642354865423578138"
+        },
+        {
+          "file": "packages/core/src/tweening/tween.ts",
+          "hash": "1724462681669100391"
+        },
+        {
+          "file": "packages/core/src/types/BBox.test.ts",
+          "hash": "15159313598803627443"
+        },
+        {
+          "file": "packages/core/src/types/BBox.ts",
+          "hash": "16460506987030284533"
+        },
+        {
+          "file": "packages/core/src/types/Canvas.ts",
+          "hash": "10231945544885087815"
+        },
+        {
+          "file": "packages/core/src/types/Color.test.ts",
+          "hash": "6600192825078894596"
+        },
+        {
+          "file": "packages/core/src/types/Color.ts",
+          "hash": "16877217645306377933"
+        },
+        {
+          "file": "packages/core/src/types/Matrix.ts",
+          "hash": "3741480400413011405"
+        },
+        {
+          "file": "packages/core/src/types/Matrix2D.test.ts",
+          "hash": "13039773228561661378"
+        },
+        {
+          "file": "packages/core/src/types/Matrix2D.ts",
+          "hash": "13450872610515974961"
+        },
+        {
+          "file": "packages/core/src/types/Origin.ts",
+          "hash": "7527886994687137338"
+        },
+        {
+          "file": "packages/core/src/types/Spacing.test.ts",
+          "hash": "4580921463011767003"
+        },
+        {
+          "file": "packages/core/src/types/Spacing.ts",
+          "hash": "7669774449627764328"
+        },
+        {
+          "file": "packages/core/src/types/Type.ts",
+          "hash": "18284836697465928195"
+        },
+        {
+          "file": "packages/core/src/types/Vector.test.ts",
+          "hash": "17178749388901353529"
+        },
+        {
+          "file": "packages/core/src/types/Vector.ts",
+          "hash": "12879109811136647173"
+        },
+        {
+          "file": "packages/core/src/types/alignment-enums.ts",
+          "hash": "3189380758475695759"
+        },
+        {
+          "file": "packages/core/src/types/index.ts",
+          "hash": "3642989300123286301"
+        },
+        {
+          "file": "packages/core/src/types/vector-transformations.ts",
+          "hash": "14505318928160798501"
+        },
+        {
+          "file": "packages/core/src/utils/DetailedError.ts",
+          "hash": "8288640756638832685"
+        },
+        {
+          "file": "packages/core/src/utils/ExperimentalError.ts",
+          "hash": "9475087129799440431"
+        },
+        {
+          "file": "packages/core/src/utils/Semaphore.ts",
+          "hash": "1196256754681131208"
+        },
+        {
+          "file": "packages/core/src/utils/__logs__/experimental-features.md",
+          "hash": "15685172361753650186"
+        },
+        {
+          "file": "packages/core/src/utils/beginSlide.ts",
+          "hash": "15081770942516395622"
+        },
+        {
+          "file": "packages/core/src/utils/capitalize.ts",
+          "hash": "15709855370849533518"
+        },
+        {
+          "file": "packages/core/src/utils/createRef.ts",
+          "hash": "5450643445865747118"
+        },
+        {
+          "file": "packages/core/src/utils/createRefArray.ts",
+          "hash": "15915230900036005628"
+        },
+        {
+          "file": "packages/core/src/utils/createRefMap.ts",
+          "hash": "7953793059320892555"
+        },
+        {
+          "file": "packages/core/src/utils/debug.test.ts",
+          "hash": "873426368391898068"
+        },
+        {
+          "file": "packages/core/src/utils/debug.ts",
+          "hash": "6830431401653729425"
+        },
+        {
+          "file": "packages/core/src/utils/deprecate.ts",
+          "hash": "10422351672723062389"
+        },
+        {
+          "file": "packages/core/src/utils/errorToLog.ts",
+          "hash": "17858415886917978436"
+        },
+        {
+          "file": "packages/core/src/utils/experimentalLog.ts",
+          "hash": "5069469131815746625"
+        },
+        {
+          "file": "packages/core/src/utils/getContext.ts",
+          "hash": "15616921867444142701"
+        },
+        {
+          "file": "packages/core/src/utils/index.ts",
+          "hash": "12730145591568724337"
+        },
+        {
+          "file": "packages/core/src/utils/math.ts",
+          "hash": "3118229083977384289"
+        },
+        {
+          "file": "packages/core/src/utils/range.test.ts",
+          "hash": "14541941748272484745"
+        },
+        {
+          "file": "packages/core/src/utils/range.ts",
+          "hash": "14060571098333870514"
+        },
+        {
+          "file": "packages/core/src/utils/useContext.ts",
+          "hash": "14314518889050994177"
+        },
+        {
+          "file": "packages/core/src/utils/usePlayback.ts",
+          "hash": "17247035343803731758"
+        },
+        {
+          "file": "packages/core/src/utils/useScene.ts",
+          "hash": "16862299749575974912"
+        },
+        {
+          "file": "packages/core/src/utils/useThread.ts",
+          "hash": "6424328187805827788"
+        },
+        {
+          "file": "packages/core/src/utils/useTime.ts",
+          "hash": "13695394907016859544"
+        },
+        {
+          "file": "packages/core/src/vite-env.d.ts",
+          "hash": "17380068705210118287"
+        },
+        {
+          "file": "packages/core/tsconfig.build.json",
+          "hash": "2456026057340635693"
+        },
+        {
+          "file": "packages/core/tsconfig.json",
+          "hash": "1963392276315931406"
+        },
+        {
+          "file": "packages/core/tsconfig.project.json",
+          "hash": "10106051975355681055"
+        },
+        {
+          "file": "packages/core/tsdoc.json",
+          "hash": "12825950522565728370"
+        },
+        {
+          "file": "packages/core/vitest.config.ts",
+          "hash": "89662148881768751"
+        },
+        {
+          "file": "packages/core/vitest.setup.ts",
+          "hash": "8300215530202288097"
+        }
+      ],
+      "@fantoche-dev/cli": [
+        {
+          "file": "packages/cli/package.json",
+          "hash": "15374219613902781281",
+          "deps": [
+            "npm:@types/cors",
+            "npm:@types/express",
+            "npm:typescript",
+            "npm:vitest",
+            "@fantoche-dev/renderer",
+            "@fantoche-dev/vite-plugin",
+            "npm:axios",
+            "npm:commander",
+            "npm:cors",
+            "npm:express",
+            "npm:uuid",
+            "@fantoche-dev/document"
+          ]
+        },
+        {
+          "file": "packages/cli/src/__tests__/render-doc.test.ts",
+          "hash": "15868630900281132614"
+        },
+        {
+          "file": "packages/cli/src/editor.ts",
+          "hash": "11895907257304389622"
+        },
+        {
+          "file": "packages/cli/src/index.ts",
+          "hash": "2491066158070308732"
+        },
+        {
+          "file": "packages/cli/src/render-doc.ts",
+          "hash": "12564057849848023014"
+        },
+        {
+          "file": "packages/cli/src/revideo.d.ts",
+          "hash": "7372366011553449461"
+        },
+        {
+          "file": "packages/cli/src/server/download.ts",
+          "hash": "13334796378210332499"
+        },
+        {
+          "file": "packages/cli/src/server/index.ts",
+          "hash": "8802162296978159561"
+        },
+        {
+          "file": "packages/cli/src/server/render.ts",
+          "hash": "9227452951165569297"
+        },
+        {
+          "file": "packages/cli/src/utils.ts",
+          "hash": "3112142669538956077"
+        },
+        {
+          "file": "packages/cli/tsconfig.json",
+          "hash": "15648608057630930208"
+        }
+      ],
+      "@fantoche-dev/template": [
+        {
+          "file": "packages/template/package.json",
+          "hash": "12050593825870321956",
+          "deps": [
+            "@fantoche-dev/ui",
+            "@fantoche-dev/vite-plugin",
+            "@fantoche-dev/2d",
+            "@fantoche-dev/core",
+            "@fantoche-dev/ffmpeg",
+            "@fantoche-dev/renderer"
+          ]
+        },
+        {
+          "file": "packages/template/scramble.gif",
+          "hash": "8945692615787685834"
+        },
+        {
+          "file": "packages/template/src/example.tsx",
+          "hash": "13366583387397120424"
+        },
+        {
+          "file": "packages/template/src/fantoche.d.ts",
+          "hash": "7372366011553449461"
+        },
+        {
+          "file": "packages/template/src/fonts/README.md",
+          "hash": "4801692133334578651"
+        },
+        {
+          "file": "packages/template/src/fonts/roboto-latin-400-normal.woff2",
+          "hash": "10734632019286081677"
+        },
+        {
+          "file": "packages/template/src/fonts/roboto-latin-700-normal.woff2",
+          "hash": "6831153279083575447"
+        },
+        {
+          "file": "packages/template/src/global.css",
+          "hash": "12444294495539798246"
+        },
+        {
+          "file": "packages/template/src/project.ts",
+          "hash": "15189959887074276390"
+        },
+        {
+          "file": "packages/template/src/render.ts",
+          "hash": "277734780357843688"
+        },
+        {
+          "file": "packages/template/src/rubiks-cube.tsx",
+          "hash": "14063020703549473095"
+        },
+        {
+          "file": "packages/template/tsconfig.json",
+          "hash": "6694265520569208456"
+        },
+        {
+          "file": "packages/template/tsdoc.json",
+          "hash": "12825950522565728370"
+        },
+        {
+          "file": "packages/template/vite.config.ts",
+          "hash": "5381600949397571245"
+        }
+      ],
+      "@fantoche-dev/ffmpeg": [
+        {
+          "file": "packages/ffmpeg/package.json",
+          "hash": "11173440457588377297",
+          "deps": [
+            "npm:@types/ffprobe-static",
+            "npm:@types/fluent-ffmpeg",
+            "npm:@types/uuid",
+            "npm:@ffmpeg-installer/ffmpeg",
+            "npm:@ffprobe-installer/ffprobe",
+            "@fantoche-dev/core",
+            "npm:fluent-ffmpeg",
+            "npm:uuid"
+          ]
+        },
+        {
+          "file": "packages/ffmpeg/src/ffmpeg-exporter-server.ts",
+          "hash": "7709030697133112671"
+        },
+        {
+          "file": "packages/ffmpeg/src/generate-audio.ts",
+          "hash": "10084795844441766566"
+        },
+        {
+          "file": "packages/ffmpeg/src/image-stream.ts",
+          "hash": "17526519253760870954"
+        },
+        {
+          "file": "packages/ffmpeg/src/index.ts",
+          "hash": "15805110388765548385"
+        },
+        {
+          "file": "packages/ffmpeg/src/revideo.d.ts",
+          "hash": "7372366011553449461"
+        },
+        {
+          "file": "packages/ffmpeg/src/settings.ts",
+          "hash": "5706546097895174951"
+        },
+        {
+          "file": "packages/ffmpeg/src/utils.ts",
+          "hash": "10055263771148404495"
+        },
+        {
+          "file": "packages/ffmpeg/src/video-frame-extractor.ts",
+          "hash": "12887485458111276191"
+        },
+        {
+          "file": "packages/ffmpeg/tsconfig.json",
+          "hash": "14104880255073933761"
+        }
+      ],
+      "@fantoche-dev/player-react": [
+        {
+          "file": "packages/player-react/package.json",
+          "hash": "18363759494660760066",
+          "deps": [
+            "npm:@tailwindcss/postcss",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:cssnano",
+            "npm:postcss",
+            "npm:postcss-cli",
+            "npm:tailwindcss",
+            "@fantoche-dev/core",
+            "npm:react",
+            "npm:react-dom",
+            "npm:uuid"
+          ]
+        },
+        {
+          "file": "packages/player-react/postcss.config.mjs",
+          "hash": "17798247320022655210"
+        },
+        {
+          "file": "packages/player-react/src/controls.tsx",
+          "hash": "4895760115419078461"
+        },
+        {
+          "file": "packages/player-react/src/global.d.ts",
+          "hash": "338361496026722187"
+        },
+        {
+          "file": "packages/player-react/src/icons.tsx",
+          "hash": "12129808878885289597"
+        },
+        {
+          "file": "packages/player-react/src/index.css",
+          "hash": "15980040263874716897"
+        },
+        {
+          "file": "packages/player-react/src/index.tsx",
+          "hash": "18243949227688220007"
+        },
+        {
+          "file": "packages/player-react/src/internal.ts",
+          "hash": "3864955915300416339"
+        },
+        {
+          "file": "packages/player-react/src/utils.ts",
+          "hash": "15535308753300659917"
+        },
+        {
+          "file": "packages/player-react/tailwind.config.ts",
+          "hash": "16606586968077805831"
+        },
+        {
+          "file": "packages/player-react/tsconfig.json",
+          "hash": "11447796016805924524"
+        }
+      ],
+      "@fantoche-dev/2d": [
+        {
+          "file": "packages/2d/package.json",
+          "hash": "15937094303036122183",
+          "deps": [
+            "npm:@preact/signals",
+            "@fantoche-dev/ui",
+            "npm:@rollup/plugin-commonjs",
+            "npm:@rollup/plugin-node-resolve",
+            "npm:@rollup/plugin-terser",
+            "npm:@rollup/plugin-typescript",
+            "npm:clsx",
+            "npm:jsdom",
+            "npm:preact",
+            "npm:rollup",
+            "npm:rollup-plugin-postcss",
+            "npm:@codemirror/language",
+            "npm:@lezer/common",
+            "npm:@lezer/highlight",
+            "@fantoche-dev/core",
+            "npm:@rive-app/canvas-advanced",
+            "npm:code-fns",
+            "npm:hls.js",
+            "npm:mathjax-full",
+            "npm:mp4box",
+            "npm:parse-svg-path"
+          ]
+        },
+        {
+          "file": "packages/2d/rollup.config.mjs",
+          "hash": "10472818673794280238"
+        },
+        {
+          "file": "packages/2d/rollup.editor.mjs",
+          "hash": "2345271391732226673"
+        },
+        {
+          "file": "packages/2d/src/editor/NodeInspectorConfig.tsx",
+          "hash": "13342712811164824476"
+        },
+        {
+          "file": "packages/2d/src/editor/PreviewOverlayConfig.tsx",
+          "hash": "14681213995919014279"
+        },
+        {
+          "file": "packages/2d/src/editor/Provider.tsx",
+          "hash": "16183728500073248016"
+        },
+        {
+          "file": "packages/2d/src/editor/SceneGraphTabConfig.tsx",
+          "hash": "16305198239608960753"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/CircleIcon.tsx",
+          "hash": "14913422394678543061"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/CodeBlockIcon.tsx",
+          "hash": "17943697317739728992"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/CurveIcon.tsx",
+          "hash": "14022678433921347403"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/GridIcon.tsx",
+          "hash": "13451974305773661413"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/IconMap.ts",
+          "hash": "1741237794400391976"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/ImgIcon.tsx",
+          "hash": "14279673067636333334"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/LayoutIcon.tsx",
+          "hash": "7834108731931160832"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/LineIcon.tsx",
+          "hash": "13921406540200938157"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/NodeIcon.tsx",
+          "hash": "2828621314963899381"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/RayIcon.tsx",
+          "hash": "8168297428264730140"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/RectIcon.tsx",
+          "hash": "2960745956738758797"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/ShapeIcon.tsx",
+          "hash": "11946023209702358027"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/TxtIcon.tsx",
+          "hash": "11655482333388599580"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/VideoIcon.tsx",
+          "hash": "17823366928101381327"
+        },
+        {
+          "file": "packages/2d/src/editor/icons/View2DIcon.tsx",
+          "hash": "1482591211908710039"
+        },
+        {
+          "file": "packages/2d/src/editor/index.css",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "packages/2d/src/editor/index.ts",
+          "hash": "6407821394951254337"
+        },
+        {
+          "file": "packages/2d/src/editor/tree/DetachedRoot.tsx",
+          "hash": "9088111652507824967"
+        },
+        {
+          "file": "packages/2d/src/editor/tree/NodeElement.tsx",
+          "hash": "2287180419044301324"
+        },
+        {
+          "file": "packages/2d/src/editor/tree/TreeElement.tsx",
+          "hash": "10586293636690204340"
+        },
+        {
+          "file": "packages/2d/src/editor/tree/TreeRoot.tsx",
+          "hash": "10702517732936491740"
+        },
+        {
+          "file": "packages/2d/src/editor/tree/ViewRoot.tsx",
+          "hash": "16648923203459786098"
+        },
+        {
+          "file": "packages/2d/src/editor/tree/index.module.scss",
+          "hash": "3949719877357010240"
+        },
+        {
+          "file": "packages/2d/src/editor/tree/index.ts",
+          "hash": "3745862485617608471"
+        },
+        {
+          "file": "packages/2d/src/editor/tsconfig.build.json",
+          "hash": "6923351010238929138"
+        },
+        {
+          "file": "packages/2d/src/editor/tsconfig.json",
+          "hash": "10449695129393900108"
+        },
+        {
+          "file": "packages/2d/src/editor/tsdoc.json",
+          "hash": "11214638638706876313"
+        },
+        {
+          "file": "packages/2d/src/editor/vite-env.d.ts",
+          "hash": "12946363841406869089"
+        },
+        {
+          "file": "packages/2d/src/lib/code/CodeCursor.ts",
+          "hash": "14885075665462519354"
+        },
+        {
+          "file": "packages/2d/src/lib/code/CodeDiffer.ts",
+          "hash": "12585279861614189988"
+        },
+        {
+          "file": "packages/2d/src/lib/code/CodeFragment.ts",
+          "hash": "2637323611289594834"
+        },
+        {
+          "file": "packages/2d/src/lib/code/CodeHighlighter.ts",
+          "hash": "17760559384530402136"
+        },
+        {
+          "file": "packages/2d/src/lib/code/CodeMetrics.ts",
+          "hash": "11886981673726115363"
+        },
+        {
+          "file": "packages/2d/src/lib/code/CodeRange.test.ts",
+          "hash": "1928468435571350225"
+        },
+        {
+          "file": "packages/2d/src/lib/code/CodeRange.ts",
+          "hash": "14254920822636250119"
+        },
+        {
+          "file": "packages/2d/src/lib/code/CodeScope.ts",
+          "hash": "12778414994005207698"
+        },
+        {
+          "file": "packages/2d/src/lib/code/CodeSelection.ts",
+          "hash": "5405743514964828386"
+        },
+        {
+          "file": "packages/2d/src/lib/code/CodeSignal.ts",
+          "hash": "10899872567007815212"
+        },
+        {
+          "file": "packages/2d/src/lib/code/CodeTokenizer.ts",
+          "hash": "6538179932069213758"
+        },
+        {
+          "file": "packages/2d/src/lib/code/DefaultHighlightStyle.ts",
+          "hash": "1927830296205835629"
+        },
+        {
+          "file": "packages/2d/src/lib/code/LezerHighlighter.ts",
+          "hash": "12894863304698181056"
+        },
+        {
+          "file": "packages/2d/src/lib/code/diff.test.ts",
+          "hash": "1878322429965728158"
+        },
+        {
+          "file": "packages/2d/src/lib/code/diff.ts",
+          "hash": "18093284024789696092"
+        },
+        {
+          "file": "packages/2d/src/lib/code/extractRange.ts",
+          "hash": "16518543616160954885"
+        },
+        {
+          "file": "packages/2d/src/lib/code/index.ts",
+          "hash": "3411755511518928309"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Audio.ts",
+          "hash": "3527787998300951447"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Bezier.ts",
+          "hash": "13952418008189669480"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Circle.ts",
+          "hash": "8283061092397757442"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Code.ts",
+          "hash": "3540695872141700433"
+        },
+        {
+          "file": "packages/2d/src/lib/components/CodeBlock.ts",
+          "hash": "15779429712018948958"
+        },
+        {
+          "file": "packages/2d/src/lib/components/CubicBezier.ts",
+          "hash": "2257127787090892222"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Curve.ts",
+          "hash": "17929098678928936176"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Grid.ts",
+          "hash": "930202898616870496"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Icon.ts",
+          "hash": "17068434946232867200"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Img.ts",
+          "hash": "2370610146033142451"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Knot.ts",
+          "hash": "15908006402161955471"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Latex.ts",
+          "hash": "11083233097441700754"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Layout.ts",
+          "hash": "301729159674553594"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Line.ts",
+          "hash": "644937715507392415"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Media.ts",
+          "hash": "10160502042327500909"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Node.ts",
+          "hash": "13593215744612794616"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Path.ts",
+          "hash": "7432699490785482106"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Polygon.ts",
+          "hash": "15042089739587896146"
+        },
+        {
+          "file": "packages/2d/src/lib/components/QuadBezier.ts",
+          "hash": "13904832012061282612"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Ray.ts",
+          "hash": "16528991606108902296"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Rect.ts",
+          "hash": "17988611051165303084"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Rive.ts",
+          "hash": "7908373359801988961"
+        },
+        {
+          "file": "packages/2d/src/lib/components/SVG.ts",
+          "hash": "2706436156785980170"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Shape.ts",
+          "hash": "8246094265378536023"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Spline.ts",
+          "hash": "2472708588303555997"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Txt.test.tsx",
+          "hash": "11258749360206954221"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Txt.ts",
+          "hash": "226008444377885917"
+        },
+        {
+          "file": "packages/2d/src/lib/components/TxtLeaf.ts",
+          "hash": "746443329352960349"
+        },
+        {
+          "file": "packages/2d/src/lib/components/Video.ts",
+          "hash": "11842314407704147333"
+        },
+        {
+          "file": "packages/2d/src/lib/components/View2D.ts",
+          "hash": "15688623922590996937"
+        },
+        {
+          "file": "packages/2d/src/lib/components/__tests__/children.test.tsx",
+          "hash": "6760165619864929439"
+        },
+        {
+          "file": "packages/2d/src/lib/components/__tests__/clone.test.tsx",
+          "hash": "9935078330817327700"
+        },
+        {
+          "file": "packages/2d/src/lib/components/__tests__/generatorTest.ts",
+          "hash": "8931732220823908214"
+        },
+        {
+          "file": "packages/2d/src/lib/components/__tests__/mockScene2D.ts",
+          "hash": "10980458610670026760"
+        },
+        {
+          "file": "packages/2d/src/lib/components/__tests__/query.test.tsx",
+          "hash": "10526444481259116589"
+        },
+        {
+          "file": "packages/2d/src/lib/components/__tests__/state.test.tsx",
+          "hash": "12098696050870069993"
+        },
+        {
+          "file": "packages/2d/src/lib/components/index.ts",
+          "hash": "7942299646929803839"
+        },
+        {
+          "file": "packages/2d/src/lib/components/types.ts",
+          "hash": "17106651369620802013"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/ArcSegment.ts",
+          "hash": "9116840832574237404"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/CircleSegment.ts",
+          "hash": "11222982808557389095"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/CubicBezierSegment.ts",
+          "hash": "16482630062400881642"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/CurveDrawingInfo.ts",
+          "hash": "14977190489185397542"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/CurvePoint.ts",
+          "hash": "18379057390220476002"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/CurveProfile.ts",
+          "hash": "18149614401299934754"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/KnotInfo.ts",
+          "hash": "17715890009941404749"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/LineSegment.ts",
+          "hash": "15815599561687582464"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/Polynomial.ts",
+          "hash": "10937006622363343921"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/Polynomial2D.ts",
+          "hash": "3866077124484417045"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/PolynomialSegment.ts",
+          "hash": "5505263434194337001"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/QuadBezierSegment.ts",
+          "hash": "8978158712200095067"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/Segment.ts",
+          "hash": "6143715665966088478"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/UniformPolynomialCurveSampler.ts",
+          "hash": "13881128456505324990"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/createCurveProfileLerp.ts",
+          "hash": "606538384376355746"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/getBezierSplineProfile.ts",
+          "hash": "16738478639428004975"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/getCircleProfile.ts",
+          "hash": "4262833402455227807"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/getPathProfile.ts",
+          "hash": "14240357280976888453"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/getPointAtDistance.ts",
+          "hash": "10008410393890082382"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/getPolylineProfile.test.ts",
+          "hash": "9671540633470907451"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/getPolylineProfile.ts",
+          "hash": "6617844280113298179"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/getRectProfile.ts",
+          "hash": "11901220383495235834"
+        },
+        {
+          "file": "packages/2d/src/lib/curves/index.ts",
+          "hash": "6867542896394063622"
+        },
+        {
+          "file": "packages/2d/src/lib/decorators/canvasStyleSignal.ts",
+          "hash": "13254562805909307394"
+        },
+        {
+          "file": "packages/2d/src/lib/decorators/colorSignal.ts",
+          "hash": "6211139088010982894"
+        },
+        {
+          "file": "packages/2d/src/lib/decorators/compound.ts",
+          "hash": "13638715438840999162"
+        },
+        {
+          "file": "packages/2d/src/lib/decorators/computed.ts",
+          "hash": "13111759165559847023"
+        },
+        {
+          "file": "packages/2d/src/lib/decorators/defaultStyle.ts",
+          "hash": "8805524463692617169"
+        },
+        {
+          "file": "packages/2d/src/lib/decorators/filtersSignal.ts",
+          "hash": "1199683941831283880"
+        },
+        {
+          "file": "packages/2d/src/lib/decorators/index.ts",
+          "hash": "15285217395015679124"
+        },
+        {
+          "file": "packages/2d/src/lib/decorators/initializers.ts",
+          "hash": "15539578377271717407"
+        },
+        {
+          "file": "packages/2d/src/lib/decorators/nodeName.ts",
+          "hash": "7932232020756363244"
+        },
+        {
+          "file": "packages/2d/src/lib/decorators/signal.test.ts",
+          "hash": "14984320104319015878"
+        },
+        {
+          "file": "packages/2d/src/lib/decorators/signal.ts",
+          "hash": "7112824729347584545"
+        },
+        {
+          "file": "packages/2d/src/lib/decorators/spacingSignal.ts",
+          "hash": "3731481155359356844"
+        },
+        {
+          "file": "packages/2d/src/lib/decorators/vector2Signal.ts",
+          "hash": "14321520368767628026"
+        },
+        {
+          "file": "packages/2d/src/lib/globals.d.ts",
+          "hash": "7743389992830506894"
+        },
+        {
+          "file": "packages/2d/src/lib/index.ts",
+          "hash": "14569961142259506648"
+        },
+        {
+          "file": "packages/2d/src/lib/jsx-dev-runtime.ts",
+          "hash": "16309918129243537113"
+        },
+        {
+          "file": "packages/2d/src/lib/jsx-runtime.ts",
+          "hash": "2896548041878300740"
+        },
+        {
+          "file": "packages/2d/src/lib/parse-svg-path.d.ts",
+          "hash": "17686988009938699957"
+        },
+        {
+          "file": "packages/2d/src/lib/partials/Filter.ts",
+          "hash": "6051125332274475646"
+        },
+        {
+          "file": "packages/2d/src/lib/partials/Gradient.ts",
+          "hash": "2120510576604902672"
+        },
+        {
+          "file": "packages/2d/src/lib/partials/Pattern.ts",
+          "hash": "140262539912094223"
+        },
+        {
+          "file": "packages/2d/src/lib/partials/ShaderConfig.ts",
+          "hash": "10955551207599150064"
+        },
+        {
+          "file": "packages/2d/src/lib/partials/index.ts",
+          "hash": "7541631398341279327"
+        },
+        {
+          "file": "packages/2d/src/lib/partials/types.ts",
+          "hash": "15537912081523948087"
+        },
+        {
+          "file": "packages/2d/src/lib/scenes/Scene2D.ts",
+          "hash": "10071666574681015623"
+        },
+        {
+          "file": "packages/2d/src/lib/scenes/index.ts",
+          "hash": "8902166289265473891"
+        },
+        {
+          "file": "packages/2d/src/lib/scenes/makeScene2D.ts",
+          "hash": "600885671567625754"
+        },
+        {
+          "file": "packages/2d/src/lib/scenes/useScene2D.ts",
+          "hash": "14984622664633504504"
+        },
+        {
+          "file": "packages/2d/src/lib/tsconfig.build.json",
+          "hash": "12553462384988606753"
+        },
+        {
+          "file": "packages/2d/src/lib/tsconfig.json",
+          "hash": "8634811183611913814"
+        },
+        {
+          "file": "packages/2d/src/lib/tsdoc.json",
+          "hash": "11214638638706876313"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/CanvasUtils.ts",
+          "hash": "5107172331471860474"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/diff.test.ts",
+          "hash": "5979463161765414063"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/diff.ts",
+          "hash": "13714791886698934894"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/index.ts",
+          "hash": "451896022113064572"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/is.ts",
+          "hash": "16714314553756534521"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/makeSignalExtensions.ts",
+          "hash": "15046560105699509060"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/video/declarations.d.ts",
+          "hash": "11894662231822307007"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/video/ffmpeg-client.ts",
+          "hash": "4656197882156868295"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/video/mp4-parser-manager.ts",
+          "hash": "2566576316235954231"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/video/parser/index.ts",
+          "hash": "4207657605856529199"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/video/parser/parser.ts",
+          "hash": "7140701666095104614"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/video/parser/sampler.ts",
+          "hash": "14945496838555670190"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/video/parser/segment.ts",
+          "hash": "15017046926270144929"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/video/parser/sink.ts",
+          "hash": "257951801623758642"
+        },
+        {
+          "file": "packages/2d/src/lib/utils/video/parser/utils.ts",
+          "hash": "4343058069332552298"
+        },
+        {
+          "file": "packages/2d/src/tsconfig.base.json",
+          "hash": "100184625353221596"
+        },
+        {
+          "file": "packages/2d/src/tsconfig.build.json",
+          "hash": "10260366540527455645"
+        },
+        {
+          "file": "packages/2d/src/tsconfig.json",
+          "hash": "9638964785734650310"
+        },
+        {
+          "file": "packages/2d/tsconfig.project.json",
+          "hash": "13260318778220321312"
+        },
+        {
+          "file": "packages/2d/vitest.config.ts",
+          "hash": "12877235578649214150"
+        }
+      ],
+      "@fantoche-dev/player": [
+        {
+          "file": "packages/player/index.html",
+          "hash": "16204341763295131236"
+        },
+        {
+          "file": "packages/player/package.json",
+          "hash": "18155529876101483478",
+          "deps": [
+            "@fantoche-dev/core",
+            "npm:sass",
+            "npm:terser"
+          ]
+        },
+        {
+          "file": "packages/player/src/global.d.ts",
+          "hash": "9124056114708553990"
+        },
+        {
+          "file": "packages/player/src/main.ts",
+          "hash": "16814257603095724774"
+        },
+        {
+          "file": "packages/player/src/styles.scss",
+          "hash": "18036163595380114645"
+        },
+        {
+          "file": "packages/player/src/template.html",
+          "hash": "8590584799895454154"
+        },
+        {
+          "file": "packages/player/tsconfig.json",
+          "hash": "1407930795785457861"
+        },
+        {
+          "file": "packages/player/tsdoc.json",
+          "hash": "12825950522565728370"
+        },
+        {
+          "file": "packages/player/types/main.d.ts",
+          "hash": "2756582058429590607"
+        },
+        {
+          "file": "packages/player/vite.config.ts",
+          "hash": "18116334027521671808"
+        }
+      ],
+      "@fantoche-dev/ui": [
+        {
+          "file": "packages/ui/editor.html",
+          "hash": "15239895751297373684"
+        },
+        {
+          "file": "packages/ui/index.html",
+          "hash": "1071964832489234583"
+        },
+        {
+          "file": "packages/ui/package.json",
+          "hash": "1485733503202106972",
+          "deps": [
+            "npm:@preact/preset-vite",
+            "npm:clsx",
+            "npm:highlight.js",
+            "npm:sass",
+            "npm:source-map-js",
+            "npm:vite-plugin-dts",
+            "npm:@preact/signals",
+            "@fantoche-dev/core",
+            "npm:preact"
+          ]
+        },
+        {
+          "file": "packages/ui/project.html",
+          "hash": "15802393214908729066"
+        },
+        {
+          "file": "packages/ui/src/Editor.module.scss",
+          "hash": "8624190023405465980"
+        },
+        {
+          "file": "packages/ui/src/Editor.tsx",
+          "hash": "5200913254143431902"
+        },
+        {
+          "file": "packages/ui/src/Index.module.scss",
+          "hash": "8430021388138628694"
+        },
+        {
+          "file": "packages/ui/src/ProjectSelection.tsx",
+          "hash": "8387454960878447913"
+        },
+        {
+          "file": "packages/ui/src/components/animations/borderHighlight.ts",
+          "hash": "8820452277709586639"
+        },
+        {
+          "file": "packages/ui/src/components/animations/emphasize.ts",
+          "hash": "17456720185048897957"
+        },
+        {
+          "file": "packages/ui/src/components/animations/highlight.ts",
+          "hash": "1491000857506679027"
+        },
+        {
+          "file": "packages/ui/src/components/animations/index.ts",
+          "hash": "13562279516375044787"
+        },
+        {
+          "file": "packages/ui/src/components/animations/shake.ts",
+          "hash": "1380469642727587225"
+        },
+        {
+          "file": "packages/ui/src/components/console/Console.module.scss",
+          "hash": "17228153458418732568"
+        },
+        {
+          "file": "packages/ui/src/components/console/Console.tsx",
+          "hash": "70042587477400486"
+        },
+        {
+          "file": "packages/ui/src/components/console/Log.tsx",
+          "hash": "9082007366250123667"
+        },
+        {
+          "file": "packages/ui/src/components/console/SourceCodeFrame.tsx",
+          "hash": "4257675216999994355"
+        },
+        {
+          "file": "packages/ui/src/components/console/StackTrace.tsx",
+          "hash": "7976772547919674548"
+        },
+        {
+          "file": "packages/ui/src/components/console/index.ts",
+          "hash": "8512421635855053709"
+        },
+        {
+          "file": "packages/ui/src/components/controls/Button.tsx",
+          "hash": "264784737923372013"
+        },
+        {
+          "file": "packages/ui/src/components/controls/ButtonCheckbox.tsx",
+          "hash": "5322421291138325297"
+        },
+        {
+          "file": "packages/ui/src/components/controls/ButtonSelect.tsx",
+          "hash": "2303088735328633798"
+        },
+        {
+          "file": "packages/ui/src/components/controls/Checkbox.tsx",
+          "hash": "12309449573054563953"
+        },
+        {
+          "file": "packages/ui/src/components/controls/Controls.module.scss",
+          "hash": "13909258153520673189"
+        },
+        {
+          "file": "packages/ui/src/components/controls/Group.tsx",
+          "hash": "13878782828078326135"
+        },
+        {
+          "file": "packages/ui/src/components/controls/IconButton.tsx",
+          "hash": "18239142353273944307"
+        },
+        {
+          "file": "packages/ui/src/components/controls/IconCheckbox.tsx",
+          "hash": "10474379286681380185"
+        },
+        {
+          "file": "packages/ui/src/components/controls/Input.tsx",
+          "hash": "17976759927100222746"
+        },
+        {
+          "file": "packages/ui/src/components/controls/InputSelect.tsx",
+          "hash": "13958608160094129187"
+        },
+        {
+          "file": "packages/ui/src/components/controls/Label.tsx",
+          "hash": "16860441930238742437"
+        },
+        {
+          "file": "packages/ui/src/components/controls/NumberInput.tsx",
+          "hash": "7006293315327288813"
+        },
+        {
+          "file": "packages/ui/src/components/controls/NumberInputSelect.tsx",
+          "hash": "13378281004969489191"
+        },
+        {
+          "file": "packages/ui/src/components/controls/Pill.tsx",
+          "hash": "1683476986782835184"
+        },
+        {
+          "file": "packages/ui/src/components/controls/ReadOnlyInput.tsx",
+          "hash": "5992792608665631075"
+        },
+        {
+          "file": "packages/ui/src/components/controls/Select.tsx",
+          "hash": "5152258126393162318"
+        },
+        {
+          "file": "packages/ui/src/components/controls/Separator.tsx",
+          "hash": "9490694964589363695"
+        },
+        {
+          "file": "packages/ui/src/components/controls/Toggle.tsx",
+          "hash": "5949871459212109844"
+        },
+        {
+          "file": "packages/ui/src/components/controls/index.ts",
+          "hash": "544139920384080694"
+        },
+        {
+          "file": "packages/ui/src/components/fields/ArrayField.tsx",
+          "hash": "9270618515820202551"
+        },
+        {
+          "file": "packages/ui/src/components/fields/AutoField.tsx",
+          "hash": "11653136590008182721"
+        },
+        {
+          "file": "packages/ui/src/components/fields/Expandable.module.scss",
+          "hash": "5037988635818535903"
+        },
+        {
+          "file": "packages/ui/src/components/fields/Expandable.tsx",
+          "hash": "2388479993795022183"
+        },
+        {
+          "file": "packages/ui/src/components/fields/Layout.module.scss",
+          "hash": "2429190437639925701"
+        },
+        {
+          "file": "packages/ui/src/components/fields/Layout.tsx",
+          "hash": "2224092516196595169"
+        },
+        {
+          "file": "packages/ui/src/components/fields/NumberField.tsx",
+          "hash": "541583816776915094"
+        },
+        {
+          "file": "packages/ui/src/components/fields/SpacingField.tsx",
+          "hash": "9639766834552370826"
+        },
+        {
+          "file": "packages/ui/src/components/fields/UnknownField.tsx",
+          "hash": "13442827377204770137"
+        },
+        {
+          "file": "packages/ui/src/components/fields/Vector2Field.tsx",
+          "hash": "17960659309926437118"
+        },
+        {
+          "file": "packages/ui/src/components/fields/index.ts",
+          "hash": "3219129614929004004"
+        },
+        {
+          "file": "packages/ui/src/components/footer/Footer.module.scss",
+          "hash": "1520548097066792392"
+        },
+        {
+          "file": "packages/ui/src/components/footer/Footer.tsx",
+          "hash": "4127663506403179468"
+        },
+        {
+          "file": "packages/ui/src/components/footer/Versions.module.scss",
+          "hash": "6340348904203156638"
+        },
+        {
+          "file": "packages/ui/src/components/footer/Versions.tsx",
+          "hash": "17582671874805104741"
+        },
+        {
+          "file": "packages/ui/src/components/footer/index.ts",
+          "hash": "13217032514544095680"
+        },
+        {
+          "file": "packages/ui/src/components/icons/AccountTree.tsx",
+          "hash": "9365350037420472239"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Add.tsx",
+          "hash": "6103176096838196367"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Bug.tsx",
+          "hash": "10819345616897493422"
+        },
+        {
+          "file": "packages/ui/src/components/icons/ChevronRight.tsx",
+          "hash": "11447351889194985661"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Clear.tsx",
+          "hash": "8077848013870408650"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Close.tsx",
+          "hash": "2090829284229631014"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Colorize.tsx",
+          "hash": "5569830536599562879"
+        },
+        {
+          "file": "packages/ui/src/components/icons/DragIndicator.tsx",
+          "hash": "17652639766357963401"
+        },
+        {
+          "file": "packages/ui/src/components/icons/FastForward.tsx",
+          "hash": "620168740984985721"
+        },
+        {
+          "file": "packages/ui/src/components/icons/FastRewind.tsx",
+          "hash": "15189894328011155285"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Fullscreen.tsx",
+          "hash": "13151408274434561295"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Grid.tsx",
+          "hash": "12731324505083989867"
+        },
+        {
+          "file": "packages/ui/src/components/icons/HourglassBottom.tsx",
+          "hash": "9117017853697795201"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Locate.tsx",
+          "hash": "11410136939537508874"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Movie.tsx",
+          "hash": "9398426038340941274"
+        },
+        {
+          "file": "packages/ui/src/components/icons/OpenInNew.tsx",
+          "hash": "17177944847558471115"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Pause.tsx",
+          "hash": "4901197665796578554"
+        },
+        {
+          "file": "packages/ui/src/components/icons/PhotoCamera.tsx",
+          "hash": "1271823131685821204"
+        },
+        {
+          "file": "packages/ui/src/components/icons/PlayArrow.tsx",
+          "hash": "8900699598560112991"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Recenter.tsx",
+          "hash": "14419626073284727451"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Repeat.tsx",
+          "hash": "17273532309106257169"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Revideo.tsx",
+          "hash": "15606384693403092166"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Schedule.tsx",
+          "hash": "13481937771442879537"
+        },
+        {
+          "file": "packages/ui/src/components/icons/School.tsx",
+          "hash": "7365586720985631968"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Science.tsx",
+          "hash": "11907606086202715906"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Settings.tsx",
+          "hash": "12872601181096021328"
+        },
+        {
+          "file": "packages/ui/src/components/icons/SkipNext.tsx",
+          "hash": "8945165529789779352"
+        },
+        {
+          "file": "packages/ui/src/components/icons/SkipPrevious.tsx",
+          "hash": "10855181777641515884"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Tune.tsx",
+          "hash": "16362678600753150326"
+        },
+        {
+          "file": "packages/ui/src/components/icons/UnfoldMore.tsx",
+          "hash": "4789107431100720168"
+        },
+        {
+          "file": "packages/ui/src/components/icons/VideoSettings.tsx",
+          "hash": "7097213360328147437"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Videocam.tsx",
+          "hash": "16470078869695355657"
+        },
+        {
+          "file": "packages/ui/src/components/icons/VolumeOff.tsx",
+          "hash": "9470351784186776408"
+        },
+        {
+          "file": "packages/ui/src/components/icons/VolumeOn.tsx",
+          "hash": "6246176893788364465"
+        },
+        {
+          "file": "packages/ui/src/components/icons/Warning.tsx",
+          "hash": "1417964705025533139"
+        },
+        {
+          "file": "packages/ui/src/components/icons/index.ts",
+          "hash": "364779582640373798"
+        },
+        {
+          "file": "packages/ui/src/components/layout/Collapse.module.scss",
+          "hash": "11123980514544750460"
+        },
+        {
+          "file": "packages/ui/src/components/layout/Collapse.tsx",
+          "hash": "8060990288266583331"
+        },
+        {
+          "file": "packages/ui/src/components/layout/ElementSwitch.tsx",
+          "hash": "4130917990156992625"
+        },
+        {
+          "file": "packages/ui/src/components/layout/Header.module.scss",
+          "hash": "11471867721882380964"
+        },
+        {
+          "file": "packages/ui/src/components/layout/Header.tsx",
+          "hash": "15513085770320042308"
+        },
+        {
+          "file": "packages/ui/src/components/layout/Navigation.module.scss",
+          "hash": "5418765094908582258"
+        },
+        {
+          "file": "packages/ui/src/components/layout/Navigation.tsx",
+          "hash": "15976331785563994501"
+        },
+        {
+          "file": "packages/ui/src/components/layout/ResizeableLayout.module.scss",
+          "hash": "107113147374210308"
+        },
+        {
+          "file": "packages/ui/src/components/layout/ResizeableLayout.tsx",
+          "hash": "11737156071729341403"
+        },
+        {
+          "file": "packages/ui/src/components/layout/index.ts",
+          "hash": "3400386306133730441"
+        },
+        {
+          "file": "packages/ui/src/components/playback/CurrentTime.tsx",
+          "hash": "8321905414028325840"
+        },
+        {
+          "file": "packages/ui/src/components/playback/Framerate.tsx",
+          "hash": "2289427992939627454"
+        },
+        {
+          "file": "packages/ui/src/components/playback/Playback.module.scss",
+          "hash": "5558495700423143262"
+        },
+        {
+          "file": "packages/ui/src/components/playback/PlaybackControls.tsx",
+          "hash": "4434355965710244161"
+        },
+        {
+          "file": "packages/ui/src/components/playback/PlaybackProgress.tsx",
+          "hash": "17751845693524832774"
+        },
+        {
+          "file": "packages/ui/src/components/playback/index.ts",
+          "hash": "12883454261264824923"
+        },
+        {
+          "file": "packages/ui/src/components/sidebar/Sidebar.module.scss",
+          "hash": "278701295000982019"
+        },
+        {
+          "file": "packages/ui/src/components/sidebar/Threads.tsx",
+          "hash": "10419531640424462688"
+        },
+        {
+          "file": "packages/ui/src/components/sidebar/index.ts",
+          "hash": "9244071150420637356"
+        },
+        {
+          "file": "packages/ui/src/components/tabs/Badge.tsx",
+          "hash": "5230083366213725250"
+        },
+        {
+          "file": "packages/ui/src/components/tabs/Pane.tsx",
+          "hash": "11285264199334328851"
+        },
+        {
+          "file": "packages/ui/src/components/tabs/Tabs.module.scss",
+          "hash": "12753280352392350246"
+        },
+        {
+          "file": "packages/ui/src/components/tabs/Tabs.tsx",
+          "hash": "8663354449923657815"
+        },
+        {
+          "file": "packages/ui/src/components/tabs/index.ts",
+          "hash": "12372172185423649485"
+        },
+        {
+          "file": "packages/ui/src/components/timeline/Playhead.tsx",
+          "hash": "14791589956543734458"
+        },
+        {
+          "file": "packages/ui/src/components/timeline/RangeSelector.tsx",
+          "hash": "2521388284052855331"
+        },
+        {
+          "file": "packages/ui/src/components/timeline/SceneTrack.tsx",
+          "hash": "12677404392410337278"
+        },
+        {
+          "file": "packages/ui/src/components/timeline/SlideTrack.tsx",
+          "hash": "13541418574309380607"
+        },
+        {
+          "file": "packages/ui/src/components/timeline/Timeline.module.scss",
+          "hash": "7556399700457921007"
+        },
+        {
+          "file": "packages/ui/src/components/timeline/Timeline.tsx",
+          "hash": "3913910603435997212"
+        },
+        {
+          "file": "packages/ui/src/components/timeline/Timestamps.tsx",
+          "hash": "4654935137011937024"
+        },
+        {
+          "file": "packages/ui/src/components/timeline/index.ts",
+          "hash": "2624931203595198349"
+        },
+        {
+          "file": "packages/ui/src/components/viewport/ColorPicker.tsx",
+          "hash": "13480645355207565957"
+        },
+        {
+          "file": "packages/ui/src/components/viewport/Coordinates.tsx",
+          "hash": "6057207842901478502"
+        },
+        {
+          "file": "packages/ui/src/components/viewport/EditorPreview.tsx",
+          "hash": "12730563696982284573"
+        },
+        {
+          "file": "packages/ui/src/components/viewport/Inspector.tsx",
+          "hash": "8711574138560990976"
+        },
+        {
+          "file": "packages/ui/src/components/viewport/OverlayCanvas.tsx",
+          "hash": "3953354302394705638"
+        },
+        {
+          "file": "packages/ui/src/components/viewport/PreviewStage.tsx",
+          "hash": "1673385452455583691"
+        },
+        {
+          "file": "packages/ui/src/components/viewport/StageView.tsx",
+          "hash": "12434875578789839094"
+        },
+        {
+          "file": "packages/ui/src/components/viewport/Timestamp.tsx",
+          "hash": "8551162645480766333"
+        },
+        {
+          "file": "packages/ui/src/components/viewport/Viewport.module.scss",
+          "hash": "12475267988265702144"
+        },
+        {
+          "file": "packages/ui/src/components/viewport/Viewport.tsx",
+          "hash": "4973712525022274631"
+        },
+        {
+          "file": "packages/ui/src/components/viewport/index.ts",
+          "hash": "2417318394013140724"
+        },
+        {
+          "file": "packages/ui/src/contexts/application.tsx",
+          "hash": "16831130447997774275"
+        },
+        {
+          "file": "packages/ui/src/contexts/index.ts",
+          "hash": "14849415205163603346"
+        },
+        {
+          "file": "packages/ui/src/contexts/panels.tsx",
+          "hash": "13222149732857238610"
+        },
+        {
+          "file": "packages/ui/src/contexts/shortcuts.tsx",
+          "hash": "18312810352769181510"
+        },
+        {
+          "file": "packages/ui/src/contexts/timeline.tsx",
+          "hash": "6624276589417233604"
+        },
+        {
+          "file": "packages/ui/src/contexts/viewport.ts",
+          "hash": "15087558733077590681"
+        },
+        {
+          "file": "packages/ui/src/global.d.ts",
+          "hash": "9030181902002001232"
+        },
+        {
+          "file": "packages/ui/src/hooks/index.ts",
+          "hash": "11664380234136885918"
+        },
+        {
+          "file": "packages/ui/src/hooks/useCurrentFrame.ts",
+          "hash": "9187051019998294822"
+        },
+        {
+          "file": "packages/ui/src/hooks/useDocumentEvent.ts",
+          "hash": "8686155338127492556"
+        },
+        {
+          "file": "packages/ui/src/hooks/useDrag.ts",
+          "hash": "3609696306656101496"
+        },
+        {
+          "file": "packages/ui/src/hooks/useDuration.ts",
+          "hash": "6714411665722636509"
+        },
+        {
+          "file": "packages/ui/src/hooks/useFormattedNumber.tsx",
+          "hash": "1791165672528659288"
+        },
+        {
+          "file": "packages/ui/src/hooks/useHover.ts",
+          "hash": "12733905009516918611"
+        },
+        {
+          "file": "packages/ui/src/hooks/useKeyHold.ts",
+          "hash": "4113590047456745315"
+        },
+        {
+          "file": "packages/ui/src/hooks/usePlayerState.ts",
+          "hash": "7335763010411239665"
+        },
+        {
+          "file": "packages/ui/src/hooks/usePlayerTime.ts",
+          "hash": "9441467359695204928"
+        },
+        {
+          "file": "packages/ui/src/hooks/useReducedMotion.ts",
+          "hash": "17398505214340070725"
+        },
+        {
+          "file": "packages/ui/src/hooks/useRendererState.ts",
+          "hash": "1261169222351831179"
+        },
+        {
+          "file": "packages/ui/src/hooks/useScenes.ts",
+          "hash": "17946176129345557316"
+        },
+        {
+          "file": "packages/ui/src/hooks/useSettings.ts",
+          "hash": "10442540746818659555"
+        },
+        {
+          "file": "packages/ui/src/hooks/useShortcut.ts",
+          "hash": "2660816824738351679"
+        },
+        {
+          "file": "packages/ui/src/hooks/useSize.tsx",
+          "hash": "15968471208701304670"
+        },
+        {
+          "file": "packages/ui/src/hooks/useStateChange.ts",
+          "hash": "6636023222240219640"
+        },
+        {
+          "file": "packages/ui/src/hooks/useStorage.ts",
+          "hash": "12983573719726785275"
+        },
+        {
+          "file": "packages/ui/src/hooks/useSubscribable.ts",
+          "hash": "15444761292000549114"
+        },
+        {
+          "file": "packages/ui/src/hooks/useViewportMatrix.ts",
+          "hash": "3798422172256859425"
+        },
+        {
+          "file": "packages/ui/src/img/checkmark.svg",
+          "hash": "7237782654941080809"
+        },
+        {
+          "file": "packages/ui/src/img/dropdown-light.svg",
+          "hash": "9530317335153955351"
+        },
+        {
+          "file": "packages/ui/src/img/dropdown.svg",
+          "hash": "5123424864754869583"
+        },
+        {
+          "file": "packages/ui/src/img/grid.svg",
+          "hash": "13314325700801781765"
+        },
+        {
+          "file": "packages/ui/src/index.scss",
+          "hash": "5033920921190350124"
+        },
+        {
+          "file": "packages/ui/src/main.tsx",
+          "hash": "6959710762527943355"
+        },
+        {
+          "file": "packages/ui/src/plugin/EditorPlugin.ts",
+          "hash": "8060563187605240018"
+        },
+        {
+          "file": "packages/ui/src/plugin/GridPlugin/index.ts",
+          "hash": "12652178867986121946"
+        },
+        {
+          "file": "packages/ui/src/plugin/OverlayWrapper.tsx",
+          "hash": "10180178988428003592"
+        },
+        {
+          "file": "packages/ui/src/plugin/index.module.scss",
+          "hash": "10895022384996091033"
+        },
+        {
+          "file": "packages/ui/src/plugin/index.ts",
+          "hash": "14722088719098766052"
+        },
+        {
+          "file": "packages/ui/src/plugin/makeEditorPlugin.ts",
+          "hash": "1712736882028302970"
+        },
+        {
+          "file": "packages/ui/src/signals/EditorPanel.ts",
+          "hash": "17817013726701461623"
+        },
+        {
+          "file": "packages/ui/src/signals/index.ts",
+          "hash": "16954772204588690025"
+        },
+        {
+          "file": "packages/ui/src/signals/labelClip.ts",
+          "hash": "11866491226909294426"
+        },
+        {
+          "file": "packages/ui/src/signals/projectName.ts",
+          "hash": "17369042770289639153"
+        },
+        {
+          "file": "packages/ui/src/signals/storedSignal.ts",
+          "hash": "327081664970942642"
+        },
+        {
+          "file": "packages/ui/src/utils/LoggerManager.ts",
+          "hash": "256550503580694139"
+        },
+        {
+          "file": "packages/ui/src/utils/clamp.ts",
+          "hash": "13878876918568000644"
+        },
+        {
+          "file": "packages/ui/src/utils/compareVersions.ts",
+          "hash": "16471299058556853549"
+        },
+        {
+          "file": "packages/ui/src/utils/formatDuration.ts",
+          "hash": "18033596636359175607"
+        },
+        {
+          "file": "packages/ui/src/utils/index.ts",
+          "hash": "3547854930887474673"
+        },
+        {
+          "file": "packages/ui/src/utils/localStorage.ts",
+          "hash": "10339927288141914399"
+        },
+        {
+          "file": "packages/ui/src/utils/mouse.ts",
+          "hash": "4772241280825150953"
+        },
+        {
+          "file": "packages/ui/src/utils/openOutputPath.ts",
+          "hash": "16802298580472190034"
+        },
+        {
+          "file": "packages/ui/src/utils/sourceMaps.ts",
+          "hash": "10013190375402374946"
+        },
+        {
+          "file": "packages/ui/src/utils/withLoader.ts",
+          "hash": "3377656115015429373"
+        },
+        {
+          "file": "packages/ui/src/vite-env.d.ts",
+          "hash": "12946363841406869089"
+        },
+        {
+          "file": "packages/ui/tsconfig.json",
+          "hash": "13558400364363245306"
+        },
+        {
+          "file": "packages/ui/tsconfig.plugin.json",
+          "hash": "965216215286019950"
+        },
+        {
+          "file": "packages/ui/tsdoc.json",
+          "hash": "12825950522565728370"
+        },
+        {
+          "file": "packages/ui/types/main.d.ts",
+          "hash": "1000175454957598191"
+        },
+        {
+          "file": "packages/ui/vite.config.ts",
+          "hash": "15400139627612808699"
+        },
+        {
+          "file": "packages/ui/vite.showcase.ts",
+          "hash": "9115488285866168730"
+        }
+      ],
+      "@fantoche-dev/docs": [
+        {
+          "file": "packages/docs/.gitignore",
+          "hash": "36508400688034506"
+        },
+        {
+          "file": "packages/docs/README.md",
+          "hash": "12121362457657359525"
+        },
+        {
+          "file": "packages/docs/global.d.ts",
+          "hash": "17091395503427856517"
+        },
+        {
+          "file": "packages/docs/mdx-components.js",
+          "hash": "2643110068235472156"
+        },
+        {
+          "file": "packages/docs/next-env.d.ts",
+          "hash": "2517811901510882550"
+        },
+        {
+          "file": "packages/docs/next.config.ts",
+          "hash": "9035141397668383149"
+        },
+        {
+          "file": "packages/docs/package.json",
+          "hash": "9605648257599789981",
+          "deps": [
+            "@fantoche-dev/2d",
+            "@fantoche-dev/core",
+            "npm:@tailwindcss/postcss",
+            "npm:@types/babel__standalone",
+            "npm:@tailwindcss/typography",
+            "npm:@types/node@22.13.10",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:pagefind",
+            "npm:tailwindcss",
+            "npm:tw-animate-css",
+            "npm:typedoc",
+            "npm:typedoc-plugin-frontmatter",
+            "npm:typedoc-plugin-markdown",
+            "npm:@babel/standalone",
+            "npm:@codemirror/commands",
+            "npm:@codemirror/lang-javascript",
+            "npm:@codemirror/language",
+            "npm:@codemirror/state",
+            "npm:@codemirror/view",
+            "npm:@lezer/highlight",
+            "npm:@lezer/javascript",
+            "npm:@radix-ui/react-slot",
+            "npm:codemirror",
+            "npm:@theguild/remark-mermaid",
+            "npm:class-variance-authority",
+            "npm:clsx",
+            "npm:mdast-util-from-markdown",
+            "npm:mdast-util-gfm",
+            "npm:micromark-extension-gfm",
+            "npm:next",
+            "npm:nextra",
+            "npm:nextra-theme-docs",
+            "npm:react",
+            "npm:react-dom",
+            "npm:tailwind-merge",
+            "npm:unist-util-visit"
+          ]
+        },
+        {
+          "file": "packages/docs/postcss.config.mjs",
+          "hash": "9351023963424765230"
+        },
+        {
+          "file": "packages/docs/prettier.config.js",
+          "hash": "17912484242729769017"
+        },
+        {
+          "file": "packages/docs/public/img/banner.png",
+          "hash": "10110975408784424254"
+        },
+        {
+          "file": "packages/docs/public/img/discord-icon-dark.svg",
+          "hash": "14095250348776794656"
+        },
+        {
+          "file": "packages/docs/public/img/discord-icon.svg",
+          "hash": "11920719796754660215"
+        },
+        {
+          "file": "packages/docs/public/img/favicon.svg",
+          "hash": "4874579861374546674"
+        },
+        {
+          "file": "packages/docs/public/img/github-icon-dark.svg",
+          "hash": "16517003429553552017"
+        },
+        {
+          "file": "packages/docs/public/img/github-icon.svg",
+          "hash": "11506445085382729958"
+        },
+        {
+          "file": "packages/docs/public/img/logo.svg",
+          "hash": "10653282638336880385"
+        },
+        {
+          "file": "packages/docs/public/img/logo_dark.svg",
+          "hash": "4735908874883469712"
+        },
+        {
+          "file": "packages/docs/public/img/logpayload-message.png",
+          "hash": "9665043273179287117"
+        },
+        {
+          "file": "packages/docs/public/img/media/editor-audio-track-delayed.png",
+          "hash": "5765377225657938111"
+        },
+        {
+          "file": "packages/docs/public/img/media/editor-audio-track.png",
+          "hash": "180705995700159041"
+        },
+        {
+          "file": "packages/docs/public/img/media/spline.svg",
+          "hash": "2114070344872335753"
+        },
+        {
+          "file": "packages/docs/public/img/rendering_icon.svg",
+          "hash": "5528697311731060102"
+        },
+        {
+          "file": "packages/docs/public/img/ui.svg",
+          "hash": "6011702707782157190"
+        },
+        {
+          "file": "packages/docs/remark-api-snippet.mjs",
+          "hash": "11614223028158609418"
+        },
+        {
+          "file": "packages/docs/remark-docs-links.mjs",
+          "hash": "15220973675297130082"
+        },
+        {
+          "file": "packages/docs/remark-fiddle.mjs",
+          "hash": "16052931646753655019"
+        },
+        {
+          "file": "packages/docs/scripts/copy-modules.mjs",
+          "hash": "5425364324204715505"
+        },
+        {
+          "file": "packages/docs/scripts/fix-api-links.mjs",
+          "hash": "4862952927621707711"
+        },
+        {
+          "file": "packages/docs/scripts/generate-api.mjs",
+          "hash": "12689850528488680582"
+        },
+        {
+          "file": "packages/docs/src/app/_meta.js",
+          "hash": "18422441042902758113"
+        },
+        {
+          "file": "packages/docs/src/app/apple-icon.png",
+          "hash": "11140399501780304934"
+        },
+        {
+          "file": "packages/docs/src/app/docs/[[...mdxPath]]/page.tsx",
+          "hash": "4820005016826648379"
+        },
+        {
+          "file": "packages/docs/src/app/favicon.ico",
+          "hash": "9633930776982539423"
+        },
+        {
+          "file": "packages/docs/src/app/globals.css",
+          "hash": "1823401328354115859"
+        },
+        {
+          "file": "packages/docs/src/app/icon.png",
+          "hash": "16694918926336423141"
+        },
+        {
+          "file": "packages/docs/src/app/layout.tsx",
+          "hash": "16993493167427852805"
+        },
+        {
+          "file": "packages/docs/src/app/opengraph-image.png",
+          "hash": "16415607456745298002"
+        },
+        {
+          "file": "packages/docs/src/app/page.tsx",
+          "hash": "1912817448447275025"
+        },
+        {
+          "file": "packages/docs/src/app/robots.ts",
+          "hash": "8585377418325794465"
+        },
+        {
+          "file": "packages/docs/src/app/sitemap.ts",
+          "hash": "9404003228269714423"
+        },
+        {
+          "file": "packages/docs/src/components/fiddle/Dropdown.tsx",
+          "hash": "11773290826441605899"
+        },
+        {
+          "file": "packages/docs/src/components/fiddle/SharedPlayer.ts",
+          "hash": "11710606698426128290"
+        },
+        {
+          "file": "packages/docs/src/components/fiddle/autocomplete.ts",
+          "hash": "6268084516636673079"
+        },
+        {
+          "file": "packages/docs/src/components/fiddle/dropdown.module.css",
+          "hash": "3705977949869689028"
+        },
+        {
+          "file": "packages/docs/src/components/fiddle/errorHighlighting.ts",
+          "hash": "5614782922651250584"
+        },
+        {
+          "file": "packages/docs/src/components/fiddle/folding.ts",
+          "hash": "5041767518294289654"
+        },
+        {
+          "file": "packages/docs/src/components/fiddle/icons.tsx",
+          "hash": "2085648999708283425"
+        },
+        {
+          "file": "packages/docs/src/components/fiddle/index.tsx",
+          "hash": "15846815887177053853"
+        },
+        {
+          "file": "packages/docs/src/components/fiddle/parseFiddle.ts",
+          "hash": "8253700256712348257"
+        },
+        {
+          "file": "packages/docs/src/components/fiddle/styles.module.css",
+          "hash": "10010874219405862722"
+        },
+        {
+          "file": "packages/docs/src/components/fiddle/themes.ts",
+          "hash": "4162235906554655880"
+        },
+        {
+          "file": "packages/docs/src/components/fiddle/transformer.ts",
+          "hash": "13322579061162928875"
+        },
+        {
+          "file": "packages/docs/src/components/fiddle/useSubscribable.ts",
+          "hash": "5222300922089842738"
+        },
+        {
+          "file": "packages/docs/src/components/site/buffer.tsx",
+          "hash": "8599273241572666101"
+        },
+        {
+          "file": "packages/docs/src/components/site/footer.tsx",
+          "hash": "9260002656782283217"
+        },
+        {
+          "file": "packages/docs/src/components/site/github-icon.tsx",
+          "hash": "10910494802001508284"
+        },
+        {
+          "file": "packages/docs/src/components/site/header.tsx",
+          "hash": "4754006288405017105"
+        },
+        {
+          "file": "packages/docs/src/components/site/logo.tsx",
+          "hash": "2128466527974748351"
+        },
+        {
+          "file": "packages/docs/src/components/site/page-hero.tsx",
+          "hash": "12731486929079270253"
+        },
+        {
+          "file": "packages/docs/src/components/site/revideo-import-map.tsx",
+          "hash": "702771705418720201"
+        },
+        {
+          "file": "packages/docs/src/components/site/side-bordered.tsx",
+          "hash": "6492722950623903840"
+        },
+        {
+          "file": "packages/docs/src/components/ui/button.tsx",
+          "hash": "5782499481595033703"
+        },
+        {
+          "file": "packages/docs/src/components/ui/enter-icon.tsx",
+          "hash": "4976980155674774559"
+        },
+        {
+          "file": "packages/docs/src/content/_meta.js",
+          "hash": "10871080560345162637"
+        },
+        {
+          "file": "packages/docs/src/content/animations/_meta.js",
+          "hash": "3513303850261136547"
+        },
+        {
+          "file": "packages/docs/src/content/animations/code-animations.mdx",
+          "hash": "18071616435940775539"
+        },
+        {
+          "file": "packages/docs/src/content/animations/configuration.mdx",
+          "hash": "1861643426397444066"
+        },
+        {
+          "file": "packages/docs/src/content/animations/custom-components.mdx",
+          "hash": "6625641075071037690"
+        },
+        {
+          "file": "packages/docs/src/content/animations/custom-font.mdx",
+          "hash": "4066695599300905921"
+        },
+        {
+          "file": "packages/docs/src/content/animations/experimental.mdx",
+          "hash": "6004033992301285063"
+        },
+        {
+          "file": "packages/docs/src/content/animations/filters-and-effects.mdx",
+          "hash": "17041185754700789608"
+        },
+        {
+          "file": "packages/docs/src/content/animations/flow.mdx",
+          "hash": "16171041674819484174"
+        },
+        {
+          "file": "packages/docs/src/content/animations/hierarchy.mdx",
+          "hash": "15329629631036458876"
+        },
+        {
+          "file": "packages/docs/src/content/animations/layouts.mdx",
+          "hash": "5081407559035062736"
+        },
+        {
+          "file": "packages/docs/src/content/animations/logging.mdx",
+          "hash": "9026030896979600497"
+        },
+        {
+          "file": "packages/docs/src/content/animations/positioning.mdx",
+          "hash": "7607245062874972804"
+        },
+        {
+          "file": "packages/docs/src/content/animations/project-variables.mdx",
+          "hash": "3594624020156770541"
+        },
+        {
+          "file": "packages/docs/src/content/animations/random.mdx",
+          "hash": "6127767472940978175"
+        },
+        {
+          "file": "packages/docs/src/content/animations/references.mdx",
+          "hash": "443374856262120242"
+        },
+        {
+          "file": "packages/docs/src/content/animations/shaders.mdx",
+          "hash": "5370652636950355018"
+        },
+        {
+          "file": "packages/docs/src/content/animations/signals.mdx",
+          "hash": "13764166884630903667"
+        },
+        {
+          "file": "packages/docs/src/content/animations/spawners.mdx",
+          "hash": "755520230551934591"
+        },
+        {
+          "file": "packages/docs/src/content/animations/time-events.mdx",
+          "hash": "8436179490199936402"
+        },
+        {
+          "file": "packages/docs/src/content/animations/transitions.mdx",
+          "hash": "4319123207162655299"
+        },
+        {
+          "file": "packages/docs/src/content/animations/tweening.mdx",
+          "hash": "6551713956167188565"
+        },
+        {
+          "file": "packages/docs/src/content/api-reference/_meta.js",
+          "hash": "13250793730524128341"
+        },
+        {
+          "file": "packages/docs/src/content/api-reference/index.mdx",
+          "hash": "8965386294649739745"
+        },
+        {
+          "file": "packages/docs/src/content/api-reference/player-react/_meta.js",
+          "hash": "17961915299400273610"
+        },
+        {
+          "file": "packages/docs/src/content/api-reference/player-react/player.mdx",
+          "hash": "17757534341866956476"
+        },
+        {
+          "file": "packages/docs/src/content/api-reference/renderer/_meta.js",
+          "hash": "13977792503843877943"
+        },
+        {
+          "file": "packages/docs/src/content/api-reference/renderer/renderPartialVideo.mdx",
+          "hash": "2574420198678900397"
+        },
+        {
+          "file": "packages/docs/src/content/api-reference/renderer/renderVideo.mdx",
+          "hash": "6160761789165313345"
+        },
+        {
+          "file": "packages/docs/src/content/api-reference/revideo-ffmpeg/_meta.js",
+          "hash": "12498850725811162326"
+        },
+        {
+          "file": "packages/docs/src/content/api-reference/revideo-ffmpeg/concatenate-media.mdx",
+          "hash": "3934912973506073810"
+        },
+        {
+          "file": "packages/docs/src/content/api-reference/revideo-ffmpeg/merge-audio-with-video.mdx",
+          "hash": "1353223040334233502"
+        },
+        {
+          "file": "packages/docs/src/content/code-snippets/_meta.js",
+          "hash": "6578276090966982822"
+        },
+        {
+          "file": "packages/docs/src/content/code-snippets/changing-object-size-over-time-with-signals.mdx",
+          "hash": "3870323398484193980"
+        },
+        {
+          "file": "packages/docs/src/content/code-snippets/hls-video.mdx",
+          "hash": "17006442711491426492"
+        },
+        {
+          "file": "packages/docs/src/content/code-snippets/moving-objects.mdx",
+          "hash": "6836909058361522601"
+        },
+        {
+          "file": "packages/docs/src/content/code-snippets/streaming-text.mdx",
+          "hash": "9240041156770853119"
+        },
+        {
+          "file": "packages/docs/src/content/code-snippets/transparent-video.mdx",
+          "hash": "9056641275495162426"
+        },
+        {
+          "file": "packages/docs/src/content/common-issues/_meta.js",
+          "hash": "11711056975472866523"
+        },
+        {
+          "file": "packages/docs/src/content/common-issues/ffmpeg.mdx",
+          "hash": "17447035589684134203"
+        },
+        {
+          "file": "packages/docs/src/content/common-issues/slow-rendering.mdx",
+          "hash": "4804711435422102546"
+        },
+        {
+          "file": "packages/docs/src/content/get-help/_meta.js",
+          "hash": "12675021075894496935"
+        },
+        {
+          "file": "packages/docs/src/content/get-help/discord.mdx",
+          "hash": "66105503805002014"
+        },
+        {
+          "file": "packages/docs/src/content/guide/_meta.js",
+          "hash": "8484657793852682201"
+        },
+        {
+          "file": "packages/docs/src/content/guide/building-webapps/_meta.js",
+          "hash": "9639109193903168955"
+        },
+        {
+          "file": "packages/docs/src/content/guide/building-webapps/deploy-rendering-service.mdx",
+          "hash": "5122024842580205853"
+        },
+        {
+          "file": "packages/docs/src/content/guide/building-webapps/rendering-endpoint.mdx",
+          "hash": "3640197437019566206"
+        },
+        {
+          "file": "packages/docs/src/content/guide/building-webapps/saas-template.mdx",
+          "hash": "17650259491334202995"
+        },
+        {
+          "file": "packages/docs/src/content/guide/building-webapps/using-the-player.mdx",
+          "hash": "5139805957332026017"
+        },
+        {
+          "file": "packages/docs/src/content/guide/designing-animations/3d-animations-with-threejs.mdx",
+          "hash": "7878097746450805401"
+        },
+        {
+          "file": "packages/docs/src/content/guide/designing-animations/_meta.js",
+          "hash": "15516255728372971574"
+        },
+        {
+          "file": "packages/docs/src/content/guide/designing-animations/designing-animations.mdx",
+          "hash": "15644092988385642711"
+        },
+        {
+          "file": "packages/docs/src/content/guide/designing-animations/emojis.mdx",
+          "hash": "14020428267110873662"
+        },
+        {
+          "file": "packages/docs/src/content/guide/designing-animations/logical-separation.mdx",
+          "hash": "8057912938339428984"
+        },
+        {
+          "file": "packages/docs/src/content/guide/designing-animations/rive-animations.mdx",
+          "hash": "9094214638349135067"
+        },
+        {
+          "file": "packages/docs/src/content/guide/installation-and-setup.mdx",
+          "hash": "18245714157236845893"
+        },
+        {
+          "file": "packages/docs/src/content/guide/parameterized-video.mdx",
+          "hash": "4191557569032843510"
+        },
+        {
+          "file": "packages/docs/src/content/guide/performance/_meta.js",
+          "hash": "7254082756943840974"
+        },
+        {
+          "file": "packages/docs/src/content/guide/performance/decoders.mdx",
+          "hash": "16883520310744817395"
+        },
+        {
+          "file": "packages/docs/src/content/guide/performance/node-parent-reloading.mdx",
+          "hash": "478489524089299645"
+        },
+        {
+          "file": "packages/docs/src/content/guide/project-structure.mdx",
+          "hash": "3213013654119104792"
+        },
+        {
+          "file": "packages/docs/src/content/guide/rendering-videos.mdx",
+          "hash": "13476198115346869530"
+        },
+        {
+          "file": "packages/docs/src/content/guide/understanding-scene-flow.mdx",
+          "hash": "3969401159797692850"
+        },
+        {
+          "file": "packages/docs/src/content/index.mdx",
+          "hash": "8621626647377474428"
+        },
+        {
+          "file": "packages/docs/src/content/platform/_meta.js",
+          "hash": "1847850360934163037"
+        },
+        {
+          "file": "packages/docs/src/content/platform/introduction.mdx",
+          "hash": "3692527660911395109"
+        },
+        {
+          "file": "packages/docs/src/content/platform/render-endpoint.mdx",
+          "hash": "15431571023938794468"
+        },
+        {
+          "file": "packages/docs/src/content/upgrading/_meta.js",
+          "hash": "17180423442586171999"
+        },
+        {
+          "file": "packages/docs/src/content/upgrading/from_0.2.x_to_0.3.mdx",
+          "hash": "17325829320407253502"
+        },
+        {
+          "file": "packages/docs/src/content/upgrading/from_0.3.x_to_0.4.mdx",
+          "hash": "9379675766874380303"
+        },
+        {
+          "file": "packages/docs/src/content/upgrading/from_0.5.x_to_0.10.mdx",
+          "hash": "6487687318398527625"
+        },
+        {
+          "file": "packages/docs/src/lib/utils.ts",
+          "hash": "15572675029679350972"
+        },
+        {
+          "file": "packages/docs/tsconfig.json",
+          "hash": "4922475251092711540"
+        }
+      ],
+      "@fantoche-dev/e2e": [
+        {
+          "file": "packages/e2e/.gitignore",
+          "hash": "12249757810560697132"
+        },
+        {
+          "file": "packages/e2e/documents/anchors-narration.json",
+          "hash": "14292175889310612848"
+        },
+        {
+          "file": "packages/e2e/documents/block-escape.json",
+          "hash": "2215717591470111612"
+        },
+        {
+          "file": "packages/e2e/documents/code-highlight.json",
+          "hash": "12831118191583526826"
+        },
+        {
+          "file": "packages/e2e/documents/gate.json",
+          "hash": "11729528695680297044"
+        },
+        {
+          "file": "packages/e2e/documents/image-svg.json",
+          "hash": "4779440745485176221"
+        },
+        {
+          "file": "packages/e2e/documents/latex.json",
+          "hash": "7404368545355695769"
+        },
+        {
+          "file": "packages/e2e/documents/layout-flex.json",
+          "hash": "13851323865445214903"
+        },
+        {
+          "file": "packages/e2e/documents/shapes-draw-on.json",
+          "hash": "17169725274689200502"
+        },
+        {
+          "file": "packages/e2e/documents/text-basics.json",
+          "hash": "17198537708488706423"
+        },
+        {
+          "file": "packages/e2e/package.json",
+          "hash": "1403264049527137233",
+          "deps": [
+            "@fantoche-dev/ui",
+            "@fantoche-dev/vite-plugin",
+            "@fantoche-dev/2d",
+            "@fantoche-dev/core",
+            "@fantoche-dev/ffmpeg",
+            "npm:jest-image-snapshot",
+            "npm:puppeteer",
+            "@fantoche-dev/document"
+          ]
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/circle.png",
+          "hash": "4691692827255774443"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-anchors-narration-mid.png",
+          "hash": "9429564445625316047"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-anchors-narration.png",
+          "hash": "16616973092932471312"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-block-escape-mid.png",
+          "hash": "5114648720473029198"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-block-escape.png",
+          "hash": "16157530938787252136"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-code-highlight-mid.png",
+          "hash": "8420806637451908852"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-code-highlight.png",
+          "hash": "8420806637451908852"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-gate-mid.png",
+          "hash": "13194236934945222188"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-gate.png",
+          "hash": "11168028333118563013"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-image-svg.png",
+          "hash": "8342387367135714984"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-latex.png",
+          "hash": "8420806637451908852"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-layout-flex.png",
+          "hash": "9313305284075877865"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-shapes-draw-on-mid.png",
+          "hash": "11335533173680665956"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-shapes-draw-on.png",
+          "hash": "11335533173680665956"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/doc-text-basics.png",
+          "hash": "17523484169001878201"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/mc-compat-mid.png",
+          "hash": "15221587597829737866"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/mc-compat.png",
+          "hash": "11311024258634695921"
+        },
+        {
+          "file": "packages/e2e/src/__image_snapshots__/rect.png",
+          "hash": "3666571041655860600"
+        },
+        {
+          "file": "packages/e2e/src/app.ts",
+          "hash": "325253311006781266"
+        },
+        {
+          "file": "packages/e2e/src/assets/dot.png",
+          "hash": "13352559490026316059"
+        },
+        {
+          "file": "packages/e2e/src/global.d.ts",
+          "hash": "14260776989911081329"
+        },
+        {
+          "file": "packages/e2e/src/rendering.test.ts",
+          "hash": "9134407502995349412"
+        },
+        {
+          "file": "packages/e2e/tests/blocks/fx.tsx",
+          "hash": "11694259430198098312"
+        },
+        {
+          "file": "packages/e2e/tests/fonts.css",
+          "hash": "8614568601685888839"
+        },
+        {
+          "file": "packages/e2e/tests/fonts/jetbrains-mono-latin-400-normal.woff2",
+          "hash": "17203528575124564501"
+        },
+        {
+          "file": "packages/e2e/tests/fonts/roboto-latin-400-normal.woff2",
+          "hash": "10734632019286081677"
+        },
+        {
+          "file": "packages/e2e/tests/fonts/roboto-latin-700-normal.woff2",
+          "hash": "6831153279083575447"
+        },
+        {
+          "file": "packages/e2e/tests/project.ts",
+          "hash": "4455857986641834041"
+        },
+        {
+          "file": "packages/e2e/tests/revideo.d.ts",
+          "hash": "7372366011553449461"
+        },
+        {
+          "file": "packages/e2e/tests/scenes/circle.tsx",
+          "hash": "819581885714383587"
+        },
+        {
+          "file": "packages/e2e/tests/scenes/mc-compat.tsx",
+          "hash": "1060283539723864321"
+        },
+        {
+          "file": "packages/e2e/tests/scenes/rect.tsx",
+          "hash": "8706324331206103989"
+        },
+        {
+          "file": "packages/e2e/tsconfig.json",
+          "hash": "16568827484926074837"
+        },
+        {
+          "file": "packages/e2e/vite.config.ts",
+          "hash": "7181243583838095340"
+        }
+      ]
+    }
+  },
+  "externalNodesHash": "10163305890470471089"
+}

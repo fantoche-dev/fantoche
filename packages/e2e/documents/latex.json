@@ -3,7 +3,8 @@
   "meta": {
     "fps": 30,
     "size": [320, 320],
-    "duration": 0.1
+    "duration": 0.1,
+    "background": "#0d0d12"
   },
   "elements": [
     {

@@ -49,21 +49,21 @@
   ],
   "timeline": [
     {
-      "at": "intro.word:busca",
+      "at": "intro.word:olha",
       "target": "pointer",
       "set": {
         "fill": "#e6a700"
       }
     },
     {
-      "at": "intro.word:binária",
+      "at": "intro.word:busca",
       "target": "pointer",
       "tween": {
         "x": {
           "to": 100
         }
       },
-      "dur": 0.4,
+      "dur": 0.5,
       "easing": "easeOutCubic"
     }
   ]
