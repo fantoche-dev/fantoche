@@ -22,6 +22,10 @@
     "./evaluator": {
       "types": "./dist/evaluator.d.ts",
       "default": "./dist/evaluator.js"
+    },
+    "./scene": {
+      "types": "./dist/scene/index.d.ts",
+      "default": "./dist/scene/index.js"
     }
   },
   "scripts": {
@@ -35,10 +39,12 @@
   ],
   "dependencies": {
     "@fantoche-dev/core": "0.11.0",
-    "zod": "^4.1.5"
+    "zod": "^4.1.5",
+    "@fantoche-dev/2d": "0.11.0"
   },
   "devDependencies": {
     "typescript": "^6.0.3",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "jsdom": "^25.0.1"
   }
 }
