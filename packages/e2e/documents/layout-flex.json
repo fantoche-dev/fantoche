@@ -1,0 +1,74 @@
+{
+  "version": "0.1",
+  "meta": {
+    "fps": 30,
+    "size": [320, 320],
+    "duration": 0.1
+  },
+  "elements": [
+    {
+      "id": "col",
+      "type": "layout",
+      "props": {
+        "direction": "column",
+        "gap": 12,
+        "padding": 16,
+        "alignItems": "center",
+        "width": 280
+      },
+      "children": [
+        {
+          "id": "row",
+          "type": "layout",
+          "props": {
+            "direction": "row",
+            "gap": 10
+          },
+          "children": [
+            {
+              "id": "a",
+              "type": "rect",
+              "props": {
+                "width": 50,
+                "height": 50,
+                "fill": "#e13238",
+                "radius": 6
+              }
+            },
+            {
+              "id": "b",
+              "type": "rect",
+              "props": {
+                "width": 50,
+                "height": 50,
+                "fill": "#e6a700",
+                "radius": 6
+              }
+            },
+            {
+              "id": "c",
+              "type": "rect",
+              "props": {
+                "width": 50,
+                "height": 50,
+                "fill": "lightseagreen",
+                "radius": 6
+              }
+            }
+          ]
+        },
+        {
+          "id": "wide",
+          "type": "rect",
+          "props": {
+            "width": 180,
+            "height": 40,
+            "fill": "#5c6470",
+            "radius": 8
+          }
+        }
+      ]
+    }
+  ],
+  "timeline": []
+}

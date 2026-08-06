@@ -89,8 +89,8 @@ export interface ActiveBlock {
   exportName: string;
   t0F: number;
   t1F: number;
-  /** Seconds since the block's window opened. */
-  localSeconds: number;
+  /** Frames since the block's window opened (integer when frame is). */
+  localFrames: number;
 }
 
 export interface FrameState {
@@ -199,9 +199,12 @@ function evaluateTrack(track: Track, frame: number): PropValue | undefined {
 /**
  * The pure heart of the document pipeline: same IR + same t ⇒ same state,
  * with O(log keys) work per track and no dependence on prior evaluations.
+ *
+ * Frame-based entry: callers that live in frames (the scene runtime) must
+ * use this directly — a frame→seconds→frame round trip loses a frame for
+ * ~1% of frames at 30/60fps (123/30*30 = 122.999…).
  */
-export function evaluate(ir: TimelineIR, tSeconds: number): FrameState {
-  const frame = tSeconds * ir.fps;
+export function evaluateFrame(ir: TimelineIR, frame: number): FrameState {
   const props = new Map<string, Map<string, PropValue>>();
   for (const track of ir.tracks) {
     const value = evaluateTrack(track, frame);
@@ -272,10 +275,15 @@ export function evaluate(ir: TimelineIR, tSeconds: number): FrameState {
         exportName: block.exportName,
         t0F: block.t0F,
         t1F: block.t1F,
-        localSeconds: (frame - block.t0F) / ir.fps,
+        localFrames: frame - block.t0F,
       });
     }
   }
 
   return {props, code, blocks};
+}
+
+/** Seconds-based convenience wrapper over {@link evaluateFrame}. */
+export function evaluate(ir: TimelineIR, tSeconds: number): FrameState {
+  return evaluateFrame(ir, tSeconds * ir.fps);
 }

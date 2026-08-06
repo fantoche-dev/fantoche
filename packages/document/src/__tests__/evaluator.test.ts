@@ -88,7 +88,7 @@ describe('evaluate', () => {
     expect(evaluate(ir, 7.9).blocks).toHaveLength(0);
     const active = evaluate(ir, 8.5).blocks;
     expect(active).toHaveLength(1);
-    expect(active[0].localSeconds).toBeCloseTo(0.5);
+    expect(active[0].localFrames).toBeCloseTo(15);
     expect(evaluate(ir, 9).blocks).toHaveLength(0);
   });
 

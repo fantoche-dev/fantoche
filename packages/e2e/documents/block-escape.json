@@ -1,0 +1,29 @@
+{
+  "version": "0.1",
+  "meta": {
+    "fps": 30,
+    "size": [320, 320],
+    "duration": 0.8
+  },
+  "elements": [
+    {
+      "id": "frame",
+      "type": "rect",
+      "props": {
+        "width": 240,
+        "height": 240,
+        "stroke": "#5c6470",
+        "lineWidth": 3
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "at": 0.2,
+      "block": {
+        "src": "../tests/blocks/fx.tsx#slide",
+        "dur": 0.6
+      }
+    }
+  ]
+}

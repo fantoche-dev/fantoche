@@ -1,0 +1,52 @@
+{
+  "version": "0.1",
+  "meta": {
+    "fps": 30,
+    "size": [320, 320],
+    "duration": 0.1
+  },
+  "elements": [
+    {
+      "id": "big",
+      "type": "text",
+      "props": {
+        "text": "Aa Gg",
+        "fontSize": 48,
+        "fill": "#ffffff",
+        "y": -100
+      }
+    },
+    {
+      "id": "bold",
+      "type": "text",
+      "props": {
+        "text": "bold 700",
+        "fontSize": 28,
+        "fontWeight": 700,
+        "fill": "#e6a700",
+        "y": -40
+      }
+    },
+    {
+      "id": "small",
+      "type": "text",
+      "props": {
+        "text": "acentuação áéíõç",
+        "fontSize": 20,
+        "fill": "#5c6470",
+        "y": 20
+      }
+    },
+    {
+      "id": "colored",
+      "type": "text",
+      "props": {
+        "text": "lightseagreen",
+        "fontSize": 24,
+        "fill": "lightseagreen",
+        "y": 80
+      }
+    }
+  ],
+  "timeline": []
+}

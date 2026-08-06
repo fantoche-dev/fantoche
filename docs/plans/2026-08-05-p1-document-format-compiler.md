@@ -313,7 +313,32 @@ Test: vitest + the `mockScene2D` idiom (`packages/2d/src/lib/components/__tests_
 > rule; DOM lib added to the package tsconfig (types only — the node-safety
 > test still guards the root barrel at runtime). Block replay is bounded by
 > the block window and verified by seek-equals-sweep, backward-seek and
-> node-cleanup tests.
+> node-cleanup tests. 
+
+> **Batch D Opus review outcomes (2026-08-05):** applied in full — (C1) code
+> signals now settle unconditionally (comparing `parsed()` skipped the settle
+> past progress 0.5, freezing a mid-morph scope; sweep and seek diverged);
+> (C2) the Seekable fast path excludes the scene's last frame and falls
+> through to the step loop, so the scene handoff at overlapping bounds runs
+> (a boundary seek previously reported `finished` mid-project and corrupted
+> parallel-render workers); (I1) the runtime is integer-frame end to end
+> (`evaluateFrame`; `ActiveBlock.localFrames`) — the frame→seconds→frame
+> round trip lost 1 frame in ~1% of frames at 30/60fps and would have been
+> frozen into the goldens; (I2) backward seeks on seekable cached scenes skip
+> the reset/rebuild entirely (scrubbing no longer re-tokenizes/re-renders
+> every node per frame); (I3) BlockHost mirrors GeneratorScene.next
+> (promisables awaited and fed back, intra-frame yields don't count as
+> frames, baseline step on window entry); (I4) animated set/tween prop names
+> are compile-checked against a per-element allow-list (a valid document
+> could previously invoke `dispose`/`remove` on nodes) and `applyProp`
+> requires a signal `context`; (I5) svg `src` now fails at compile time with
+> a path, not at reset with a stack trace; (I7) overlapping block windows are
+> a CompileError. New tests: two-scene boundary handoff, backward-seek
+> no-rebuild, code-settle sweep-vs-seek, builders per element type, render
+> lifecycle smoke (jsdom DOMMatrix stub), non-vacuous finish semantics.
+> Deferred with owners: `getMediaAssets` narration audio (good-first-issue
+> draft, Task 20), block generator semantics documented in the package README
+> (Task 20), `code` highlighter/language prop (v0.2 candidate).
 
 ### Task 15: Element builders (adapter table)
 

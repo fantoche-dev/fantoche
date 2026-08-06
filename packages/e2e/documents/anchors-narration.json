@@ -1,0 +1,70 @@
+{
+  "version": "0.1",
+  "meta": {
+    "fps": 30,
+    "size": [320, 320],
+    "duration": 1.2
+  },
+  "narration": {
+    "segments": [
+      {
+        "id": "intro",
+        "text": "olha a busca binária",
+        "start": 0,
+        "dur": 1.2,
+        "words": [
+          {
+            "text": "olha",
+            "start": 0.0
+          },
+          {
+            "text": "a",
+            "start": 0.25
+          },
+          {
+            "text": "busca",
+            "start": 0.35
+          },
+          {
+            "text": "binária",
+            "start": 0.6,
+            "dur": 0.4
+          }
+        ]
+      }
+    ]
+  },
+  "elements": [
+    {
+      "id": "pointer",
+      "type": "rect",
+      "props": {
+        "x": -100,
+        "width": 50,
+        "height": 50,
+        "fill": "#5c6470",
+        "radius": 8
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "at": "intro.word:busca",
+      "target": "pointer",
+      "set": {
+        "fill": "#e6a700"
+      }
+    },
+    {
+      "at": "intro.word:binária",
+      "target": "pointer",
+      "tween": {
+        "x": {
+          "to": 100
+        }
+      },
+      "dur": 0.4,
+      "easing": "easeOutCubic"
+    }
+  ]
+}

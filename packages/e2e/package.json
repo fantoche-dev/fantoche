@@ -12,7 +12,8 @@
     "@fantoche-dev/core": "*",
     "@fantoche-dev/ffmpeg": "*",
     "jest-image-snapshot": "^6.2.0",
-    "puppeteer": "^25.3.0"
+    "puppeteer": "^25.3.0",
+    "@fantoche-dev/document": "*"
   },
   "devDependencies": {
     "@fantoche-dev/ui": "*",

@@ -1,0 +1,178 @@
+{
+  "version": "0.1",
+  "meta": {
+    "fps": 30,
+    "size": [320, 320],
+    "background": "#0d0d12",
+    "duration": 8
+  },
+  "assets": {
+    "dot": {
+      "type": "image",
+      "src": "/assets/dot.png"
+    }
+  },
+  "narration": {
+    "segments": [
+      {
+        "id": "abre",
+        "text": "a busca corta o espaço pela metade",
+        "start": 0.5,
+        "dur": 3,
+        "words": [
+          {
+            "text": "busca",
+            "start": 0.9
+          },
+          {
+            "text": "corta",
+            "start": 1.4
+          },
+          {
+            "text": "metade",
+            "start": 2.8,
+            "dur": 0.7
+          }
+        ]
+      }
+    ]
+  },
+  "elements": [
+    {
+      "id": "title",
+      "type": "text",
+      "props": {
+        "text": "busca binária",
+        "fontSize": 34,
+        "fill": "#ffffff",
+        "y": -120,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "bar",
+      "type": "rect",
+      "props": {
+        "x": 0,
+        "y": -60,
+        "width": 240,
+        "height": 16,
+        "fill": "#5c6470",
+        "radius": 8
+      }
+    },
+    {
+      "id": "half",
+      "type": "rect",
+      "props": {
+        "x": -60,
+        "y": -60,
+        "width": 120,
+        "height": 16,
+        "fill": "#e6a700",
+        "radius": 8,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "pic",
+      "type": "image",
+      "props": {
+        "src": "dot",
+        "width": 36,
+        "height": 36,
+        "x": -130,
+        "y": -60,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "snippet",
+      "type": "code",
+      "props": {
+        "code": "while (lo < hi) {\n  mid = (lo + hi) >> 1;\n  if (a[mid] < x) lo = mid + 1;\n  else hi = mid;\n}",
+        "fontSize": 17,
+        "y": 60,
+        "fontFamily": "JetBrains Mono",
+        "fill": "#e6e6e6"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "at": "abre.start",
+      "target": "title",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.6
+    },
+    {
+      "at": "abre.word:corta",
+      "target": "half",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.4
+    },
+    {
+      "at": "abre.word:metade",
+      "target": "pic",
+      "set": {
+        "opacity": 1
+      }
+    },
+    {
+      "at": 3.5,
+      "target": "pic",
+      "tween": {
+        "x": {
+          "to": 130
+        }
+      },
+      "dur": 1.5,
+      "easing": "easeInOutCubic"
+    },
+    {
+      "at": 2,
+      "target": "snippet",
+      "select": {
+        "lines": [1, 1]
+      },
+      "dur": 0.5
+    },
+    {
+      "at": 4.5,
+      "target": "snippet",
+      "select": {
+        "lines": [2, 3]
+      },
+      "dur": 0.5
+    },
+    {
+      "at": 5.5,
+      "target": "snippet",
+      "edit": {
+        "replace": [
+          {
+            "match": ">> 1",
+            "which": "first"
+          },
+          "/ 2 | 0"
+        ]
+      },
+      "dur": 0.8
+    },
+    {
+      "at": 6.6,
+      "block": {
+        "src": "../tests/blocks/fx.tsx#slide",
+        "dur": 1.2
+      }
+    }
+  ]
+}

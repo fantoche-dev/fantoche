@@ -1,0 +1,32 @@
+{
+  "version": "0.1",
+  "meta": {
+    "fps": 30,
+    "size": [320, 320],
+    "duration": 1,
+    "background": "#0d0d12"
+  },
+  "elements": [
+    {
+      "id": "snippet",
+      "type": "code",
+      "props": {
+        "code": "function lo(a, x) {\n  let m = 0;\n  return m + x;\n}",
+        "fontSize": 22,
+        "x": -20,
+        "fontFamily": "JetBrains Mono",
+        "fill": "#e6e6e6"
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "at": 0.1,
+      "target": "snippet",
+      "select": {
+        "lines": [1, 2]
+      },
+      "dur": 0.6
+    }
+  ]
+}

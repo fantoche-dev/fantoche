@@ -24,6 +24,14 @@ export async function start(): Promise<App> {
   ]);
 
   const page = await browser.newPage();
+  page.on('console', message => {
+    if (message.type() === 'error') {
+      console.error(`[browser] ${message.text()}`);
+    }
+  });
+  page.on('pageerror', error => {
+    console.error(`[browser] ${error.message}`);
+  });
   await page.goto(`http://localhost:${server.config.server.port}`);
   await page.waitForSelector('main');
 

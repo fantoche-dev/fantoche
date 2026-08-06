@@ -2121,6 +2121,16 @@
                 "fontFamily": {
                   "type": "string"
                 },
+                "fill": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
                 "selection": {
                   "anyOf": [
                     {

@@ -1,11 +1,14 @@
 import type {Node, View2D} from '@fantoche-dev/2d';
 import type {ThreadGenerator} from '@fantoche-dev/core';
-import {threads} from '@fantoche-dev/core';
+import {isPromisable, isPromise, threads} from '@fantoche-dev/core';
 import type {ActiveBlock} from '../evaluator.js';
 
 /**
  * A code block's generator: receives a container node parented to the view
- * and animates inside its declared window.
+ * and animates inside its declared window. Stepping mirrors GeneratorScene's
+ * frame semantics: one baseline step on window entry (like reset()'s first
+ * next()), then one step per elapsed frame; promisable/promise yields are
+ * awaited and fed back, and do NOT count as frames.
  */
 export interface BlockFactory {
   (container: Node): ThreadGenerator;
@@ -20,7 +23,7 @@ interface RunningBlock {
   key: string;
   container: Node;
   runner: ThreadGenerator;
-  /** Frames of the block's window already stepped. */
+  /** Baseline + elapsed frames already stepped. */
   steppedFrames: number;
 }
 
@@ -43,11 +46,7 @@ export class BlockHost {
   ) {}
 
   /** Bring block state in line with the evaluator's frame state. */
-  public async sync(
-    active: ActiveBlock[],
-    view: View2D,
-    fps: number,
-  ): Promise<void> {
+  public async sync(active: ActiveBlock[], view: View2D): Promise<void> {
     const target = active[0] ?? null;
     const targetKey =
       target === null ? null : blockKey(target.src, target.exportName);
@@ -68,7 +67,8 @@ export class BlockHost {
       return;
     }
 
-    const targetFrames = Math.floor(target.localSeconds * fps);
+    // Baseline step at window entry + one per elapsed local frame.
+    const targetFrames = Math.floor(target.localFrames) + 1;
     if (this.running !== null && targetFrames < this.running.steppedFrames) {
       // Seeking backward inside the window: bounded replay from the start.
       this.dispose();
@@ -84,16 +84,21 @@ export class BlockHost {
     }
     while (this.running.steppedFrames < targetFrames) {
       const runner = this.running.runner;
-      const result = this.exec(() => runner.next());
-      if (result.done) {
-        break;
+      let result = this.exec(() => runner.next());
+      while (result.value) {
+        if (isPromisable(result.value)) {
+          const value = await result.value.toPromise();
+          result = this.exec(() => runner.next(value));
+        } else if (isPromise(result.value)) {
+          const value = await result.value;
+          result = this.exec(() => runner.next(value));
+        } else {
+          result = this.exec(() => runner.next(result.value));
+        }
       }
-      if (
-        result.value !== null &&
-        typeof result.value === 'object' &&
-        'then' in (result.value as object)
-      ) {
-        await (result.value as PromiseLike<unknown>);
+      if (result.done) {
+        this.running.steppedFrames = targetFrames;
+        break;
       }
       this.running.steppedFrames++;
     }

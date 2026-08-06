@@ -10,7 +10,11 @@ export interface TimelineIR {
   fps: number;
   size: [number, number];
   background: string | null;
-  /** Total duration in frames (inclusive upper bound is durationF - 1). */
+  /**
+   * Frames this document owns, including the settle frame of its last
+   * animation. The scene runtime ends at firstFrame + durationF, matching
+   * the generator-scene convention.
+   */
   durationF: number;
   elements: CompiledElement[];
   tracks: Track[];

@@ -96,13 +96,19 @@ export class PlaybackManager {
         await this.currentScene.reset();
       } else if (this.frame >= frame) {
         this.previousScene = null;
-        this.frame = this.currentScene.firstFrame;
-        await this.currentScene.reset();
+        if (!isSeekable(this.currentScene) || !this.currentScene.isCached()) {
+          this.frame = this.currentScene.firstFrame;
+          await this.currentScene.reset();
+        }
+        // Seekable scenes jump backward directly — no node-tree rebuild.
       }
     }
 
     // O(1) fast path for scenes with direct time addressing. Skipped
     // mid-transition (previousScene set) so transition frames still step.
+    // The scene's LAST frame is excluded: scene bounds overlap and the
+    // boundary frame belongs to the NEXT scene — jump to lastFrame - 1 and
+    // let the step loop below run the ordinary scene handoff.
     if (
       this.previousScene === null &&
       isSeekable(this.currentScene) &&
@@ -110,11 +116,12 @@ export class PlaybackManager {
       frame >= this.currentScene.firstFrame &&
       frame <= this.currentScene.lastFrame
     ) {
-      // Assign the frame BEFORE seeking: PlaybackStatus.time reads it.
-      this.frame = frame;
-      await this.currentScene.seekToFrame(frame);
-      this.finished = this.currentScene.isFinished();
-      return this.finished;
+      const direct = Math.min(frame, this.currentScene.lastFrame - 1);
+      if (direct >= this.currentScene.firstFrame) {
+        // Assign the frame BEFORE seeking: PlaybackStatus.time reads it.
+        this.frame = direct;
+        await this.currentScene.seekToFrame(direct);
+      }
     }
 
     this.finished = false;

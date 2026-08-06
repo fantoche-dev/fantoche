@@ -1,4 +1,4 @@
-import type {Code, View2D} from '@fantoche-dev/2d';
+import type {Code, CodeTag, View2D} from '@fantoche-dev/2d';
 import {
   Node,
   View2D as View2DClass,
@@ -14,7 +14,7 @@ import type {
 } from '@fantoche-dev/core';
 import {AbstractScene, SceneRenderEvent, SceneState} from '@fantoche-dev/core';
 import type {CodeFrameState} from '../evaluator.js';
-import {evaluate} from '../evaluator.js';
+import {evaluateFrame} from '../evaluator.js';
 import type {TimelineIR} from '../ir.js';
 import type {BlockFactory} from './blocks.js';
 import {BlockHost} from './blocks.js';
@@ -45,8 +45,9 @@ export class DocumentScene
   private nodesById = new Map<string, Node>();
   private ir: TimelineIR;
   private assets: AssetMap;
+  private built = false;
   private readonly blockHost: BlockHost;
-  private readonly diffCache = new Map<string, unknown>();
+  private readonly diffCache = new Map<string, CodeTag[]>();
   private readonly warnedProps = new Set<string>();
 
   public constructor(description: FullSceneDescription<DocumentSceneConfig>) {
@@ -92,8 +93,8 @@ export class DocumentScene
   }
 
   public async next(): Promise<void> {
-    await this.applyState(this.localTime());
-    this.updateSceneState();
+    await this.applyState(this.playback.frame - this.firstFrame);
+    this.updateSceneState(this.playback.frame);
   }
 
   public async reset(previousScene: Scene | null = null): Promise<void> {
@@ -105,6 +106,7 @@ export class DocumentScene
       }
     }
     this.registeredNodes.clear();
+    this.registeredNodes = new Map();
     this.nodeCounters.clear();
     this.nodesById.clear();
     this.blockHost.reset();
@@ -112,15 +114,19 @@ export class DocumentScene
     this.previousOnTop = false;
     this.recreateView();
     this.buildNodes();
+    this.built = true;
     this.state = SceneState.AfterTransitionIn;
     this.afterReset.dispatch();
-    await this.applyState(this.localTime());
-    this.updateSceneState();
+    await this.applyState(this.playback.frame - this.firstFrame);
+    this.updateSceneState(this.playback.frame);
   }
 
   public async seekToFrame(frame: number): Promise<void> {
-    await this.applyState((frame - this.firstFrame) / this.ir.fps);
-    this.updateSceneState();
+    if (!this.built) {
+      await this.reset();
+    }
+    await this.applyState(frame - this.firstFrame);
+    this.updateSceneState(frame);
   }
 
   protected async draw(context: CanvasRenderingContext2D): Promise<void> {
@@ -178,12 +184,8 @@ export class DocumentScene
 
   // -- internals ------------------------------------------------------------
 
-  private localTime(): number {
-    return (this.playback.frame - this.firstFrame) / this.ir.fps;
-  }
-
-  private updateSceneState(): void {
-    if (this.playback.frame >= this.lastFrame) {
+  private updateSceneState(frame: number): void {
+    if (frame >= this.lastFrame) {
       this.state = SceneState.Finished;
     } else if (this.state === SceneState.Finished) {
       this.state = SceneState.AfterTransitionIn;
@@ -199,6 +201,11 @@ export class DocumentScene
         assetHash: '0',
         size,
       });
+      // The document's own background wins over the host project's shared
+      // one — a document must look the same in any project it is placed in.
+      if (this.ir.background !== null) {
+        this.view.fill(this.ir.background);
+      }
     });
   }
 
@@ -216,8 +223,8 @@ export class DocumentScene
     });
   }
 
-  private async applyState(tSeconds: number): Promise<void> {
-    const state = evaluate(this.ir, tSeconds);
+  private async applyState(localFrame: number): Promise<void> {
+    const state = evaluateFrame(this.ir, localFrame);
     this.execute(() => {
       for (const [targetId, props] of state.props) {
         const node = this.nodesById.get(targetId);
@@ -243,14 +250,15 @@ export class DocumentScene
         }
       }
     });
-    await this.blockHost.sync(state.blocks, this.getView(), this.ir.fps);
+    await this.blockHost.sync(state.blocks, this.getView());
   }
 
   private applyCodeState(code: Code, state: CodeFrameState): void {
     if (typeof state.code === 'string') {
-      if (code.parsed() !== state.code) {
-        code.code(state.code);
-      }
+      // Unconditional: comparing parsed() would skip the settle (parsed
+      // resolves to the after-text at progress > 0.5, leaving the signal a
+      // frozen mid-morph scope forever). The setter no-ops equal raw values.
+      code.code(state.code);
     } else {
       const {from, to, progress} = state.code;
       const cacheKey = `${from} ${to}`;
@@ -265,10 +273,7 @@ export class DocumentScene
         this.diffCache.set(cacheKey, fragments);
       }
       // Fresh object per frame — signal identity check would no-op otherwise.
-      code.code({
-        progress,
-        fragments: fragments as never,
-      });
+      code.code({progress, fragments});
     }
 
     const {ranges, from, progress} = state.selection;
@@ -283,7 +288,7 @@ export class DocumentScene
     }
   }
 
-  private buildDiffFragments(code: Code, from: string, to: string): unknown {
+  private buildDiffFragments(code: Code, from: string, to: string): CodeTag[] {
     const highlighter = code.highlighter();
     const tokenize =
       highlighter !== null && highlighter.initialize()

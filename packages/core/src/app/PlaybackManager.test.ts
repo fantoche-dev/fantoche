@@ -52,7 +52,7 @@ describe('PlaybackManager.seek', () => {
     expect(playback.frame).toBe(5000);
   });
 
-  test('backward seeks on seekable scenes also skip the replay loop', async () => {
+  test('backward seeks on seekable scenes skip both the replay loop AND the rebuild', async () => {
     const {scene, calls} = makeStubScene({seekable: true});
     const playback = new PlaybackManager();
     playback.setup([scene]);
@@ -62,7 +62,36 @@ describe('PlaybackManager.seek', () => {
 
     expect(calls.seekToFrame).toEqual([5000, 100]);
     expect(calls.next).toBe(0);
+    expect(calls.reset).toBe(0);
     expect(playback.frame).toBe(100);
+  });
+
+  test('seeking exactly to a scene boundary hands off to the next scene', async () => {
+    const first = makeStubScene({seekable: true, firstFrame: 0, lastFrame: 50});
+    const second = makeStubScene({
+      seekable: false,
+      firstFrame: 50,
+      lastFrame: 100,
+    });
+    let firstDone = false;
+    (first.scene as unknown as Record<string, unknown>).canTransitionOut = () =>
+      firstDone;
+    (first.scene as unknown as {next(): Promise<void>}).next = async () => {
+      first.calls.next++;
+      firstDone = true;
+    };
+    const playback = new PlaybackManager();
+    playback.setup([first.scene, second.scene]);
+
+    const finished = await playback.seek(50);
+
+    // Fast path jumps to 49, the step loop runs the ordinary handoff: the
+    // boundary frame belongs to the SECOND scene and playback is not done.
+    expect(first.calls.seekToFrame).toEqual([49]);
+    expect(playback.currentScene).toBe(second.scene);
+    expect(second.calls.reset).toBe(1);
+    expect(finished).toBe(false);
+    expect(playback.frame).toBe(50);
   });
 
   test('non-seekable scenes keep the frame-step behavior', async () => {

@@ -35,6 +35,31 @@ export interface CompileResult {
   warnings: string[];
 }
 
+const TRANSFORM_PROPS = ['x', 'y', 'scale', 'rotation', 'opacity', 'zIndex'];
+const SHAPE_PROPS = ['fill', 'stroke', 'lineWidth'];
+const SIZE_PROPS = ['width', 'height'];
+
+/**
+ * Animated (set/tween) props allowed per element type. The schema whitelists
+ * ELEMENT props; timeline records are open strings, and without this check a
+ * valid document could invoke arbitrary node methods (dispose, remove, …).
+ */
+const ANIMATABLE: Record<string, ReadonlySet<string>> = Object.fromEntries(
+  Object.entries({
+    text: ['text', 'fontSize', 'fontWeight', ...SHAPE_PROPS],
+    rect: ['radius', ...SIZE_PROPS, ...SHAPE_PROPS],
+    circle: ['startAngle', 'endAngle', ...SIZE_PROPS, ...SHAPE_PROPS],
+    line: ['points', 'start', 'end', 'arrowSize', 'radius', ...SHAPE_PROPS],
+    path: ['data', 'start', 'end', ...SHAPE_PROPS],
+    polygon: ['sides', 'radius', ...SIZE_PROPS, ...SHAPE_PROPS],
+    image: ['alpha', ...SIZE_PROPS],
+    svg: [...SIZE_PROPS],
+    latex: [...SIZE_PROPS],
+    code: ['fontSize', 'fill'],
+    layout: ['gap', 'padding', ...SIZE_PROPS],
+  }).map(([type, props]) => [type, new Set([...TRANSFORM_PROPS, ...props])]),
+);
+
 /** The whole code is "selected" — nothing is dimmed. */
 export const FULL_SELECTION: CodeRange[] = [
   [
@@ -96,6 +121,15 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
     });
   };
   walk(doc.elements as unknown as RawElement[], null, '/elements');
+  for (const element of elements) {
+    if (element.type === 'svg' && element.props.src !== undefined) {
+      throw new CompileError(
+        'svg asset-file sources are reserved for a future version — the v0 ' +
+          'runtime only renders inline markup (props.svg)',
+        `/elements: element "${element.id}" props.src`,
+      );
+    }
+  }
 
   // -- timeline ------------------------------------------------------------
   const propEvents = new Map<string, PropEvent[]>();
@@ -155,6 +189,13 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
               item.tween as Record<string, {to: PropValue; from?: PropValue}>,
             ).map(([prop, spec]) => ({kind: 'tween', prop, ...spec}) as const);
       for (const entry of entries) {
+        if (!ANIMATABLE[target.type]?.has(entry.prop)) {
+          throw new CompileError(
+            `"${entry.prop}" is not an animatable prop of ${target.type} ` +
+              `element "${target.id}"`,
+            `${path}/${'set' in item ? 'set' : 'tween'}/${entry.prop}`,
+          );
+        }
         const key = `${target.id}\u0000${entry.prop}`;
         const events = propEvents.get(key) ?? [];
         events.push(
@@ -373,6 +414,17 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
       durationF = Math.max(durationF, op.t1F + 1);
     }
   }
+  const sortedBlocks = [...blocks].sort((a, b) => a.t0F - b.t0F);
+  for (let i = 1; i < sortedBlocks.length; i++) {
+    if (sortedBlocks[i].t0F < sortedBlocks[i - 1].t1F) {
+      throw new CompileError(
+        `block windows overlap ("${sortedBlocks[i - 1].src}#${sortedBlocks[i - 1].exportName}" ` +
+          `and "${sortedBlocks[i].src}#${sortedBlocks[i].exportName}") — ` +
+          'the runtime hosts one block at a time',
+        '/timeline',
+      );
+    }
+  }
   for (const block of blocks) {
     durationF = Math.max(durationF, block.t1F);
   }
@@ -395,7 +447,7 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
       elements,
       tracks,
       codeTracks,
-      blocks: blocks.sort((a, b) => a.t0F - b.t0F),
+      blocks: sortedBlocks,
       narrationAudio: doc.narration?.audio ?? null,
     },
     warnings,

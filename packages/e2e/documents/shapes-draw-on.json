@@ -1,0 +1,86 @@
+{
+  "version": "0.1",
+  "meta": {
+    "fps": 30,
+    "size": [320, 320],
+    "duration": 1
+  },
+  "elements": [
+    {
+      "id": "sq",
+      "type": "rect",
+      "props": {
+        "x": -90,
+        "y": -90,
+        "width": 70,
+        "height": 70,
+        "fill": "#e13238",
+        "radius": 12
+      }
+    },
+    {
+      "id": "ring",
+      "type": "circle",
+      "props": {
+        "x": 90,
+        "y": -90,
+        "width": 70,
+        "height": 70,
+        "stroke": "#e6a700",
+        "lineWidth": 8
+      }
+    },
+    {
+      "id": "hex",
+      "type": "polygon",
+      "props": {
+        "x": -90,
+        "y": 90,
+        "sides": 6,
+        "width": 70,
+        "height": 70,
+        "fill": "#5c6470"
+      }
+    },
+    {
+      "id": "wave",
+      "type": "path",
+      "props": {
+        "x": 60,
+        "y": 90,
+        "data": "M -40 0 C -20 -40 20 40 40 0",
+        "stroke": "lightseagreen",
+        "lineWidth": 5
+      }
+    },
+    {
+      "id": "arrow",
+      "type": "line",
+      "props": {
+        "points": [
+          [-120, 0],
+          [0, -30],
+          [120, 0]
+        ],
+        "stroke": "#2a2a35",
+        "lineWidth": 5,
+        "endArrow": true,
+        "arrowSize": 16,
+        "end": 0
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "at": 0,
+      "target": "arrow",
+      "tween": {
+        "end": {
+          "to": 1
+        }
+      },
+      "dur": 1,
+      "easing": "linear"
+    }
+  ]
+}

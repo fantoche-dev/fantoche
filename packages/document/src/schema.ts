@@ -226,6 +226,8 @@ const codeElement = z.strictObject({
     code: z.string(),
     fontSize: z.number().finite().positive().optional(),
     fontFamily: z.string().optional(),
+    /** Fallback token color (used when no highlighter is configured). */
+    fill: z.string().nullable().optional(),
     selection: z.union([rangeSpecSchema, z.array(rangeSpecSchema)]).optional(),
     ...transformProps,
   }),
