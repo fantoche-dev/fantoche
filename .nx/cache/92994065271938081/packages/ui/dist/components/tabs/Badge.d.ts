@@ -1,9 +1,0 @@
-import { LogLevel } from '@fantoche-dev/core';
-import { ComponentChildren, Ref } from 'preact';
-export interface BadgeInterface {
-    level?: LogLevel;
-    children?: ComponentChildren;
-    badgeRef?: Ref<HTMLDivElement>;
-}
-export declare function Badge({ children, badgeRef, level, }: BadgeInterface): import("preact").JSX.Element;
-//# sourceMappingURL=Badge.d.ts.map

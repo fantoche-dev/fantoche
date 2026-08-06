@@ -82,12 +82,6 @@ jobs:
       - run: npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
       - run: npx lerna run build --ignore @fantoche-dev/docs
       - run: npm run e2e:test
-      # TEMPORARY (golden generation): remove after committing updated goldens
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: e2e-rendered-frames
-          path: packages/e2e/output/project
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

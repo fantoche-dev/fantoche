@@ -1,8 +1,0 @@
-export declare enum EditorPanel {
-    SceneGraph = "@fantoche/2d-scene-graph",
-    Threads = "threads-panel",
-    Console = "console-panel",
-    Timeline = "timeline-panel"
-}
-export declare function isEditorPanel(value: string): value is EditorPanel;
-//# sourceMappingURL=EditorPanel.d.ts.map

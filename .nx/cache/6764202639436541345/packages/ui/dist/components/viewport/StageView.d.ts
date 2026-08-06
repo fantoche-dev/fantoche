@@ -1,9 +1,0 @@
-import { Stage } from '@fantoche/core';
-import { HTMLAttributes } from 'preact';
-import { MutableRef } from 'preact/hooks';
-export interface StageViewProps extends HTMLAttributes<HTMLDivElement> {
-    forwardRef?: MutableRef<HTMLDivElement>;
-    stage: Stage;
-}
-export declare function StageView({ stage, className, forwardRef, ...rest }: StageViewProps): import("preact").JSX.Element;
-//# sourceMappingURL=StageView.d.ts.map

@@ -19,3 +19,6 @@ CHANGELOG.md
 
 # Generated artifact — byte-stable output of `npm run schema:emit`
 /packages/document/schema
+
+# nx build cache
+.nx

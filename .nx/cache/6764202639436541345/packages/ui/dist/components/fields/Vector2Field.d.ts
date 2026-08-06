@@ -1,6 +1,0 @@
-import { Vector2 } from '@fantoche/core';
-export interface Vector2FieldProps {
-    value: Vector2;
-}
-export declare function Vector2Field({ value }: Vector2FieldProps): import("preact").JSX.Element;
-//# sourceMappingURL=Vector2Field.d.ts.map

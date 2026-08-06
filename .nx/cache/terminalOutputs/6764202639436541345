@@ -1,17 +1,0 @@
-
-> @fantoche/ui@0.11.0 build
-> tsc && vite build
-
-[36mvite v8.2.0 [32mbuilding client environment for production...[36m[39m
-[2Ktransforming...[32m✓[0m 385 modules transformed.
-rendering chunks...
-
-[unplugin:dts] Start generate declaration files...
-[unplugin:dts] Declaration files built in 999ms.
-
-computing gzip size...
-[2mdist/[0m[32meditor.html  [0m[1;2m    1.01 kB[0m[2m │ gzip:   0.55 kB[0m
-[2mdist/[0m[35mstyle.css    [0m[1;2m   26.28 kB[0m[2m │ gzip:   6.06 kB[0m
-[2mdist/[0m[36mmain.js      [0m[33;1m1,159.13 kB[0m[2m │ gzip: 354.99 kB[0m
-
-[32m✓ built in 1.25s[39m
