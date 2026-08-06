@@ -15,7 +15,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "test": "vitest run"
   },
   "bin": {
     "fantoche": "dist/index.js"
@@ -27,7 +28,8 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.6",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.10"
   },
   "dependencies": {
     "@fantoche-dev/renderer": "0.11.0",
@@ -36,6 +38,7 @@
     "commander": "^15.0.0",
     "cors": "^2.8.5",
     "express": "^5.2.1",
-    "uuid": "^14.0.1"
+    "uuid": "^14.0.1",
+    "@fantoche-dev/document": "0.11.0"
   }
 }

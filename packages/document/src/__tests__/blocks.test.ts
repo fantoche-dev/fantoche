@@ -23,14 +23,14 @@ function* slide(container: Node): ThreadGenerator {
   }
 }
 
+const blockRegistry: Record<string, typeof slide> = {};
+blockRegistry['./fx.tsx#slide'] = slide;
+
 function makeScene(): {scene: DocumentScene; playback: PlaybackManager} {
   const playback = new PlaybackManager();
   const status = new PlaybackStatus(playback);
   const description = {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    ...makeDocumentScene('block-test', doc, {
-      blocks: {'./fx.tsx#slide': slide},
-    }),
+    ...makeDocumentScene('block-test', doc, {blocks: blockRegistry}),
     size: new Vector2(320, 320),
     resolutionScale: 1,
     playback: status,

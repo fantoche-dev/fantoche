@@ -2,10 +2,12 @@
 
 import {Command} from 'commander';
 import {launchEditor} from './editor';
+import {renderDoc} from './render-doc';
 import {createServer} from './server/index';
 
 const program = new Command();
 
+// Hand-synced at release time — see RELEASING.md step 1.
 const VERSION = '0.11.0';
 
 program
@@ -48,5 +50,18 @@ program
     const editor = await launchEditor(options.projectFile, options.port);
     console.log(`Editor running on port ${editor.config.server.port}`);
   });
+
+program
+  .command('render')
+  .description(
+    'Render a fantoche document (.json) to video, headless. The document is ' +
+      'the source of truth: fps and size come from its meta. Deterministic — ' +
+      'same document and assets produce the same video.',
+  )
+  .argument('<doc>', 'Path to the document .json file')
+  .option('--out <file.mp4>', 'Output file name (default: <doc name>.mp4)')
+  .option('--out-dir <dir>', 'Output directory', './output')
+  .option('--workers <n>', 'Number of parallel render workers')
+  .action(renderDoc);
 
 program.parse(process.argv);
