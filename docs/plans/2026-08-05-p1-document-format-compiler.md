@@ -301,6 +301,20 @@ Mid-transition (`previousScene !== null`) falls through to the loop (correctness
 
 Test: vitest + the `mockScene2D` idiom (`packages/2d/src/lib/components/__tests__/mockScene2D.ts`) adapted — construct a DocumentScene from a small doc, `seekToFrame` to assorted frames, assert node signal values equal evaluator output; assert `next()` after `seekToFrame` is consistent (no drift). Commit: `feat(document): DocumentScene — O(1) seek scene driving 2d nodes`
 
+> **Tasks 14–16 outcome (2026-08-05):** landed as `packages/document/src/scene`
+> (`./scene` subpath; jsdom tests). Deviations/limitations recorded:
+> DocumentScene duck-types the Scene2D registry surface (`registerNode`/
+> `getNode`) that `useScene2D()` callers actually touch, instead of core
+> exposing a formal interface; `getMediaAssets` returns `[]` in v0 (narration
+> audio muxing deferred to the corpus/CLI work — documents declare no playable
+> media elements); svg elements support inline markup only at runtime
+> (asset-file src errors with guidance); code diff fragments are memoized per
+> (before, after) pair and re-wrapped fresh per frame per the identity-check
+> rule; DOM lib added to the package tsconfig (types only — the node-safety
+> test still guards the root barrel at runtime). Block replay is bounded by
+> the block window and verified by seek-equals-sweep, backward-seek and
+> node-cleanup tests.
+
 ### Task 15: Element builders (adapter table)
 
 **Files:** `packages/document/src/scene/builders.ts` + tests
