@@ -408,6 +408,26 @@ Commit: `test(document): P1 gate — scrub/export identity + O(1) seek measureme
 
 ---
 
+## Good-first-issue drafts (file via `gh` after Daniel approves — Task 5)
+
+1. **New corpus documents** (`good first issue`, `test`): add a document to
+   `packages/e2e/documents/` exercising an uncovered combination (e.g.
+   nested layouts + tweens, multi-segment narration) and regenerate goldens
+   on CI per the plan's mechanism.
+2. **`--range` flag for `fantoche render`** (`good first issue`, `cli`):
+   plumb `settings.projectSettings.range` through `render-doc.ts` so a slice
+   of a document can be rendered for fast iteration.
+3. **RangeSpec sugar: `{match}` with occurrence index** (`good first issue`,
+   `document`): allow `{match: "x", which: 2}` (nth occurrence) in addition
+   to first/last/all; compiler + schema + JSON Schema + tests.
+4. **Narration audio in `getMediaAssets`** (`document`, `runtime`): a
+   document with `narration.audio` should surface that asset so headless
+   renders mux the voice track (deferred from Task 14 — see the batch D
+   review outcome note).
+5. **Code highlighter prop** (`document`, `v0.2`): design a
+   `language`/highlighter story for `code` elements (today they render
+   unhighlighted; `Code.defaultHighlighter` is a global static).
+
 ## Execution order & checkpoints
 
 Batches: **[1–4]** hygiene → checkpoint; **[6–8]** schema → checkpoint; **[9–11]** compiler+evaluator → checkpoint; **[12–13]** core surgery (highest-risk; e2e must stay green) → checkpoint; **[14–16]** runtime → checkpoint; **[17]** CLI; **[18–19]** corpus+gate; **[20]** wrap. Task 5 runs whenever Daniel is available; nothing blocks on it except actual npm publishing and issue filing.
