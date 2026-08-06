@@ -2,10 +2,7 @@
   "version": "0.1",
   "meta": {
     "fps": 30,
-    "size": [
-      320,
-      320
-    ],
+    "size": [320, 320],
     "duration": 0.1
   },
   "assets": {
