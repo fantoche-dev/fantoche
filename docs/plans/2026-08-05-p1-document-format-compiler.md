@@ -427,9 +427,54 @@ Commit: `test(document): P1 gate — scrub/export identity + O(1) seek measureme
 5. **Code highlighter prop** (`document`, `v0.2`): design a
    `language`/highlighter story for `code` elements (today they render
    unhighlighted; `Code.defaultHighlighter` is a global static).
+6. **Font assets for CLI renders** (`cli`, `document`): documents that use
+   custom fonts render with fallbacks under `fantoche render` (no page css
+   to load them) — design font declarations in the document (e.g. a `font`
+   asset type) that the shim turns into @font-face injection.
 
 ## Execution order & checkpoints
 
 Batches: **[1–4]** hygiene → checkpoint; **[6–8]** schema → checkpoint; **[9–11]** compiler+evaluator → checkpoint; **[12–13]** core surgery (highest-risk; e2e must stay green) → checkpoint; **[14–16]** runtime → checkpoint; **[17]** CLI; **[18–19]** corpus+gate; **[20]** wrap. Task 5 runs whenever Daniel is available; nothing blocks on it except actual npm publishing and issue filing.
 
 Every task ends with the tree building and tests passing. Golden changes always regenerate on CI (Linux reference) with the P0 Task 8 artifact mechanism.
+
+---
+
+## ✅ P1 GATE PASSED — 2026-08-05
+
+Roadmap criteria (docs/05-roadmap.md P1) with evidence:
+
+- **Non-trivial doc renders via scrub and headless export**: `gate.json`
+  (text + shapes + image + code with animated highlight/edit + narration
+  anchors + an embedded code block, 8s) renders headless via
+  `fantoche render packages/e2e/documents/gate.json` (GATE-RENDER-OK; frame
+  at t=4s visually equals the committed golden `doc-gate-mid.png`), and the
+  identical scene drives the player path (DocumentScene is what both paths
+  execute). Sweep ≡ random access verified at 6 probe frames including the
+  block interior (signal-level identity; pixel determinism from equal
+  signals is pinned by the 19 Linux-generated goldens, compared at ~0 diff
+  on CI).
+- **Seek is O(1), measured, no generator replay for document scenes**:
+  `gate seek: 8s doc = 0.28ms, 600s doc (75×, +300 keys) = 0.003ms`
+  (flat — the long doc is faster because its probe lands in a sparse
+  region); PlaybackManager performs zero `next()` calls during document
+  seeks (spied); block replay is bounded by the block window (0.6–1.2s),
+  never document length.
+- **Schema + types + published JSON Schema, version + migration from day 1**:
+  `packages/document` (99 tests) — strict zod schema, JSON Schema artifact
+  with drift test, migration scaffold with cycle guard.
+- **Compiler → IR → evaluator → existing scene graph**: pure pipeline with
+  purity/sweep property tests; document scenes live beside generator scenes
+  (e2e project mixes both; legacy goldens unchanged).
+- **Code-block escape hatch working**: registered runners execute inside
+  declared windows in both jsdom tests and real Chromium golden renders.
+- **Explainer elements first-class, narration-anchored**: text, shapes,
+  image, svg, latex, code (highlight + diff edits), layout — all in the
+  corpus; `anchors-narration.json` pins word-anchor timing on frames.
+- **CI**: full matrix green at the goldens commit (run 31060821283); three
+  Opus review rounds (batches A+B, C, D) applied in full, including three
+  critical semantic fixes caught before goldens were recorded.
+
+Post-gate known items: CLI renders don't load page fonts (documents
+referencing bundled fonts fall back — v0.2, add to issue drafts);
+remaining Daniel-manual list in Task 5.

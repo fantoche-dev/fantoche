@@ -94,6 +94,19 @@ export async function renderDoc(
     process.exit(1);
   }
 
+  // Relative asset paths resolve from the document's own directory; absolute
+  // URLs (data:, http[s]:) pass through; leading-/ paths are the embedding
+  // page's concern and pass through unchanged.
+  const docDir = path.dirname(resolvedDocPath);
+  const doc = validation.doc as {assets?: Record<string, {src: string}>};
+  if (doc.assets !== undefined) {
+    for (const asset of Object.values(doc.assets)) {
+      if (!/^(data:|https?:|\/)/.test(asset.src)) {
+        asset.src = `/@fs/${path.resolve(docDir, asset.src)}`;
+      }
+    }
+  }
+
   const name = path.basename(docPath).replace(/\.json$/i, '');
   const outFile = options.out ?? `${name}.mp4`;
   if (!outFile.endsWith('.mp4')) {
@@ -118,7 +131,7 @@ export async function renderDoc(
     validation.doc,
     name,
     blockSrcs,
-    path.dirname(resolvedDocPath),
+    docDir,
     shimDir,
   );
   const shimName = `render-${crypto

@@ -2,14 +2,17 @@
   "version": "0.1",
   "meta": {
     "fps": 30,
-    "size": [320, 320],
+    "size": [
+      320,
+      320
+    ],
     "background": "#0d0d12",
     "duration": 8
   },
   "assets": {
     "dot": {
       "type": "image",
-      "src": "/assets/dot.png"
+      "src": "./assets/dot.png"
     }
   },
   "narration": {
@@ -141,7 +144,10 @@
       "at": 2,
       "target": "snippet",
       "select": {
-        "lines": [1, 1]
+        "lines": [
+          1,
+          1
+        ]
       },
       "dur": 0.5
     },
@@ -149,7 +155,10 @@
       "at": 4.5,
       "target": "snippet",
       "select": {
-        "lines": [2, 3]
+        "lines": [
+          2,
+          3
+        ]
       },
       "dur": 0.5
     },
