@@ -37,6 +37,7 @@ import {
 import type {EasingName} from './easings.js';
 import type {CodeRange, TimelineIR, Track} from './ir.js';
 import type {PropValue} from './schema.js';
+import {lastAtOrBefore} from './search.js';
 
 export const EASINGS: Record<EasingName, TimingFunction> = {
   linear,
@@ -155,27 +156,6 @@ function cloneRanges(ranges: CodeRange[]): CodeRange[] {
     [...from] as [number, number],
     [...to] as [number, number],
   ]);
-}
-
-/** Index of the last entry with time ≤ frame, or -1. */
-function lastAtOrBefore<T>(
-  entries: readonly T[],
-  frame: number,
-  time: (entry: T) => number,
-): number {
-  let low = 0;
-  let high = entries.length - 1;
-  let found = -1;
-  while (low <= high) {
-    const mid = (low + high) >> 1;
-    if (time(entries[mid]) <= frame) {
-      found = mid;
-      low = mid + 1;
-    } else {
-      high = mid - 1;
-    }
-  }
-  return found;
 }
 
 function evaluateTrack(track: Track, frame: number): PropValue | undefined {

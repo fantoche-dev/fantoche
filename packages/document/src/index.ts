@@ -41,7 +41,14 @@ export type {
   TrackKey,
 } from './ir.js';
 export {documentJsonSchema} from './json-schema.js';
-export {VISEMES, visemeAt, visemeTrackSchema} from './lipsync/visemes.js';
+// VISEME_TRACK_VERSION is *not* DOCUMENT_FORMAT_VERSION: the track format
+// versions independently of the document format (see visemes.ts).
+export {
+  VISEMES,
+  VISEME_TRACK_VERSION,
+  visemeAt,
+  visemeTrackSchema,
+} from './lipsync/visemes.js';
 export type {Viseme, VisemeTrack} from './lipsync/visemes.js';
 export {MigrationError, migrateDocument} from './migrate.js';
 export type {MigrateResult} from './migrate.js';

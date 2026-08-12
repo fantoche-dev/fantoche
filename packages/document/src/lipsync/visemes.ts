@@ -3,12 +3,24 @@
  * so the blind comparison compares mouth *quality* and not plumbing.
  *
  * Node-safe by contract (see the header of `index.ts`): this module imports
- * `zod` and nothing else. In particular it must never reach
- * `@fantoche-dev/core`, which is what forces the binary search below to be
- * spelled out again instead of reusing the evaluator's `lastAtOrBefore`.
+ * `zod` and the import-free `../search.js`, and nothing else. In particular
+ * it must never reach `@fantoche-dev/core`, which is why the hold lookup
+ * borrows the search primitive rather than the evaluator that also uses it.
  */
 
 import {z} from 'zod';
+import {lastAtOrBefore} from '../search.js';
+
+/**
+ * Version of the *track* format.
+ *
+ * Its own constant, not `DOCUMENT_FORMAT_VERSION`: the two read '0.1' today
+ * but version independently. A track is a cacheable derived asset, not part
+ * of a document, so bumping the document format must not imply a track bump
+ * (nor the reverse) — and reaching for the wrong one here would produce a
+ * track that validates against nothing.
+ */
+export const VISEME_TRACK_VERSION = '0.1';
 
 /**
  * Preston-Blair / Rhubarb mouth set: A–H plus X (rest).
@@ -32,13 +44,30 @@ export type Viseme = (typeof VISEMES)[number];
  */
 export const visemeTrackSchema = z
   .strictObject({
-    version: z.literal('0.1'),
+    version: z.literal(VISEME_TRACK_VERSION),
     /** Which arm produced this — recorded so tracks stay attributable. */
     engine: z.enum(['rhubarb', 'whisperx']),
-    /** Path to the audio the track was derived from, relative to the track. */
+    /**
+     * Where the audio the track was derived from lives. The consumer
+     * resolves it relative to the track file; an absolute path is accepted
+     * and used as-is, which is worth having while this is a locally run
+     * spike tool pointed at scratch recordings.
+     */
     audio: z.string().min(1),
-    /** BCP-47-ish language tag; the PT-BR caveat is the whole point of it. */
-    language: z.string().min(2).optional(),
+    /**
+     * BCP-47 subset: a lowercase language, optionally plus an uppercase
+     * region. Narrower than BCP-47 proper on purpose — the blind comparison
+     * groups arms by this exact string, and 'pt', 'pt_BR' and 'PT-br' must
+     * not read as three languages. The PT-BR caveat is the whole point of
+     * the field.
+     */
+    language: z
+      .string()
+      .regex(
+        /^[a-z]{2}(-[A-Z]{2})?$/,
+        'language must be a lowercase tag with an optional uppercase region, e.g. "pt" or "pt-BR"',
+      )
+      .optional(),
     /** Cue times are seconds from the start of `audio`, never frames. */
     cues: z
       .array(
@@ -49,15 +78,30 @@ export const visemeTrackSchema = z
       )
       .min(1),
   })
-  .refine(
-    // Strictly increasing, not merely sorted: two cues sharing a `t` would
-    // make the hold lookup ambiguous (the binary search may land on either),
-    // so the same track could render two different mouths. Reject at the
-    // door instead of picking a winner at read time.
-    track =>
-      track.cues.every((cue, i) => i === 0 || cue.t > track.cues[i - 1].t),
-    {message: 'cues must be strictly increasing in t', path: ['cues']},
-  );
+  // Strictly increasing, not merely sorted: two cues sharing a `t` would make
+  // the hold lookup ambiguous (the binary search may land on either), so the
+  // same track could render two different mouths. Reject at the door instead
+  // of picking a winner at read time.
+  //
+  // `superRefine` rather than `refine` so the issue path carries the offending
+  // index: an aligner emits hundreds of cues per clip and nobody should bisect
+  // that by hand.
+  //
+  // Caveat for whoever publishes a JSON Schema for this format: `z.toJSONSchema`
+  // silently drops refinements, so an emitted artifact would be *weaker* than
+  // this runtime schema unless the rule is re-added by hand, the way
+  // `json-schema.ts` re-adds the document format's exactly-one-of rules.
+  .superRefine((track, ctx) => {
+    for (let i = 1; i < track.cues.length; i++) {
+      if (track.cues[i].t <= track.cues[i - 1].t) {
+        ctx.addIssue({
+          code: 'custom',
+          message: 'cues must be strictly increasing in t',
+          path: ['cues', i, 't'],
+        });
+      }
+    }
+  });
 
 /** A parsed, validated viseme track — the output of both spike arms. */
 export type VisemeTrack = z.infer<typeof visemeTrackSchema>;
@@ -79,20 +123,10 @@ export type VisemeTrack = z.infer<typeof visemeTrackSchema>;
  * @param t - Time in seconds from the start of the audio.
  * @returns The held viseme, or `'X'` (rest) when no cue has started yet.
  */
-export function visemeAt(cues: VisemeTrack['cues'], t: number): Viseme {
-  // Binary search for the last cue at or before `t`: O(log n) keeps the
-  // lookup seekable, matching the evaluator's O(1)-in-document-length rule.
-  let low = 0;
-  let high = cues.length - 1;
-  let found = -1;
-  while (low <= high) {
-    const mid = (low + high) >> 1;
-    if (cues[mid].t <= t) {
-      found = mid;
-      low = mid + 1;
-    } else {
-      high = mid - 1;
-    }
-  }
-  return found === -1 ? 'X' : cues[found].viseme;
+export function visemeAt(
+  cues: readonly VisemeTrack['cues'][number][],
+  t: number,
+): Viseme {
+  const index = lastAtOrBefore(cues, t, cue => cue.t);
+  return index === -1 ? 'X' : cues[index].viseme;
 }
