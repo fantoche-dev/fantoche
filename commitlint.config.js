@@ -7,6 +7,7 @@ module.exports = {
       'always',
       [
         '2d',
+        'character',
         'cli',
         'core',
         'create',
@@ -16,6 +17,8 @@ module.exports = {
         'e2e',
         'examples',
         'ffmpeg',
+        'lipsync',
+        'narration',
         'player',
         'player-react',
         'renderer',
