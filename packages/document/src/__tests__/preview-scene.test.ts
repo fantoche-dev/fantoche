@@ -16,7 +16,7 @@ const mouths = Object.fromEntries(
   ]),
 ) as Record<Viseme, string>;
 
-const doc = buildVisemePreviewDocument({
+const {doc} = buildVisemePreviewDocument({
   track: {
     version: '0.1',
     engine: 'rhubarb',

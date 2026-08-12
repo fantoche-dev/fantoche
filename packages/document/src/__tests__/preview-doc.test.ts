@@ -48,7 +48,7 @@ function visibleAt(ir: TimelineIR, frame: number): Viseme[] {
 
 describe('viseme preview document', () => {
   test('emits one svg element per viseme and hold-switches opacity', () => {
-    const doc = buildVisemePreviewDocument({
+    const {doc} = buildVisemePreviewDocument({
       track: track([
         {t: 0, viseme: 'X'},
         {t: 0.5, viseme: 'B'},
@@ -88,7 +88,7 @@ describe('viseme preview document', () => {
   });
 
   test('meta.duration holds the last cue for half a second', () => {
-    const doc = buildVisemePreviewDocument({
+    const {doc} = buildVisemePreviewDocument({
       track: track([
         {t: 0, viseme: 'X'},
         {t: 1.25, viseme: 'B'},
@@ -116,7 +116,7 @@ describe('viseme preview document', () => {
         mouths,
         fps: 24,
         size: [480, 320],
-      }),
+      }).doc,
     );
     for (let frame = 0; frame < ir.durationF; frame++) {
       expect(visibleAt(ir, frame)).toHaveLength(1);
@@ -143,7 +143,7 @@ describe('viseme preview document', () => {
         mouths,
         fps: 30,
         size: [480, 320],
-      }),
+      }).doc,
     );
     expect(visibleAt(ir, 30)).toEqual(['B']);
     expect(visibleAt(ir, ir.durationF - 1)).toEqual(['B']);
@@ -152,7 +152,7 @@ describe('viseme preview document', () => {
   test('cues that round onto one frame collapse to the last of them', () => {
     // 0.50 and 0.51 both round to frame 15 at 30fps. That frame can only draw
     // one mouth, and the survivor must be the one still in effect at frame 16.
-    const doc = buildVisemePreviewDocument({
+    const {doc} = buildVisemePreviewDocument({
       track: track([
         {t: 0, viseme: 'X'},
         {t: 0.5, viseme: 'B'},
@@ -179,8 +179,108 @@ describe('viseme preview document', () => {
     }
   });
 
+  test('collapsing costs nothing on screen and drops a dead track', () => {
+    // What the collapse is, and is not, for. Uncollapsed, the compiler's
+    // same-frame overwrite draws exactly the same preview — so this is not a
+    // bug being papered over. It buys a document a reader can predict without
+    // knowing that overwrite rule, and an IR without a track that does
+    // nothing.
+    const cues: VisemeTrack['cues'] = [
+      {t: 0, viseme: 'X'},
+      {t: 0.5, viseme: 'B'},
+      {t: 0.51, viseme: 'C'},
+      {t: 0.9, viseme: 'D'},
+    ];
+    const {doc} = buildVisemePreviewDocument({
+      track: track(cues),
+      mouths,
+      fps: 30,
+      size: [480, 320],
+    });
+
+    // The same document with every cue's switch left in, superseded or not.
+    const timeline: FantocheDocument['timeline'] = [];
+    let held: Viseme = 'X';
+    for (const cue of cues) {
+      timeline.push({
+        at: cue.t,
+        target: `mouth-${cue.viseme}`,
+        set: {opacity: 1},
+      });
+      if (cue.viseme !== held) {
+        timeline.push({at: cue.t, target: `mouth-${held}`, set: {opacity: 0}});
+      }
+      held = cue.viseme;
+    }
+    const collapsed = compile(doc);
+    const uncollapsed = compile({...doc, timeline});
+
+    expect(collapsed.durationF).toBe(uncollapsed.durationF);
+    for (let frame = 0; frame < collapsed.durationF; frame++) {
+      expect(visibleAt(collapsed, frame)).toEqual(
+        visibleAt(uncollapsed, frame),
+      );
+    }
+    // Same pixels, not the same IR: B is raised and lowered on frame 15, so
+    // uncollapsed it survives as a track whose only key restates the opacity
+    // it started at.
+    expect(uncollapsed.tracks.map(t => t.target)).toContain('mouth-B');
+    expect(collapsed.tracks.map(t => t.target)).not.toContain('mouth-B');
+  });
+
+  test('counts the cues the frame rate collapsed away', () => {
+    const cues: VisemeTrack['cues'] = [
+      {t: 0, viseme: 'X'},
+      {t: 0.5, viseme: 'B'},
+      {t: 0.51, viseme: 'C'},
+      {t: 0.515, viseme: 'D'},
+      {t: 0.9, viseme: 'F'},
+    ];
+    // 0.5, 0.51 and 0.515 all round onto frame 15 at 30fps: two of those three
+    // cues never reach the screen, and the count is the only place that says
+    // so — the document itself looks perfectly healthy without them.
+    const lossy = buildVisemePreviewDocument({
+      track: track(cues),
+      mouths,
+      fps: 30,
+      size: [480, 320],
+    });
+    expect(lossy.collapsed).toBe(2);
+    expect(lossy.doc.timeline).toEqual([
+      {at: 0, target: 'mouth-X', set: {opacity: 1}},
+      {at: 0.515, target: 'mouth-D', set: {opacity: 1}},
+      {at: 0.515, target: 'mouth-X', set: {opacity: 0}},
+      {at: 0.9, target: 'mouth-F', set: {opacity: 1}},
+      {at: 0.9, target: 'mouth-D', set: {opacity: 0}},
+    ]);
+
+    // The loss is the frame rate's, not the track's: at 120fps the same cues
+    // land on frames 60, 61 and 62 and every one of them is drawn.
+    const dense = buildVisemePreviewDocument({
+      track: track(cues),
+      mouths,
+      fps: 120,
+      size: [480, 320],
+    });
+    expect(dense.collapsed).toBe(0);
+    expect(dense.doc.timeline).toHaveLength(cues.length * 2 - 1);
+
+    // A track no frame rate has to squeeze reports zero rather than nothing.
+    expect(
+      buildVisemePreviewDocument({
+        track: track([
+          {t: 0, viseme: 'X'},
+          {t: 0.5, viseme: 'B'},
+        ]),
+        mouths,
+        fps: 30,
+        size: [480, 320],
+      }).collapsed,
+    ).toBe(0);
+  });
+
   test('rests before a track that does not start at zero', () => {
-    const doc = buildVisemePreviewDocument({
+    const {doc} = buildVisemePreviewDocument({
       track: track([{t: 0.4, viseme: 'B'}]),
       mouths,
       fps: 30,
@@ -221,7 +321,7 @@ describe('viseme preview document', () => {
 
   test('does not alias its inputs', () => {
     const cues: VisemeTrack['cues'] = [{t: 0, viseme: 'X'}];
-    const doc = buildVisemePreviewDocument({
+    const {doc} = buildVisemePreviewDocument({
       track: track(cues),
       mouths,
       fps: 30,
@@ -258,7 +358,7 @@ describe('viseme preview document', () => {
     ).toThrow(/H/);
   });
 
-  test('refuses inputs the frame math cannot use', () => {
+  test('refuses inputs the format cannot carry', () => {
     expect(() =>
       buildVisemePreviewDocument({
         track: track([]),
@@ -267,7 +367,9 @@ describe('viseme preview document', () => {
         size: [480, 320],
       }),
     ).toThrow(/cue/);
-    for (const fps of [0, -30, 1.5, NaN]) {
+    // 121 and up are as unusable as 0: `meta.fps` tops out at 120, so a
+    // document built at 240 is one no renderer will ever be handed.
+    for (const fps of [0, -30, 1.5, NaN, Infinity, 121, 240]) {
       expect(() =>
         buildVisemePreviewDocument({
           track: track([{t: 0, viseme: 'X'}]),
@@ -276,6 +378,52 @@ describe('viseme preview document', () => {
           size: [480, 320],
         }),
       ).toThrow(/fps/);
+    }
+    // `meta.size` is two positive *integers*: a half pixel is as invalid as a
+    // canvas with no area.
+    const badSizes: (readonly [number, number])[] = [
+      [480.5, 320],
+      [480, 319.5],
+      [480, 0],
+      [0, 320],
+      [-4, 8],
+      [NaN, 320],
+      [480.5, 0],
+    ];
+    for (const size of badSizes) {
+      expect(() =>
+        buildVisemePreviewDocument({
+          track: track([{t: 0, viseme: 'X'}]),
+          mouths,
+          fps: 30,
+          size,
+        }),
+      ).toThrow(/size/);
+    }
+  });
+
+  test('keeps its promise: every document it returns validates', () => {
+    // The guards exist to make the return type honest, so the bounds are
+    // checked from the outside — at the edges, where an off-by-one in a guard
+    // would show up as a document the schema rejects.
+    const corners = [
+      [1, [1, 1]],
+      [24, [480, 320]],
+      [120, [1920, 1080]],
+    ] as const;
+    for (const [fps, size] of corners) {
+      const {doc} = buildVisemePreviewDocument({
+        track: track([
+          {t: 0, viseme: 'X'},
+          {t: 0.5, viseme: 'B'},
+        ]),
+        mouths,
+        fps,
+        size,
+      });
+      const validation = validateDocument(doc);
+      expect(validation.ok).toBe(true);
+      expect(doc.meta).toMatchObject({fps, size: [size[0], size[1]]});
     }
   });
 });

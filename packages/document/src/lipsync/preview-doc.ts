@@ -29,6 +29,17 @@ import {VISEMES, visemeAt} from './visemes.js';
  */
 const TAIL_SECONDS = 0.5;
 
+/**
+ * Highest frame rate a document may declare.
+ *
+ * Restated from `meta.fps` in the schema rather than derived from it: this
+ * module is the one that has to reject 240 *before* building, and a guard
+ * that reads a zod internal to learn its own bound would be the more fragile
+ * of the two couplings. `refuses inputs the format cannot carry` in
+ * `preview-doc.test.ts` fails if the schema ever moves.
+ */
+const MAX_FPS = 120;
+
 /** Element id of the layer drawing one viseme. */
 function idFor(viseme: Viseme): string {
   return `mouth-${viseme}`;
@@ -45,10 +56,34 @@ export interface VisemePreviewOptions {
    * runtime only draws inline markup.
    */
   mouths: Readonly<Record<Viseme, string>>;
-  /** Frames per second; also the resolution the cue times collapse onto. */
+  /**
+   * Frames per second; also the resolution the cue times collapse onto.
+   *
+   * Bounded by the document format itself — a whole number from 1 to 120 —
+   * because a document carrying anything else does not validate.
+   */
   fps: number;
-  /** Preview canvas size, in pixels. */
+  /** Preview canvas size in whole pixels, both positive. */
   size: readonly [number, number];
+}
+
+/** Output of {@link buildVisemePreviewDocument}. */
+export interface VisemePreviewResult {
+  /** The preview document. */
+  doc: FantocheDocument;
+  /**
+   * How many cues the frame rate swallowed: cues that rounded onto a frame an
+   * earlier cue had already claimed and so never reach the screen.
+   *
+   * Reported rather than left implicit because it is measurement error, not a
+   * detail. At 30fps two cues less than ~17ms apart become one, and the cues
+   * an aligner emits that short are disproportionately the bilabial closures
+   * a lipsync comparison is scored on — so a preview that drops a dozen of
+   * them can make the *frame rate* look like an engine's weakness. A caller
+   * comparing engines should either report this number alongside the score or
+   * raise `fps` until it is zero.
+   */
+  collapsed: number;
 }
 
 /**
@@ -59,25 +94,46 @@ export interface VisemePreviewOptions {
  * so the caller's insertion order cannot reach the document.
  *
  * Throws when the mouth sheet is incomplete, the track has no cues, or `fps`
- * is not a positive integer — none of which can produce a document worth
- * looking at, and all of which are worth saying out loud rather than encoding
- * as a blank preview.
+ * or `size` are outside what the document format accepts — none of which can
+ * produce a document worth looking at, and all of which are worth saying out
+ * loud rather than encoding as a blank preview or an unrenderable file.
  *
  * @param options - Track, mouth sheet and canvas, see
  *   {@link VisemePreviewOptions}.
- * @returns A document that validates and compiles as it stands.
+ * @returns A document that validates and compiles as it stands, plus the
+ *   number of cues the frame rate collapsed away — see
+ *   {@link VisemePreviewResult}.
  */
 export function buildVisemePreviewDocument(
   options: VisemePreviewOptions,
-): FantocheDocument {
+): VisemePreviewResult {
   const {track, mouths, fps, size} = options;
   const cues = track.cues;
 
   if (cues.length === 0) {
     throw new Error('a viseme preview needs at least one cue');
   }
-  if (!Number.isInteger(fps) || fps < 1) {
-    throw new Error(`fps must be a positive integer (got ${fps})`);
+  // The bounds are the document format's own (`meta.fps`, `meta.size`), not a
+  // house rule: checking them here is what lets this function promise a
+  // document that validates. Reported against the option name, since the
+  // caller passing 240 is holding a `VisemePreviewOptions`, not a document.
+  if (!Number.isInteger(fps) || fps < 1 || fps > MAX_FPS) {
+    throw new Error(
+      `options.fps must be a whole number of frames from 1 to ${MAX_FPS} ` +
+        `(got ${fps}) — a document may not carry any other frame rate`,
+    );
+  }
+  if (
+    !Number.isInteger(size[0]) ||
+    !Number.isInteger(size[1]) ||
+    size[0] < 1 ||
+    size[1] < 1
+  ) {
+    throw new Error(
+      `options.size must be two positive whole pixels ` +
+        `(got ${size[0]}x${size[1]}) — a document may not carry a ` +
+        `fractional or empty canvas`,
+    );
   }
   // Checked up front and reported together: the mouth sheet is nine files on
   // disk, and finding out one is missing a cue at a time would mean nine runs.
@@ -91,12 +147,30 @@ export function buildVisemePreviewDocument(
     );
   }
 
-  // Frame rounding matches the compiler's `toFrame` exactly: a cue lands on
-  // the nearest frame, so two cues less than half a frame apart claim the
-  // same one. Collapsing them here — last one wins, because it is the mouth
-  // still in effect on the *following* frame — keeps the emitted document
-  // unambiguous instead of leaning on the compiler's same-frame key tiebreak.
+  // A cue lands on the nearest frame (`toFrame`, shared with the compiler), so
+  // two cues less than half a frame apart claim the same one — and a frame can
+  // only draw one mouth.
+  //
+  // Collapsing them is not a correction. Emitted uncollapsed, `pushKey`'s
+  // same-frame overwrite picks the same winner and the preview draws exactly
+  // the same pixels. What it costs is a document that asks its reader to know
+  // that overwrite rule to predict what it draws — and the document, not the
+  // IR, is the artifact a human reads, diffs and files a bug against — plus
+  // one dead track per superseded cue: a mouth raised and lowered on a single
+  // frame survives compilation as a one-key track setting an opacity it
+  // already had. The tiebreak is also the compiler's to tighten into a
+  // `CompileError` later, as it already does for overlapping animations, and
+  // nothing here should be relying on it. `collapsing costs nothing on screen`
+  // in `preview-doc.test.ts` holds all of that to the evidence.
+  //
+  // Last one wins, and that direction is forced rather than chosen: first-wins
+  // would raise the mouth of a cue that is already superseded on the only
+  // frame it owns, and never raise the one still in effect on the frame after.
+  //
+  // The count is returned: a collapsed cue is a cue the viewer never sees, and
+  // that is a fact about the measurement, not an implementation detail.
   const switches: {t: number; viseme: Viseme}[] = [];
+  let collapsed = 0;
   for (const cue of cues) {
     const previous = switches[switches.length - 1];
     // Copied, never aliased: a caller may keep mutating its parsed track.
@@ -106,6 +180,7 @@ export function buildVisemePreviewDocument(
       toFrame(previous.t, fps) === toFrame(cue.t, fps)
     ) {
       switches[switches.length - 1] = next;
+      collapsed++;
     } else {
       switches.push(next);
     }
@@ -134,17 +209,20 @@ export function buildVisemePreviewDocument(
   }
 
   return {
-    version: DOCUMENT_FORMAT_VERSION,
-    meta: {
-      fps,
-      size: [size[0], size[1]],
-      duration: cues[cues.length - 1].t + TAIL_SECONDS,
+    doc: {
+      version: DOCUMENT_FORMAT_VERSION,
+      meta: {
+        fps,
+        size: [size[0], size[1]],
+        duration: cues[cues.length - 1].t + TAIL_SECONDS,
+      },
+      elements: VISEMES.map(viseme => ({
+        id: idFor(viseme),
+        type: 'svg' as const,
+        props: {svg: mouths[viseme], opacity: viseme === opening ? 1 : 0},
+      })),
+      timeline,
     },
-    elements: VISEMES.map(viseme => ({
-      id: idFor(viseme),
-      type: 'svg' as const,
-      props: {svg: mouths[viseme], opacity: viseme === opening ? 1 : 0},
-    })),
-    timeline,
+    collapsed,
   };
 }
