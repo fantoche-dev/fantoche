@@ -14,6 +14,7 @@
  * values from `./visemes.js`, and nothing that reaches `@fantoche-dev/core`.
  */
 
+import {toFrame} from '../frames.js';
 import type {FantocheDocument, TimelineItem} from '../schema.js';
 import {DOCUMENT_FORMAT_VERSION} from '../version.js';
 import type {Viseme, VisemeTrack} from './visemes.js';
@@ -95,13 +96,15 @@ export function buildVisemePreviewDocument(
   // same one. Collapsing them here — last one wins, because it is the mouth
   // still in effect on the *following* frame — keeps the emitted document
   // unambiguous instead of leaning on the compiler's same-frame key tiebreak.
-  const toFrame = (seconds: number): number => Math.round(seconds * fps);
   const switches: {t: number; viseme: Viseme}[] = [];
   for (const cue of cues) {
     const previous = switches[switches.length - 1];
     // Copied, never aliased: a caller may keep mutating its parsed track.
     const next = {t: cue.t, viseme: cue.viseme};
-    if (previous !== undefined && toFrame(previous.t) === toFrame(cue.t)) {
+    if (
+      previous !== undefined &&
+      toFrame(previous.t, fps) === toFrame(cue.t, fps)
+    ) {
       switches[switches.length - 1] = next;
     } else {
       switches.push(next);

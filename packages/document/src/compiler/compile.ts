@@ -5,6 +5,7 @@ import {
   resolveRangeSpec,
 } from '../code-text.js';
 import {DEFAULT_EASING, type EasingName} from '../easings.js';
+import {toFrame as roundToFrame} from '../frames.js';
 import type {
   BlockIR,
   CodeRange,
@@ -90,7 +91,10 @@ interface PropEvent {
 export function compileDocument(doc: FantocheDocument): CompileResult {
   const warnings: string[] = [];
   const fps = doc.meta.fps;
-  const toFrame = (seconds: number) => Math.round(seconds * fps);
+  // Bound to this document's fps once; the rule itself lives in `frames.ts`,
+  // where the preview builder can share it (its cue collapse has to round the
+  // same way this does).
+  const toFrame = (seconds: number) => roundToFrame(seconds, fps);
   const narrationIndex = buildNarrationIndex(doc.narration);
 
   // -- elements ------------------------------------------------------------
