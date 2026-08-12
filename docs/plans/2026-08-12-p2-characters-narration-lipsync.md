@@ -124,7 +124,13 @@ viseme comparison arm — neither is installed in CI or needed to render.
   Thresholds: 20px strict on Linux; darwin-only 0.8% allowance on text scenes.
 - **Verification pattern:** build `npx lerna run build --ignore @fantoche-dev/docs`;
   unit `npx lerna run test`; e2e `npm run e2e:test`; render smoke
-  `npm run template:render`.
+  `npm run template:render`. A single file:
+  `cd packages/<pkg> && npx vitest run src/__tests__/<name>.test.ts` —
+  **never** `npx vitest … -w <pkg>`: `-w` is vitest's own `--watch`, not npm's
+  workspace flag, and the run will hang.
+- **Test style:** the suites use `test(...)`, never `it(...)` (83 call sites to
+  zero in `packages/document`). The snippets below are illustrative — match the
+  repo, not the snippet, wherever the two disagree, and say so in your report.
 - **Skills:** @superpowers:test-driven-development for every task below;
   @superpowers:verification-before-completion before any "done" claim.
 - Commit style: conventional commits, scope-enum enforced (Task 1).
@@ -165,11 +171,11 @@ compares *quality*, not plumbing.
 **Step 1: Write the failing test**
 
 ```ts
-import {describe, expect, it} from 'vitest';
+import {describe, expect, test} from 'vitest';
 import {VISEMES, visemeAt, visemeTrackSchema} from '../lipsync/visemes.js';
 
 describe('viseme track', () => {
-  it('accepts the Preston-Blair alphabet and rejects strays', () => {
+  test('accepts the Preston-Blair alphabet and rejects strays', () => {
     expect(VISEMES).toEqual(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'X']);
     const ok = visemeTrackSchema.safeParse({
       version: '0.1',
@@ -186,7 +192,7 @@ describe('viseme track', () => {
     ).toBe(false);
   });
 
-  it('rejects unsorted cues (hold lookup assumes order)', () => {
+  test('rejects unsorted cues (hold lookup assumes order)', () => {
     expect(
       visemeTrackSchema.safeParse({
         version: '0.1', engine: 'rhubarb', audio: 'v.wav',
@@ -195,7 +201,7 @@ describe('viseme track', () => {
     ).toBe(false);
   });
 
-  it('holds each cue until the next one', () => {
+  test('holds each cue until the next one', () => {
     const cues = [{t: 0, viseme: 'X'}, {t: 0.2, viseme: 'B'}, {t: 0.4, viseme: 'X'}] as const;
     expect(visemeAt([...cues], 0)).toBe('X');
     expect(visemeAt([...cues], 0.19)).toBe('X');
@@ -205,7 +211,7 @@ describe('viseme track', () => {
 });
 ```
 
-**Step 2:** Run `npx vitest run src/__tests__/visemes.test.ts -w packages/document`
+**Step 2:** Run `cd packages/document && npx vitest run src/__tests__/visemes.test.ts`
 → FAIL (module not found).
 
 **Step 3: Implement**
@@ -294,12 +300,12 @@ Expected: nine identical viewBoxes.
 **Step 1: Write the failing test**
 
 ```ts
-import {describe, expect, it} from 'vitest';
+import {describe, expect, test} from 'vitest';
 import {readFileSync} from 'node:fs';
 import {parseRhubarbOutput} from '../lipsync/rhubarb.js';
 
 describe('rhubarb adapter', () => {
-  it('converts mouthCues to a viseme track', () => {
+  test('converts mouthCues to a viseme track', () => {
     const raw = JSON.parse(
       readFileSync(new URL('./fixtures/rhubarb-pt-br-01.json', import.meta.url), 'utf8'),
     );
@@ -310,7 +316,7 @@ describe('rhubarb adapter', () => {
     expect(track.cues.every((c, i) => i === 0 || c.t > track.cues[i - 1].t)).toBe(true);
   });
 
-  it('drops zero-length cues rather than emitting equal timestamps', () => {
+  test('drops zero-length cues rather than emitting equal timestamps', () => {
     const track = parseRhubarbOutput(
       {mouthCues: [
         {start: 0, end: 0.1, value: 'X'},
@@ -393,7 +399,7 @@ renders through the existing pipeline with no runtime changes.
 **Step 1: Write the failing test**
 
 ```ts
-import {describe, expect, it} from 'vitest';
+import {describe, expect, test} from 'vitest';
 import {compileDocument, validateDocument} from '../index.js';
 import {buildVisemePreviewDocument} from '../lipsync/preview-doc.js';
 
@@ -402,7 +408,7 @@ const MOUTHS = Object.fromEntries(
 );
 
 describe('viseme preview document', () => {
-  it('emits one svg element per viseme and hold-switches opacity', () => {
+  test('emits one svg element per viseme and hold-switches opacity', () => {
     const doc = buildVisemePreviewDocument({
       track: {version: '0.1', engine: 'rhubarb', audio: 'v.wav',
               cues: [{t: 0, viseme: 'X'}, {t: 0.5, viseme: 'B'}]},
@@ -418,7 +424,7 @@ describe('viseme preview document', () => {
     expect(ir.tracks.every(t => t.keys.every(k => k.easing === 'hold'))).toBe(true);
   });
 
-  it('is a pure function of its inputs', () => {
+  test('is a pure function of its inputs', () => {
     const args = {track: {version: '0.1', engine: 'rhubarb', audio: 'v.wav',
                           cues: [{t: 0, viseme: 'X'}]} as const,
                   mouths: MOUTHS, fps: 30, size: [480, 320] as [number, number]};
@@ -579,7 +585,7 @@ const ART = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <circle id="pivot-arm-l" cx="122" cy="101" r="1" data-fantoche-pivot="arm-l"/>
 </svg>`;
 
-it('extracts one sub-svg per slot, pivot-centred', () => {
+test('extracts one sub-svg per slot, pivot-centred', () => {
   const out = splitArt(ART, {
     'arm-l': {element: 'arm_x5F_l', pivot: [122, 101]},
   });
@@ -591,19 +597,19 @@ it('extracts one sub-svg per slot, pivot-centred', () => {
   expect(out.slots['arm-l']).not.toContain('id="torso"');
 });
 
-it('reads pivot markers and strips them from the output', () => {
+test('reads pivot markers and strips them from the output', () => {
   const out = splitArt(ART, {'arm-l': {element: 'arm_x5F_l', pivot: 'center'}});
   expect(out.pivots['arm-l']).toEqual([122, 101]);           // marker wins over preset
   expect(out.slots['arm-l']).not.toContain('pivot-arm-l');   // marker never renders
 });
 
-it('reports orphans and misses instead of throwing', () => {
+test('reports orphans and misses instead of throwing', () => {
   const out = splitArt(ART, {'arm-r': {element: 'nope', pivot: 'center'}});
   expect(out.missing).toEqual(['arm-r']);
   expect(out.orphans).toContain('torso');
 });
 
-it('is deterministic', () => {
+test('is deterministic', () => {
   const a = splitArt(ART, {'arm-l': {element: 'arm_x5F_l', pivot: 'center'}});
   expect(a).toEqual(splitArt(ART, {'arm-l': {element: 'arm_x5F_l', pivot: 'center'}}));
 });
@@ -713,7 +719,7 @@ const RIG = {
   hand: {parent: 'arm-l', rest: [180, 90] as const},
 };
 
-it('composes FK: rotating a parent carries children along an arc', () => {
+test('composes FK: rotating a parent carries children along an arc', () => {
   const out = composeRig(RIG, {'arm-l': {rotation: 90}});
   // hand is 40px along +x from arm-l at rest; a 90° turn puts it 40px along +y.
   expect(out.hand.x).toBeCloseTo(140, 6);
@@ -721,7 +727,7 @@ it('composes FK: rotating a parent carries children along an arc', () => {
   expect(out.hand.rotation).toBeCloseTo(90, 6);
 });
 
-it('keeps limb length under rotation (the reason FK is not baked into keys)', () => {
+test('keeps limb length under rotation (the reason FK is not baked into keys)', () => {
   const rest = composeRig(RIG, {});
   const bent = composeRig(RIG, {'arm-l': {rotation: 37}});
   const len = (a: {x: number; y: number}, b: {x: number; y: number}) =>
@@ -729,12 +735,12 @@ it('keeps limb length under rotation (the reason FK is not baked into keys)', ()
   expect(len(bent['arm-l'], bent.hand)).toBeCloseTo(len(rest['arm-l'], rest.hand), 6);
 });
 
-it('multiplies scale down the chain and stays shear-free', () => {
+test('multiplies scale down the chain and stays shear-free', () => {
   const out = composeRig(RIG, {torso: {scale: 2}, 'arm-l': {scale: 1.5}});
   expect(out.hand.scale).toBeCloseTo(3, 6);
 });
 
-it('is pure and allocation-stable across repeated calls', () => {
+test('is pure and allocation-stable across repeated calls', () => {
   expect(composeRig(RIG, {torso: {rotation: 12}})).toEqual(
     composeRig(RIG, {torso: {rotation: 12}}),
   );
@@ -967,12 +973,12 @@ compress a gesture instead of colliding with the next one.
 **Step 1: Write the failing test**
 
 ```ts
-it('lands exactly on the target at the settle frame', () => {
+test('lands exactly on the target at the settle frame', () => {
   const {ir} = compileDocument(springDoc({from: 0, to: 100, dur: 0.5}));
   expect(evaluateFrame(ir, 15).props.get('box')!.get('x')).toBeCloseTo(100, 9);
 });
 
-it('carries momentum from the previous spring segment', () => {
+test('carries momentum from the previous spring segment', () => {
   // 0→100 then immediately 100→200: the second segment starts already moving,
   // so it overshoots where a fresh spring would not.
   const {ir} = compileDocument(chainedSpringDoc());
@@ -981,14 +987,14 @@ it('carries momentum from the previous spring segment', () => {
   expect(mid).toBeGreaterThan(fresh);
 });
 
-it('is O(1): a probe at frame 300 costs the same in an 8s and a 600s document', () => { /* … */ });
+test('is O(1): a probe at frame 300 costs the same in an 8s and a 600s document', () => { /* … */ });
 
-it('rejects springs on non-scalar props with an actionable message', () => {
+test('rejects springs on non-scalar props with an actionable message', () => {
   expect(() => compileDocument(springDoc({prop: 'scale', to: [2, 2]})))
     .toThrow(/spring.*scalar number/i);
 });
 
-it('stays pure: same IR and frame ⇒ identical value', () => { /* … */ });
+test('stays pure: same IR and frame ⇒ identical value', () => { /* … */ });
 ```
 
 **Step 2:** Run → FAIL.
