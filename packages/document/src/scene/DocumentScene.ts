@@ -281,7 +281,7 @@ export class DocumentScene
       code.code(state.code);
     } else {
       const {from, to, progress} = state.code;
-      const cacheKey = `${from} ${to}`;
+      const cacheKey = `${from}\u0000${to}`;
       let fragments = this.diffCache.get(cacheKey);
       if (fragments === undefined) {
         // Diff via the code signal's own tween machinery is generator-bound;
