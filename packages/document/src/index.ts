@@ -41,6 +41,8 @@ export type {
   TrackKey,
 } from './ir.js';
 export {documentJsonSchema} from './json-schema.js';
+export {buildVisemePreviewDocument} from './lipsync/preview-doc.js';
+export type {VisemePreviewOptions} from './lipsync/preview-doc.js';
 // VISEME_TRACK_VERSION is *not* DOCUMENT_FORMAT_VERSION: the track format
 // versions independently of the document format (see visemes.ts).
 export {

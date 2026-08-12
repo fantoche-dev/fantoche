@@ -2,6 +2,7 @@
 
 import {Command} from 'commander';
 import {launchEditor} from './editor';
+import {lipsyncPreview} from './lipsync/command';
 import {renderDoc} from './render-doc';
 import {createServer} from './server/index';
 
@@ -63,5 +64,25 @@ program
   .option('--out-dir <dir>', 'Output directory', './output')
   .option('--workers <n>', 'Number of parallel render workers')
   .action(renderDoc);
+
+const lipsync = program
+  .command('lipsync')
+  .description('Dev-time lipsync tools. Never a render-time dependency.');
+
+lipsync
+  .command('preview')
+  .description(
+    'Turn a viseme track (.json) into a renderable document: nine stacked ' +
+      'mouth SVGs whose opacity is hold-switched, one cue at a time.',
+  )
+  .argument('<track>', 'Path to the viseme track .json file')
+  .requiredOption('--mouths <dir>', 'Directory holding A.svg … X.svg')
+  .requiredOption('--out <doc.json>', 'Document file to write')
+  .option('--fps <n>', 'Frames per second of the preview', '30')
+  .option('--size <WxH>', 'Preview canvas size', '480x320')
+  .option('--render', 'Render the document to video once written')
+  .option('--out-dir <dir>', 'Output directory for --render', './output')
+  .option('--workers <n>', 'Number of parallel render workers for --render')
+  .action(lipsyncPreview);
 
 program.parse(process.argv);
