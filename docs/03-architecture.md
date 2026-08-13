@@ -85,6 +85,16 @@ render backend seam  ────────►  Canvas2D (default)  |  ThorVG-
 export               ────────►  wasm mp4 / ffmpeg image stream → concat/merge
 ```
 
+**What "O(1) seek" claims, precisely.** Cost independent of *where* you seek:
+frame 10 000 costs what frame 1 costs, because `state(t)` reads the IR instead
+of replaying the timeline up to `t`. It is *not* a claim of constant work per
+frame — `evaluateFrame` is O(tracks × log keys), binary searching each track's
+key list, so it grows with the size of the document. The property the GUI,
+parallel render and undo all depend on is the first one, and generators have
+neither. The one deliberate exception is a code block, whose replay is bounded
+by the block's own declared duration (see
+[design review §3](design-review-2026-08-06.md)).
+
 The Revideo runtime survives *below* the evaluator: the document compiles down
 to node-graph mutations per frame. Legacy generator scenes keep working beside
 document scenes — that is the Motion Canvas compatibility story and the
