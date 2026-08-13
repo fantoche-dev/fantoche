@@ -18,7 +18,7 @@ import {toFrame} from '../frames.js';
 import type {FantocheDocument, TimelineItem} from '../schema.js';
 import {DOCUMENT_FORMAT_VERSION} from '../version.js';
 import type {Viseme, VisemeTrack} from './visemes.js';
-import {VISEMES, visemeAt} from './visemes.js';
+import {VISEMES, visemeAt, visemeTrackSchema} from './visemes.js';
 
 /**
  * Seconds the final mouth is held after the last cue.
@@ -93,10 +93,11 @@ export interface VisemePreviewResult {
  * the mouth record is walked in {@link VISEMES} order rather than key order,
  * so the caller's insertion order cannot reach the document.
  *
- * Throws when the mouth sheet is incomplete, the track has no cues, or `fps`
- * or `size` are outside what the document format accepts — none of which can
- * produce a document worth looking at, and all of which are worth saying out
- * loud rather than encoding as a blank preview or an unrenderable file.
+ * Throws when the mouth sheet is incomplete, the track is not one the track
+ * format accepts, or `fps` or `size` are outside what the document format
+ * accepts — none of which can produce a document worth looking at, and all of
+ * which are worth saying out loud rather than encoding as a blank preview or
+ * an unrenderable file.
  *
  * @param options - Track, mouth sheet and canvas, see
  *   {@link VisemePreviewOptions}.
@@ -107,12 +108,31 @@ export interface VisemePreviewResult {
 export function buildVisemePreviewDocument(
   options: VisemePreviewOptions,
 ): VisemePreviewResult {
-  const {track, mouths, fps, size} = options;
-  const cues = track.cues;
+  const {mouths, fps, size} = options;
 
-  if (cues.length === 0) {
+  if (options.track.cues.length === 0) {
     throw new Error('a viseme preview needs at least one cue');
   }
+  // `VisemeTrack` is structural, so satisfying the parameter type is not the
+  // same as having been through the schema — and this function promises a
+  // document that validates. A caller holding a hand-written or freshly
+  // adapted track reaches here unchecked: `t: -1` used to build
+  // `meta.duration: -0.5`, and cues out of order put the *last* cue's time
+  // into a duration the earlier ones then fall outside of. The CLI parses
+  // first and will parse twice because of this; that is the cheaper half of
+  // the trade, and the same defence-in-depth the CLI applies by re-validating
+  // the document this function just promised was valid.
+  const validated = visemeTrackSchema.safeParse(options.track);
+  if (!validated.success) {
+    throw new Error(
+      `options.track is not a valid viseme track: ${validated.error.issues
+        .map(issue => `/${issue.path.join('/')}: ${issue.message}`)
+        .join('; ')}`,
+    );
+  }
+  // The parsed copy from here on, so the validation is load-bearing rather
+  // than a check the rest of the function then ignores.
+  const cues = validated.data.cues;
   // The bounds are the document format's own (`meta.fps`, `meta.size`), not a
   // house rule: checking them here is what lets this function promise a
   // document that validates. Reported against the option name, since the

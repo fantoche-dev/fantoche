@@ -402,6 +402,47 @@ describe('viseme preview document', () => {
     }
   });
 
+  test('refuses a track the track format itself would reject', () => {
+    // `VisemeTrack` is a structural type, so an unvalidated object satisfies
+    // the parameter and reaches this public export unchecked. The CLI happens
+    // to `safeParse` first; nothing makes a direct caller do the same, and
+    // this function promises a document that validates either way.
+    //
+    // Each of these built one that does not: `t: -1` put `meta.duration` at
+    // -0.5, and cues out of order put the last cue's time — not the greatest —
+    // into a duration the earlier cues then fall outside of.
+    expect(() =>
+      buildVisemePreviewDocument({
+        track: track([{t: -1, viseme: 'X'}]),
+        mouths,
+        fps: 30,
+        size: [480, 320],
+      }),
+    ).toThrow(/\/cues\/0\/t/);
+    expect(() =>
+      buildVisemePreviewDocument({
+        track: track([
+          {t: 0, viseme: 'X'},
+          {t: 0.5, viseme: 'B'},
+          {t: 0.2, viseme: 'C'},
+        ]),
+        mouths,
+        fps: 30,
+        size: [480, 320],
+      }),
+    ).toThrow(/\/cues\/2\/t/);
+    // The version and engine are part of what makes a track attributable, so
+    // a track that lost them is not one a comparison should be scored on.
+    expect(() =>
+      buildVisemePreviewDocument({
+        track: {...track([{t: 0, viseme: 'X'}]), engine: 'guesswork'} as never,
+        mouths,
+        fps: 30,
+        size: [480, 320],
+      }),
+    ).toThrow(/\/engine/);
+  });
+
   test('keeps its promise: every document it returns validates', () => {
     // The guards exist to make the return type honest, so the bounds are
     // checked from the outside — at the edges, where an off-by-one in a guard
