@@ -7,17 +7,27 @@ import {start} from './app';
 expect.extend({toMatchImageSnapshot});
 
 describe('Rendering', () => {
-  let app: App;
+  let app: App | undefined;
 
   beforeAll(async () => {
     app = await start();
   });
 
   afterAll(async () => {
-    await app.stop();
+    // Optional, because `start()` throwing leaves this undefined: teardown
+    // then threw a TypeError of its own, and that second failure is the one
+    // that gets read. A Chrome that would not launch reported as
+    // "cannot read properties of undefined" sends whoever is on the failure
+    // looking in the wrong place entirely.
+    await app?.stop();
   });
 
   test('Animation renders correctly', async () => {
+    // For the type checker, not for the runtime: a failing `beforeAll` aborts
+    // the suite before any test body runs.
+    if (app === undefined) {
+      throw new Error('the app did not start — see the beforeAll failure');
+    }
     await app.page.click('#render');
     await app.page.waitForSelector('#render:not([data-rendering="true"])');
 
