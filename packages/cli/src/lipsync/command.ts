@@ -60,6 +60,59 @@ export function parseFps(value: string): number {
 }
 
 /**
+ * The SVG tags the runtime's parser actually turns into nodes.
+ *
+ * Mirrored by hand from the tag chain in `SVG.parseSVGData`
+ * (`packages/2d/src/lib/components/SVG.ts`), which is an if/else over
+ * `child.tagName` rather than a list this could import. `g` is deliberately
+ * absent: it is a container, so a file whose only content is an empty group
+ * draws nothing.
+ *
+ * The cost of the duplication is that a tag added to the parser is rejected
+ * here until this list catches up — a wrong "unusable" on a sheet that would
+ * have rendered. The cost of not having it is a preview of a blank canvas
+ * scored as an aligner's failure, which is the more expensive mistake in a
+ * comparison whose whole output is a human judgement.
+ */
+const DRAWABLE_TAGS = [
+  'path',
+  'rect',
+  'circle',
+  'ellipse',
+  'line',
+  'polyline',
+  'polygon',
+  'image',
+  'use',
+] as const;
+
+/**
+ * The canvas an `<svg>` root declares, as a comparable string, or `undefined`
+ * when it declares none.
+ *
+ * Read off the root tag alone: a `width` anywhere else in the markup belongs
+ * to a shape, and matching it would accept a sheet the runtime cannot size.
+ *
+ * @param rootTag - The `<svg …>` opening tag, markup included.
+ * @returns The normalised viewBox, `WIDTHxHEIGHT`, or `undefined`.
+ */
+function canvasOf(rootTag: string): string | undefined {
+  const viewBox = /viewBox\s*=\s*["']([^"']*)["']/i.exec(rootTag)?.[1];
+  if (viewBox !== undefined && viewBox.trim() !== '') {
+    // Separators vary ("0 0 100 60", "0,0,100,60"); the canvas does not.
+    return viewBox.trim().replace(/[\s,]+/g, ' ');
+  }
+  const width = /\bwidth\s*=\s*["']([^"']*)["']/i.exec(rootTag)?.[1]?.trim();
+  const height = /\bheight\s*=\s*["']([^"']*)["']/i.exec(rootTag)?.[1]?.trim();
+  return width !== undefined &&
+    width !== '' &&
+    height !== undefined &&
+    height !== ''
+    ? `${width}x${height}`
+    : undefined;
+}
+
+/**
  * Read one `<viseme>.svg` per viseme out of a mouth-sheet directory.
  *
  * The markup is inlined into the document rather than referenced, because
@@ -83,6 +136,7 @@ export function readMouthSheet<TViseme extends string>(
 ): Record<TViseme, string> {
   const sheet = {} as Record<TViseme, string>;
   const unusable: string[] = [];
+  const canvases = new Map<TViseme, string>();
   for (const viseme of visemes) {
     const file = path.resolve(dir, `${viseme}.svg`);
     let markup: string;
@@ -98,15 +152,53 @@ export function readMouthSheet<TViseme extends string>(
       sheet[viseme] = '';
       continue;
     }
+    sheet[viseme] = markup;
+
+    // Structural, not a parse: the real parser needs a DOM this process does
+    // not have. It catches what actually goes wrong with a hand-made or
+    // half-exported sheet — an empty file, an error page saved as .svg, an
+    // export with no canvas, a drawing made of tags the runtime ignores.
+    // A shape that sits in `<defs>` and is never `<use>`d still counts here
+    // and still draws nothing; that is the gap this check does not close.
+    const rootTag = /<svg\b[^>]*>/i.exec(markup)?.[0];
     if (markup.trim() === '') {
       unusable.push(`${viseme}.svg (file is empty)`);
+    } else if (rootTag === undefined) {
+      unusable.push(`${viseme}.svg (no <svg> root element)`);
+    } else if (canvasOf(rootTag) === undefined) {
+      unusable.push(
+        `${viseme}.svg (root <svg> has neither viewBox nor width and height)`,
+      );
+    } else if (
+      !DRAWABLE_TAGS.some(tag => new RegExp(`<${tag}\\b`, 'i').test(markup))
+    ) {
+      unusable.push(
+        `${viseme}.svg (nothing the renderer draws — no ` +
+          `${DRAWABLE_TAGS.join(', ')})`,
+      );
+    } else {
+      canvases.set(viseme, canvasOf(rootTag) as string);
     }
-    sheet[viseme] = markup;
   }
   if (unusable.length > 0) {
     throw new Error(
       `mouth sheet "${dir}" is unusable: ${unusable.join(', ')} — one ` +
-        `non-empty file per viseme (${visemes.join('')}) is needed`,
+        `non-empty file per viseme (${visemes.join('')}) is needed, each an ` +
+        `<svg> with a canvas and something drawable in it`,
+    );
+  }
+
+  // Reported only once every file is individually sound, because a file that
+  // could not be read has no canvas to disagree with — "C.svg mixes canvases"
+  // on top of "C.svg is missing" would be noise on the real failure.
+  const distinct = new Set(canvases.values());
+  if (distinct.size > 1) {
+    throw new Error(
+      `mouth sheet "${dir}" mixes canvases: ` +
+        `${[...canvases]
+          .map(([viseme, canvas]) => `${viseme}.svg (${canvas})`)
+          .join(', ')} — every mouth must share one viewBox and origin, or ` +
+        `the mouth jumps at each cue that changes canvas`,
     );
   }
   return sheet;
@@ -135,6 +227,23 @@ export async function lipsyncPreview(
   } = await import('@fantoche-dev/document');
 
   const resolvedTrackPath = path.resolve(trackPath);
+  const outPath = path.resolve(options.out);
+  // Checked before anything is read, because the failure it prevents is
+  // destructive: `--out track.json` overwrote the very alignment being
+  // previewed, and a track costs a tool run — and, for the spike, a recording
+  // session — to reproduce. Resolved paths rather than the typed strings, so
+  // `mouth/../track.json` is caught too. It does not resolve symlinks or a
+  // case-insensitive filesystem's idea of sameness; those are exotic next to
+  // the accident this is here for, and the write itself is unchanged.
+  if (outPath === resolvedTrackPath) {
+    console.error(
+      `--out ${options.out} is the viseme track being read ` +
+        `(${resolvedTrackPath}) — writing the preview there would destroy ` +
+        `its own input; pass a different path`,
+    );
+    process.exit(1);
+  }
+
   let raw: unknown;
   try {
     raw = JSON.parse(fs.readFileSync(resolvedTrackPath, 'utf8'));
@@ -183,7 +292,6 @@ export async function lipsyncPreview(
     process.exit(1);
   }
 
-  const outPath = path.resolve(options.out);
   try {
     fs.mkdirSync(path.dirname(outPath), {recursive: true});
     fs.writeFileSync(outPath, `${JSON.stringify(preview.doc, null, 2)}\n`);
