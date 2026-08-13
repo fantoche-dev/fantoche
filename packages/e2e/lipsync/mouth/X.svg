@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200">
+  <!-- X — rest / silence. Closed and relaxed: wider and thinner than A. -->
+  <path d="M 78 100 Q 160 76 242 100 Q 160 124 78 100 Z" fill="#c9606f" stroke="#5a2a36" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M 78 100 Q 160 108 242 100" fill="none" stroke="#5a2a36" stroke-width="3" stroke-linecap="round"/>
+</svg>

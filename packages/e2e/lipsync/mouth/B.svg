@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200">
+  <!-- B — K, S, T, EE. Barely open, teeth clenched. -->
+  <ellipse cx="160" cy="100" rx="88" ry="32" fill="#c9606f" stroke="#5a2a36" stroke-width="4"/>
+  <ellipse cx="160" cy="100" rx="70" ry="16" fill="#34121c"/>
+  <ellipse cx="160" cy="94" rx="58" ry="8" fill="#f7f3ea"/>
+  <ellipse cx="160" cy="100" rx="70" ry="16" fill="none" stroke="#5a2a36" stroke-width="3"/>
+</svg>

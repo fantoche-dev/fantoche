@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200">
+  <!-- H — L. Open with the tongue tip raised to the alveolar ridge. -->
+  <ellipse cx="160" cy="100" rx="72" ry="58" fill="#c9606f" stroke="#5a2a36" stroke-width="4"/>
+  <ellipse cx="160" cy="100" rx="54" ry="40" fill="#34121c"/>
+  <ellipse cx="160" cy="68" rx="30" ry="8" fill="#f7f3ea"/>
+  <path d="M 128 138 Q 160 64 192 138 Z" fill="#e2748c" stroke="#b0576c" stroke-width="3" stroke-linejoin="round"/>
+  <ellipse cx="160" cy="100" rx="54" ry="40" fill="none" stroke="#5a2a36" stroke-width="3"/>
+</svg>

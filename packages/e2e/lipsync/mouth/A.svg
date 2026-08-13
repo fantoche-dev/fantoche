@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200">
+  <!-- A — P, B, M. Closed under pressure: as wide as X but with the lips
+       compressed into a thick mass around a flat seam, so a viewer can tell a
+       bilabial closure from rest at a glance. That distinction is the whole
+       point of the spike, so these two must not read as the same drawing. -->
+  <path d="M 84 100 Q 160 68 236 100 Q 160 132 84 100 Z" fill="#c9606f" stroke="#5a2a36" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M 84 100 L 236 100" fill="none" stroke="#5a2a36" stroke-width="7" stroke-linecap="round"/>
+</svg>
