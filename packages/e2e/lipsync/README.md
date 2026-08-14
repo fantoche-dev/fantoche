@@ -23,8 +23,8 @@ The sentences are not arbitrary. Each carries bilabials (`p`/`b`/`m`), rounded
 vowels (`o`/`u`) and labiodentals (`f`/`v`) — the shapes a bad viseme mapping
 gets wrong in a way a viewer can see — and each runs ~8 s, because drift over 8
 s is one of the four scored axes. The `.txt` holds the transcript exactly as
-spoken; WhisperX is given it verbatim, so a word that differs from the recording
-is a misalignment the spike will blame on the tool.
+spoken and is force-aligned verbatim; ASR is deliberately not allowed to alter
+the sentence before the gate.
 
 ### Current state: the WAVs are not here yet
 
@@ -81,6 +81,75 @@ Then record the provenance below: whose voice, recorded when, on what.
 
 **Provenance.** Not yet recorded — see above. Once they exist: recorded by
 Daniel Nichiata, original speech, licensed under the repo's MIT licence.
+
+## Local spike tools
+
+Both tools live under ignored `scratch/tools/`; only their captured JSON is
+committed. The versions used to build the adapters are Rhubarb 1.14.0 and
+WhisperX 3.8.6.
+
+On macOS, install Rhubarb's official release locally (the published binary is
+x86_64, so Apple Silicon needs Rosetta):
+
+```bash
+LIPSYNC_SCRATCH=packages/e2e/lipsync/scratch
+mkdir -p "$LIPSYNC_SCRATCH/tools/rhubarb"
+curl -fL \
+  https://github.com/DanielSWolf/rhubarb-lip-sync/releases/download/v1.14.0/Rhubarb-Lip-Sync-1.14.0-macOS.zip \
+  -o "$LIPSYNC_SCRATCH/tools/rhubarb.zip"
+ditto -x -k "$LIPSYNC_SCRATCH/tools/rhubarb.zip" \
+  "$LIPSYNC_SCRATCH/tools/rhubarb"
+export RHUBARB_BIN="$PWD/$LIPSYNC_SCRATCH/tools/rhubarb/Rhubarb-Lip-Sync-1.14.0-macOS/rhubarb"
+```
+
+Install WhisperX in its own Python 3.13 environment. Models download into the
+ignored cache on the first alignment:
+
+```bash
+LIPSYNC_SCRATCH=packages/e2e/lipsync/scratch
+uv venv --python 3.13 "$LIPSYNC_SCRATCH/tools/whisperx-venv"
+uv pip install \
+  --python "$LIPSYNC_SCRATCH/tools/whisperx-venv/bin/python" \
+  whisperx==3.8.6
+export WHISPERX_PYTHON="$PWD/$LIPSYNC_SCRATCH/tools/whisperx-venv/bin/python"
+export WHISPERX_MODEL_DIR="$PWD/$LIPSYNC_SCRATCH/tools/whisperx-models"
+```
+
+The wrapper uses WhisperX's alignment model directly: the known transcript is
+the input, not a fresh ASR guess. Produce both candidate tracks like this
+(repeat with `en-01` and `--language en` for the control):
+
+```bash
+npm run build -w packages/cli
+
+"$RHUBARB_BIN" --version
+node packages/cli/dist/index.js lipsync rhubarb \
+  "$LIPSYNC_SCRATCH/pt-br-01.wav" --language pt-BR \
+  --out "$LIPSYNC_SCRATCH/rhubarb-pt-br.viseme.json"
+
+"$WHISPERX_PYTHON" scripts/align.py \
+  "$LIPSYNC_SCRATCH/pt-br-01.wav" \
+  --transcript packages/e2e/lipsync/pt-br-01.txt --language pt-BR \
+  --model-dir "$WHISPERX_MODEL_DIR" \
+  --out "$LIPSYNC_SCRATCH/whisperx-pt-br.alignment.json"
+node packages/cli/dist/index.js lipsync whisperx \
+  "$LIPSYNC_SCRATCH/whisperx-pt-br.alignment.json" \
+  --audio "$LIPSYNC_SCRATCH/pt-br-01.wav" --language pt-BR \
+  --out "$LIPSYNC_SCRATCH/whisperx-pt-br.viseme.json"
+```
+
+These ignored TTS stand-ins prove the pipeline, but remain invalid gate input.
+Once the human recordings exist, write the comparison and finish the score
+sheets before opening `key.json`:
+
+```bash
+node packages/cli/dist/index.js lipsync compare \
+  "$LIPSYNC_SCRATCH/rhubarb-pt-br.viseme.json" \
+  "$LIPSYNC_SCRATCH/whisperx-pt-br.viseme.json" \
+  --mouths packages/e2e/lipsync/mouth \
+  --audio "$LIPSYNC_SCRATCH/pt-br-01.wav" \
+  --out "$LIPSYNC_SCRATCH/compare-pt-br"
+```
 
 ## Mouth sheet (`mouth/`)
 

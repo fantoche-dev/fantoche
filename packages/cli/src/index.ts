@@ -3,6 +3,8 @@
 import {Command} from 'commander';
 import {launchEditor} from './editor';
 import {lipsyncPreview} from './lipsync/command';
+import {lipsyncCompare} from './lipsync/compare';
+import {generateRhubarbTrack, generateWhisperXTrack} from './lipsync/generate';
 import {renderDoc} from './render-doc';
 import {createServer} from './server/index';
 
@@ -84,5 +86,40 @@ lipsync
   .option('--out-dir <dir>', 'Output directory for --render', './output')
   .option('--workers <n>', 'Number of parallel render workers for --render')
   .action(lipsyncPreview);
+
+lipsync
+  .command('rhubarb')
+  .description('Generate a viseme track with dev-time Rhubarb phonetic mode.')
+  .argument('<wav>', 'Source WAV')
+  .requiredOption('--language <tag>', 'Language tag recorded in the track')
+  .requiredOption('--out <json>', 'Output viseme track')
+  .action((wav, options) => generateRhubarbTrack(wav, options));
+
+lipsync
+  .command('whisperx')
+  .description('Convert scripts/align.py output into a viseme track.')
+  .argument('<alignment>', 'Normalised word/character alignment JSON')
+  .requiredOption('--audio <wav>', 'Source WAV recorded in the track')
+  .requiredOption('--language <tag>', 'Language tag recorded in the track')
+  .requiredOption('--out <json>', 'Output viseme track')
+  .action((alignment, options) => generateWhisperXTrack(alignment, options));
+
+lipsync
+  .command('compare')
+  .description(
+    'Render two tracks against the same mouth sheet and audio with a stable, hidden left/right assignment.',
+  )
+  .argument('<a>', 'First viseme track')
+  .argument('<b>', 'Second viseme track')
+  .requiredOption('--mouths <dir>', 'Directory holding A.svg … X.svg')
+  .requiredOption('--audio <wav>', 'Audio heard in both comparison videos')
+  .requiredOption(
+    '--out <dir>',
+    'Directory for left.mp4, right.mp4 and key.json',
+  )
+  .option('--fps <n>', 'Frames per second of both previews', '60')
+  .option('--size <WxH>', 'Preview canvas size', '480x320')
+  .option('--workers <n>', 'Number of parallel render workers')
+  .action((a, b, options) => lipsyncCompare(a, b, options));
 
 program.parse(process.argv);
