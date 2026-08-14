@@ -52,29 +52,70 @@ tracked).
 
 ### Recording the real clips
 
-Read each `.txt` at a normal narration pace, in one take, in a quiet room.
-Record however you like, then normalise the container and rate — that part has
-to be exact:
+**Say exactly what the `.txt` says.** WhisperX is handed the transcript and
+force-aligns it verbatim — it is not allowed to re-transcribe. An improvised
+word has no audio to land on, so the misalignment it causes gets scored against
+arm B rather than against the take.
+
+**One take, no edits.** A splice is a discontinuity in the audio, and jitter is
+one of the four scored axes; an editing artefact would be scored as the
+aligner's instability.
+
+**Both clips under identical conditions** — same mic, same distance, same room,
+same processing. PT-BR is the gate and EN is the control, so any difference in
+the recordings shows up as a difference between languages that is not about
+language.
+
+**Quiet room, and no noise reduction afterwards.** Rhubarb's phonetic mode is
+acoustic analysis and WhisperX is a trained model; background noise and
+denoising artefacts do not cost the two arms the same, which turns room tone
+into a thumb on the scale.
+
+**Narration pace, ~8 s.** These are 17 and 22 words, so about 130 wpm — the pace
+of explaining something, not of talking. Drift over 8 s is a scored axis, so a 4
+s clip cannot answer it.
+
+**Keep the trailing silence under ~0.4 s.** This one is not stylistic. A preview
+document lasts until its last cue plus 0.5 s, and `lipsync compare` muxes with
+`-shortest`: while the audio is the shorter stream, both sides get clamped to
+the same length. Let the audio run past it and each side is instead clamped to
+its _own_ last cue, so the two videos end at different times — the arms would be
+scored over different windows.
+
+Record with headroom and convert afterwards; recording straight at 16 kHz gives
+the mic preamp no room:
 
 ```bash
-ffmpeg -i take.m4a -ar 16000 -ac 1 -c:a pcm_s16le packages/e2e/lipsync/pt-br-01.wav
-```
-
-Or record straight to the target format (list your inputs first; the device
-index is machine-specific):
-
-```bash
+# List inputs first — the device index is machine-specific.
 ffmpeg -f avfoundation -list_devices true -i "" 2>&1 | grep -A5 audio
-ffmpeg -f avfoundation -i ":0" -t 10 -ar 16000 -ac 1 -c:a pcm_s16le take.wav
+ffmpeg -f avfoundation -i ":0" -ar 48000 -ac 1 -t 15 -c:a pcm_s16le take-pt.wav
 ```
 
-Verify before committing — both must report 16000 Hz, 1 channel, ~8 s:
+Then trim the silence off both ends and convert to what the tools want, in one
+pass (repeat for `en-01`):
+
+```bash
+ffmpeg -i take-pt.wav \
+  -af "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.1,\
+areverse,silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.1,areverse" \
+  -ar 16000 -ac 1 -c:a pcm_s16le packages/e2e/lipsync/pt-br-01.wav
+```
+
+Verify before committing — 16000 Hz, 1 channel, ~8 s:
 
 ```bash
 for f in packages/e2e/lipsync/*.wav; do
   ffprobe -v error -show_entries stream=sample_rate,channels \
     -show_entries format=duration -of default=noprint_wrappers=1 "$f"
 done
+```
+
+And check the level: `max_volume` should sit a little under 0 dB. At 0.0 dB the
+take is clipped, and clipping is distortion both arms have to guess through.
+
+```bash
+ffmpeg -i packages/e2e/lipsync/pt-br-01.wav -af volumedetect -f null - 2>&1 \
+  | grep -E "max_volume|mean_volume"
 ```
 
 Then record the provenance below: whose voice, recorded when, on what.
@@ -138,6 +179,16 @@ node packages/cli/dist/index.js lipsync whisperx \
   --out "$LIPSYNC_SCRATCH/whisperx-pt-br.viseme.json"
 ```
 
+Arm B is an explicitly **orthographic approximation**, not a phoneme model. Its
+PT-BR rules are frozen before blind scoring and differ from the English control:
+accented vowels stay distinct during matching, `o` and `u` use different rounded
+mouths, isolated `h` is silent, `r/rr` do not reuse the English rounded mouth,
+and longest-match handles `ch`, `lh`, `nh`, `rr`, `ss`, silent `u` in common
+`que/qui` and `gue/gui` spellings, plus vowel + coda `m/n` nasalisation. These
+rules reduce known false mouth movements; they do not turn Portuguese spelling
+into phonemic evidence. Changing them after watching a comparison invalidates
+its score and requires a fresh blind run.
+
 These ignored TTS stand-ins prove the pipeline, but remain invalid gate input.
 Once the human recordings exist, write the comparison and finish the score
 sheets before opening `key.json`:
@@ -150,6 +201,10 @@ node packages/cli/dist/index.js lipsync compare \
   --audio "$LIPSYNC_SCRATCH/pt-br-01.wav" \
   --out "$LIPSYNC_SCRATCH/compare-pt-br"
 ```
+
+The compare command refuses to render if either arm would lose a cue to frame
+rounding. A scoreable run therefore reports only that frame collapse is zero in
+both arms; per-side cue density remains inside `key.json` until scoring ends.
 
 ## Mouth sheet (`mouth/`)
 
