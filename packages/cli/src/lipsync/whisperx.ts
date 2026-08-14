@@ -3,10 +3,13 @@ import {
   type Viseme,
   type VisemeTrack,
 } from '@fantoche-dev/document';
-import {graphemeToViseme} from './viseme-map';
+import {matchGraphemeToViseme} from './viseme-map';
 
 /** Silence long enough to put the mouth back at rest. */
 export const SILENCE_SECONDS = 0.12;
+
+/** Alignment rounding tolerated when deciding whether two letters touch. */
+const ORTHOGRAPHIC_JOIN_SECONDS = 0.005;
 
 export interface AlignedWord {
   text: string;
@@ -153,8 +156,6 @@ export function charAlignmentToVisemes(
   const chars = [...alignment.chars].sort(
     (a, b) => a.start - b.start || a.end - b.end,
   );
-  const cues: VisemeTrack['cues'] = [];
-  let previousEnd: number | undefined;
   for (const char of chars) {
     if (
       typeof char.char !== 'string' ||
@@ -167,18 +168,37 @@ export function charAlignmentToVisemes(
         'WhisperX character alignments need positive finite intervals',
       );
     }
-    const viseme = graphemeToViseme(char.char, options.language);
+  }
+
+  const cues: VisemeTrack['cues'] = [];
+  let previousEnd: number | undefined;
+  const graphemes = chars.map(char => char.char);
+  const joinsNext = chars
+    .slice(0, -1)
+    .map(
+      (char, index) =>
+        chars[index + 1].start - char.end <= ORTHOGRAPHIC_JOIN_SECONDS,
+    );
+  for (let index = 0; index < chars.length; ) {
+    const match = matchGraphemeToViseme(
+      graphemes,
+      index,
+      options.language,
+      joinsNext,
+    );
+    const span = chars.slice(index, index + match.consumed);
+    const start = span[0].start;
+    const end = Math.max(...span.map(char => char.end));
+    index += match.consumed;
+    const viseme = match.viseme;
     if (viseme === undefined) {
       continue;
     }
-    if (
-      previousEnd !== undefined &&
-      char.start - previousEnd >= SILENCE_SECONDS
-    ) {
+    if (previousEnd !== undefined && start - previousEnd >= SILENCE_SECONDS) {
       pushCue(cues, previousEnd, 'X');
     }
-    pushCue(cues, char.start, viseme);
-    previousEnd = Math.max(previousEnd ?? char.end, char.end);
+    pushCue(cues, start, viseme);
+    previousEnd = Math.max(previousEnd ?? end, end);
   }
   if (cues.length === 0 || previousEnd === undefined) {
     throw new Error('WhisperX alignment contains no mapped graphemes');

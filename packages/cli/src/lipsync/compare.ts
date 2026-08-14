@@ -194,14 +194,30 @@ export async function lipsyncCompare(
   const size = parseSize(options.size);
   fs.mkdirSync(outDir, {recursive: true});
 
+  const previews = {
+    left: buildVisemePreviewDocument({
+      track: trackByPath.get(sides.left)!,
+      mouths,
+      fps,
+      size,
+    }),
+    right: buildVisemePreviewDocument({
+      track: trackByPath.get(sides.right)!,
+      mouths,
+      fps,
+      size,
+    }),
+  };
+  if (previews.left.collapsed > 0 || previews.right.collapsed > 0) {
+    throw new Error(
+      `Blind comparison would collapse cues at ${fps} fps; increase --fps before scoring`,
+    );
+  }
+
   const temporary: string[] = [];
   const completedSides: Record<'left' | 'right', string> = {
     left: '',
     right: '',
-  };
-  const collapsedBySide: Record<'left' | 'right', number> = {
-    left: 0,
-    right: 0,
   };
   const key: Record<string, unknown> = {
     assignmentHash: sides.hash,
@@ -212,7 +228,7 @@ export async function lipsyncCompare(
     for (const side of ['left', 'right'] as const) {
       const trackPath = sides[side];
       const track = trackByPath.get(trackPath)!;
-      const preview = buildVisemePreviewDocument({track, mouths, fps, size});
+      const preview = previews[side];
       const docPath = path.join(outDir, `.${side}.doc.json`);
       const silentName = `.${side}.silent.mp4`;
       const silentPath = path.join(outDir, silentName);
@@ -231,7 +247,6 @@ export async function lipsyncCompare(
         muxedPath,
       );
       completedSides[side] = muxedPath;
-      collapsedBySide[side] = preview.collapsed;
       key[side] = {
         track: trackPath,
         engine: track.engine,
@@ -256,9 +271,7 @@ export async function lipsyncCompare(
   }
 
   console.log(`Wrote blinded comparison to ${outDir}`);
-  console.log(
-    `Frame-collapse check: left ${collapsedBySide.left}, right ${collapsedBySide.right}`,
-  );
+  console.log('Frame-collapse check: zero in both arms.');
   console.log('Score left.mp4 and right.mp4 from 1–5 on:');
   console.log('  • closure on bilabials (p/b/m)');
   console.log('  • rounding on o/u');

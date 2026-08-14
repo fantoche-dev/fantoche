@@ -25,6 +25,10 @@ function writeTrack(
   dir: string,
   name: string,
   engine: 'rhubarb' | 'whisperx',
+  cues = [
+    {t: 0, viseme: 'X'},
+    {t: 0.2, viseme: engine === 'rhubarb' ? 'B' : 'C'},
+  ],
 ): string {
   const file = path.join(dir, name);
   fs.writeFileSync(
@@ -34,10 +38,7 @@ function writeTrack(
       engine,
       audio: 'voice.wav',
       language: 'pt',
-      cues: [
-        {t: 0, viseme: 'X'},
-        {t: 0.2, viseme: engine === 'rhubarb' ? 'B' : 'C'},
-      ],
+      cues,
     }),
   );
   return file;
@@ -119,7 +120,7 @@ describe('lipsync comparison harness', () => {
     expect(key.left.collapsed).toBeTypeOf('number');
     expect(log.mock.calls.flat().join(' ')).not.toMatch(/rhubarb|whisperx/);
     expect(log.mock.calls.flat().join(' ')).toMatch(
-      /Frame-collapse check: left \d+, right \d+/,
+      /Frame-collapse check: zero in both arms/,
     );
   });
 
@@ -153,5 +154,31 @@ describe('lipsync comparison harness', () => {
         size: '480x320',
       }),
     ).rejects.toThrow(/was derived from/);
+  });
+
+  test('aborts before rendering when either arm loses cues to frame rounding', async () => {
+    const dir = scratch();
+    const a = writeTrack(dir, 'a.json', 'rhubarb', [
+      {t: 0, viseme: 'X'},
+      {t: 0.001, viseme: 'B'},
+    ]);
+    const b = writeTrack(dir, 'b.json', 'whisperx');
+    const render = vi.fn();
+
+    await expect(
+      lipsyncCompare(
+        a,
+        b,
+        {
+          mouths: path.join(dir, 'mouths'),
+          audio: path.join(dir, 'voice.wav'),
+          out: path.join(dir, 'comparison'),
+          fps: '60',
+          size: '480x320',
+        },
+        {render: render as never},
+      ),
+    ).rejects.toThrow(/increase --fps before scoring/);
+    expect(render).not.toHaveBeenCalled();
   });
 });
