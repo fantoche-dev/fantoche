@@ -12,27 +12,38 @@ neither Rhubarb nor WhisperX is ever installed to render a video.
 ## Audio
 
 Two clips, one per language, **mono 16 kHz PCM WAV** — the format both candidate
-tools want, and small enough to commit (~250 KB for 8 s).
+tools want, and small enough to commit (~300 KB each).
 
-| File                    | Language | Role                                       |
-| ----------------------- | -------- | ------------------------------------------ |
-| `pt-br-01.wav` + `.txt` | PT-BR    | the gate: the language P2 is judged on     |
-| `en-01.wav` + `.txt`    | EN       | the control: the language both tools claim |
+| File           | Language | Role                           | Speech | Peak    | RMS       |
+| -------------- | -------- | ------------------------------ | ------ | ------- | --------- |
+| `pt-br-01.wav` | PT-BR    | the gate: what P2 is judged on | 9.6 s  | -5.7 dB | -26.54 dB |
+| `en-01.wav`    | EN       | the control                    | 9.4 s  | -2.1 dB | -26.46 dB |
 
 The sentences are not arbitrary. Each carries bilabials (`p`/`b`/`m`), rounded
 vowels (`o`/`u`) and labiodentals (`f`/`v`) — the shapes a bad viseme mapping
-gets wrong in a way a viewer can see — and each runs ~8 s, because drift over 8
-s is one of the four scored axes. The `.txt` holds the transcript exactly as
-spoken and is force-aligned verbatim; ASR is deliberately not allowed to alter
-the sentence before the gate.
+gets wrong in a way a viewer can see — and each runs past 8 s, because drift
+over 8 s is one of the four scored axes. The `.txt` holds the transcript exactly
+as spoken and is force-aligned verbatim; ASR is deliberately not allowed to
+alter the sentence before the gate.
 
-### Current state: the WAVs are not here yet
+**The pair is matched, and that was measured rather than assumed.** The two RMS
+levels are 0.08 dB apart and the noise floors 0.8 dB apart, so no gain was
+applied to either file — the clips are exactly what the microphone captured,
+trimmed and resampled. The 3.6 dB spread in _peak_ is one louder plosive in the
+English take, not a level difference. This matters because PT-BR is the gate and
+EN is the control: a level or length gap between them would show up as a
+difference "between languages" that is not about language.
 
-`scratch/pt-br-01.wav` and `scratch/en-01.wav` are machine-generated stand-ins
-(macOS `say`, voices Luciana and Samantha, rate 150, resampled to mono 16 kHz).
-They exist so the adapters in Tasks 4 and 5 can be written and tested against
-real tool output before anyone records anything, and they are **git-ignored on
-purpose**, for two independent reasons:
+Both were verified by force-aligning the committed transcript against the
+committed audio: 25/25 and 22/22 words placed, no implausible word durations,
+largest inter-word gap 0.74 s and 0.76 s (the sentence-boundary pauses).
+
+### The stand-ins under `scratch/`
+
+`scratch/pt-br-01.wav` and `scratch/en-01.wav` are machine-generated (macOS
+`say`, voices Luciana and Samantha, rate 150). They let the Task 4 and 5
+adapters be built against real tool output before anything was recorded, and
+they stay **git-ignored**, for two independent reasons:
 
 1. **Licence.** This repo is MIT. Apple's macOS licence does not clearly grant
    redistribution of audio synthesised by the system voices, and audio is
@@ -45,10 +56,8 @@ purpose**, for two independent reasons:
    acoustic analysis. A gate passed on synthetic audio would not be evidence
    about the gate's actual question.
 
-So the stand-ins are fine for building the adapters and wrong for scoring them.
-**Task 7 must be scored on real recordings**, committed as `pt-br-01.wav` and
-`en-01.wav` in this directory, replacing nothing (the stand-ins were never
-tracked).
+They remain useful for smoke-testing the pipeline and are **never** valid gate
+input. Task 7 is scored on the committed recordings.
 
 ### Recording the real clips
 
@@ -71,9 +80,17 @@ acoustic analysis and WhisperX is a trained model; background noise and
 denoising artefacts do not cost the two arms the same, which turns room tone
 into a thumb on the scale.
 
-**Narration pace, ~8 s.** These are 17 and 22 words, so about 130 wpm — the pace
-of explaining something, not of talking. Drift over 8 s is a scored axis, so a 4
-s clip cannot answer it.
+**Your own narration pace.** Drift over 8 s is a scored axis, so the clips have
+to reach ~8 s — but the sentences are sized so that falls out of a natural
+delivery, not out of slowing down. If a take lands short, **lengthen the
+sentence rather than stretching the reading**: a performance nobody would use in
+a video is not what the gate should be measuring, and the north-star demo
+(Task 21) is this voice at this pace.
+
+These were first sized against the macOS `say` stand-ins, which run ~124 wpm
+with long pauses at every comma. That is a TTS artefact, and calibrating a human
+against it produced a sentence too short to reach 8 s without acting. The PT-BR
+line was extended once for exactly that reason.
 
 **Keep the trailing silence under ~0.4 s.** This one is not stylistic. A preview
 document lasts until its last cue plus 0.5 s, and `lipsync compare` muxes with
@@ -91,13 +108,23 @@ ffmpeg -f avfoundation -list_devices true -i "" 2>&1 | grep -A5 audio
 ffmpeg -f avfoundation -i ":0" -ar 48000 -ac 1 -t 15 -c:a pcm_s16le take-pt.wav
 ```
 
-Then trim the silence off both ends and convert to what the tools want, in one
-pass (repeat for `en-01`):
+Then trim, **measuring the boundaries rather than trusting a threshold**. A
+fixed `silenceremove` threshold is the obvious approach and it silently does
+nothing when the room tone sits above it — the take that produced these files
+had a noise floor peaking at -42 dB, so the usual -45 dB filter would have left
+four seconds of dead air and keyboard noise in place, quietly breaking the
+equal-window rule above. Find where speech actually starts and ends first:
 
 ```bash
-ffmpeg -i take-pt.wav \
-  -af "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.1,\
-areverse,silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.1,areverse" \
+ffmpeg -i take-pt.wav -af "silencedetect=noise=-35dB:d=0.3" -f null - 2>&1 \
+  | grep -E "silence_start|silence_end"
+```
+
+Then cut just outside those numbers — roughly 0.1 s before the first word and
+0.15 s after the last — and resample in the same pass:
+
+```bash
+ffmpeg -ss 0.50 -to 10.14 -i take-pt.wav \
   -ar 16000 -ac 1 -c:a pcm_s16le packages/e2e/lipsync/pt-br-01.wav
 ```
 
@@ -120,8 +147,11 @@ ffmpeg -i packages/e2e/lipsync/pt-br-01.wav -af volumedetect -f null - 2>&1 \
 
 Then record the provenance below: whose voice, recorded when, on what.
 
-**Provenance.** Not yet recorded — see above. Once they exist: recorded by
-Daniel Nichiata, original speech, licensed under the repo's MIT licence.
+**Provenance.** Recorded 2026-08-14 by Daniel Nichiata — his own voice, one take
+each, on a JBL Quantum Stream Talk USB condenser at 48 kHz mono, trimmed to the
+measured speech boundaries and resampled to 16 kHz. No gain, denoising,
+compression or editing was applied. Original speech, licensed under the repo's
+MIT licence.
 
 ## Local spike tools
 
