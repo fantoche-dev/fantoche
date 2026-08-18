@@ -1,1 +1,1 @@
-Bom dia, pessoal. Hoje vamos falar de busca binária, passo a passo, com um exemplo bem simples. Você olha o meio, compara, e descarta metade.
+Bom dia, pessoal. Hoje vamos falar de busca binária, com um exemplo bem simples. Você olha o meio, compara, e descarta metade.

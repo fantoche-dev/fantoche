@@ -35,8 +35,19 @@ EN is the control: a level or length gap between them would show up as a
 difference "between languages" that is not about language.
 
 Both were verified by force-aligning the committed transcript against the
-committed audio: 25/25 and 22/22 words placed, no implausible word durations,
+committed audio: 22/22 and 22/22 words placed, no implausible word durations,
 largest inter-word gap 0.74 s and 0.76 s (the sentence-boundary pauses).
+
+**That verification has a blind spot, and it bit once.** Forced alignment always
+places every word somewhere, so it cannot detect a transcript word the take
+never spoke. The first committed PT-BR transcript carried "passo a passo," but
+the recording skipped the phrase — the "25/25 placed" check passed anyway, with
+the three ghost words tucked into a pause and a breath. The mismatch was caught
+during the first blind scoring round (silence map + spectrogram of the audio,
+not the key), the transcript was corrected to what the take actually says, and
+the transcript-consuming arm was regenerated for a fresh blind round. Word
+_presence_ therefore has to be checked by listening or by silence-mapping the
+audio; alignment only verifies word _placement_.
 
 ### The stand-ins under `scratch/`
 
@@ -90,7 +101,13 @@ a video is not what the gate should be measuring, and the north-star demo
 These were first sized against the macOS `say` stand-ins, which run ~124 wpm
 with long pauses at every comma. That is a TTS artefact, and calibrating a human
 against it produced a sentence too short to reach 8 s without acting. The PT-BR
-line was extended once for exactly that reason.
+line was extended once for exactly that reason, gaining its third sentence. The
+take spoke the added sentence but skipped "passo a passo," from the middle of
+the second one — a reading slip. The slip cost nothing the gate needs: the
+delivery still runs 9.6 s and the line keeps bilabials, rounded vowels and
+labiodentals, so the transcript was corrected to the spoken sentence instead of
+re-recording, which also preserved the matched pair with the EN control
+(recorded in the same session).
 
 **Keep the trailing silence under ~0.4 s.** This one is not stylistic. A preview
 document lasts until its last cue plus 0.5 s, and `lipsync compare` muxes with
@@ -151,7 +168,8 @@ Then record the provenance below: whose voice, recorded when, on what.
 each, on a JBL Quantum Stream Talk USB condenser at 48 kHz mono, trimmed to the
 measured speech boundaries and resampled to 16 kHz. No gain, denoising,
 compression or editing was applied. Original speech, licensed under the repo's
-MIT licence.
+MIT licence. The audio has not been touched since; `pt-br-01.txt` was corrected
+on 2026-08-18 to the sentence the take actually contains (see above).
 
 ## Local spike tools
 
