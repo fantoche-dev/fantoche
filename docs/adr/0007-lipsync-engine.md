@@ -1,0 +1,71 @@
+# ADR 0007 — Lipsync engine: neither arm ships; gate at risk, manual authoring is the fallback
+
+- Status: **accepted**
+- Date: 2026-08-18
+
+## Context
+
+ADR 0004 made lipsync a load-bearing promise (voice → phonemes → visemes,
+locally) and flagged Portuguese quality as an explicit P2 spike gate rather
+than an assumption. The spike compared the two candidate engines blind on a
+human PT-BR recording (the gate) and a matched EN recording (the control):
+Rhubarb 1.14.0 in language-independent phonetic mode, and WhisperX 3.8.6
+forced alignment through our frozen grapheme→viseme map. Protocol, scores
+and the mid-spike transcript correction are recorded in
+[lipsync-spike-results.md](../lipsync-spike-results.md).
+
+The plan's decision rule offered three outcomes: adopt Rhubarb, adopt
+WhisperX, or — if neither reaches 3/5 on PT-BR — record the gate as at risk
+and fall back to manual viseme authoring. "Reaches 3/5" is read as
+**every axis ≥3**, not the mean: a mouth that jitters constantly or never
+closes on p/b/m is not "usable on average".
+
+## Decision
+
+**Neither engine ships as the automatic PT-BR lipsync engine. The P2 gate
+is at risk, and P2 ships manual viseme authoring as the fallback** — the
+viseme track format is engine-agnostic by design and already supports
+hand-written cues, so the north-star demo's mouth track is authored (or
+hand-corrected) rather than generated.
+
+The scores that force this (PT-BR, round 2; 1–5 per axis):
+
+| Axis          | Rhubarb | WhisperX |
+| ------------- | ------- | -------- |
+| p/b/m closure | 3       | **2**    |
+| o/u rounding  | **2**   | 3        |
+| Jitter        | 4       | **2**    |
+| Drift         | 5       | 4        |
+
+Two findings sharpen the re-spike beyond the plan's wording:
+
+1. **The failure is not Portuguese-specific.** The EN control fails the
+   same bar with the same signatures (Rhubarb: precise pressed closures,
+   zero drift, but no rest shape and weak rounding; WhisperX: perfect
+   rests and solid word timing, but no pressed closure at all and 1-frame
+   jitter). A "real PT-BR phoneme model" alone would not have passed the
+   gate — the viseme *mapping/timing* layer is where both arms lose.
+2. **The failures are complementary.** Each arm is strong exactly where the
+   other is weak. The re-spike target is therefore phoneme-level timing
+   (not per-grapheme even splits) feeding a map that produces pressed A on
+   bilabials *and* X at rests, with a minimum-hold rule against 1-frame
+   shapes — judged against Rhubarb's closure precision and WhisperX's rest
+   placement as the two benchmarks the spike established.
+
+## Consequences
+
+- **Do not silently proceed** — this is the outcome ADR 0004 gated on, and
+  it changes P2's shape at the Task 7 checkpoint: the demo's lipsync is
+  authored, not automatic, and automatic lipsync moves to a re-spike with
+  its own gate.
+- **Part D (narration) is unaffected in its use of forced alignment.** The
+  at-risk verdict is about viseme generation; WhisperX's word-level
+  placement was solid in both languages (22/22, drift 4), so the narration
+  spine of ADR 0004 — word-anchored events — still stands on WhisperX-class
+  alignment.
+- Both adapters and the compare/blind tooling stay: they are the harness
+  the re-spike will be scored in, and the results doc's per-arm findings
+  are its requirements list.
+- ADR 0004's Portuguese caveat is resolved in the negative for v1:
+  lipsync-quality-in-Portuguese was not an assumption, and measuring it is
+  what kept a not-good-enough engine out of the product's first demo.
