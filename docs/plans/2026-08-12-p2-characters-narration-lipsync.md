@@ -2,23 +2,28 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-## Status — updated 2026-08-18
+## Status — updated 2026-08-18 (reshape)
 
-- **Agora:** Parte A (Tasks 1–7) completa. O gate cego PT-BR rodou duas
-  vezes (a rodada 1 caiu por transcrição ≠ áudio; ver
+- **Agora:** Parte A (Tasks 1–7) completa e em PR (#1). O gate cego PT-BR
+  rodou duas vezes (a rodada 1 caiu por transcrição ≠ áudio; ver
   `docs/lipsync-spike-results.md`) e **ADR 0007 registra o gate em risco**:
   nenhum braço atinge ≥3 em todos os eixos; a P2 embarca autoria manual de
-  visemas e o lipsync automático vai a re-spike.
-- **Próximo:** decisão de reshape da P2 no checkpoint (fatia vertical com
-  autoria manual no caminho do demo) antes de abrir a Parte B.
-- **Bloqueio:** nenhum técnico; a decisão de reshape é do Daniel.
+  visemas. **Reshape decidido 2026-08-18:** Partes B–F reorganizadas —
+  Parte B é a menor fatia vertical até o primeiro demo ponta a ponta
+  (10–15 s, PT-BR, visemas manuais, Task 23); ergonomia de import (C),
+  retiming + springs (D) e o re-spike de lipsync (F, com os 4 should-fixes
+  da revisão como pré-requisitos, sem bloquear o gate) vêm depois do demo.
+- **Próximo:** Parte B (Tasks 8, 9, 10, 13, 14, 15, 16, 17, 18, 23).
+- **Bloqueio:** nenhum técnico. Daniel-manual: narração de 10–15 s
+  (Task 23; `pt-br-01.wav` serve de stand-in até lá).
 - **Última verificação:** 2026-08-18 — cli 40/40 testes; 2026-08-14 — build
   dos 10 pacotes, 434 unitários (seriais), E2E 13 cenas + goldens, lint.
 
 **Goal:** A `character.json` (rig + poses + art slots imported from SVG) becomes a
 first-class document citizen: a cast member is posed and gestured from the
-narration-anchored timeline, its mouth driven by a viseme track derived from
-Portuguese audio, its word timings produced by local forced alignment — the
+narration-anchored timeline, its mouth driven by a committed viseme track
+(hand-authored against the Portuguese audio — ADR 0007's shipping path),
+its word timings produced by local forced alignment — the
 whole north-star demo rendering offline, end-to-end, with `state(t)` still pure
 and seek still O(1).
 
@@ -90,6 +95,12 @@ viseme comparison arm — neither is installed in CI or needed to render.
     `compileDocument(doc, {characters})` takes an already-parsed character map;
     the CLI shim and `project.ts` resolve paths to JSON, mirroring how `blocks`
     are already threaded through `makeDocumentScene`.
+11. **(Added at the Part A checkpoint, 2026-08-18 — Daniel's reshape
+    decision.)** ADR 0007: no engine met the bar, so **manual viseme
+    authoring is the P2 shipping path**, and Parts B–F are reshaped
+    demo-first — smallest vertical slice to a first end-to-end demo
+    (Part B), ergonomics and polish after it (C–D), gate (E), lipsync
+    re-spike non-blocking (F).
 
 ---
 
@@ -492,12 +503,26 @@ the control): closure on bilabials, rounding on `o/u`, jitter, drift over 8 s.
 
 **Step 4:** Commit: `docs(lipsync): ADR 0007 — engine decision from the PT-BR blind spike`
 
-> **CHECKPOINT — report to Daniel before Part B.** The chosen engine decides
-> which adapter Part D reuses, and a failed gate changes P2's shape.
+> **CHECKPOINT — report to Daniel before Part B.** *(Fired 2026-08-18: the
+> gate failed, and it did change P2's shape — the reshape below is the
+> result. Word alignment still reuses the WhisperX adapter in Task 17;
+> alignment and lipsync are separate verdicts.)*
 
 ---
 
-# Part B — ADR 0006 + character format & import
+# Part B — Vertical slice: character core + the first end-to-end demo
+
+Reshaped at the Part A checkpoint (2026-08-18, ADR 0007): with manual viseme
+authoring as the shipping path, the biggest open risk is no longer an engine
+— it is whether the pipeline can carry a posed, speaking character at all.
+So the next slice is the smallest vertical cut that proves it: a minimal
+character format and import, FK posing with one ugly-but-functional
+character, narration audio in the render, and a 10–15 s PT-BR demo whose
+mouth runs on a hand-written viseme track. Import ergonomics (Part C),
+retiming and springs (Part D) and the lipsync re-spike (Part F) all come
+after this demo exists.
+
+---
 
 ## Task 8: ADR 0006 — transform hierarchy vs render hierarchy
 
@@ -658,63 +683,6 @@ which is harmless here because the box is only a window).
 
 ---
 
-## Task 11: `fantoche character check`
-
-**Files:**
-- Create: `packages/cli/src/character/check.ts`
-- Modify: `packages/cli/src/index.ts`
-- Test: `packages/cli/src/__tests__/character-check.test.ts`
-
-**Step 1: Write the failing test** — a character whose `element` ids no longer
-match the art reports each slot as `bound` / `missing` / `orphaned`, and a
-missing slot gets a **fuzzy suggestion** (Levenshtein ≤ 40 % of length) naming
-the closest orphan; exit code is 1 when anything is unbound.
-
-**Step 2:** Run → FAIL.
-
-**Step 3: Implement** `checkCharacter(characterPath)` returning a structured
-report (so the future editor reuses it), plus a printer. Suggestions are what
-make re-imported art survivable (design notes §1): mangled ids like
-`arm_x5F_l` must suggest `arm-l`, so normalise `_x5F_`/`_`/`-`/case before
-scoring.
-
-**Step 4:** Run → PASS.
-
-**Step 5:** Commit: `feat(character): character check with fuzzy rebinding hints`
-
----
-
-## Task 12: `fantoche character bind` + `import`
-
-**Files:**
-- Create: `packages/cli/src/character/bind.ts`, `packages/cli/src/character/import.ts`
-- Test: `packages/cli/src/__tests__/character-bind.test.ts`
-
-**Step 1: Write the failing test** — drive the interactive loop with a scripted
-input stream (no TTY in CI): given art with three ids and a character missing
-two bindings, the answers `1`, `s` (skip) produce a `character.json` with
-exactly one new mapping and **no other key reordered or reformatted** (the file
-is a user's document, not our output).
-
-**Step 2:** Run → FAIL.
-
-**Step 3: Implement.** `bind` walks unbound slots, lists candidate orphans
-ranked by the Task 11 scorer, and writes the mapping back. `import <art.svg>`
-scaffolds a `character.json` from the art's top-level group ids (best-effort
-first binding) so nobody starts from an empty file. **Neither command ever
-edits the SVG** — that is the design-notes §1 rule.
-
-**Step 4:** Run → PASS.
-
-**Step 5:** Commit: `feat(character): interactive bind + import scaffolding`
-
-> **CHECKPOINT — Part B complete.** Art can be bound and split; nothing renders
-> yet.
-
----
-
-# Part C — Pose evaluator & cast compilation
-
 ## Task 13: 2×3 matrix helper + FK composition (ADR 0006 core)
 
 **Files:**
@@ -821,6 +789,11 @@ document still validates through `migrateDocument` with `applied: ['0.1→0.2']`
   `x`, `y`, `scale`, `rotation`, `opacity`.
 - IR gains `rigs: Record<castId, CompiledRig>` (topologically ordered slots +
   rest offsets from Task 13).
+- `lipsyncItem` expansion is in scope here **because Task 23 depends on it**:
+  expand `{target, lipsync}` over the cast member's `visemes` slot map into
+  per-slot `opacity` hold-switch events — the same shape Task 6's preview
+  emits — so a hand-written viseme track drives a character mouth with no
+  new runtime code.
 
 **Step 4:** Run → PASS. Regenerate the JSON Schema artifact.
 
@@ -858,24 +831,30 @@ ordinary `svg` elements already handled by `buildElement`.
 
 ---
 
-## Task 16: Reference characters + goldens
+## Task 16: Reference character + goldens (reshaped: one character, raw path)
 
 **Files:**
-- Create: `packages/e2e/characters/teacher/{character.json,teacher.svg}` (+ a
-  second, structurally different character — one with a depth-swapping arm)
+- Create: `packages/e2e/characters/teacher/{character.json,teacher.svg}` —
+  one character, ugly on purpose, **with a depth-swapping arm** (the second,
+  structurally different character moved to Task 24)
+- Create: `packages/cli/src/character/import.ts` — **minimal and
+  non-interactive**: `fantoche character import <art> <character.json>` runs
+  `splitArt` (Task 10) and writes the split artifacts; no scaffolding, no
+  bind loop, no fuzzy hints (all Part C, Tasks 11–12)
 - Create: `packages/e2e/documents/character-poses.json`
 - Modify: `packages/e2e/tests/project.ts`
 - Modify: `packages/document/src/character/*` as bugs surface
 
-**Step 1:** Build the two characters through the real CLI path
-(`import` → `bind` → `check` clean). Using our own tools here is the point:
-if the workflow is bad, we find out now.
+**Step 1:** Hand-author `character.json` against the art's ids and split it
+with the minimal import command. Using the raw path here is deliberate: it
+proves the artifact layout the compiler consumes before any ergonomics are
+built over it — and it keeps the slice small, which is the reshape's point.
 
 **Step 2:** `character-poses.json` must pin the two things unit tests cannot:
 a limb rotating about its authored pivot, and an **arm crossing from behind
 the torso to in front** at a keyframe (the ADR 0006 payoff).
 
-**Step 3:** Register both, run `npm run e2e:test` locally to confirm rendering,
+**Step 3:** Register it, run `npm run e2e:test` locally to confirm rendering,
 then **regenerate goldens on CI** (Linux reference; never commit locally
 produced goldens — P1 learned this the hard way).
 
@@ -883,13 +862,10 @@ produced goldens — P1 learned this the hard way).
 pins the *absence* of the feature is worse than none (the P1 batch E+F review
 caught exactly that failure twice).
 
-**Step 5:** Commit: `test(character): reference cast + pose/depth-swap goldens`
+**Step 5:** Commit: `test(character): reference character + pose/depth-swap goldens`
 
-> **CHECKPOINT — Part C complete.** Characters pose and re-order on screen.
 
 ---
-
-# Part D — Narration alignment & audio
 
 ## Task 17: `fantoche narration align`
 
@@ -948,6 +924,157 @@ Expected: `audio`.
 
 ---
 
+## Task 23: First end-to-end demo — 10–15 s, PT-BR, manual visemes  ⚠️ DANIEL-MANUAL (narration)
+
+**Files:**
+- Create: `packages/e2e/demo/first-slice/{demo.json,narration.wav,narration.txt,mouth.viseme.json}`
+- Modify: `packages/document/src/lipsync/visemes.ts` (engine enum gains `'manual'`)
+- Modify: `packages/e2e/tests/project.ts`
+
+This is the definition of done for Part B, and the point of the reshape: the
+smallest document where every P2 mechanism carries real weight — a cast
+member posed from the narration-anchored timeline, its mouth hold-switched
+from a committed viseme track, the narration audible in the output.
+
+**Step 1 (Daniel):** Record 10–15 s of PT-BR narration (one or two sentences,
+natural pace, the Part A recording guide applies) and commit wav + verbatim
+transcript. To unblock wiring before the recording exists,
+`packages/e2e/lipsync/pt-br-01.wav` (9.6 s, committed, transcript already
+corrected to the take) is an acceptable stand-in — swap it out before calling
+the task done.
+
+**Step 2:** `fantoche narration align` (Task 17) fills the word timings.
+
+**Step 3:** Add `'manual'` to the viseme track schema's `engine` enum first
+(one-line schema change + test; the format was built to hold hand-written
+cues — this makes that official instead of mislabelling the author as an
+engine). Then hand-write `mouth.viseme.json` and audition it with
+`fantoche lipsync preview` (Task 6). Budget the authoring by the Task 7
+axes, not per-phoneme perfection: pressed closures on the bilabials, rounded
+mouths on o/u, rests at pauses, no 1-frame shapes —
+`docs/lipsync-spike-results.md` records exactly which mistakes viewers see.
+Rubric level 3 ("usable") is the bar.
+
+**Step 4:** Author `demo.json`: the Task 16 character in `cast`, two or three
+pose changes anchored to words, the `lipsync` item driving the mouth,
+narration audio. Render and verify:
+
+```bash
+fantoche render packages/e2e/demo/first-slice/demo.json --out first-slice.mp4
+ffprobe -v error -show_entries format=duration -show_entries stream=codec_type -of default=nw=1 output/first-slice.mp4
+```
+
+Expected: 10–15 s, a video **and an audio** stream, and the mouth visibly
+closing on bilabials at normal speed.
+
+**Step 5:** Register the demo as an e2e scene with goldens (CI-generated),
+so the whole slice stays pinned.
+
+**Step 6:** Commit: `test(e2e): first vertical-slice demo — posed cast, manual visemes, audible narration`
+
+> **CHECKPOINT — Part B complete.** The first end-to-end demo exists: a
+> posed character speaks Portuguese in an offline render. Stop and report
+> before ergonomics and polish.
+
+---
+
+# Part C — Import ergonomics & the reference cast
+
+The slice imported one character over a raw, non-interactive path. This part
+makes re-import survivable for a human — `check` with fuzzy rebinding hints,
+interactive `bind`, scaffolding — and proves the workflow on a second,
+structurally different character.
+
+---
+
+## Task 11: `fantoche character check`
+
+**Files:**
+- Create: `packages/cli/src/character/check.ts`
+- Modify: `packages/cli/src/index.ts`
+- Test: `packages/cli/src/__tests__/character-check.test.ts`
+
+**Step 1: Write the failing test** — a character whose `element` ids no longer
+match the art reports each slot as `bound` / `missing` / `orphaned`, and a
+missing slot gets a **fuzzy suggestion** (Levenshtein ≤ 40 % of length) naming
+the closest orphan; exit code is 1 when anything is unbound.
+
+**Step 2:** Run → FAIL.
+
+**Step 3: Implement** `checkCharacter(characterPath)` returning a structured
+report (so the future editor reuses it), plus a printer. Suggestions are what
+make re-imported art survivable (design notes §1): mangled ids like
+`arm_x5F_l` must suggest `arm-l`, so normalise `_x5F_`/`_`/`-`/case before
+scoring.
+
+**Step 4:** Run → PASS.
+
+**Step 5:** Commit: `feat(character): character check with fuzzy rebinding hints`
+
+---
+
+## Task 12: `fantoche character bind` + `import`
+
+**Files:**
+- Create: `packages/cli/src/character/bind.ts`
+- Modify: `packages/cli/src/character/import.ts` (shipped minimal by Task 16)
+- Test: `packages/cli/src/__tests__/character-bind.test.ts`
+
+**Step 1: Write the failing test** — drive the interactive loop with a scripted
+input stream (no TTY in CI): given art with three ids and a character missing
+two bindings, the answers `1`, `s` (skip) produce a `character.json` with
+exactly one new mapping and **no other key reordered or reformatted** (the file
+is a user's document, not our output).
+
+**Step 2:** Run → FAIL.
+
+**Step 3: Implement.** `bind` walks unbound slots, lists candidate orphans
+ranked by the Task 11 scorer, and writes the mapping back. `import <art.svg>`
+**upgrades the minimal command Task 16 shipped**: it additionally scaffolds a
+`character.json` from the art's top-level group ids (best-effort first
+binding) so nobody starts from an empty file. **Neither command ever edits
+the SVG** — that is the design-notes §1 rule.
+
+**Step 4:** Run → PASS.
+
+**Step 5:** Commit: `feat(character): interactive bind + import scaffolding`
+
+
+---
+
+## Task 24: Second reference character through the full import UX
+
+**Files:**
+- Create: `packages/e2e/characters/<name>/{character.json,<name>.svg}` — structurally different from the Task 16 character (different slot topology, at least one limb chain of depth ≥ 3)
+- Modify: `packages/e2e/documents/character-poses.json`, `packages/e2e/tests/project.ts`
+
+**Step 1:** Build it through the real CLI path this time — `import` → `bind`
+→ `check` clean. Using our own tools end-to-end is the point: if the
+workflow is bad, we find out here, with ergonomics on the table — not inside
+the Part B slice.
+
+**Step 2:** Extend `character-poses.json` so both characters appear, keeping
+the Task 16 golden guarantees (pivot-true rotation, visible depth swap)
+pinned across both.
+
+**Step 3:** Goldens regenerate on CI (Linux reference — never locally).
+
+**Step 4:** Commit: `test(character): second reference character via the full import path`
+
+> **CHECKPOINT — Part C complete.** Art can be imported, re-imported and
+> rebound by a human without reading the splitter's source.
+
+---
+
+# Part D — Retiming & springs
+
+Authoring polish, deliberately after the first demo: neither task is needed
+for the slice, both make the north-star demo better to author. Task 19 is
+what lets re-recorded narration compress a gesture instead of colliding with
+the next one; Task 20 is the motion-quality step.
+
+---
+
 ## Task 19: Adaptive durations (`dur: {fit}` / `{value, min}`)
 
 **Files:**
@@ -973,8 +1100,6 @@ compress a gesture instead of colliding with the next one.
 **Step 5:** Commit: `feat(document): adaptive tween durations for retimed narration`
 
 ---
-
-# Part E — Closed-form springs
 
 ## Task 20: Spring easing with compile-time entry-velocity baking
 
@@ -1040,7 +1165,9 @@ test('stays pure: same IR and frame ⇒ identical value', () => { /* … */ });
 
 ---
 
-# Part F — North-star demo & P2 gate
+# Part E — North-star demo & P2 gate
+
+---
 
 ## Task 21: The north-star demo document  ⚠️ DANIEL-MANUAL (narration)
 
@@ -1053,7 +1180,14 @@ test('stays pure: same IR and frame ⇒ identical value', () => { /* … */ });
 
 **Step 2:** Author `demo.json`: a cast member who gestures at chosen words,
 a diagram built from shapes/arrows, a `Code` walkthrough with an animated
-highlight, and the lipsync track from the ADR 0007 engine.
+highlight, and a hand-authored lipsync track — the ADR 0007 path, already
+proven at small scale by Task 23. At 90 s that is ~700–900 cues at gate-track
+density, so author it draft-first: generate a starting track with either
+Part A arm, then hand-correct against the mistake catalogue in
+`docs/lipsync-spike-results.md` — still manual authorship (the author owns
+every cue), at a tractable cost. (If the Task 26 re-spike has landed a
+winner by now it may supply the track instead, but the demo must never wait
+on it.)
 
 **Step 3:** Render offline and verify **every** gate clause literally:
 ```bash
@@ -1107,19 +1241,102 @@ presets, more poses on the reference cast, per-language viseme maps).
 
 ---
 
+# Part F — Lipsync re-spike (does not gate P2)
+
+ADR 0007 sent automatic lipsync to a re-spike and put manual authoring on
+the shipping path, so nothing here blocks Parts B–E or the gate; if P2
+closes first, this part carries to P3 with its prerequisites already
+recorded. The Part A checkpoint review left four should-fixes on the spike
+harness — they are the re-spike's entry criteria, because each closes a hole
+the incident or the scoring axes actually hit.
+
+---
+
+## Task 25: Harness hardening — the checkpoint review's should-fixes
+
+**Files:**
+- Modify: `packages/cli/src/lipsync/compare.ts`, `packages/cli/src/lipsync/generate.ts`, `packages/cli/src/lipsync/whisperx.ts`
+- Rename: `packages/cli/src/__tests__/fixtures/{rhubarb,whisperx}-pt-br-01.json`
+- Tests: extend `compare.test.ts`, `generate.test.ts`
+
+The four, from the Part A checkpoint review (PR #1):
+
+1. **Enforce the equal-window rule in the tool.** `muxComparisonAudio` uses
+   `-shortest`, so equal scoring windows currently depend on recording
+   discipline alone. Add a post-mux duration-equality check (or refuse when
+   the audio outruns either video). `compare.ts:87-109`
+2. **Bind track↔audio by content, not path.** Record the audio's content
+   hash in the track at generation, verify it at compare — a re-recorded WAV
+   under the same name currently invalidates both tracks silently.
+   `compare.ts:176-185`
+3. **Rename or annotate the TTS stand-in fixtures.** They are stand-in
+   captures named after the gate clips, and the whisperx one still contains
+   the ghost phrase; rename to `*-scratch-01.json` or add a provenance note.
+4. **Print alignment diagnostics in `generateWhisperXTrack`** — words-placed
+   count and largest inter-word gap: the checks that caught the mid-spike
+   incident, currently ad hoc. `generate.ts:47-74`
+
+Take the review's nits opportunistically while in these files: transactional
+output publish (`compare.ts:261-265`), same-`t` re-merge
+(`whisperx.ts:125-140`), and a test for `lipsyncCompare`'s failure path.
+
+**Commit:** one per fix, conventional scopes as in Part A.
+
+---
+
+## Task 26: The re-spike itself
+
+Framing from ADR 0007, which the re-spike answers and does not re-litigate:
+the failure is not Portuguese-specific (the EN control fails the same bar),
+and the two arms fail **complementarily** — one produces pressed closures
+and no rests, the other rests and never a pressed closure. The target is
+therefore *phoneme-level timing feeding a viseme map that emits both pressed
+closures and rests* — not a third arm of the same shape as the first two.
+
+Ground rules, inherited from Part A: candidates run against the committed
+22-word PT-BR take and the EN control, unchanged; tracks are committed
+cacheable JSON (ADR 0004); the comparison is blind, on the Task 7 axes and
+rubric, through the Task 25-hardened harness; the map (or its successor)
+freezes before scoring. Success bar: **≥3 on every PT-BR axis** — the bar
+neither arm met. The outcome is a new ADR superseding 0007's engine
+decision, or a recorded second failure that leaves manual authoring the
+path. Both are acceptable ends; an un-run re-spike is neither — it simply
+expires into P3.
+
 ## Execution order & checkpoints
 
-Batches: **[1–7]** lipsync spike → **CHECKPOINT (gate risk — stop and report)**;
-**[8–12]** ADR + format + import → checkpoint; **[13–16]** evaluator + cast +
-goldens → checkpoint; **[17–19]** narration → checkpoint; **[20]** springs;
-**[21–22]** demo + gate.
+Batches: **[1–7]** lipsync spike → **CHECKPOINT (done 2026-08-18 — gate at
+risk, ADR 0007, reshape decided)**; **[8, 9, 10, 13, 14, 15, 16, 17, 18,
+23]** vertical slice → **CHECKPOINT (first end-to-end demo — stop and
+report)**; **[11, 12, 24]** import ergonomics → checkpoint; **[19, 20]**
+retiming + springs → checkpoint; **[21–22]** north-star demo + gate.
+**[25–26]** re-spike: any time after Task 23, never blocking the batches
+before it; carries to P3 if the gate closes first.
 
-Every task ends with the tree building and tests passing. Golden changes always
-regenerate on CI (Linux reference).
+Every task ends with the tree building and tests passing. Golden changes
+always regenerate on CI (Linux reference).
 
-Daniel-manual items (unblock early — they gate Tasks 7, 21): audio fixtures
-(Task 3), the blind scoring (Task 7), the 90 s demo narration (Task 21),
-and installing WhisperX/Rhubarb locally.
+Daniel-manual items (unblock early): the 10–15 s slice narration (Task 23 —
+`pt-br-01.wav` stands in until it exists), the 90 s demo narration
+(Task 21). The WhisperX/Rhubarb local installs already exist from Part A.
+
+## Hygiene queue — real, not urgent
+
+Recorded at the Part A checkpoint; none of it blocks a batch, and any item
+may ride along with whichever task touches its area:
+
+- `vitest run` (never bare `vitest`) in every script invocation, so nothing
+  can hang in watch mode.
+- An explicit, larger `test()` timeout (or a serialized suite) for the
+  comparator test that renders video — its default 5 s flaked once under
+  concurrent vitest; that flake is the recorded problem. Separately, a
+  timeout on the compare command's child processes (render/ffmpeg), so a
+  wedged run fails instead of hanging the terminal.
+- `scratch/` in `.prettierignore` — the format check should never see
+  scoring artifacts.
+- `test:smoke` wired into CI.
+- The docs-site audit, and the Revideo→Fantoche rebranding pass over the
+  documentation.
 
 ## Deferred — recorded, not in P2
 
