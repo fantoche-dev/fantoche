@@ -1,8 +1,10 @@
 import {z} from 'zod';
+import {CHARACTER_FORMAT_VERSION, characterSchema} from './character/schema.js';
 import {documentSchema} from './schema.js';
 import {DOCUMENT_FORMAT_VERSION} from './version.js';
 
 const SCHEMA_ID = `https://raw.githubusercontent.com/fantoche-dev/fantoche/main/packages/document/schema/document-${DOCUMENT_FORMAT_VERSION}.schema.json`;
+const CHARACTER_SCHEMA_ID = `https://raw.githubusercontent.com/fantoche-dev/fantoche/main/packages/document/schema/character-${CHARACTER_FORMAT_VERSION}.schema.json`;
 
 type JsonObject = Record<string, unknown>;
 
@@ -78,6 +80,35 @@ export function documentJsonSchema(): JsonObject {
   return {
     $id: SCHEMA_ID,
     title: `Fantoche document format ${DOCUMENT_FORMAT_VERSION}`,
+    ...schema,
+  };
+}
+
+/**
+ * The published JSON Schema for the character format. Same contract as
+ * `documentJsonSchema`: emitted next to it, drift-pinned by a test. The
+ * structural rules survive emission; the referential ones (parent exists,
+ * no cycles, pose keys resolve) are zod refinements with no JSON Schema
+ * form — validators get structure, `characterSchema` stays the authority.
+ */
+export function characterJsonSchema(): JsonObject {
+  const schema = z.toJSONSchema(characterSchema, {
+    target: 'draft-2020-12',
+    io: 'input',
+  }) as JsonObject;
+
+  walk(schema, node => {
+    // zod emits tuples as bare prefixItems — pin their exact length.
+    if (Array.isArray(node.prefixItems) && node.items === undefined) {
+      node.items = false;
+      node.minItems = node.prefixItems.length;
+      node.maxItems = node.prefixItems.length;
+    }
+  });
+
+  return {
+    $id: CHARACTER_SCHEMA_ID,
+    title: `Fantoche character format ${CHARACTER_FORMAT_VERSION}`,
     ...schema,
   };
 }
