@@ -169,7 +169,10 @@ after research lands in `01-research.md`.
 
 Character = **rig** (named FK groups/slots; IK later) + **poses** (named
 parameter sets) + easing. `state(t) = interpolate(pose keys ≤ t)` — pure,
-addressable, GUI-editable. Key simplification: output is *video*, not an
+addressable, GUI-editable. Structure decided in **ADR 0006**: slots render as
+flat siblings (transform hierarchy ≠ render hierarchy), FK is composed by the
+pose evaluator, and `depth` is a hold-interpolated pose parameter mapped to
+`zIndex` — draw order is poseable. Key simplification: output is *video*, not an
 interactive runtime, so **no state machines in v1** — the timeline is the only
 driver. That deletes the hardest concept non-animators face in Rive/Spine.
 Characters are documents too (`character.json`: rig + poses + art slots) →
@@ -196,7 +199,9 @@ scrub-centric and gets progressively replaced rather than patched.
 ## 5. Open questions (tracked, not blocking)
 
 1. Authoring surface: strict JSON vs JSON5/YAML front-end that compiles to JSON.
-2. Character format details: slot/attachment model (Spine-like) vs plain group tree.
+2. ~~Character format details: slot/attachment model (Spine-like) vs plain
+   group tree.~~ **Resolved by ADR 0006:** flat slot model with an explicit
+   slot→element binding table; no group tree.
 3. Camera/scene model in the document (multi-scene, transitions).
 4. Plugin API for custom node types and effects.
 5. Name and npm scope (`fantoche` free on npm as of 2026-08-04; org availability unverified).
