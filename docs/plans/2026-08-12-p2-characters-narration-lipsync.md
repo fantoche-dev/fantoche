@@ -2,6 +2,19 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
+## Status — updated 2026-08-18
+
+- **Agora:** Parte A (Tasks 1–7) completa. O gate cego PT-BR rodou duas
+  vezes (a rodada 1 caiu por transcrição ≠ áudio; ver
+  `docs/lipsync-spike-results.md`) e **ADR 0007 registra o gate em risco**:
+  nenhum braço atinge ≥3 em todos os eixos; a P2 embarca autoria manual de
+  visemas e o lipsync automático vai a re-spike.
+- **Próximo:** decisão de reshape da P2 no checkpoint (fatia vertical com
+  autoria manual no caminho do demo) antes de abrir a Parte B.
+- **Bloqueio:** nenhum técnico; a decisão de reshape é do Daniel.
+- **Última verificação:** 2026-08-18 — cli 40/40 testes; 2026-08-14 — build
+  dos 10 pacotes, 434 unitários (seriais), E2E 13 cenas + goldens, lint.
+
 **Goal:** A `character.json` (rig + poses + art slots imported from SVG) becomes a
 first-class document citizen: a cast member is posed and gestured from the
 narration-anchored timeline, its mouth driven by a viseme track derived from
