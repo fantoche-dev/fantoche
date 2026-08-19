@@ -6,6 +6,7 @@ import {launchEditor} from './editor';
 import {lipsyncPreview} from './lipsync/command';
 import {lipsyncCompare} from './lipsync/compare';
 import {generateRhubarbTrack, generateWhisperXTrack} from './lipsync/generate';
+import {alignNarration} from './narration/align';
 import {renderDoc} from './render-doc';
 import {createServer} from './server/index';
 
@@ -67,6 +68,31 @@ program
   .option('--out-dir <dir>', 'Output directory', './output')
   .option('--workers <n>', 'Number of parallel render workers')
   .action(renderDoc);
+
+const narration = program
+  .command('narration')
+  .description('Dev-time narration tools. Never a render-time dependency.');
+
+narration
+  .command('align')
+  .description(
+    'Fill narration.segments[].words[] with forced-alignment timings. The ' +
+      "segments' text is the transcript and is aligned verbatim, never altered.",
+  )
+  .argument('<doc.json>', 'Document whose narration to align')
+  .requiredOption('--audio <wav>', 'Narration audio file')
+  .requiredOption('--language <tag>', 'Language tag, e.g. pt-BR')
+  .option('--python <path>', 'Python with whisperx (default: $WHISPERX_PYTHON)')
+  .option('--model-dir <dir>', 'Model cache (default: $WHISPERX_MODEL_DIR)')
+  .action(async (docPath: string, options) => {
+    await alignNarration(docPath, {
+      audio: options.audio,
+      language: options.language,
+      python: options.python,
+      modelDir: options.modelDir,
+    });
+    console.log(`aligned ${docPath}`);
+  });
 
 const character = program
   .command('character')
