@@ -1,0 +1,36 @@
+{
+  "version": "0.1",
+  "id": "teacher",
+  "art": {"src": "teacher.art.json"},
+  "slots": {
+    "torso": {"element": "torso"},
+    "head": {"element": "head", "parent": "torso", "rest": {"depth": 2}},
+    "arm-l": {"element": "arm_x5F_l", "parent": "torso", "rest": {"depth": 5}},
+    "hand-l": {"element": "hand-l", "parent": "arm-l", "rest": {"depth": 6}},
+    "arm-r": {"element": "arm-r", "parent": "torso", "rest": {"depth": -5}},
+    "mouth-a": {"element": "mouth-a", "parent": "head", "rest": {"depth": 3}},
+    "mouth-b": {"element": "mouth-b", "parent": "head", "rest": {"depth": 3}},
+    "mouth-c": {"element": "mouth-c", "parent": "head", "rest": {"depth": 3}},
+    "mouth-d": {"element": "mouth-d", "parent": "head", "rest": {"depth": 3}},
+    "mouth-e": {"element": "mouth-e", "parent": "head", "rest": {"depth": 3}},
+    "mouth-f": {"element": "mouth-f", "parent": "head", "rest": {"depth": 3}},
+    "mouth-g": {"element": "mouth-g", "parent": "head", "rest": {"depth": 3}},
+    "mouth-h": {"element": "mouth-h", "parent": "head", "rest": {"depth": 3}},
+    "mouth-x": {"element": "mouth-x", "parent": "head", "rest": {"depth": 3}}
+  },
+  "poses": {
+    "wave": {"arm-l.rotation": 50, "hand-l.rotation": 20},
+    "arm-front": {"arm-r.rotation": -100, "arm-r.depth": 10}
+  },
+  "visemes": {
+    "A": "mouth-a",
+    "B": "mouth-b",
+    "C": "mouth-c",
+    "D": "mouth-d",
+    "E": "mouth-e",
+    "F": "mouth-f",
+    "G": "mouth-g",
+    "H": "mouth-h",
+    "X": "mouth-x"
+  }
+}

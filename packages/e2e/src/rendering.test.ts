@@ -48,6 +48,7 @@ describe('Rendering', () => {
       'doc-block-escape',
       'doc-code-diff',
       'doc-gate',
+      'doc-character-poses',
     ];
     const rendered = images.map(image => image.name);
     for (const scene of expectedScenes) {

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import {Command} from 'commander';
+import {importCharacter} from './character/import';
 import {launchEditor} from './editor';
 import {lipsyncPreview} from './lipsync/command';
 import {lipsyncCompare} from './lipsync/compare';
@@ -66,6 +67,26 @@ program
   .option('--out-dir <dir>', 'Output directory', './output')
   .option('--workers <n>', 'Number of parallel render workers')
   .action(renderDoc);
+
+const character = program
+  .command('character')
+  .description('Dev-time character rig tools. Never a render-time dependency.');
+
+character
+  .command('import')
+  .description(
+    'Split character art into the render-ready *.art.json sidecar named by ' +
+      'character.art.src. Minimal and non-interactive; the SVG is never modified.',
+  )
+  .argument('<art.svg>', 'Path to the character art SVG')
+  .argument('<character.json>', 'Path to the character definition')
+  .action((artPath: string, characterPath: string) => {
+    const report = importCharacter(artPath, characterPath);
+    console.log(`wrote ${report.sidecarPath}`);
+    if (report.orphans.length > 0) {
+      console.log(`unbound art ids: ${report.orphans.join(', ')}`);
+    }
+  });
 
 const lipsync = program
   .command('lipsync')

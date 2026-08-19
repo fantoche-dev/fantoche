@@ -1,0 +1,10 @@
+{
+  "version": "0.2",
+  "meta": {"fps": 30, "size": [320, 320], "duration": 3},
+  "cast": {"ana": {"character": "teacher", "y": 10, "scale": 0.55}},
+  "elements": [],
+  "timeline": [
+    {"at": 0.4, "target": "ana", "pose": "wave", "dur": 0.5},
+    {"at": 0.9, "target": "ana", "pose": "arm-front", "dur": 0.4}
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "version": "0.1",
+  "centre": [
+    160,
+    240
+  ],
+  "slots": {
+    "torso": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"120 180 80 140\"><g id=\"torso\" xmlns=\"http://www.w3.org/2000/svg\">\n    <rect x=\"120\" y=\"180\" width=\"80\" height=\"140\" rx=\"12\" fill=\"#7a5c3e\"/>\n    <rect x=\"132\" y=\"196\" width=\"56\" height=\"10\" rx=\"5\" fill=\"#5f462e\"/>\n  </g></svg>",
+    "head": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"104 64 112 112\"><g id=\"head\" xmlns=\"http://www.w3.org/2000/svg\">\n    <circle cx=\"160\" cy=\"120\" r=\"56\" fill=\"#d9a066\"/>\n    <circle cx=\"140\" cy=\"104\" r=\"7\" fill=\"#1f2937\"/>\n    <circle cx=\"180\" cy=\"104\" r=\"7\" fill=\"#1f2937\"/>\n  </g></svg>",
+    "arm-l": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"58 188 120 14\"><g id=\"arm_x5F_l\" xmlns=\"http://www.w3.org/2000/svg\">\n    <rect x=\"58\" y=\"188\" width=\"66\" height=\"14\" rx=\"7\" fill=\"#d9a066\"/>\n  </g></svg>",
+    "hand-l": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"45 184 42 22\"><g id=\"hand-l\" xmlns=\"http://www.w3.org/2000/svg\">\n    <circle cx=\"56\" cy=\"195\" r=\"11\" fill=\"#e7b57f\"/>\n  </g></svg>",
+    "arm-r": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"142 188 120 14\"><g id=\"arm-r\" xmlns=\"http://www.w3.org/2000/svg\">\n    <rect x=\"196\" y=\"188\" width=\"66\" height=\"14\" rx=\"7\" fill=\"#b0763f\"/>\n  </g></svg>",
+    "mouth-a": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"140 147 40 7\"><g id=\"mouth-a\" xmlns=\"http://www.w3.org/2000/svg\">\n    <rect x=\"140\" y=\"147\" width=\"40\" height=\"7\" rx=\"3.5\" fill=\"#7c2d12\"/>\n  </g></svg>",
+    "mouth-b": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"140 144 40 12\"><g id=\"mouth-b\" xmlns=\"http://www.w3.org/2000/svg\">\n    <rect x=\"140\" y=\"144\" width=\"40\" height=\"12\" rx=\"3\" fill=\"#7c2d12\"/>\n    <rect x=\"144\" y=\"148\" width=\"32\" height=\"4\" fill=\"#f8fafc\"/>\n  </g></svg>",
+    "mouth-c": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"138 140 44 20\"><g id=\"mouth-c\" xmlns=\"http://www.w3.org/2000/svg\">\n    <rect x=\"138\" y=\"140\" width=\"44\" height=\"20\" rx=\"6\" fill=\"#4a0e0e\"/>\n    <rect x=\"143\" y=\"142\" width=\"34\" height=\"5\" fill=\"#f8fafc\"/>\n  </g></svg>",
+    "mouth-d": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"136 136 48 32\"><g id=\"mouth-d\" xmlns=\"http://www.w3.org/2000/svg\">\n    <ellipse cx=\"160\" cy=\"152\" rx=\"24\" ry=\"16\" fill=\"#4a0e0e\"/>\n    <ellipse cx=\"160\" cy=\"160\" rx=\"10\" ry=\"6\" fill=\"#f472b6\"/>\n  </g></svg>",
+    "mouth-e": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"149 141 22 22\"><g id=\"mouth-e\" xmlns=\"http://www.w3.org/2000/svg\">\n    <circle cx=\"160\" cy=\"152\" r=\"11\" fill=\"#4a0e0e\"/>\n  </g></svg>",
+    "mouth-f": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"151 143 18 18\"><g id=\"mouth-f\" xmlns=\"http://www.w3.org/2000/svg\">\n    <circle cx=\"160\" cy=\"152\" r=\"9\" fill=\"#7c2d12\"/>\n    <circle cx=\"160\" cy=\"152\" r=\"3.5\" fill=\"#4a0e0e\"/>\n  </g></svg>",
+    "mouth-g": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"140 145 40 10\"><g id=\"mouth-g\" xmlns=\"http://www.w3.org/2000/svg\">\n    <rect x=\"140\" y=\"146\" width=\"40\" height=\"9\" rx=\"3\" fill=\"#7c2d12\"/>\n    <rect x=\"144\" y=\"145\" width=\"32\" height=\"5\" fill=\"#f8fafc\"/>\n  </g></svg>",
+    "mouth-h": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"138 141 44 18\"><g id=\"mouth-h\" xmlns=\"http://www.w3.org/2000/svg\">\n    <rect x=\"138\" y=\"141\" width=\"44\" height=\"18\" rx=\"6\" fill=\"#4a0e0e\"/>\n    <rect x=\"152\" y=\"141\" width=\"16\" height=\"10\" rx=\"4\" fill=\"#f472b6\"/>\n  </g></svg>",
+    "mouth-x": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"142 149 36 4\"><g id=\"mouth-x\" xmlns=\"http://www.w3.org/2000/svg\">\n    <rect x=\"142\" y=\"149\" width=\"36\" height=\"4\" rx=\"2\" fill=\"#9a3412\"/>\n  </g></svg>"
+  },
+  "pivots": {
+    "torso": [
+      160,
+      250
+    ],
+    "head": [
+      160,
+      120
+    ],
+    "arm-l": [
+      118,
+      195
+    ],
+    "hand-l": [
+      66,
+      195
+    ],
+    "arm-r": [
+      202,
+      195
+    ],
+    "mouth-a": [
+      160,
+      150.5
+    ],
+    "mouth-b": [
+      160,
+      150
+    ],
+    "mouth-c": [
+      160,
+      150
+    ],
+    "mouth-d": [
+      160,
+      152
+    ],
+    "mouth-e": [
+      160,
+      152
+    ],
+    "mouth-f": [
+      160,
+      152
+    ],
+    "mouth-g": [
+      160,
+      150
+    ],
+    "mouth-h": [
+      160,
+      150
+    ],
+    "mouth-x": [
+      160,
+      151
+    ]
+  }
+}

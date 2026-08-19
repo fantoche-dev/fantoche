@@ -82,6 +82,13 @@ jobs:
       - run: npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
       - run: npx lerna run build --ignore @fantoche-dev/docs
       - run: npm run e2e:test
+      # TEMP (drop after doc-character-poses goldens are committed): new
+      # scenes write their Linux goldens here on first run; ship them back.
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-goldens
+          path: packages/e2e/src/__image_snapshots__
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
