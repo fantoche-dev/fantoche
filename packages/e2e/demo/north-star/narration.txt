@@ -1,0 +1,23 @@
+Hoje vamos entender busca binária com um exemplo visual. Ela usa somente três ideias: ordem, comparação e descarte.
+
+Primeiro, precisamos de uma lista ordenada. Aqui estão quinze números. Nosso objetivo é encontrar o número trinta e sete.
+
+Em vez de testar cada posição, olhamos direto para o meio. Nesta lista, o primeiro meio é o número trinta e um.
+
+Comparamos trinta e sete com trinta e um. Como o alvo é maior, nenhuma posição à esquerda serve. Descartamos aquela metade.
+
+Agora restam os números maiores. Escolhemos novamente o centro, que desta vez é quarenta e sete.
+
+O alvo é menor que quarenta e sete, então descartamos a metade direita. A cada comparação, o intervalo fica duas vezes menor.
+
+O próximo meio é trinta e sete. Encontramos o valor sem visitar quase toda a lista.
+
+No código, começamos com dois limites: baixo no início e alto no fim. Enquanto baixo não ultrapassar alto, calculamos o meio.
+
+Se o valor central for igual ao alvo, devolvemos sua posição. Se for menor, movemos baixo. Caso contrário, reduzimos alto.
+
+Perceba o padrão: quinze posições viraram sete, depois três e finalmente uma. Por isso o custo cresce como logaritmo do tamanho da lista.
+
+Com um milhão de itens, precisamos de cerca de vinte comparações. Mas a lista precisa estar ordenada antes da busca.
+
+Esse é o coração da busca binária: olhar o meio, comparar e eliminar metade. Com dados ordenados, uma decisão pequena economiza muito trabalho.

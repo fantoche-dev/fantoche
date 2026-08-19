@@ -1,0 +1,3012 @@
+{
+  "version": "0.2",
+  "meta": {
+    "fps": 30,
+    "size": [1920, 1080],
+    "background": "#0b1020",
+    "duration": 90.48
+  },
+  "assets": {
+    "teacher": {
+      "type": "character",
+      "src": "../../characters/teacher/character.json"
+    },
+    "voice": {
+      "type": "audio",
+      "src": "narration.wav",
+      "dur": 90.48
+    },
+    "mouth": {
+      "type": "lipsync",
+      "src": "mouth.viseme.json"
+    }
+  },
+  "narration": {
+    "audio": "voice",
+    "segments": [
+      {
+        "id": "intro",
+        "text": "Today we will understand binary search with a visual example. It uses only three ideas: ordering, comparison, and elimination.",
+        "start": 0.22,
+        "dur": 8.322,
+        "words": [
+          {
+            "text": "today",
+            "start": 0.22,
+            "dur": 0.3
+          },
+          {
+            "text": "we",
+            "start": 0.58,
+            "dur": 0.08
+          },
+          {
+            "text": "will",
+            "start": 0.68,
+            "dur": 0.16
+          },
+          {
+            "text": "understand",
+            "start": 0.9,
+            "dur": 0.48
+          },
+          {
+            "text": "binary",
+            "start": 1.46,
+            "dur": 0.42
+          },
+          {
+            "text": "search",
+            "start": 1.92,
+            "dur": 0.3
+          },
+          {
+            "text": "with",
+            "start": 2.281,
+            "dur": 0.14
+          },
+          {
+            "text": "a",
+            "start": 2.461,
+            "dur": 0.02
+          },
+          {
+            "text": "visual",
+            "start": 2.541,
+            "dur": 0.3
+          },
+          {
+            "text": "example",
+            "start": 2.881,
+            "dur": 0.44
+          },
+          {
+            "text": "it",
+            "start": 3.861,
+            "dur": 0.06
+          },
+          {
+            "text": "uses",
+            "start": 4.001,
+            "dur": 0.24
+          },
+          {
+            "text": "only",
+            "start": 4.361,
+            "dur": 0.22
+          },
+          {
+            "text": "three",
+            "start": 4.641,
+            "dur": 0.22
+          },
+          {
+            "text": "ideas",
+            "start": 4.901,
+            "dur": 0.4
+          },
+          {
+            "text": "ordering",
+            "start": 5.761,
+            "dur": 0.4
+          },
+          {
+            "text": "comparison",
+            "start": 6.301,
+            "dur": 0.701
+          },
+          {
+            "text": "and",
+            "start": 7.202,
+            "dur": 0.1
+          },
+          {
+            "text": "elimination",
+            "start": 7.382,
+            "dur": 1.16
+          }
+        ]
+      },
+      {
+        "id": "lista",
+        "text": "First, we need a sorted list. Here are fifteen numbers. Our goal is to find number thirty-seven.",
+        "start": 8.542,
+        "dur": 6.181,
+        "words": [
+          {
+            "text": "first",
+            "start": 8.542,
+            "dur": 0.3
+          },
+          {
+            "text": "we",
+            "start": 9.042,
+            "dur": 0.12
+          },
+          {
+            "text": "need",
+            "start": 9.202,
+            "dur": 0.12
+          },
+          {
+            "text": "a",
+            "start": 9.362,
+            "dur": 0.06
+          },
+          {
+            "text": "sorted",
+            "start": 9.462,
+            "dur": 0.26
+          },
+          {
+            "text": "list",
+            "start": 9.762,
+            "dur": 0.28
+          },
+          {
+            "text": "here",
+            "start": 10.602,
+            "dur": 0.16
+          },
+          {
+            "text": "are",
+            "start": 10.802,
+            "dur": 0.1
+          },
+          {
+            "text": "fifteen",
+            "start": 10.942,
+            "dur": 0.32
+          },
+          {
+            "text": "numbers",
+            "start": 11.302,
+            "dur": 0.341
+          },
+          {
+            "text": "our",
+            "start": 12.243,
+            "dur": 0.1
+          },
+          {
+            "text": "goal",
+            "start": 12.383,
+            "dur": 0.28
+          },
+          {
+            "text": "is",
+            "start": 12.743,
+            "dur": 0.1
+          },
+          {
+            "text": "to",
+            "start": 12.883,
+            "dur": 0.08
+          },
+          {
+            "text": "find",
+            "start": 13.003,
+            "dur": 0.22
+          },
+          {
+            "text": "number",
+            "start": 13.283,
+            "dur": 0.24
+          },
+          {
+            "text": "thirty-seven",
+            "start": 13.583,
+            "dur": 1.14
+          }
+        ]
+      },
+      {
+        "id": "primeiro_meio",
+        "text": "Instead of checking every position, we look directly at the middle. In this list, the first middle value is thirty-one.",
+        "start": 14.723,
+        "dur": 7.282,
+        "words": [
+          {
+            "text": "instead",
+            "start": 14.723,
+            "dur": 0.36
+          },
+          {
+            "text": "of",
+            "start": 15.103,
+            "dur": 0.06
+          },
+          {
+            "text": "checking",
+            "start": 15.223,
+            "dur": 0.3
+          },
+          {
+            "text": "every",
+            "start": 15.623,
+            "dur": 0.18
+          },
+          {
+            "text": "position",
+            "start": 15.823,
+            "dur": 0.441
+          },
+          {
+            "text": "we",
+            "start": 16.604,
+            "dur": 0.08
+          },
+          {
+            "text": "look",
+            "start": 16.724,
+            "dur": 0.18
+          },
+          {
+            "text": "directly",
+            "start": 16.924,
+            "dur": 0.44
+          },
+          {
+            "text": "at",
+            "start": 17.424,
+            "dur": 0.06
+          },
+          {
+            "text": "the",
+            "start": 17.504,
+            "dur": 0.1
+          },
+          {
+            "text": "middle",
+            "start": 17.624,
+            "dur": 0.26
+          },
+          {
+            "text": "in",
+            "start": 18.404,
+            "dur": 0.06
+          },
+          {
+            "text": "this",
+            "start": 18.504,
+            "dur": 0.16
+          },
+          {
+            "text": "list",
+            "start": 18.744,
+            "dur": 0.28
+          },
+          {
+            "text": "the",
+            "start": 19.384,
+            "dur": 0.14
+          },
+          {
+            "text": "first",
+            "start": 19.644,
+            "dur": 0.3
+          },
+          {
+            "text": "middle",
+            "start": 20.044,
+            "dur": 0.24
+          },
+          {
+            "text": "value",
+            "start": 20.304,
+            "dur": 0.401
+          },
+          {
+            "text": "is",
+            "start": 20.845,
+            "dur": 0.08
+          },
+          {
+            "text": "thirty-one",
+            "start": 21.005,
+            "dur": 1
+          }
+        ]
+      },
+      {
+        "id": "descarta_esquerda",
+        "text": "We compare thirty-seven with thirty-one. Because the target is larger, no position on the left can work. We eliminate that half.",
+        "start": 22.005,
+        "dur": 7.762,
+        "words": [
+          {
+            "text": "we",
+            "start": 22.005,
+            "dur": 0.12
+          },
+          {
+            "text": "compare",
+            "start": 22.165,
+            "dur": 0.34
+          },
+          {
+            "text": "thirty-seven",
+            "start": 22.585,
+            "dur": 0.58
+          },
+          {
+            "text": "with",
+            "start": 23.205,
+            "dur": 0.12
+          },
+          {
+            "text": "thirty-one",
+            "start": 23.345,
+            "dur": 0.44
+          },
+          {
+            "text": "because",
+            "start": 24.285,
+            "dur": 0.28
+          },
+          {
+            "text": "the",
+            "start": 24.605,
+            "dur": 0.08
+          },
+          {
+            "text": "target",
+            "start": 24.725,
+            "dur": 0.341
+          },
+          {
+            "text": "is",
+            "start": 25.106,
+            "dur": 0.08
+          },
+          {
+            "text": "larger",
+            "start": 25.226,
+            "dur": 0.38
+          },
+          {
+            "text": "no",
+            "start": 26.086,
+            "dur": 0.14
+          },
+          {
+            "text": "position",
+            "start": 26.266,
+            "dur": 0.4
+          },
+          {
+            "text": "on",
+            "start": 26.726,
+            "dur": 0.06
+          },
+          {
+            "text": "the",
+            "start": 26.826,
+            "dur": 0.08
+          },
+          {
+            "text": "left",
+            "start": 26.946,
+            "dur": 0.2
+          },
+          {
+            "text": "can",
+            "start": 27.186,
+            "dur": 0.14
+          },
+          {
+            "text": "work",
+            "start": 27.366,
+            "dur": 0.24
+          },
+          {
+            "text": "we",
+            "start": 28.166,
+            "dur": 0.1
+          },
+          {
+            "text": "eliminate",
+            "start": 28.306,
+            "dur": 0.42
+          },
+          {
+            "text": "that",
+            "start": 28.746,
+            "dur": 0.12
+          },
+          {
+            "text": "half",
+            "start": 28.886,
+            "dur": 0.881
+          }
+        ]
+      },
+      {
+        "id": "segundo_meio",
+        "text": "Now only the larger numbers remain. We choose the center again, and this time it is forty-seven.",
+        "start": 29.767,
+        "dur": 5.721,
+        "words": [
+          {
+            "text": "now",
+            "start": 29.767,
+            "dur": 0.18
+          },
+          {
+            "text": "only",
+            "start": 30.147,
+            "dur": 0.2
+          },
+          {
+            "text": "the",
+            "start": 30.387,
+            "dur": 0.1
+          },
+          {
+            "text": "larger",
+            "start": 30.527,
+            "dur": 0.28
+          },
+          {
+            "text": "numbers",
+            "start": 30.867,
+            "dur": 0.28
+          },
+          {
+            "text": "remain",
+            "start": 31.187,
+            "dur": 0.36
+          },
+          {
+            "text": "we",
+            "start": 32.087,
+            "dur": 0.1
+          },
+          {
+            "text": "choose",
+            "start": 32.207,
+            "dur": 0.2
+          },
+          {
+            "text": "the",
+            "start": 32.427,
+            "dur": 0.08
+          },
+          {
+            "text": "center",
+            "start": 32.547,
+            "dur": 0.3
+          },
+          {
+            "text": "again",
+            "start": 32.867,
+            "dur": 0.26
+          },
+          {
+            "text": "and",
+            "start": 33.487,
+            "dur": 0.08
+          },
+          {
+            "text": "this",
+            "start": 33.607,
+            "dur": 0.16
+          },
+          {
+            "text": "time",
+            "start": 33.807,
+            "dur": 0.241
+          },
+          {
+            "text": "it",
+            "start": 34.108,
+            "dur": 0.04
+          },
+          {
+            "text": "is",
+            "start": 34.208,
+            "dur": 0.08
+          },
+          {
+            "text": "forty-seven",
+            "start": 34.368,
+            "dur": 1.12
+          }
+        ]
+      },
+      {
+        "id": "descarta_direita",
+        "text": "The target is smaller than forty-seven, so we eliminate the right half. With every comparison, the interval becomes twice as small.",
+        "start": 35.488,
+        "dur": 7.602,
+        "words": [
+          {
+            "text": "the",
+            "start": 35.488,
+            "dur": 0.1
+          },
+          {
+            "text": "target",
+            "start": 35.628,
+            "dur": 0.34
+          },
+          {
+            "text": "is",
+            "start": 36.028,
+            "dur": 0.06
+          },
+          {
+            "text": "smaller",
+            "start": 36.148,
+            "dur": 0.34
+          },
+          {
+            "text": "than",
+            "start": 36.528,
+            "dur": 0.12
+          },
+          {
+            "text": "forty-seven",
+            "start": 36.688,
+            "dur": 0.56
+          },
+          {
+            "text": "so",
+            "start": 37.488,
+            "dur": 0.12
+          },
+          {
+            "text": "we",
+            "start": 37.648,
+            "dur": 0.08
+          },
+          {
+            "text": "eliminate",
+            "start": 37.788,
+            "dur": 0.42
+          },
+          {
+            "text": "the",
+            "start": 38.228,
+            "dur": 0.1
+          },
+          {
+            "text": "right",
+            "start": 38.368,
+            "dur": 0.141
+          },
+          {
+            "text": "half",
+            "start": 38.549,
+            "dur": 0.22
+          },
+          {
+            "text": "with",
+            "start": 39.329,
+            "dur": 0.14
+          },
+          {
+            "text": "every",
+            "start": 39.589,
+            "dur": 0.2
+          },
+          {
+            "text": "comparison",
+            "start": 39.849,
+            "dur": 0.6
+          },
+          {
+            "text": "the",
+            "start": 40.689,
+            "dur": 0.12
+          },
+          {
+            "text": "interval",
+            "start": 40.909,
+            "dur": 0.38
+          },
+          {
+            "text": "becomes",
+            "start": 41.329,
+            "dur": 0.34
+          },
+          {
+            "text": "twice",
+            "start": 41.769,
+            "dur": 0.32
+          },
+          {
+            "text": "as",
+            "start": 42.149,
+            "dur": 0.06
+          },
+          {
+            "text": "small",
+            "start": 42.269,
+            "dur": 0.821
+          }
+        ]
+      },
+      {
+        "id": "encontra",
+        "text": "The next middle value is thirty-seven. We found it without visiting almost the entire list.",
+        "start": 43.09,
+        "dur": 5.521,
+        "words": [
+          {
+            "text": "the",
+            "start": 43.09,
+            "dur": 0.1
+          },
+          {
+            "text": "next",
+            "start": 43.25,
+            "dur": 0.2
+          },
+          {
+            "text": "middle",
+            "start": 43.51,
+            "dur": 0.2
+          },
+          {
+            "text": "value",
+            "start": 43.75,
+            "dur": 0.38
+          },
+          {
+            "text": "is",
+            "start": 44.27,
+            "dur": 0.08
+          },
+          {
+            "text": "thirty-seven",
+            "start": 44.43,
+            "dur": 0.6
+          },
+          {
+            "text": "we",
+            "start": 45.57,
+            "dur": 0.12
+          },
+          {
+            "text": "found",
+            "start": 45.73,
+            "dur": 0.24
+          },
+          {
+            "text": "it",
+            "start": 45.99,
+            "dur": 0.06
+          },
+          {
+            "text": "without",
+            "start": 46.09,
+            "dur": 0.24
+          },
+          {
+            "text": "visiting",
+            "start": 46.37,
+            "dur": 0.36
+          },
+          {
+            "text": "almost",
+            "start": 46.89,
+            "dur": 0.28
+          },
+          {
+            "text": "the",
+            "start": 47.21,
+            "dur": 0.08
+          },
+          {
+            "text": "entire",
+            "start": 47.33,
+            "dur": 0.381
+          },
+          {
+            "text": "list",
+            "start": 47.751,
+            "dur": 0.86
+          }
+        ]
+      },
+      {
+        "id": "codigo_limites",
+        "text": "In the code, we start with two boundaries: low at the beginning and high at the end. While low does not pass high, we calculate the middle.",
+        "start": 48.611,
+        "dur": 8.442,
+        "words": [
+          {
+            "text": "in",
+            "start": 48.611,
+            "dur": 0.06
+          },
+          {
+            "text": "the",
+            "start": 48.711,
+            "dur": 0.06
+          },
+          {
+            "text": "code",
+            "start": 48.831,
+            "dur": 0.32
+          },
+          {
+            "text": "we",
+            "start": 49.451,
+            "dur": 0.14
+          },
+          {
+            "text": "start",
+            "start": 49.631,
+            "dur": 0.24
+          },
+          {
+            "text": "with",
+            "start": 49.911,
+            "dur": 0.14
+          },
+          {
+            "text": "two",
+            "start": 50.171,
+            "dur": 0.2
+          },
+          {
+            "text": "boundaries",
+            "start": 50.431,
+            "dur": 0.5
+          },
+          {
+            "text": "low",
+            "start": 51.371,
+            "dur": 0.22
+          },
+          {
+            "text": "at",
+            "start": 51.631,
+            "dur": 0.06
+          },
+          {
+            "text": "the",
+            "start": 51.731,
+            "dur": 0.06
+          },
+          {
+            "text": "beginning",
+            "start": 51.831,
+            "dur": 0.421
+          },
+          {
+            "text": "and",
+            "start": 52.452,
+            "dur": 0.1
+          },
+          {
+            "text": "high",
+            "start": 52.632,
+            "dur": 0.2
+          },
+          {
+            "text": "at",
+            "start": 52.852,
+            "dur": 0.06
+          },
+          {
+            "text": "the",
+            "start": 52.952,
+            "dur": 0.08
+          },
+          {
+            "text": "end",
+            "start": 53.132,
+            "dur": 0.2
+          },
+          {
+            "text": "while",
+            "start": 53.872,
+            "dur": 0.2
+          },
+          {
+            "text": "low",
+            "start": 54.112,
+            "dur": 0.18
+          },
+          {
+            "text": "does",
+            "start": 54.312,
+            "dur": 0.14
+          },
+          {
+            "text": "not",
+            "start": 54.492,
+            "dur": 0.16
+          },
+          {
+            "text": "pass",
+            "start": 54.692,
+            "dur": 0.26
+          },
+          {
+            "text": "high",
+            "start": 54.972,
+            "dur": 0.26
+          },
+          {
+            "text": "we",
+            "start": 55.512,
+            "dur": 0.1
+          },
+          {
+            "text": "calculate",
+            "start": 55.652,
+            "dur": 0.48
+          },
+          {
+            "text": "the",
+            "start": 56.152,
+            "dur": 0.08
+          },
+          {
+            "text": "middle",
+            "start": 56.272,
+            "dur": 0.781
+          }
+        ]
+      },
+      {
+        "id": "codigo_ramos",
+        "text": "If the middle value equals the target, we return its position. If it is smaller, we move low. Otherwise, we reduce high.",
+        "start": 57.053,
+        "dur": 7.981,
+        "words": [
+          {
+            "text": "if",
+            "start": 57.053,
+            "dur": 0.08
+          },
+          {
+            "text": "the",
+            "start": 57.153,
+            "dur": 0.1
+          },
+          {
+            "text": "middle",
+            "start": 57.293,
+            "dur": 0.22
+          },
+          {
+            "text": "value",
+            "start": 57.553,
+            "dur": 0.3
+          },
+          {
+            "text": "equals",
+            "start": 57.953,
+            "dur": 0.3
+          },
+          {
+            "text": "the",
+            "start": 58.293,
+            "dur": 0.1
+          },
+          {
+            "text": "target",
+            "start": 58.453,
+            "dur": 0.38
+          },
+          {
+            "text": "we",
+            "start": 59.273,
+            "dur": 0.12
+          },
+          {
+            "text": "return",
+            "start": 59.453,
+            "dur": 0.38
+          },
+          {
+            "text": "its",
+            "start": 59.873,
+            "dur": 0.12
+          },
+          {
+            "text": "position",
+            "start": 60.033,
+            "dur": 0.48
+          },
+          {
+            "text": "if",
+            "start": 61.073,
+            "dur": 0.061
+          },
+          {
+            "text": "it",
+            "start": 61.174,
+            "dur": 0.06
+          },
+          {
+            "text": "is",
+            "start": 61.274,
+            "dur": 0.06
+          },
+          {
+            "text": "smaller",
+            "start": 61.374,
+            "dur": 0.38
+          },
+          {
+            "text": "we",
+            "start": 61.894,
+            "dur": 0.12
+          },
+          {
+            "text": "move",
+            "start": 62.074,
+            "dur": 0.16
+          },
+          {
+            "text": "low",
+            "start": 62.294,
+            "dur": 0.2
+          },
+          {
+            "text": "otherwise",
+            "start": 63.014,
+            "dur": 0.48
+          },
+          {
+            "text": "we",
+            "start": 63.754,
+            "dur": 0.12
+          },
+          {
+            "text": "reduce",
+            "start": 63.934,
+            "dur": 0.28
+          },
+          {
+            "text": "high",
+            "start": 64.234,
+            "dur": 0.8
+          }
+        ]
+      },
+      {
+        "id": "complexidade",
+        "text": "Notice the pattern: fifteen positions became seven, then three, and finally one. That is why the cost grows like the logarithm of the list size.",
+        "start": 65.034,
+        "dur": 9.242,
+        "words": [
+          {
+            "text": "notice",
+            "start": 65.034,
+            "dur": 0.3
+          },
+          {
+            "text": "the",
+            "start": 65.374,
+            "dur": 0.08
+          },
+          {
+            "text": "pattern",
+            "start": 65.494,
+            "dur": 0.381
+          },
+          {
+            "text": "fifteen",
+            "start": 66.355,
+            "dur": 0.36
+          },
+          {
+            "text": "positions",
+            "start": 66.755,
+            "dur": 0.5
+          },
+          {
+            "text": "became",
+            "start": 67.335,
+            "dur": 0.32
+          },
+          {
+            "text": "seven",
+            "start": 67.755,
+            "dur": 0.38
+          },
+          {
+            "text": "then",
+            "start": 68.515,
+            "dur": 0.2
+          },
+          {
+            "text": "three",
+            "start": 68.775,
+            "dur": 0.32
+          },
+          {
+            "text": "and",
+            "start": 69.495,
+            "dur": 0.12
+          },
+          {
+            "text": "finally",
+            "start": 69.715,
+            "dur": 0.36
+          },
+          {
+            "text": "one",
+            "start": 70.216,
+            "dur": 0.12
+          },
+          {
+            "text": "that",
+            "start": 70.856,
+            "dur": 0.16
+          },
+          {
+            "text": "is",
+            "start": 71.096,
+            "dur": 0.06
+          },
+          {
+            "text": "why",
+            "start": 71.196,
+            "dur": 0.14
+          },
+          {
+            "text": "the",
+            "start": 71.376,
+            "dur": 0.1
+          },
+          {
+            "text": "cost",
+            "start": 71.516,
+            "dur": 0.26
+          },
+          {
+            "text": "grows",
+            "start": 71.816,
+            "dur": 0.3
+          },
+          {
+            "text": "like",
+            "start": 72.156,
+            "dur": 0.16
+          },
+          {
+            "text": "the",
+            "start": 72.356,
+            "dur": 0.06
+          },
+          {
+            "text": "logarithm",
+            "start": 72.476,
+            "dur": 0.5
+          },
+          {
+            "text": "of",
+            "start": 73.016,
+            "dur": 0.04
+          },
+          {
+            "text": "the",
+            "start": 73.096,
+            "dur": 0.06
+          },
+          {
+            "text": "list",
+            "start": 73.216,
+            "dur": 0.16
+          },
+          {
+            "text": "size",
+            "start": 73.396,
+            "dur": 0.88
+          }
+        ]
+      },
+      {
+        "id": "milhao",
+        "text": "With one million items, we need about twenty comparisons. But the list must already be sorted before the search.",
+        "start": 74.276,
+        "dur": 6.682,
+        "words": [
+          {
+            "text": "with",
+            "start": 74.276,
+            "dur": 0.14
+          },
+          {
+            "text": "one",
+            "start": 74.556,
+            "dur": 0.101
+          },
+          {
+            "text": "million",
+            "start": 74.697,
+            "dur": 0.32
+          },
+          {
+            "text": "items",
+            "start": 75.137,
+            "dur": 0.3
+          },
+          {
+            "text": "we",
+            "start": 75.857,
+            "dur": 0.12
+          },
+          {
+            "text": "need",
+            "start": 76.017,
+            "dur": 0.14
+          },
+          {
+            "text": "about",
+            "start": 76.197,
+            "dur": 0.2
+          },
+          {
+            "text": "twenty",
+            "start": 76.497,
+            "dur": 0.3
+          },
+          {
+            "text": "comparisons",
+            "start": 76.837,
+            "dur": 0.62
+          },
+          {
+            "text": "but",
+            "start": 78.017,
+            "dur": 0.12
+          },
+          {
+            "text": "the",
+            "start": 78.157,
+            "dur": 0.08
+          },
+          {
+            "text": "list",
+            "start": 78.277,
+            "dur": 0.2
+          },
+          {
+            "text": "must",
+            "start": 78.557,
+            "dur": 0.18
+          },
+          {
+            "text": "already",
+            "start": 78.857,
+            "dur": 0.28
+          },
+          {
+            "text": "be",
+            "start": 79.198,
+            "dur": 0.1
+          },
+          {
+            "text": "sorted",
+            "start": 79.358,
+            "dur": 0.3
+          },
+          {
+            "text": "before",
+            "start": 79.698,
+            "dur": 0.26
+          },
+          {
+            "text": "the",
+            "start": 79.998,
+            "dur": 0.06
+          },
+          {
+            "text": "search",
+            "start": 80.098,
+            "dur": 0.86
+          }
+        ]
+      },
+      {
+        "id": "fecho",
+        "text": "This is the heart of binary search: look at the middle, compare, and eliminate half. With sorted data, one small decision saves a great deal of work.",
+        "start": 80.958,
+        "dur": 9.062,
+        "words": [
+          {
+            "text": "this",
+            "start": 80.958,
+            "dur": 0.18
+          },
+          {
+            "text": "is",
+            "start": 81.218,
+            "dur": 0.08
+          },
+          {
+            "text": "the",
+            "start": 81.338,
+            "dur": 0.1
+          },
+          {
+            "text": "heart",
+            "start": 81.518,
+            "dur": 0.24
+          },
+          {
+            "text": "of",
+            "start": 81.798,
+            "dur": 0.06
+          },
+          {
+            "text": "binary",
+            "start": 81.918,
+            "dur": 0.42
+          },
+          {
+            "text": "search",
+            "start": 82.398,
+            "dur": 0.3
+          },
+          {
+            "text": "look",
+            "start": 83.118,
+            "dur": 0.12
+          },
+          {
+            "text": "at",
+            "start": 83.278,
+            "dur": 0.04
+          },
+          {
+            "text": "the",
+            "start": 83.358,
+            "dur": 0.06
+          },
+          {
+            "text": "middle",
+            "start": 83.458,
+            "dur": 0.241
+          },
+          {
+            "text": "compare",
+            "start": 83.939,
+            "dur": 0.5
+          },
+          {
+            "text": "and",
+            "start": 84.659,
+            "dur": 0.14
+          },
+          {
+            "text": "eliminate",
+            "start": 84.979,
+            "dur": 0.48
+          },
+          {
+            "text": "half",
+            "start": 85.499,
+            "dur": 0.24
+          },
+          {
+            "text": "with",
+            "start": 86.319,
+            "dur": 0.14
+          },
+          {
+            "text": "sorted",
+            "start": 86.519,
+            "dur": 0.32
+          },
+          {
+            "text": "data",
+            "start": 86.879,
+            "dur": 0.32
+          },
+          {
+            "text": "one",
+            "start": 87.699,
+            "dur": 0.12
+          },
+          {
+            "text": "small",
+            "start": 87.879,
+            "dur": 0.24
+          },
+          {
+            "text": "decision",
+            "start": 88.159,
+            "dur": 0.461
+          },
+          {
+            "text": "saves",
+            "start": 88.7,
+            "dur": 0.26
+          },
+          {
+            "text": "a",
+            "start": 89,
+            "dur": 0.04
+          },
+          {
+            "text": "great",
+            "start": 89.1,
+            "dur": 0.32
+          },
+          {
+            "text": "deal",
+            "start": 89.48,
+            "dur": 0.2
+          },
+          {
+            "text": "of",
+            "start": 89.72,
+            "dur": 0.06
+          },
+          {
+            "text": "work",
+            "start": 89.82,
+            "dur": 0.2
+          }
+        ]
+      }
+    ]
+  },
+  "cast": {
+    "ana": {
+      "character": "teacher",
+      "x": -700,
+      "y": 190,
+      "scale": 1.7
+    }
+  },
+  "elements": [
+    {
+      "id": "title",
+      "type": "text",
+      "props": {
+        "text": "BINARY SEARCH",
+        "fontSize": 82,
+        "fontWeight": 800,
+        "fill": "#f8fafc",
+        "x": 210,
+        "y": -450,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "subtitle",
+      "type": "text",
+      "props": {
+        "text": "ordering  •  comparison  •  elimination",
+        "fontSize": 38,
+        "fontWeight": 500,
+        "fill": "#93c5fd",
+        "x": 210,
+        "y": -355,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "target",
+      "type": "text",
+      "props": {
+        "text": "target: 37",
+        "fontSize": 48,
+        "fontWeight": 700,
+        "fill": "#fbbf24",
+        "x": 170,
+        "y": -225,
+        "scale": 1,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "pointer",
+      "type": "line",
+      "props": {
+        "points": [
+          [0, 0],
+          [0, 58]
+        ],
+        "x": 160,
+        "y": -185,
+        "stroke": "#fbbf24",
+        "lineWidth": 8,
+        "endArrow": true,
+        "arrowSize": 20,
+        "end": 1,
+        "opacity": 0,
+        "zIndex": 10
+      }
+    },
+    {
+      "id": "pointer_label",
+      "type": "text",
+      "props": {
+        "text": "MEIO",
+        "fontSize": 28,
+        "fontWeight": 800,
+        "fill": "#fbbf24",
+        "x": 160,
+        "y": -205,
+        "opacity": 0,
+        "zIndex": 10
+      }
+    },
+    {
+      "id": "box_0",
+      "type": "rect",
+      "props": {
+        "x": -260,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "scale": 1,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_0",
+      "type": "text",
+      "props": {
+        "text": "3",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": -260,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_1",
+      "type": "rect",
+      "props": {
+        "x": -200,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "scale": 1,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_1",
+      "type": "text",
+      "props": {
+        "text": "7",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": -200,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_2",
+      "type": "rect",
+      "props": {
+        "x": -140,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_2",
+      "type": "text",
+      "props": {
+        "text": "11",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": -140,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_3",
+      "type": "rect",
+      "props": {
+        "x": -80,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_3",
+      "type": "text",
+      "props": {
+        "text": "15",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": -80,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_4",
+      "type": "rect",
+      "props": {
+        "x": -20,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_4",
+      "type": "text",
+      "props": {
+        "text": "19",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": -20,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_5",
+      "type": "rect",
+      "props": {
+        "x": 40,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_5",
+      "type": "text",
+      "props": {
+        "text": "23",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 40,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_6",
+      "type": "rect",
+      "props": {
+        "x": 100,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_6",
+      "type": "text",
+      "props": {
+        "text": "27",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 100,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_7",
+      "type": "rect",
+      "props": {
+        "x": 160,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "scale": 1,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_7",
+      "type": "text",
+      "props": {
+        "text": "31",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 160,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_8",
+      "type": "rect",
+      "props": {
+        "x": 220,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_8",
+      "type": "text",
+      "props": {
+        "text": "35",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 220,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_9",
+      "type": "rect",
+      "props": {
+        "x": 280,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "scale": 1,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_9",
+      "type": "text",
+      "props": {
+        "text": "37",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 280,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_10",
+      "type": "rect",
+      "props": {
+        "x": 340,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_10",
+      "type": "text",
+      "props": {
+        "text": "43",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 340,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_11",
+      "type": "rect",
+      "props": {
+        "x": 400,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_11",
+      "type": "text",
+      "props": {
+        "text": "47",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 400,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_12",
+      "type": "rect",
+      "props": {
+        "x": 460,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_12",
+      "type": "text",
+      "props": {
+        "text": "51",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 460,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_13",
+      "type": "rect",
+      "props": {
+        "x": 520,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_13",
+      "type": "text",
+      "props": {
+        "text": "55",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 520,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_14",
+      "type": "rect",
+      "props": {
+        "x": 580,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_14",
+      "type": "text",
+      "props": {
+        "text": "59",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 580,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "explain",
+      "type": "text",
+      "props": {
+        "text": "With every comparison, half disappears.",
+        "fontSize": 42,
+        "fontWeight": 600,
+        "fill": "#cbd5e1",
+        "x": 170,
+        "y": 90,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "code_panel",
+      "type": "rect",
+      "props": {
+        "x": 280,
+        "y": 30,
+        "width": 1260,
+        "height": 850,
+        "radius": 34,
+        "fill": "#111827",
+        "stroke": "#334155",
+        "lineWidth": 4,
+        "opacity": 0,
+        "zIndex": 40
+      }
+    },
+    {
+      "id": "snippet",
+      "type": "code",
+      "props": {
+        "code": "function binarySearch(list, target) {\n  let low = 0;\n  let high = list.length - 1;\n  while (low <= high) {\n    const middle = Math.floor((low + high) / 2);\n    if (list[middle] === target) return middle;\n    if (list[middle] < target) low = middle + 1;\n    else high = middle - 1;\n  }\n  return -1;\n}",
+        "fontSize": 38,
+        "fontFamily": "JetBrains Mono",
+        "fill": "#e2e8f0",
+        "x": 250,
+        "y": 20,
+        "opacity": 0,
+        "zIndex": 41
+      }
+    },
+    {
+      "id": "count_title",
+      "type": "text",
+      "props": {
+        "text": "15  →  7  →  3  →  1",
+        "fontSize": 96,
+        "fontWeight": 800,
+        "fill": "#60a5fa",
+        "x": 250,
+        "y": -80,
+        "opacity": 0,
+        "zIndex": 42
+      }
+    },
+    {
+      "id": "count_note",
+      "type": "text",
+      "props": {
+        "text": "logarithmic growth: O(log n)",
+        "fontSize": 48,
+        "fontWeight": 600,
+        "fill": "#f8fafc",
+        "x": 250,
+        "y": 60,
+        "opacity": 0,
+        "zIndex": 42
+      }
+    },
+    {
+      "id": "million",
+      "type": "text",
+      "props": {
+        "text": "1,000,000 items  ≈  20 comparisons",
+        "fontSize": 62,
+        "fontWeight": 800,
+        "fill": "#34d399",
+        "x": 250,
+        "y": 180,
+        "opacity": 0,
+        "zIndex": 43
+      }
+    },
+    {
+      "id": "condition",
+      "type": "text",
+      "props": {
+        "text": "precondition: the list must already be sorted",
+        "fontSize": 38,
+        "fontWeight": 500,
+        "fill": "#fbbf24",
+        "x": 250,
+        "y": 270,
+        "opacity": 0,
+        "zIndex": 43
+      }
+    },
+    {
+      "id": "core",
+      "type": "text",
+      "props": {
+        "text": "MIDDLE  →  COMPARE  →  ELIMINATE HALF",
+        "fontSize": 55,
+        "fontWeight": 800,
+        "fill": "#f8fafc",
+        "x": 250,
+        "y": -20,
+        "opacity": 0,
+        "zIndex": 44
+      }
+    },
+    {
+      "id": "core_note",
+      "type": "text",
+      "props": {
+        "text": "one small decision saves a great deal of work",
+        "fontSize": 40,
+        "fontWeight": 500,
+        "fill": "#93c5fd",
+        "x": 250,
+        "y": 85,
+        "opacity": 0,
+        "zIndex": 44
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "target": "ana",
+      "lipsync": "mouth"
+    },
+    {
+      "at": "intro.start",
+      "target": "title",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": {
+        "value": 0.7,
+        "min": 0.3
+      },
+      "easing": "easeOutCubic"
+    },
+    {
+      "at": "intro.start",
+      "target": "title",
+      "tween": {
+        "y": {
+          "to": -420
+        }
+      },
+      "dur": 0.8,
+      "easing": "spring"
+    },
+    {
+      "at": "intro.word:ideas",
+      "target": "subtitle",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.5
+    },
+    {
+      "at": "intro.word:visual",
+      "target": "ana",
+      "pose": "wave",
+      "dur": {
+        "value": 0.7,
+        "min": 0.35
+      },
+      "easing": "spring"
+    },
+    {
+      "at": "lista.start",
+      "target": "title",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.4
+    },
+    {
+      "at": "lista.start",
+      "target": "subtitle",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.4
+    },
+    {
+      "at": "lista.word:list",
+      "target": "target",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_0",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_0",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_1",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_1",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_2",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_2",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_3",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_3",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_4",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_4",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_5",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_5",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_6",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_6",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_7",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_7",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_8",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_8",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_9",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_9",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_10",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_10",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_11",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_11",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_12",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_12",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_13",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_13",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "box_14",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:sorted",
+      "target": "num_14",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:goal",
+      "target": "target",
+      "tween": {
+        "scale": {
+          "to": 1.12
+        }
+      },
+      "dur": 0.55,
+      "easing": "easeOutBack"
+    },
+    {
+      "at": "primeiro_meio.word:directly",
+      "target": "pointer",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.25
+    },
+    {
+      "at": "primeiro_meio.word:directly",
+      "target": "pointer_label",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.25
+    },
+    {
+      "at": "primeiro_meio.word:directly",
+      "target": "box_7",
+      "set": {
+        "fill": "#b45309"
+      }
+    },
+    {
+      "at": "primeiro_meio.word:directly",
+      "target": "box_7",
+      "tween": {
+        "scale": {
+          "to": 1.18
+        }
+      },
+      "dur": 0.55,
+      "easing": "easeOutBack"
+    },
+    {
+      "at": "primeiro_meio.word:directly",
+      "target": "ana",
+      "pose": "arm-front",
+      "dur": {
+        "value": 0.65,
+        "min": 0.3
+      },
+      "easing": "spring"
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "box_0",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "num_0",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "box_1",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "num_1",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "box_2",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "num_2",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "box_3",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "num_3",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "box_4",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "num_4",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "box_5",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "num_5",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "box_6",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "num_6",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "box_7",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:eliminate",
+      "target": "num_7",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:half",
+      "target": "explain",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.4
+    },
+    {
+      "at": "segundo_meio.word:center",
+      "target": "pointer",
+      "tween": {
+        "x": {
+          "to": 400
+        }
+      },
+      "dur": 0.65,
+      "easing": "easeOutBack"
+    },
+    {
+      "at": "segundo_meio.word:center",
+      "target": "pointer_label",
+      "tween": {
+        "x": {
+          "to": 400
+        }
+      },
+      "dur": 0.65,
+      "easing": "spring"
+    },
+    {
+      "at": "segundo_meio.word:center",
+      "target": "box_11",
+      "set": {
+        "fill": "#b45309"
+      }
+    },
+    {
+      "at": "segundo_meio.word:again",
+      "target": "ana",
+      "pose": "rest",
+      "dur": 0.5,
+      "easing": "spring"
+    },
+    {
+      "at": "descarta_direita.word:right",
+      "target": "box_11",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:right",
+      "target": "num_11",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:right",
+      "target": "box_12",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:right",
+      "target": "num_12",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:right",
+      "target": "box_13",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:right",
+      "target": "num_13",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:right",
+      "target": "box_14",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:right",
+      "target": "num_14",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:comparison",
+      "target": "pointer",
+      "tween": {
+        "x": {
+          "to": 280
+        }
+      },
+      "dur": 0.65,
+      "easing": "spring"
+    },
+    {
+      "at": "descarta_direita.word:comparison",
+      "target": "pointer_label",
+      "tween": {
+        "x": {
+          "to": 280
+        }
+      },
+      "dur": 0.65,
+      "easing": "spring"
+    },
+    {
+      "at": "encontra.word:found",
+      "target": "box_9",
+      "set": {
+        "fill": "#047857",
+        "stroke": "#34d399"
+      }
+    },
+    {
+      "at": "encontra.word:found",
+      "target": "box_9",
+      "tween": {
+        "scale": {
+          "to": 1.28
+        }
+      },
+      "dur": 0.65,
+      "easing": "easeOutBack"
+    },
+    {
+      "at": "encontra.word:found",
+      "target": "target",
+      "set": {
+        "text": "found: 37",
+        "fill": "#34d399"
+      }
+    },
+    {
+      "at": "encontra.word:value",
+      "target": "ana",
+      "pose": "wave",
+      "dur": 0.7,
+      "easing": "spring"
+    },
+    {
+      "at": "codigo_limites.word:code",
+      "target": "code_panel",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_limites.word:code",
+      "target": "snippet",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_limites.word:code",
+      "target": "snippet",
+      "select": {
+        "lines": [0, 4]
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_limites.word:boundaries",
+      "target": "snippet",
+      "select": {
+        "lines": [1, 2]
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_limites.word:while",
+      "target": "snippet",
+      "select": {
+        "lines": [3, 4]
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_limites.word:code",
+      "target": "ana",
+      "pose": "rest",
+      "dur": 0.55,
+      "easing": "spring"
+    },
+    {
+      "at": "codigo_ramos.word:equals",
+      "target": "snippet",
+      "select": {
+        "lines": [5, 5]
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_ramos.word:smaller",
+      "target": "snippet",
+      "select": {
+        "lines": [6, 6]
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_ramos.word:otherwise",
+      "target": "snippet",
+      "select": {
+        "lines": [7, 7]
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "complexidade.word:pattern",
+      "target": "snippet",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "complexidade.word:pattern",
+      "target": "count_title",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.5
+    },
+    {
+      "at": "complexidade.word:logarithm",
+      "target": "count_note",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "complexidade.word:finally",
+      "target": "ana",
+      "pose": "arm-front",
+      "dur": 0.65,
+      "easing": "spring"
+    },
+    {
+      "at": "milhao.word:million",
+      "target": "million",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.5
+    },
+    {
+      "at": "milhao.word:sorted",
+      "target": "condition",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "milhao.word:comparisons",
+      "target": "ana",
+      "pose": "wave",
+      "dur": 0.65,
+      "easing": "spring"
+    },
+    {
+      "at": "fecho.word:heart",
+      "target": "count_title",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.3
+    },
+    {
+      "at": "fecho.word:heart",
+      "target": "count_note",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.3
+    },
+    {
+      "at": "fecho.word:heart",
+      "target": "million",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.3
+    },
+    {
+      "at": "fecho.word:heart",
+      "target": "condition",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.3
+    },
+    {
+      "at": "fecho.word:heart",
+      "target": "core",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.5
+    },
+    {
+      "at": "fecho.word:decision",
+      "target": "core_note",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "fecho.word:work",
+      "target": "ana",
+      "pose": "rest",
+      "dur": 0.55,
+      "easing": "spring"
+    }
+  ]
+}
