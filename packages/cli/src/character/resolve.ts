@@ -8,6 +8,7 @@ import {
 } from '@fantoche-dev/document';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import {errorWithCause} from '../errors';
 
 export interface ResolvedCastAssets {
   characters: Record<string, {character: Character; art: CharacterArt}>;
@@ -83,8 +84,9 @@ function parseWith<T>(
   try {
     raw = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   } catch (error) {
-    throw new Error(
+    throw errorWithCause(
       `${label}: could not read ${filePath}: ${(error as Error).message}`,
+      error,
     );
   }
   const result = schema.safeParse(raw);

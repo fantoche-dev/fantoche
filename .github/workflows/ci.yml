@@ -81,18 +81,7 @@ jobs:
       - run: npx puppeteer browsers install chrome
       - run: npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
       - run: npx lerna run build --ignore @fantoche-dev/docs
-      # TEMP (drop after doc-first-slice goldens are committed, restoring the
-      # plain `npm run e2e:test`): direct vitest invocation with an explicit
-      # --update — flags don't survive the nested npm chain and vitest also
-      # reads GITHUB_ACTIONS. Only the new scene's files get committed, after
-      # verifying the rest came back byte-identical.
-      - run: npx vitest run --update
-        working-directory: packages/e2e
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: linux-goldens
-          path: packages/e2e/src/__image_snapshots__
+      - run: npm run e2e:test
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
