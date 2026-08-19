@@ -28,8 +28,20 @@
   byte-idênticos, 90,565 s, zero anchor warnings) e o original PT-BR virou o
   controle de segundo idioma (`packages/e2e/demo/north-star-pt-br/`).
   Detalhes e evidência no adendo english-first do roadmap.
-- **Próximo:** Parte F (re-spike automático, não bloqueante) ou P3. A troca da
-  voz pode ocorrer em paralelo sem alterar o runtime.
+- **Parte F (2026-08-19):** Task 25 completa — janelas de scoring iguais
+  verificadas por ffprobe, tracks ligados ao áudio por digest sha-256,
+  diagnósticos de alinhamento impressos, fixtures stand-in renomeadas com
+  proveniência. Task 26 tem seu candidato: `fantoche lipsync hold`, a camada
+  de timing independente de idioma. Sobre o draft inglês ela entrega 0
+  intervalos sub-0,100 s, 48/48 closures e as 63 pausas medidas — as mesmas
+  propriedades do track manual, automaticamente. **Falta a barra real:**
+  scoring cego ≥3 em todos os eixos PT-BR, que é passo do Daniel. ADR 0007
+  permanece de pé até lá.
+- **Também em 2026-08-19:** `fantoche doc check` passa a impor o piso do
+  `docs/content-quality.md` §2; fila de higiene fechada; auditoria do
+  docs-site concluída (a varredura de rebranding *não* deve ser executada).
+- **Próximo:** P3. A troca da voz pode ocorrer em paralelo sem alterar o
+  runtime.
 - **Bloqueio:** nenhum para código/P3; somente a declaração formal da Task 21
   manual aguarda a narração final com proveniência adequada.
 - **Última verificação:** 2026-08-19 — build dos 10 pacotes, 521 testes de
@@ -1387,18 +1399,19 @@ Daniel-manual items (unblock early): the 10–15 s slice narration (Task 23 —
 Recorded at the Part A checkpoint; none of it blocks a batch, and any item
 may ride along with whichever task touches its area:
 
-- `vitest run` (never bare `vitest`) in every script invocation, so nothing
-  can hang in watch mode.
-- An explicit, larger `test()` timeout (or a serialized suite) for the
-  comparator test that renders video — its default 5 s flaked once under
-  concurrent vitest; that flake is the recorded problem. Separately, a
-  timeout on the compare command's child processes (render/ffmpeg), so a
-  wedged run fails instead of hanging the terminal.
-- `scratch/` in `.prettierignore` — the format check should never see
-  scoring artifacts.
-- `test:smoke` wired into CI.
-- The docs-site audit, and the Revideo→Fantoche rebranding pass over the
-  documentation.
+- [x] `vitest run` (never bare `vitest`) in every script invocation, so
+  nothing can hang in watch mode. *(core, 2d and e2e were still bare.)*
+- [x] A timeout on the comparator's child processes (render/ffmpeg), so a
+  wedged run fails instead of hanging the terminal. `lipsync compare` now
+  takes `--timeout` (default 900 s) and fails the named step; the two tests
+  that reproduce a wedge no longer burn the suite's 5 s default each.
+- [x] `scratch/` in `.prettierignore`.
+- [x] `test:smoke` wired into CI — as its own job that also asserts the
+  scaffolded project is complete and carries no upstream scope names.
+- [x] The docs-site audit — **run, and its conclusion is not to run the
+  rebranding sweep**. See the audit in `docs/05-roadmap.md`: the tree is
+  unbuilt, unpublished upstream content that P5 rewrites, and a rename would
+  break 21 upstream asset URLs and misattribute the fork.
 
 ## Deferred — recorded, not in P2
 

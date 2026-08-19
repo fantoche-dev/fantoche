@@ -133,12 +133,41 @@ contributor work: [P2 good-first issue drafts](good-first-issues-p2.md).
 
 ## Open-source hygiene checklist (P0 unless noted)
 
-- [ ] MIT license, correct attribution chain (motion-canvas → revideo → us)
-- [ ] CODE_OF_CONDUCT, CONTRIBUTING with a contribution ladder
+Audited against the tree 2026-08-19; every box below was verified, not
+assumed.
+
+- [x] MIT license, correct attribution chain (motion-canvas → revideo → us) —
+      `LICENSE` carries all three copyrights; `README.md` states the chain and
+      preserves the upstream README at `docs/UPSTREAM-REVIDEO-README.md`
+- [x] CODE_OF_CONDUCT, CONTRIBUTING with a contribution ladder
       (cast/characters · docs · TS · C++)
-- [ ] Issue/PR templates; good-first-issue seeding (P1+)
-- [ ] ADRs public (this directory); roadmap public; decisions in the open
-- [ ] No telemetry, ever, in the OSS packages
-- [ ] Release automation (changesets or equivalent) (P1)
-- [ ] Docs site with runnable examples (P2+); cast library gallery (P5)
+- [x] Issue/PR templates; good-first-issue seeding (P1+) —
+      `.github/ISSUE_TEMPLATE`, `.github/PULL_REQUEST_TEMPLATE.md`, and
+      [P2 drafts](good-first-issues-p2.md)
+- [x] ADRs public (this directory); roadmap public; decisions in the open
+- [x] No telemetry, ever, in the OSS packages — enforced by CI's
+      `no-telemetry` guard, not only by policy
+- [x] Release automation (P1) — `lerna publish` on conventional commits, npm
+      OIDC trusted publishing, and a guard that fails the release when the
+      scaffolder's template pins drift from `lerna.json`
+- [ ] Docs site with runnable examples (P2+); cast library gallery (P5) — see
+      the docs-site audit below
 - [ ] Discord (or Zulip) once there is something to discuss (P2+)
+
+### Docs-site audit — 2026-08-19
+
+`packages/docs` is still Revideo's own documentation, verbatim: 535
+occurrences of the upstream name, an index that opens "Welcome to Revideo!"
+and states *Revideo's* fork attribution rather than ours, and 21 asset URLs
+pointing at upstream's S3 bucket. It is `--ignore`d in every CI job and in
+the publish workflow, so it is neither built, tested nor released.
+
+**The rebranding sweep recorded in the P2 hygiene queue is deliberately not
+run.** A find-and-replace over that tree would break the 21 upstream asset
+URLs, leave the pages documenting someone else's API under our name, and
+rewrite an attribution statement that is correct as upstream's and wrong as
+ours. The attribution that matters is at the repo root, and it is correct.
+
+The docs site is P5 work ("docs site, examples-first"), and it is a rewrite,
+not a rename. Until then it stays unbuilt and unpublished — which is the
+honest state for inherited content we have not adopted.
