@@ -1347,3 +1347,20 @@ may ride along with whichever task touches its area:
   retiming collisions fail loudly; only the *wording* is deferred.
 - **Under-damped / vector springs**, IK, and the visual binder + pivot gizmo
   (P3 editor v0, per design notes §1 and §3).
+- **Canonical `serializeDocument()` + validator-level id uniqueness +
+  round-trip property tests** (agent review, 2026-08-19). Legitimate, with
+  one tension to decide first: the repo's stance is that *user-owned* files
+  (doc.json, character.json) get formatting-preserving writes (`narration
+  align`, Task 12's bind rule), while *machine-owned* artifacts (`*.art.json`,
+  viseme tracks) are canonical. A canonical serializer must not silently
+  reformat user files. Natural slot: alongside Part C's Task 12 (bind is the
+  next writer) — with episodes-as-corpus round-trip tests once Task 23/21
+  produce episodes. Schema strictness already holds (`z.strictObject`
+  throughout); "meta as escape hatch" would loosen it and needs its own
+  decision.
+- **`applyPatch(doc, ops)` mínimo** (set/insert/remove by id, not generic
+  JSON-Patch) — the MCP/P5 enabler; not P2.
+- **`video` element + `fantoche import <gif>` transcode** (GIF→webm, alpha
+  preserved). PNG/static images are first-class today; animated GIF must
+  enter through the timed-media path or it violates pure `state(t)` — the
+  Revideo `Video` node is the infra. Cheap fast-follow after P2.
