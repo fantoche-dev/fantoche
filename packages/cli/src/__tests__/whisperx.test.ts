@@ -232,7 +232,7 @@ describe('WhisperX adapter', () => {
   test('converts captured PT-BR output into a valid track', async () => {
     const raw = JSON.parse(
       fs.readFileSync(
-        new URL('./fixtures/whisperx-pt-br-01.json', import.meta.url),
+        new URL('./fixtures/whisperx-scratch-01.json', import.meta.url),
         'utf8',
       ),
     );

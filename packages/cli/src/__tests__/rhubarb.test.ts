@@ -6,7 +6,7 @@ describe('Rhubarb adapter', () => {
   test('converts captured phonetic output into a valid viseme track', async () => {
     const raw = JSON.parse(
       fs.readFileSync(
-        new URL('./fixtures/rhubarb-pt-br-01.json', import.meta.url),
+        new URL('./fixtures/rhubarb-scratch-01.json', import.meta.url),
         'utf8',
       ),
     );

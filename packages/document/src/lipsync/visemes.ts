@@ -68,6 +68,22 @@ export const visemeTrackSchema = z
         'language must be a lowercase tag with an optional uppercase region, e.g. "pt" or "pt-BR"',
       )
       .optional(),
+    /**
+     * Lowercase sha-256 of the audio the track was derived from.
+     *
+     * Optional: tracks committed before this field existed must keep
+     * parsing. Where it is present it binds the track to audio by content
+     * rather than by path — a re-recorded WAV under the same name silently
+     * invalidates a track, and a blind comparison of two tracks against
+     * mismatched audio scores nothing at all.
+     */
+    audioSha256: z
+      .string()
+      .regex(
+        /^[0-9a-f]{64}$/,
+        'audioSha256 must be a lowercase hex sha-256 digest',
+      )
+      .optional(),
     /** Cue times are seconds from the start of `audio`, never frames. */
     cues: z
       .array(

@@ -219,3 +219,36 @@ describe('viseme track', () => {
     }
   });
 });
+
+describe('audio content binding', () => {
+  const base = {
+    version: VISEME_TRACK_VERSION,
+    engine: 'whisperx' as const,
+    audio: 'voice.wav',
+    language: 'en-US',
+    cues: [{t: 0, viseme: 'X' as const}],
+  };
+
+  test('accepts a track that records the sha-256 of its source audio', () => {
+    const parsed = visemeTrackSchema.parse({
+      ...base,
+      audioSha256: 'a'.repeat(64),
+    });
+    expect(parsed.audioSha256).toBe('a'.repeat(64));
+  });
+
+  test('stays valid without one, so committed tracks keep parsing', () => {
+    expect(visemeTrackSchema.parse(base).audioSha256).toBeUndefined();
+  });
+
+  test('refuses anything that is not a sha-256 digest', () => {
+    expect(
+      visemeTrackSchema.safeParse({...base, audioSha256: 'not-a-digest'})
+        .success,
+    ).toBe(false);
+    expect(
+      visemeTrackSchema.safeParse({...base, audioSha256: 'A'.repeat(64)})
+        .success,
+    ).toBe(false);
+  });
+});

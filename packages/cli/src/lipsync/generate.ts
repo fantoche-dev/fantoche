@@ -1,3 +1,4 @@
+import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
 import {errorWithCause} from '../errors';
@@ -20,6 +21,35 @@ function portableAudioPath(audio: string, out: string): string {
     .join('/');
 }
 
+/** Lowercase sha-256 of the source audio, so a track binds by content. */
+function sha256File(file: string): string {
+  return crypto
+    .createHash('sha256')
+    .update(fs.readFileSync(file))
+    .digest('hex');
+}
+
+/**
+ * The two numbers that caught the mid-spike alignment incident.
+ *
+ * A run that silently drops words still writes a plausible-looking track;
+ * the placed count and the largest silence between consecutive words are
+ * what make that visible without opening the JSON.
+ */
+function reportAlignmentDiagnostics(
+  words: readonly {start: number; end: number}[],
+): void {
+  console.log(`${words.length} words placed`);
+  if (words.length < 2) {
+    return;
+  }
+  let largest = 0;
+  for (let i = 1; i < words.length; i += 1) {
+    largest = Math.max(largest, words[i].start - words[i - 1].end);
+  }
+  console.log(`largest inter-word gap ${Math.round(largest * 1000) / 1000} s`);
+}
+
 function writeTrack(out: string, track: unknown): void {
   fs.mkdirSync(path.dirname(out), {recursive: true});
   fs.writeFileSync(out, `${JSON.stringify(track, null, 2)}\n`);
@@ -40,7 +70,7 @@ export async function generateRhubarbTrack(
     audio: portableAudioPath(wav, out),
     language: options.language,
   });
-  writeTrack(out, track);
+  writeTrack(out, {...track, audioSha256: sha256File(wav)});
 }
 
 /** Convert the stable output of scripts/align.py into spike arm B. */
@@ -66,9 +96,11 @@ export async function generateWhisperXTrack(
       error,
     );
   }
-  const track = charAlignmentToVisemes(normaliseWhisperXOutput(raw), {
+  const normalised = normaliseWhisperXOutput(raw);
+  reportAlignmentDiagnostics(normalised.words);
+  const track = charAlignmentToVisemes(normalised, {
     audio: portableAudioPath(audio, out),
     language: options.language,
   });
-  writeTrack(out, track);
+  writeTrack(out, {...track, audioSha256: sha256File(audio)});
 }

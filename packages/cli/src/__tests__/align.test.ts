@@ -7,7 +7,7 @@ import {
   type AlignmentResult,
   type AlignSegmentInput,
 } from '../narration/align';
-import alignment from './fixtures/whisperx-pt-br-01.json';
+import alignment from './fixtures/whisperx-scratch-01.json';
 
 const DOC = {
   version: '0.2',
