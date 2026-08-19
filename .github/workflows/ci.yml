@@ -81,9 +81,11 @@ jobs:
       - run: npx puppeteer browsers install chrome
       - run: npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
       - run: npx lerna run build --ignore @fantoche-dev/docs
-      - run: npm run e2e:test
-      # TEMP (drop after doc-character-poses goldens are committed): new
-      # scenes write their Linux goldens here on first run; ship them back.
+      # TEMP (drop after doc-character-poses goldens are committed, restoring
+      # the plain `npm run e2e:test`): with CI unset, vitest writes the new
+      # scene's missing Linux goldens instead of refusing; existing goldens
+      # are still compared exactly as before. The artifact ships them back.
+      - run: CI= npm run e2e:test
       - uses: actions/upload-artifact@v4
         if: always()
         with:

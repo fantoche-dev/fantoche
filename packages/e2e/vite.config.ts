@@ -14,6 +14,14 @@ const documentsDir = path.resolve(
 
 export default defineConfig({
   publicDir: documentsDir,
+  optimizeDeps: {
+    // project.ts imports the @fantoche-dev/document barrel (for the character
+    // schemas), whose only third-party dep is zod. Without pre-bundling it,
+    // vite discovers zod mid-run, re-optimizes, and the page 504s
+    // ("Outdated Optimize Dep") before `main` ever mounts — which is how the
+    // CI e2e job died the first time this import landed.
+    include: ['zod'],
+  },
   plugins: [
     motionCanvas.default({
       project: ['./tests/project.ts'],
