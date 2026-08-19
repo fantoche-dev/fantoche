@@ -81,18 +81,14 @@ jobs:
       - run: npx puppeteer browsers install chrome
       - run: npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
       - run: npx lerna run build --ignore @fantoche-dev/docs
-      # TEMP (drop after the doc-first-slice probe goldens are committed,
-      # restoring the plain `npm run e2e:test`): direct vitest --update as
-      # before; only new files get committed after the byte-identity check.
-      - run: npx vitest run --update
-        working-directory: packages/e2e
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: linux-goldens
-          path: packages/e2e/src/__image_snapshots__
+      - run: npm run e2e:test
       # Standalone-path smoke: the CLI render of the vertical-slice demo must
       # come out with an AAC audio stream (the /@fs→path fix stays honest).
+      # Unlike the e2e app, the renderer launches Chrome without
+      # --no-sandbox, so it needs the userns sandbox allowed (as the
+      # template job does).
+      - name: Allow Chrome user-namespace sandbox (ubuntu-24.04 AppArmor)
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
       - run: node packages/cli/dist/index.js render packages/e2e/demo/first-slice/demo.json --out first-slice.mp4 --out-dir /tmp/first-slice-smoke
       - run: |
           FFPROBE=$(node -p "require('@ffprobe-installer/ffprobe').path")

@@ -115,7 +115,7 @@ async function readOutputFiles() {
     }
     // First+mid is too thin for the vertical-slice demo: its point is
     // specific beats, so those beats get deterministic probes (30 fps).
-    for (const probe of PROBE_FRAMES[file] ?? []) {
+    for (const probe of PROBE_FRAMES.get(file) ?? []) {
       if (probe < frames.length) {
         images.push({
           name: `${file}-f${probe}`,
@@ -129,9 +129,9 @@ async function readOutputFiles() {
   return images;
 }
 
-const PROBE_FRAMES: Record<string, number[]> = {
+const PROBE_FRAMES = new Map<string, number[]>([
   // 0.8s pressed A on "pessoal"; 3.6s open-with-teeth C mid "binária" with
   // wave + crossed arm; 7.2s pressed A on "meio", arm still in front;
   // 9.5s back at rest pose with the arm behind again.
-  'doc-first-slice': [24, 108, 216, 285],
-};
+  ['doc-first-slice', [24, 108, 216, 285]],
+]);
