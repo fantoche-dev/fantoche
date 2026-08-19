@@ -149,7 +149,7 @@ export function charAlignmentToVisemes(
   }
   if (!/^[a-z]{2}(-[A-Z]{2})?$/.test(options.language)) {
     throw new Error(
-      `WhisperX track language must look like "pt" or "pt-BR" (got "${options.language}")`,
+      `WhisperX track language must look like "en" or "en-US" (got "${options.language}")`,
     );
   }
 

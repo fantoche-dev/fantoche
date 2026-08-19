@@ -87,7 +87,7 @@ narration
   )
   .argument('<doc.json>', 'Document whose narration to align')
   .requiredOption('--audio <wav>', 'Narration audio file')
-  .requiredOption('--language <tag>', 'Language tag, e.g. pt-BR')
+  .requiredOption('--language <tag>', 'Language tag, e.g. en-US')
   .option('--python <path>', 'Python with whisperx (default: $WHISPERX_PYTHON)')
   .option('--model-dir <dir>', 'Model cache (default: $WHISPERX_MODEL_DIR)')
   .option('--script <path>', 'Override the bundled scripts/align.py')

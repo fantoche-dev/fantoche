@@ -54,7 +54,16 @@ export const PT_VISEME_MAP: OrthographicVisemeMap = {
   z: 'B',
 };
 
-/** English grapheme approximation used as the control arm. */
+/**
+ * English grapheme approximation. Originally the spike's shallow control arm;
+ * since the 2026-08-19 English-first content decision it is the primary
+ * content language's map and carries its own contextual rules in the matcher
+ * (consonant digraphs, double letters, silent word-initial k/w, silent final
+ * e). Post-spike additions improve draft quality only: they change no scored
+ * result and do not revise ADR 0007 — the shipping path stays manual review.
+ * `qu` is deliberately absent: unlike PT que/qui, the English u is a spoken
+ * /w/ with visible rounding, so q and u keep separate mouths.
+ */
 export const EN_VISEME_MAP: OrthographicVisemeMap = {
   a: 'D',
   b: 'A',
@@ -92,6 +101,25 @@ const PT_DIGRAPH_MAP: Readonly<Record<string, Viseme>> = {
   ss: 'B',
 };
 
+const EN_DIGRAPH_MAP: Readonly<Record<string, Viseme>> = {
+  ch: 'B',
+  ck: 'B',
+  ee: 'B',
+  oo: 'F',
+  ph: 'G',
+  sh: 'B',
+  th: 'B',
+  wh: 'F',
+};
+
+/** Word-initial spellings whose first letter is silent: the mouth is the second's. */
+const EN_SILENT_INITIAL_MAP: Readonly<Record<string, Viseme>> = {
+  kn: 'B',
+  wr: 'E',
+};
+
+const EN_VOWELS = new Set(['a', 'e', 'i', 'o', 'u']);
+
 const PT_VOWELS = new Set([
   'a',
   'á',
@@ -127,6 +155,46 @@ function withoutAccent(grapheme: string): string {
   return normalise(grapheme)
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
+}
+
+function isBareLetter(grapheme: string): boolean {
+  return /^[a-z]$/.test(grapheme);
+}
+
+/**
+ * Whether aligned entries `index` and `index + 1` sit inside one spoken word:
+ * temporally joined and both letters. A timed space or punctuation entry is a
+ * boundary even when the alignment left no temporal gap around it.
+ */
+function joinsWithinWord(
+  graphemes: readonly string[],
+  index: number,
+  joinsNext?: readonly boolean[],
+): boolean {
+  if (index < 0 || index + 1 >= graphemes.length) {
+    return false;
+  }
+  if (joinsNext !== undefined && joinsNext[index] !== true) {
+    return false;
+  }
+  return (
+    isBareLetter(withoutAccent(graphemes[index])) &&
+    isBareLetter(withoutAccent(graphemes[index + 1]))
+  );
+}
+
+function hasEarlierVowelInWord(
+  graphemes: readonly string[],
+  index: number,
+  joinsNext?: readonly boolean[],
+): boolean {
+  for (let i = index; joinsWithinWord(graphemes, i - 1, joinsNext); i -= 1) {
+    const grapheme = withoutAccent(graphemes[i - 1]);
+    if (EN_VOWELS.has(grapheme) || grapheme === 'y') {
+      return true;
+    }
+  }
+  return false;
 }
 
 function isNasalSpelling(
@@ -181,7 +249,34 @@ export function matchGraphemeToViseme(
   const baseLanguage = language.split('-')[0].toLowerCase();
   const current = normalise(graphemes[index]);
   if (baseLanguage === 'en') {
-    return {consumed: 1, viseme: EN_VISEME_MAP[withoutAccent(current)]};
+    const base = withoutAccent(current);
+    const next = withoutAccent(graphemes[index + 1] ?? '');
+    const pair = `${base}${next}`;
+    if (joinsWithinWord(graphemes, index, joinsNext)) {
+      if (!joinsWithinWord(graphemes, index - 1, joinsNext)) {
+        const initial = EN_SILENT_INITIAL_MAP[pair];
+        if (initial !== undefined) {
+          return {consumed: 2, viseme: initial};
+        }
+      }
+      const digraph = EN_DIGRAPH_MAP[pair];
+      if (digraph !== undefined) {
+        return {consumed: 2, viseme: digraph};
+      }
+      // A doubled consonant letter is one sound; two cues would strobe.
+      if (base === next && !EN_VOWELS.has(base)) {
+        return {consumed: 2, viseme: EN_VISEME_MAP[base]};
+      }
+    }
+    // Word-final silent e (time, style) — but not a lone-vowel e (she, be).
+    if (
+      base === 'e' &&
+      !joinsWithinWord(graphemes, index, joinsNext) &&
+      hasEarlierVowelInWord(graphemes, index, joinsNext)
+    ) {
+      return {consumed: 1};
+    }
+    return {consumed: 1, viseme: EN_VISEME_MAP[base]};
   }
   if (baseLanguage !== 'pt') {
     throw new Error(`No grapheme→viseme map for language "${language}"`);

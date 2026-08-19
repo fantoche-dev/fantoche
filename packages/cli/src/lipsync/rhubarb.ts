@@ -95,7 +95,7 @@ export function parseRhubarbOutput(
     !/^[a-z]{2}(-[A-Z]{2})?$/.test(options.language)
   ) {
     throw new Error(
-      `Rhubarb track language must look like "pt" or "pt-BR" (got "${options.language}")`,
+      `Rhubarb track language must look like "en" or "en-US" (got "${options.language}")`,
     );
   }
 

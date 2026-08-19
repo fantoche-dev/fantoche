@@ -62,6 +62,86 @@ describe('WhisperX grapheme map', () => {
   });
 });
 
+describe('English contextual matching', () => {
+  test('longest-matches English consonant digraphs', () => {
+    for (const [word, index, viseme] of [
+      ['this', 0, 'B'],
+      ['shape', 0, 'B'],
+      ['check', 0, 'B'],
+      ['check', 3, 'B'],
+      ['graph', 3, 'G'],
+      ['while', 0, 'F'],
+    ] as const) {
+      expect(matchGraphemeToViseme([...word], index, 'en-US')).toEqual({
+        consumed: 2,
+        viseme,
+      });
+    }
+  });
+
+  test('double vowels take one mouth: ee stays clenched, oo puckers', () => {
+    expect(matchGraphemeToViseme([...'see'], 1, 'en-US')).toEqual({
+      consumed: 2,
+      viseme: 'B',
+    });
+    expect(matchGraphemeToViseme([...'look'], 1, 'en-US')).toEqual({
+      consumed: 2,
+      viseme: 'F',
+    });
+  });
+
+  test('identical consonant pairs collapse to a single cue', () => {
+    expect(matchGraphemeToViseme([...'small'], 3, 'en-US')).toEqual({
+      consumed: 2,
+      viseme: 'H',
+    });
+    // A doubled bilabial still closes: one pressed A, not two cues.
+    expect(matchGraphemeToViseme([...'happen'], 2, 'en-US')).toEqual({
+      consumed: 2,
+      viseme: 'A',
+    });
+  });
+
+  test('word-final silent e gives no cue once the word has a vowel', () => {
+    expect(matchGraphemeToViseme([...'time'], 3, 'en-US')).toEqual({
+      consumed: 1,
+    });
+    expect(matchGraphemeToViseme([...'style'], 4, 'en-US')).toEqual({
+      consumed: 1,
+    });
+    // In "she" the e is the only vowel — it is spoken and stays visible.
+    expect(matchGraphemeToViseme([...'she'], 2, 'en-US')).toEqual({
+      consumed: 1,
+      viseme: 'C',
+    });
+  });
+
+  test('word-initial kn and wr drop the silent letter', () => {
+    expect(matchGraphemeToViseme([...'know'], 0, 'en-US')).toEqual({
+      consumed: 2,
+      viseme: 'B',
+    });
+    expect(matchGraphemeToViseme([...'write'], 0, 'en-US')).toEqual({
+      consumed: 2,
+      viseme: 'E',
+    });
+    // Mid-word kn is two spoken consonants (weekend → k, n).
+    expect(matchGraphemeToViseme([...'weekend'], 3, 'en-US')).toEqual({
+      consumed: 1,
+      viseme: 'B',
+    });
+  });
+
+  test('does not form th across a word boundary', () => {
+    const graphemes = [...'nothere'];
+    const joinsNext = [true, true, false, true, true, true];
+    expect(matchGraphemeToViseme(graphemes, 2, 'en-US', joinsNext)).toEqual({
+      consumed: 1,
+      viseme: 'B',
+    });
+  });
+});
+
 describe('WhisperX adapter', () => {
   test('collapses runs and inserts rest for gaps of at least 120ms', () => {
     const track = charAlignmentToVisemes(
@@ -106,6 +186,25 @@ describe('WhisperX adapter', () => {
       {t: 0.45, viseme: 'B'},
       {t: 0.5, viseme: 'E'},
       {t: 0.6, viseme: 'X'},
+    ]);
+  });
+
+  test('applies contextual EN units without false th or silent-e mouths', () => {
+    const chars = [...'the time'].map((char, index) => ({
+      char,
+      start: Number((index * 0.05).toFixed(2)),
+      end: Number(((index + 1) * 0.05).toFixed(2)),
+    }));
+    const track = charAlignmentToVisemes(
+      {words: [], chars},
+      {language: 'en-US', audio: 'x.wav'},
+    );
+    expect(track.cues).toEqual([
+      {t: 0, viseme: 'B'},
+      {t: 0.1, viseme: 'C'},
+      {t: 0.2, viseme: 'B'},
+      {t: 0.3, viseme: 'A'},
+      {t: 0.35, viseme: 'X'},
     ]);
   });
 
