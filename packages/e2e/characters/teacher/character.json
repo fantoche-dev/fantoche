@@ -20,7 +20,13 @@
   },
   "poses": {
     "wave": {"arm-l.rotation": 50, "hand-l.rotation": 20},
-    "arm-front": {"arm-r.rotation": -100, "arm-r.depth": 10}
+    "arm-front": {"arm-r.rotation": -100, "arm-r.depth": 10},
+    "rest": {
+      "arm-l.rotation": 0,
+      "hand-l.rotation": 0,
+      "arm-r.rotation": 0,
+      "arm-r.depth": -5
+    }
   },
   "visemes": {
     "A": "mouth-a",

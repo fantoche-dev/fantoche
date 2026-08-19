@@ -1,0 +1,157 @@
+{
+  "version": "0.2",
+  "meta": {
+    "fps": 30,
+    "size": [320, 320],
+    "background": "#ffffff",
+    "duration": 10
+  },
+  "assets": {
+    "teacher": {
+      "type": "character",
+      "src": "../../characters/teacher/character.json"
+    },
+    "voice": {"type": "audio", "src": "narration.wav", "dur": 9.64},
+    "mouth": {"type": "lipsync", "src": "mouth.viseme.json"}
+  },
+  "narration": {
+    "audio": "voice",
+    "segments": [
+      {
+        "id": "intro",
+        "text": "Bom dia, pessoal.",
+        "start": 0,
+        "dur": 1.6,
+        "words": [
+          {"text": "bom", "start": 0.12, "dur": 0.12},
+          {"text": "dia", "start": 0.321, "dur": 0.24},
+          {"text": "pessoal", "start": 0.742, "dur": 0.821}
+        ]
+      },
+      {
+        "id": "corpo",
+        "text": "Hoje vamos falar de busca binária, com um exemplo bem simples.",
+        "start": 1.9,
+        "dur": 3.9,
+        "words": [
+          {
+            "text": "hoje",
+            "start": 1.563,
+            "dur": 0.141
+          },
+          {
+            "text": "vamos",
+            "start": 1.744,
+            "dur": 0.22
+          },
+          {
+            "text": "falar",
+            "start": 2.004,
+            "dur": 0.321
+          },
+          {
+            "text": "de",
+            "start": 2.425,
+            "dur": 0.1
+          },
+          {
+            "text": "busca",
+            "start": 2.625,
+            "dur": 0.321
+          },
+          {
+            "text": "binária",
+            "start": 3.006,
+            "dur": 1.343
+          },
+          {
+            "text": "com",
+            "start": 4.67,
+            "dur": 0.1
+          },
+          {
+            "text": "um",
+            "start": 4.79,
+            "dur": 0.04
+          },
+          {
+            "text": "exemplo",
+            "start": 4.85,
+            "dur": 0.341
+          },
+          {
+            "text": "bem",
+            "start": 5.231,
+            "dur": 0.14
+          },
+          {
+            "text": "simples",
+            "start": 5.431,
+            "dur": 1.143
+          }
+        ]
+      },
+      {
+        "id": "fecho",
+        "text": "Você olha o meio, compara, e descarta metade.",
+        "start": 6.5,
+        "dur": 3.14,
+        "words": [
+          {
+            "text": "você",
+            "start": 6.574,
+            "dur": 0.24
+          },
+          {
+            "text": "olha",
+            "start": 6.894,
+            "dur": 0.121
+          },
+          {
+            "text": "o",
+            "start": 7.035,
+            "dur": 0.02
+          },
+          {
+            "text": "meio",
+            "start": 7.115,
+            "dur": 0.32
+          },
+          {
+            "text": "compara",
+            "start": 7.736,
+            "dur": 0.541
+          },
+          {
+            "text": "e",
+            "start": 8.518,
+            "dur": 0.04
+          },
+          {
+            "text": "descarta",
+            "start": 8.578,
+            "dur": 0.501
+          },
+          {
+            "text": "metade",
+            "start": 9.119,
+            "dur": 0.521
+          }
+        ]
+      }
+    ]
+  },
+  "cast": {"ana": {"character": "teacher", "y": 10, "scale": 0.55}},
+  "elements": [],
+  "timeline": [
+    {"at": "corpo.word:vamos", "target": "ana", "pose": "wave", "dur": 0.5},
+    {
+      "at": "corpo.word:binária",
+      "target": "ana",
+      "pose": "arm-front",
+      "dur": 0.5
+    },
+    {"at": "fecho.word:descarta", "target": "ana", "pose": "rest", "dur": 0.4},
+    {"target": "ana", "lipsync": "mouth"}
+  ]
+}

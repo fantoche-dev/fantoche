@@ -1,11 +1,17 @@
 import {Color, makeProject, Vector2} from '@fantoche-dev/core';
 
-import {characterArtSchema, characterSchema} from '@fantoche-dev/document';
+import {
+  characterArtSchema,
+  characterSchema,
+  visemeTrackSchema,
+} from '@fantoche-dev/document';
 import {makeDocumentScene} from '@fantoche-dev/document/scene';
 import './fonts.css';
 
 import teacherCharacterRaw from '../characters/teacher/character.json';
 import teacherArtRaw from '../characters/teacher/teacher.art.json';
+import firstSliceDoc from '../demo/first-slice/demo.json';
+import firstSliceMouthRaw from '../demo/first-slice/mouth.viseme.json';
 import anchorsNarrationDoc from '../documents/anchors-narration.json';
 import blockEscapeDoc from '../documents/block-escape.json';
 import characterPosesDoc from '../documents/character-poses.json';
@@ -33,6 +39,9 @@ const characters = {
     art: characterArtSchema.parse(teacherArtRaw),
   },
 };
+const lipsync = {
+  mouth: visemeTrackSchema.parse(firstSliceMouthRaw),
+};
 
 export default makeProject({
   name: 'project',
@@ -51,6 +60,7 @@ export default makeProject({
     makeDocumentScene('doc-block-escape', blockEscapeDoc, {blocks}),
     makeDocumentScene('doc-gate', gateDoc, {blocks}),
     makeDocumentScene('doc-character-poses', characterPosesDoc, {characters}),
+    makeDocumentScene('doc-first-slice', firstSliceDoc, {characters, lipsync}),
   ],
   settings: {
     shared: {

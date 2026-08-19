@@ -49,6 +49,7 @@ describe('Rendering', () => {
       'doc-code-diff',
       'doc-gate',
       'doc-character-poses',
+      'doc-first-slice',
     ];
     const rendered = images.map(image => image.name);
     for (const scene of expectedScenes) {
