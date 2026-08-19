@@ -9,7 +9,14 @@ export type AudioCodec = 'aac' | 'libopus';
 
 export function resolvePath(output: string, assetPath: string) {
   let resolvedPath: string;
-  if (
+  if (assetPath.startsWith('/@fs/')) {
+    // `fantoche render` exposes document-relative assets to Vite through its
+    // filesystem URL. Audio is consumed later by server-side FFmpeg, which
+    // needs the original path rather than that browser URL.
+    resolvedPath = path.normalize(
+      decodeURIComponent(assetPath.slice('/@fs/'.length)),
+    );
+  } else if (
     assetPath.startsWith('http://') ||
     assetPath.startsWith('https://') ||
     assetPath.startsWith('data:')
