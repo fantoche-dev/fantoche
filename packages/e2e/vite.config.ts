@@ -15,11 +15,15 @@ const documentsDir = path.resolve(
 export default defineConfig({
   publicDir: documentsDir,
   optimizeDeps: {
-    // project.ts imports the @fantoche-dev/document barrel (for the character
-    // schemas), whose only third-party dep is zod. Without pre-bundling it,
-    // vite discovers zod mid-run, re-optimizes, and the page 504s
-    // ("Outdated Optimize Dep") before `main` ever mounts — which is how the
-    // CI e2e job died the first time this import landed.
+    // The plugin loads project.ts dynamically, so vite's startup crawl never
+    // sees it: its deps used to be discovered on demand, in the first
+    // optimize wave. When the project gained the @fantoche-dev/document
+    // barrel import (character schemas → zod), that discovery slipped into a
+    // SECOND wave — "optimized dependencies changed. reloading", 504
+    // "Outdated Optimize Dep", and a page that never mounts `main` on a cold
+    // CI start. Crawling the project at startup keeps every dep in wave one;
+    // zod stays pinned as the barrel's only third-party dep.
+    entries: [path.resolve(path.dirname(documentsDir), 'tests/project.ts')],
     include: ['zod'],
   },
   plugins: [
