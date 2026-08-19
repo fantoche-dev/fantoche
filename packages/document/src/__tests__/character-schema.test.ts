@@ -5,12 +5,14 @@ import {VISEMES} from '../lipsync/visemes.js';
 const minimal = {
   version: '0.1',
   id: 'teacher',
-  art: {src: 'teacher.svg'},
+  art: {src: 'teacher.art.json'},
   slots: {
     torso: {element: 'torso'},
-    'arm-l': {element: 'arm_x5F_l', parent: 'torso', pivot: [122, 101]},
+    ['arm-l']: {element: 'arm_x5F_l', parent: 'torso', pivot: [122, 101]},
   },
-  poses: {wave: {'arm-l.rotation': -30, 'arm-l.depth': 10}},
+  poses: {
+    wave: {['arm-l.rotation']: -30, ['arm-l.depth']: 10},
+  },
 };
 
 const clone = () => structuredClone(minimal) as Record<string, any>;
@@ -65,7 +67,7 @@ describe('characterSchema', () => {
 
   test('rejects a pose key naming an unknown slot', () => {
     const doc = clone();
-    doc.poses.wave = {'leg-r.rotation': 10};
+    doc.poses.wave = {['leg-r.rotation']: 10};
     const result = characterSchema.safeParse(doc);
     expect(result.success).toBe(false);
     if (!result.success) {
@@ -75,7 +77,7 @@ describe('characterSchema', () => {
 
   test('rejects a pose key naming an unknown param', () => {
     const doc = clone();
-    doc.poses.wave = {'arm-l.skew': 10};
+    doc.poses.wave = {['arm-l.skew']: 10};
     const result = characterSchema.safeParse(doc);
     expect(result.success).toBe(false);
     if (!result.success) {
@@ -97,7 +99,7 @@ describe('characterSchema', () => {
     expect(result.success).toBe(true);
 
     const partial = clone();
-    partial.visemes = {A: 'mouth-a'};
+    partial.visemes = {['A']: 'mouth-a'};
     expect(characterSchema.safeParse(partial).success).toBe(false);
   });
 

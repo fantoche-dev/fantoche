@@ -10,16 +10,12 @@ export class MigrationError extends Error {
 type RawDocument = Record<string, unknown>;
 type Migration = {to: string; migrate: (doc: RawDocument) => RawDocument};
 
-/**
- * Version-keyed migration chain. When format 0.2 lands, register
- * `'0.1': {to: '0.2', migrate: doc => ({...})}` here — documents are walked
- * version by version until they reach DOCUMENT_FORMAT_VERSION.
- */
+/** Version-keyed chain walked until the current document format is reached. */
 const MIGRATIONS: Record<string, Migration> = {
   // 0.2 only adds optional cast data and timeline item variants. Keeping the
   // hop as an identity preserves authored 0.1 JSON byte-for-byte apart from
   // the version written by the migration loop.
-  '0.1': {to: '0.2', migrate: doc => doc},
+  ['0.1']: {to: '0.2', migrate: doc => doc},
 };
 
 export interface MigrateResult {

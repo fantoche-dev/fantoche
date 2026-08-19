@@ -10,7 +10,7 @@ const ART = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
 describe('splitArt', () => {
   test('extracts one sub-svg per slot, pivot-centred', () => {
     const out = splitArt(ART, {
-      'arm-l': {element: 'arm_x5F_l', pivot: [122, 101]},
+      ['arm-l']: {element: 'arm_x5F_l', pivot: [122, 101]},
     });
     const box = /viewBox="([^"]+)"/
       .exec(out.slots['arm-l'])![1]
@@ -26,22 +26,28 @@ describe('splitArt', () => {
 
   test('reads pivot markers and strips them from the output', () => {
     const out = splitArt(ART, {
-      'arm-l': {element: 'arm_x5F_l', pivot: 'center'},
+      ['arm-l']: {element: 'arm_x5F_l', pivot: 'center'},
     });
     expect(out.pivots['arm-l']).toEqual([122, 101]); // marker wins over preset
     expect(out.slots['arm-l']).not.toContain('pivot-arm-l'); // marker never renders
   });
 
   test('reports orphans and misses instead of throwing', () => {
-    const out = splitArt(ART, {'arm-r': {element: 'nope', pivot: 'center'}});
+    const out = splitArt(ART, {
+      ['arm-r']: {element: 'nope', pivot: 'center'},
+    });
     expect(out.missing).toEqual(['arm-r']);
     expect(out.orphans).toContain('torso');
   });
 
   test('is deterministic', () => {
-    const a = splitArt(ART, {'arm-l': {element: 'arm_x5F_l', pivot: 'center'}});
+    const a = splitArt(ART, {
+      ['arm-l']: {element: 'arm_x5F_l', pivot: 'center'},
+    });
     expect(a).toEqual(
-      splitArt(ART, {'arm-l': {element: 'arm_x5F_l', pivot: 'center'}}),
+      splitArt(ART, {
+        ['arm-l']: {element: 'arm_x5F_l', pivot: 'center'},
+      }),
     );
   });
 

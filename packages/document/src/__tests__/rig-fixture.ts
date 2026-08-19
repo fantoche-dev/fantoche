@@ -15,7 +15,7 @@ export const rigCharacter = characterSchema.parse({
     },
     hand: {element: 'hand', parent: 'arm', pivot: [180, 90]},
   },
-  poses: {wave: {'arm.rotation': 90, 'arm.depth': 10}},
+  poses: {wave: {['arm.rotation']: 90, ['arm.depth']: 10}},
 });
 
 export const rigArt = characterArtSchema.parse({

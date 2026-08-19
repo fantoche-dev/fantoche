@@ -11,14 +11,16 @@ const character = characterSchema.parse({
   art: {src: 'teacher.art.json'},
   slots: {
     torso: {element: 'torso', pivot: [100, 100]},
-    'arm-l': {
+    ['arm-l']: {
       element: 'arm_x5F_l',
       parent: 'torso',
       pivot: [140, 90],
       rest: {depth: -1},
     },
   },
-  poses: {wave: {'arm-l.rotation': -30, 'arm-l.depth': 10}},
+  poses: {
+    wave: {['arm-l.rotation']: -30, ['arm-l.depth']: 10},
+  },
 });
 
 const art = characterArtSchema.parse({
@@ -26,9 +28,10 @@ const art = characterArtSchema.parse({
   centre: [100, 100],
   slots: {
     torso: '<svg viewBox="80 80 40 40"><rect width="40" height="40"/></svg>',
-    'arm-l': '<svg viewBox="120 80 40 20"><rect width="40" height="20"/></svg>',
+    ['arm-l']:
+      '<svg viewBox="120 80 40 20"><rect width="40" height="20"/></svg>',
   },
-  pivots: {torso: [100, 100], 'arm-l': [140, 90]},
+  pivots: {torso: [100, 100], ['arm-l']: [140, 90]},
 });
 
 const options = {characters: {teacher: {character, art}}};

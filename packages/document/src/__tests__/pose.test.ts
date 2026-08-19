@@ -3,13 +3,13 @@ import {composeRig} from '../character/pose.js';
 
 const RIG = {
   torso: {parent: null, rest: [100, 100] as const},
-  'arm-l': {parent: 'torso', rest: [140, 90] as const},
+  ['arm-l']: {parent: 'torso', rest: [140, 90] as const},
   hand: {parent: 'arm-l', rest: [180, 90] as const},
 };
 
 describe('composeRig', () => {
   test('composes FK: rotating a parent carries children along an arc', () => {
-    const out = composeRig(RIG, {'arm-l': {rotation: 90}});
+    const out = composeRig(RIG, {['arm-l']: {rotation: 90}});
     expect(out.hand.x).toBeCloseTo(140, 6);
     expect(out.hand.y).toBeCloseTo(130, 6);
     expect(out.hand.rotation).toBeCloseTo(90, 6);
@@ -17,7 +17,7 @@ describe('composeRig', () => {
 
   test('keeps limb length under rotation', () => {
     const rest = composeRig(RIG, {});
-    const bent = composeRig(RIG, {'arm-l': {rotation: 37}});
+    const bent = composeRig(RIG, {['arm-l']: {rotation: 37}});
     const len = (a: {x: number; y: number}, b: {x: number; y: number}) =>
       Math.hypot(a.x - b.x, a.y - b.y);
     expect(len(bent['arm-l'], bent.hand)).toBeCloseTo(
@@ -29,7 +29,7 @@ describe('composeRig', () => {
   test('multiplies uniform scale down the chain and stays shear-free', () => {
     const out = composeRig(RIG, {
       torso: {scale: 2},
-      'arm-l': {scale: 1.5},
+      ['arm-l']: {scale: 1.5},
     });
     expect(out.hand.scale).toBeCloseTo(3, 6);
   });
