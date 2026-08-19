@@ -13,7 +13,7 @@ function compile(raw: unknown): TimelineIR {
 }
 
 const base = {
-  version: '0.1',
+  version: '0.2',
   meta: {fps: 30, size: [640, 360]},
   elements: [{id: 'a', type: 'rect', props: {x: 0, width: 10, height: 10}}],
 };
@@ -156,7 +156,7 @@ describe('duration bound (batch C review C3/I6)', () => {
 
   test('explicit meta.duration ceils fractional frames', () => {
     const ir = compile({
-      version: '0.1',
+      version: '0.2',
       meta: {fps: 30, size: [640, 360], duration: 1.001},
       elements: [],
       timeline: [],
@@ -168,7 +168,7 @@ describe('duration bound (batch C review C3/I6)', () => {
 describe('IR ownership (batch C review I2)', () => {
   test('evaluated arrays are fresh objects, never IR references', () => {
     const ir = compile({
-      version: '0.1',
+      version: '0.2',
       meta: {fps: 30, size: [640, 360]},
       elements: [
         {

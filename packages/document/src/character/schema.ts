@@ -51,6 +51,7 @@ export const characterSchema = z
   .strictObject({
     version: z.literal(CHARACTER_FORMAT_VERSION),
     id: idSchema,
+    /** Path to the generated, render-ready `*.art.json` sidecar. */
     art: z.strictObject({src: z.string().min(1)}),
     slots: z.record(idSchema, slotSchema),
     poses: z.record(idSchema, z.record(z.string().min(1), z.number().finite())),

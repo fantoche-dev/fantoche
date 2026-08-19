@@ -14,6 +14,16 @@ const base = {
 } as const;
 
 describe('viseme track', () => {
+  test('accepts manual tracks as the ADR 0007 shipping path', () => {
+    expect(
+      visemeTrackSchema.safeParse({
+        ...base,
+        engine: 'manual',
+        cues: [{t: 0, viseme: 'X'}],
+      }).success,
+    ).toBe(true);
+  });
+
   test('accepts the Preston-Blair alphabet and rejects strays', () => {
     expect(VISEMES).toEqual(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'X']);
     const ok = visemeTrackSchema.safeParse({

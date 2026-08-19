@@ -13,7 +13,7 @@ function compile(raw: unknown): TimelineIR {
 }
 
 const doc = {
-  version: '0.1',
+  version: '0.2',
   meta: {fps: 30, size: [640, 360], duration: 10},
   elements: [
     {
@@ -121,7 +121,7 @@ describe('evaluate', () => {
         });
       }
       return compile({
-        version: '0.1',
+        version: '0.2',
         meta: {fps: 30, size: [640, 360]},
         elements: [
           {id: 'a', type: 'rect', props: {x: 0, width: 10, height: 10}},

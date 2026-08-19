@@ -46,7 +46,7 @@ export const visemeTrackSchema = z
   .strictObject({
     version: z.literal(VISEME_TRACK_VERSION),
     /** Which arm produced this — recorded so tracks stay attributable. */
-    engine: z.enum(['rhubarb', 'whisperx']),
+    engine: z.enum(['rhubarb', 'whisperx', 'manual']),
     /**
      * Where the audio the track was derived from lives. The consumer
      * resolves it relative to the track file; an absolute path is accepted

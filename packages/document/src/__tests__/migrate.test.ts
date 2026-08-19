@@ -12,6 +12,14 @@ const current = {
 };
 
 describe('migrateDocument', () => {
+  test('migrates 0.1 to 0.2 through the identity hop', () => {
+    const legacy = {...current, version: '0.1'};
+    const {doc, applied} = migrateDocument(legacy);
+    expect(applied).toEqual(['0.1→0.2']);
+    expect(doc).toEqual({...legacy, version: '0.2'});
+    expect(validateDocument(doc).ok).toBe(true);
+  });
+
   test('current version passes through untouched', () => {
     const {doc, applied} = migrateDocument(current);
     expect(applied).toEqual([]);

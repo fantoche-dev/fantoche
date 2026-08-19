@@ -15,7 +15,7 @@ function compile(raw: unknown) {
 }
 
 const base = {
-  version: '0.1',
+  version: '0.2',
   meta: {fps: 30, size: [640, 360]},
 };
 

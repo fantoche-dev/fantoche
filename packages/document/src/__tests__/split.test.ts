@@ -21,6 +21,7 @@ describe('splitArt', () => {
     expect(box[1] + box[3] / 2).toBeCloseTo(101, 6);
     expect(out.slots['arm-l']).toContain('width="50"');
     expect(out.slots['arm-l']).not.toContain('id="torso"');
+    expect(out).toMatchObject({version: '0.1', centre: [100, 100]});
   });
 
   test('reads pivot markers and strips them from the output', () => {

@@ -1,3 +1,5 @@
+import type {CharacterArt} from '../character/art.js';
+import {SLOT_PARAMS, type Character} from '../character/schema.js';
 import {
   applyInsert,
   applyReplace,
@@ -11,12 +13,15 @@ import type {
   CodeRange,
   CodeTrack,
   CompiledElement,
+  CompiledRig,
+  CompiledRigSlot,
   EditOp,
   SelectOp,
   TimelineIR,
   Track,
   TrackKey,
 } from '../ir.js';
+import type {Viseme, VisemeTrack} from '../lipsync/visemes.js';
 import type {FantocheDocument, PropValue, RangeSpec} from '../schema.js';
 import {AnchorError, buildNarrationIndex, resolveTimeRef} from './anchors.js';
 
@@ -34,6 +39,19 @@ export class CompileError extends Error {
 export interface CompileResult {
   ir: TimelineIR;
   warnings: string[];
+}
+
+export interface ResolvedCharacter {
+  character: Character;
+  /** Parsed contents of `character.art.src` (`*.art.json`). */
+  art: CharacterArt;
+}
+
+export interface CompileOptions {
+  /** Character id → caller-resolved character definition + art sidecar. */
+  characters?: Record<string, ResolvedCharacter>;
+  /** Lipsync asset id → caller-parsed viseme track. */
+  lipsync?: Record<string, VisemeTrack>;
 }
 
 const TRANSFORM_PROPS = ['x', 'y', 'scale', 'rotation', 'opacity', 'zIndex'];
@@ -58,7 +76,16 @@ const ANIMATABLE: Record<string, ReadonlySet<string>> = Object.fromEntries(
     latex: [...SIZE_PROPS],
     code: ['fontSize', 'fill'],
     layout: ['gap', 'padding', ...SIZE_PROPS],
-  }).map(([type, props]) => [type, new Set([...TRANSFORM_PROPS, ...props])]),
+    cast: ['x', 'y', 'scale', 'rotation', 'opacity'],
+    slot: SLOT_PARAMS,
+  }).map(([type, props]) => [
+    type,
+    new Set(
+      type === 'cast' || type === 'slot'
+        ? props
+        : [...TRANSFORM_PROPS, ...props],
+    ),
+  ]),
 );
 
 /** The whole code is "selected" — nothing is dimmed. */
@@ -85,10 +112,13 @@ interface PropEvent {
   kind: 'set' | 'tween';
   value: PropValue;
   from?: PropValue;
-  easing: EasingName;
+  easing: EasingName | 'hold';
 }
 
-export function compileDocument(doc: FantocheDocument): CompileResult {
+export function compileDocument(
+  doc: FantocheDocument,
+  options: CompileOptions = {},
+): CompileResult {
   const warnings: string[] = [];
   const fps = doc.meta.fps;
   // Bound to this document's fps once; the rule itself lives in `frames.ts`,
@@ -100,6 +130,9 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
   // -- elements ------------------------------------------------------------
   const elements: CompiledElement[] = [];
   const byId = new Map<string, CompiledElement>();
+  const animationTypes = new Map<string, 'cast' | 'slot'>();
+  const jointInitials = new Map<string, Record<string, PropValue>>();
+  const rigs: Record<string, CompiledRig> = {};
   let order = 0;
   const walk = (list: RawElement[], parentId: string | null, path: string) => {
     list.forEach((element, i) => {
@@ -125,6 +158,134 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
     });
   };
   walk(doc.elements as unknown as RawElement[], null, '/elements');
+
+  interface ResolvedCastMember {
+    bundle: ResolvedCharacter;
+    slotByElement: Map<string, string>;
+  }
+  const resolvedCast = new Map<string, ResolvedCastMember>();
+  for (const [castId, member] of Object.entries(doc.cast ?? {})) {
+    const path = `/cast/${castId}`;
+    if (byId.has(castId)) {
+      throw new CompileError(
+        `cast id "${castId}" duplicates an element id`,
+        path,
+      );
+    }
+    const bundle = options.characters?.[member.character];
+    if (bundle === undefined) {
+      throw new CompileError(
+        `character "${member.character}" is unresolved — pass options.characters["${member.character}"] as {character, art} with its *.art.json sidecar`,
+        `${path}/character`,
+      );
+    }
+    if (bundle.character.id !== member.character) {
+      throw new CompileError(
+        `resolved character id is "${bundle.character.id}", expected "${member.character}"`,
+        `${path}/character`,
+      );
+    }
+
+    const root: CompiledElement = {
+      id: castId,
+      type: 'layout',
+      props: {
+        x: member.x,
+        y: member.y,
+        scale: member.scale,
+        rotation: member.rotation,
+        opacity: member.opacity,
+      },
+      parentId: null,
+      order: order++,
+    };
+    elements.push(root);
+    byId.set(castId, root);
+    animationTypes.set(castId, 'cast');
+
+    const topologicalIds = topologicalSlotIds(bundle.character);
+    const sourceOrder = new Map(
+      Object.keys(bundle.character.slots).map((slotId, index) => [
+        slotId,
+        index,
+      ]),
+    );
+    const compiledSlots: CompiledRigSlot[] = [];
+    const slotByElement = new Map<string, string>();
+    for (const slotId of topologicalIds) {
+      const slot = bundle.character.slots[slotId];
+      const pivot = bundle.art.pivots[slotId];
+      const svg = bundle.art.slots[slotId];
+      if (pivot === undefined || svg === undefined) {
+        throw new CompileError(
+          `art sidecar "${bundle.character.art.src}" is missing ${
+            pivot === undefined ? 'pivot' : 'SVG'
+          } for slot "${slotId}"`,
+          `${path}/character`,
+        );
+      }
+      if (!slotByElement.has(slot.element)) {
+        slotByElement.set(slot.element, slotId);
+      }
+      const isMouth =
+        bundle.character.visemes !== undefined &&
+        Object.values(bundle.character.visemes).includes(slot.element);
+      const opacity =
+        isMouth && bundle.character.visemes?.X !== slot.element ? 0 : 1;
+      compiledSlots.push({
+        id: slotId,
+        nodeId: `${castId}.${slotId}`,
+        parent: slot.parent ?? null,
+        rest: [pivot[0], pivot[1]],
+        rotation: slot.rest.rotation,
+        scale: slot.rest.scale,
+        depth: slot.rest.depth,
+        opacity,
+      });
+    }
+
+    for (const slot of [...compiledSlots].sort(
+      (left, right) =>
+        left.depth - right.depth ||
+        sourceOrder.get(left.id)! - sourceOrder.get(right.id)!,
+    )) {
+      if (byId.has(slot.nodeId)) {
+        throw new CompileError(
+          `generated slot id "${slot.nodeId}" duplicates an element id`,
+          path,
+        );
+      }
+      const compiled: CompiledElement = {
+        id: slot.nodeId,
+        type: 'svg',
+        props: {
+          svg: bundle.art.slots[slot.id],
+          opacity: slot.opacity,
+          zIndex: slot.depth,
+        },
+        parentId: castId,
+        order: order++,
+      };
+      elements.push(compiled);
+      byId.set(compiled.id, compiled);
+      animationTypes.set(compiled.id, 'slot');
+      jointInitials.set(compiled.id, {
+        x: 0,
+        y: 0,
+        rotation: 0,
+        scale: 1,
+        opacity: slot.opacity,
+        depth: slot.depth,
+      });
+    }
+    rigs[castId] = {
+      castId,
+      characterId: bundle.character.id,
+      artCentre: [bundle.art.centre[0], bundle.art.centre[1]],
+      slots: compiledSlots,
+    };
+    resolvedCast.set(castId, {bundle, slotByElement});
+  }
   for (const element of elements) {
     if (element.type === 'svg' && element.props.src !== undefined) {
       throw new CompileError(
@@ -164,6 +325,25 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
     return target;
   };
 
+  const addPropEvent = (
+    target: CompiledElement,
+    prop: string,
+    event: PropEvent,
+    path: string,
+  ) => {
+    const animationType = animationTypes.get(target.id) ?? target.type;
+    if (!ANIMATABLE[animationType]?.has(prop)) {
+      throw new CompileError(
+        `"${prop}" is not an animatable prop of ${animationType} target "${target.id}"`,
+        path,
+      );
+    }
+    const key = `${target.id}\u0000${prop}`;
+    const events = propEvents.get(key) ?? [];
+    events.push(event);
+    propEvents.set(key, events);
+  };
+
   (doc.timeline as unknown as RawItem[]).forEach((item, index) => {
     const path = `/timeline/${index}`;
     let t0: number;
@@ -182,7 +362,139 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
     const dur = typeof item.dur === 'number' ? item.dur : 0;
     const easing = (item.easing as EasingName | undefined) ?? DEFAULT_EASING;
 
-    if ('set' in item || 'tween' in item) {
+    if ('pose' in item) {
+      const castId = item.target as string;
+      const cast = resolvedCast.get(castId);
+      if (cast === undefined) {
+        throw new CompileError(
+          `unknown cast member "${castId}"`,
+          `${path}/target`,
+        );
+      }
+      const poseName = item.pose as string;
+      const pose = cast.bundle.character.poses[poseName];
+      if (pose === undefined) {
+        const available = Object.keys(cast.bundle.character.poses);
+        throw new CompileError(
+          `character "${cast.bundle.character.id}" has no pose "${poseName}"; available poses: ${available.join(', ') || '(none)'}`,
+          `${path}/pose`,
+        );
+      }
+      for (const [poseKey, value] of Object.entries(pose)) {
+        const split = poseKey.lastIndexOf('.');
+        const slotId = poseKey.slice(0, split);
+        const prop = poseKey.slice(split + 1);
+        const target = byId.get(`${castId}.${slotId}`)!;
+        addPropEvent(
+          target,
+          prop,
+          dur === 0
+            ? {
+                itemIndex: index,
+                t0,
+                t1: t0,
+                kind: 'set',
+                value,
+                easing: 'hold',
+              }
+            : {
+                itemIndex: index,
+                t0,
+                t1: t0 + dur,
+                kind: 'tween',
+                value,
+                easing: prop === 'depth' ? 'hold' : easing,
+              },
+          `${path}/pose/${poseKey}`,
+        );
+      }
+    } else if ('lipsync' in item) {
+      const castId = item.target as string;
+      const cast = resolvedCast.get(castId);
+      if (cast === undefined) {
+        throw new CompileError(
+          `unknown cast member "${castId}"`,
+          `${path}/target`,
+        );
+      }
+      const lipsyncId = item.lipsync as string;
+      const asset = doc.assets?.[lipsyncId];
+      if (asset === undefined || asset.type !== 'lipsync') {
+        throw new CompileError(
+          `"${lipsyncId}" is not a declared lipsync asset`,
+          `${path}/lipsync`,
+        );
+      }
+      const track = options.lipsync?.[lipsyncId];
+      if (track === undefined) {
+        throw new CompileError(
+          `lipsync asset "${lipsyncId}" is unresolved — pass its parsed track in options.lipsync`,
+          `${path}/lipsync`,
+        );
+      }
+      const visemes = cast.bundle.character.visemes;
+      if (visemes === undefined) {
+        throw new CompileError(
+          `character "${cast.bundle.character.id}" has no viseme map`,
+          `${path}/target`,
+        );
+      }
+      const nodeFor = (viseme: Viseme): CompiledElement => {
+        const elementId = visemes[viseme];
+        const slotId = cast.slotByElement.get(elementId);
+        if (slotId === undefined) {
+          throw new CompileError(
+            `viseme "${viseme}" element "${elementId}" is not bound to a character slot`,
+            `${path}/target`,
+          );
+        }
+        return byId.get(`${castId}.${slotId}`)!;
+      };
+      const switches: {t: number; viseme: Viseme}[] = [];
+      for (const cue of track.cues) {
+        const next = {t: t0 + cue.t, viseme: cue.viseme};
+        const previous = switches.at(-1);
+        if (previous !== undefined && toFrame(previous.t) === toFrame(next.t)) {
+          switches[switches.length - 1] = next;
+        } else {
+          switches.push(next);
+        }
+      }
+      let held: Viseme = 'X';
+      for (const change of switches) {
+        const nextTarget = nodeFor(change.viseme);
+        addPropEvent(
+          nextTarget,
+          'opacity',
+          {
+            itemIndex: index,
+            t0: change.t,
+            t1: change.t,
+            kind: 'set',
+            value: 1,
+            easing: 'hold',
+          },
+          `${path}/lipsync`,
+        );
+        const heldTarget = nodeFor(held);
+        if (heldTarget.id !== nextTarget.id) {
+          addPropEvent(
+            heldTarget,
+            'opacity',
+            {
+              itemIndex: index,
+              t0: change.t,
+              t1: change.t,
+              kind: 'set',
+              value: 0,
+              easing: 'hold',
+            },
+            `${path}/lipsync`,
+          );
+        }
+        held = change.viseme;
+      }
+    } else if ('set' in item || 'tween' in item) {
       const target = requireTarget(item, index);
       const entries =
         'set' in item
@@ -193,16 +505,9 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
               item.tween as Record<string, {to: PropValue; from?: PropValue}>,
             ).map(([prop, spec]) => ({kind: 'tween', prop, ...spec}) as const);
       for (const entry of entries) {
-        if (!ANIMATABLE[target.type]?.has(entry.prop)) {
-          throw new CompileError(
-            `"${entry.prop}" is not an animatable prop of ${target.type} ` +
-              `element "${target.id}"`,
-            `${path}/${'set' in item ? 'set' : 'tween'}/${entry.prop}`,
-          );
-        }
-        const key = `${target.id}\u0000${entry.prop}`;
-        const events = propEvents.get(key) ?? [];
-        events.push(
+        addPropEvent(
+          target,
+          entry.prop,
           entry.kind === 'set'
             ? {
                 itemIndex: index,
@@ -221,8 +526,8 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
                 from: entry.from,
                 easing,
               },
+          `${path}/${'set' in item ? 'set' : 'tween'}/${entry.prop}`,
         );
-        propEvents.set(key, events);
       }
     } else if ('select' in item || 'edit' in item) {
       const target = requireTarget(item, index);
@@ -264,9 +569,9 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
   for (const [key, events] of propEvents) {
     const [target, prop] = key.split('\u0000');
     events.sort((a, b) => a.t0 - b.t0 || a.itemIndex - b.itemIndex);
-    const initial = (byId.get(target)!.props as Record<string, PropValue>)[
-      prop
-    ];
+    const initial =
+      jointInitials.get(target)?.[prop] ??
+      (byId.get(target)!.props as Record<string, PropValue>)[prop];
     const keys: TrackKey[] = [];
     let running: PropValue | undefined = initial;
     let activeUntil = -Infinity;
@@ -452,8 +757,24 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
       tracks,
       codeTracks,
       blocks: sortedBlocks,
+      rigs,
       narrationAudio: doc.narration?.audio ?? null,
     },
     warnings,
   };
+}
+
+/** Stable parent-before-child order, computed once at compile time. */
+function topologicalSlotIds(character: Character): string[] {
+  const ordered: string[] = [];
+  const visited = new Set<string>();
+  const visit = (slotId: string) => {
+    if (visited.has(slotId)) return;
+    const parent = character.slots[slotId].parent;
+    if (parent !== undefined) visit(parent);
+    visited.add(slotId);
+    ordered.push(slotId);
+  };
+  for (const slotId of Object.keys(character.slots)) visit(slotId);
+  return ordered;
 }

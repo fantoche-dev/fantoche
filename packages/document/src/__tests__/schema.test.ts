@@ -3,7 +3,7 @@ import {validateDocument} from '../validate.js';
 import {fullDocument as full} from './fixtures.js';
 
 const minimal = {
-  version: '0.1',
+  version: '0.2',
   meta: {fps: 30, size: [640, 360]},
   elements: [],
   timeline: [],

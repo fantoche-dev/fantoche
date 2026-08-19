@@ -15,7 +15,12 @@ type Migration = {to: string; migrate: (doc: RawDocument) => RawDocument};
  * `'0.1': {to: '0.2', migrate: doc => ({...})}` here — documents are walked
  * version by version until they reach DOCUMENT_FORMAT_VERSION.
  */
-const MIGRATIONS: Record<string, Migration> = {};
+const MIGRATIONS: Record<string, Migration> = {
+  // 0.2 only adds optional cast data and timeline item variants. Keeping the
+  // hop as an identity preserves authored 0.1 JSON byte-for-byte apart from
+  // the version written by the migration loop.
+  '0.1': {to: '0.2', migrate: doc => doc},
+};
 
 export interface MigrateResult {
   doc: RawDocument;

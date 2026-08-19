@@ -20,8 +20,32 @@ export interface TimelineIR {
   tracks: Track[];
   codeTracks: CodeTrack[];
   blocks: BlockIR[];
+  /** Cast id → topologically ordered FK data for the per-frame pose stage. */
+  rigs: Record<string, CompiledRig>;
   /** Narration audio asset id, when declared. */
   narrationAudio: string | null;
+}
+
+export interface CompiledRigSlot {
+  /** Character-local slot id. */
+  id: string;
+  /** Flat SVG node id in the document scene. */
+  nodeId: string;
+  parent: string | null;
+  /** Resolved pivot in source-art coordinates. */
+  rest: [number, number];
+  rotation: number;
+  scale: number;
+  depth: number;
+  opacity: number;
+}
+
+export interface CompiledRig {
+  castId: string;
+  characterId: string;
+  artCentre: [number, number];
+  /** Parent-before-child order, computed once by the compiler. */
+  slots: CompiledRigSlot[];
 }
 
 export interface CompiledElement {

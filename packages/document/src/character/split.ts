@@ -1,4 +1,5 @@
 import {DOMParser, XMLSerializer, type Element} from '@xmldom/xmldom';
+import {CHARACTER_ART_VERSION, type CharacterArt} from './art.js';
 import type {PIVOT_PRESETS} from './schema.js';
 
 export type PivotPreset = (typeof PIVOT_PRESETS)[number];
@@ -10,7 +11,7 @@ export interface SplitSlotSpec {
   pivot: readonly [number, number] | PivotPreset;
 }
 
-export interface SplitResult {
+export interface SplitResult extends CharacterArt {
   /**
    * Slot id → self-contained sub-SVG markup whose `viewBox` is symmetric
    * about the slot's pivot, so the pivot sits exactly at the fragment's
@@ -74,7 +75,14 @@ export function splitArt(
     el.parentNode?.removeChild(el);
   }
 
-  const result: SplitResult = {slots: {}, pivots: {}, missing: [], orphans: []};
+  const result: SplitResult = {
+    version: CHARACTER_ART_VERSION,
+    centre: measureArtCentre(doc.documentElement as Element),
+    slots: {},
+    pivots: {},
+    missing: [],
+    orphans: [],
+  };
   const serializer = new XMLSerializer();
 
   for (const [slotId, spec] of Object.entries(slots)) {
@@ -116,6 +124,15 @@ export function splitArt(
   result.orphans.sort();
 
   return result;
+}
+
+function measureArtCentre(root: Element): [number, number] {
+  const viewBox = numbersIn(root.getAttribute('viewBox') ?? '');
+  if (viewBox.length === 4 && viewBox[2] > 0 && viewBox[3] > 0) {
+    return [viewBox[0] + viewBox[2] / 2, viewBox[1] + viewBox[3] / 2];
+  }
+  const box = measureFragment(root);
+  return [(box.minX + box.maxX) / 2, (box.minY + box.maxY) / 2];
 }
 
 /**
