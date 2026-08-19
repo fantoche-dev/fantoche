@@ -46,6 +46,25 @@
 - **Gate:** the north-star demo (vision §5) end-to-end in ugly-but-working
   form, in Portuguese, offline.
 
+### P2 gate evidence — 2026-08-19
+
+**Status: technical pass with a provisional test voice.** Every runtime and
+offline clause below is measured. The committed `pt-BR-FranciscaNeural` Edge
+TTS WAV remains a preview stand-in; public-release sign-off still requires an
+owned human recording or licensed Azure asset and a re-aligned manual mouth
+track. That replacement does not block P3 code.
+
+| Clause | Evidence |
+| --- | --- |
+| Character format and 2–3 references | `character.json` carries slots, FK parents, pivots, rest depth, poses, and A–H/X bindings. `teacher` and `bird` are two committed references with different FK topologies; both pass `character import → bind → check`. |
+| Narration and word anchors | The north-star transcript has 241 tokens in 12 segments. Local WhisperX forced alignment placed all 241/241 with absolute document times; the compiler reports zero anchor warnings. |
+| PT-BR lipsync decision | ADR 0007 records that neither automatic arm reached ≥3 on every PT-BR axis. Rhubarb scored closure/rounding/jitter/drift = 3/2/4/5; WhisperX = 2/3/2/4. The shipping path is manual: 455 reviewed cues, all 108 aligned bilabials on A, 40 measured rests, minimum hold 0.100 s. |
+| North-star, Portuguese, offline | The 1920×1080 render is 91.665 s with H.264 video and AAC audio. Normal and `fantoche render --offline` outputs are byte-identical: SHA-256 `574955261c39e8197249a54acc40b67331415a8d81f713538d000ec4a38b0c5e`. |
+| O(1) seek with rigs | Five local runs over the same three-slot FK state measured a median 0.020 ms/seek for the 4 s rig and 0.016 ms/seek for a 600 s rig with 300 extra pose events. The test asserts the long document remains below both 20 ms and the short-run tolerance. |
+
+Author workflow: [authoring-guide.md](authoring-guide.md). Ready-to-file
+contributor work: [P2 good-first issue drafts](good-first-issues-p2.md).
+
 ## P3 — Editor v0
 
 - Timeline + inspector over the document (edit times, poses, anchors; live

@@ -2,9 +2,9 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-## Status — updated 2026-08-19 (Parts B–D complete in code)
+## Status — updated 2026-08-19 (Parts B–E complete in code)
 
-- **Agora:** Partes A–D completas em código (Tasks 1–20, 23, 24). ADR 0006
+- **Agora:** Partes A–E completas em código (Tasks 1–24). ADR 0006
   e ADR 0007 registrados (gate de lipsync em risco → autoria manual é o
   caminho). O demo da fatia vertical existe e renderiza:
   `packages/e2e/demo/first-slice/` — teacher posado por âncoras de palavra,
@@ -13,18 +13,22 @@
   prova uma topologia FK diferente, com cadeia de profundidade 4. Durações
   adaptativas absorvem retiming sem truncar silenciosamente, e springs
   criticamente amortecidas preservam impulso sem abandonar `state(t)` puro.
-- **Narração provisória:** Azure TTS foi aceita para fechar formalmente a
-  Task 23. A geração do WAV oficial aguarda um recurso/credencial Speech
-  fornecido via ambiente; nenhum segredo entra no repositório. Até lá, o demo
-  continua funcional com o stand-in humano existente.
-- **Próximo:** Parte E (Tasks 21 e 22: demo north-star e gate da P2). Parte F
-  (re-spike) pode começar em paralelo a qualquer momento, sem bloquear nada.
-- **Bloqueio:** nenhum para o código já entregue; a credencial Azure é
-  necessária para trocar a voz provisória, fechar a Task 23 e gerar a
-  narração temporária do north-star na Parte E.
-- **Última verificação:** 2026-08-19 — build dos 10 pacotes, 519 testes de
-  pacote, lint e prettier verdes localmente; CI 8/8 no commit de fechamento da
-  Parte D. O demo mp4 continua com streams video+aac conferidos por ffprobe.
+  O north-star de busca binária soma 91,6 s, 241 palavras alinhadas, diagrama,
+  walkthrough de código, teacher gesticulando e boca manual corrigida; renders
+  normal e `--offline` são byte-idênticos.
+- **Narração provisória:** por autorização do Daniel, o north-star usa Edge TTS
+  `pt-BR-FranciscaNeural` apenas para teste. O WAV está claramente marcado como
+  stand-in; a Task 21 manual e o sign-off público ainda pedem voz humana própria
+  ou um asset Azure licenciado, seguidos de novo alinhamento e nova autoria da
+  boca. O controle inglês pedido depois (`en-US-AvaNeural`, texto inglês) fica
+  separado: prova 59/59 bilabiais automáticos, mas confirma que o jitter persiste.
+- **Próximo:** Parte F (re-spike automático, não bloqueante) ou P3. A troca da
+  voz pode ocorrer em paralelo sem alterar o runtime.
+- **Bloqueio:** nenhum para código/P3; somente a declaração formal da Task 21
+  manual aguarda a narração final com proveniência adequada.
+- **Última verificação:** 2026-08-19 — build dos 10 pacotes, 521 testes de
+  pacote, E2E/goldens e template render verdes, eslint e prettier limpos;
+  renders 1920×1080 com H.264+AAC e par PT normal/offline com SHA-256 idêntico.
 
 **Goal:** A `character.json` (rig + poses + art slots imported from SVG) becomes a
 first-class document citizen: a cast member is posed and gestured from the
@@ -1268,6 +1272,28 @@ fantoche render packages/e2e/demo/north-star/demo.json
 presets, more poses on the reference cast, per-language viseme maps).
 
 **Step 4:** Commit: `docs(character): P2 gate results and authoring docs`
+
+### Checkpoint da Parte E — 2026-08-19
+
+- **Task 21 completa em código e visualmente avaliada com voz de teste:**
+  91.665 s, 1920×1080, H.264 + AAC; 12 blocos e 241/241 palavras colocadas
+  pelo caminho real de `narration align`; 44 elementos, 102 eventos e zero
+  warnings de compilação. A trilha manual tem 455 cues, mínimo de 0.100 s,
+  todos os 108 bilabiais em A e X apenas em pausas medidas.
+- **Offline provado pelo produto:** `fantoche render --offline` bloqueia HTTP(S)
+  externo sem cortar o Vite local. O render normal e o isolado têm o mesmo
+  SHA-256:
+  `574955261c39e8197249a54acc40b67331415a8d81f713538d000ec4a38b0c5e`.
+- **O(1) com rig medido:** em cinco execuções locais, mediana de 0.020 ms/seek
+  no documento rigado de 4 s e 0.016 ms/seek no de 600 s com 300 poses extras.
+- **Gate técnico passa; voz continua provisória:** o Edge TTS autorizado para
+  teste não substitui a gravação própria ou o asset Azure licenciado pedido
+  pelo passo manual. Trocar o WAV exige realinhar e reautorar a boca, mas não
+  muda nenhuma conclusão do runtime.
+- **Controle EN solicitado depois:** 250/250 palavras alinhadas e 59/59
+  bilabiais no A automático; ainda assim, 632/889 intervalos crus ficaram
+  abaixo de 0.100 s. A versão suavizada cai para 403 cues sem perder fechamentos,
+  reforçando que o timing mínimo continua sendo necessário em qualquer idioma.
 
 ---
 

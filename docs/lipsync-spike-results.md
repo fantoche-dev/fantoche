@@ -128,6 +128,25 @@ No PT-BR side reaches ≥3 on every axis — Rhubarb fails rounding (2),
 WhisperX fails closure (2) and jitter (2). Per the plan's decision rule,
 the P2 gate is **at risk**; the decision and its consequences are ADR 0007.
 
+## North-star English control (2026-08-19; diagnostic only)
+
+At Daniel's request, the 90 s north-star was translated and synthesized with
+an English voice to isolate language/voice from the visual document. Edge TTS
+`en-US-AvaNeural` read the exact 250-word English transcript; local WhisperX
+alignment placed 250/250 tokens.
+
+The untouched English adapter track reached A on all 59 aligned `p`, `b`, and
+`m` characters, compared with 87/108 on the matched PT-BR north-star draft.
+Closure is therefore materially better in this control. Jitter is not: 632 of
+889 English cue intervals were shorter than 0.100 s (the PT draft had 595 of
+957). Applying the same three-frame minimum reduced English to 403 cues while
+preserving 59/59 closures and 63 measured rests.
+
+This run was not blind, used synthetic voices, and does not revise ADR 0007 or
+replace the PT-BR gate. It narrows the re-spike: the English grapheme path can
+place closures, but a minimum-hold/timing layer remains necessary independent
+of language.
+
 ## Honesty about blindness
 
 Round 2 was key-sealed but not cognitively naive: the scorer already knew
