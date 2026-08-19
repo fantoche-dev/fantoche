@@ -2,26 +2,29 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-## Status — updated 2026-08-19 (Parts B–C complete in code)
+## Status — updated 2026-08-19 (Parts B–D complete in code)
 
-- **Agora:** Partes A–C completas em código (Tasks 1–18, 23, 24). ADR 0006
+- **Agora:** Partes A–D completas em código (Tasks 1–20, 23, 24). ADR 0006
   e ADR 0007 registrados (gate de lipsync em risco → autoria manual é o
   caminho). O demo da fatia vertical existe e renderiza:
   `packages/e2e/demo/first-slice/` — teacher posado por âncoras de palavra,
   boca em track manual de 64 cues e narração audível (vídeo + AAC). A UX de
   personagem cobre `import → check → bind → check`, e o segundo personagem
-  prova uma topologia FK diferente, com cadeia de profundidade 4.
+  prova uma topologia FK diferente, com cadeia de profundidade 4. Durações
+  adaptativas absorvem retiming sem truncar silenciosamente, e springs
+  criticamente amortecidas preservam impulso sem abandonar `state(t)` puro.
 - **Narração provisória:** Azure TTS foi aceita para fechar formalmente a
   Task 23. A geração do WAV oficial aguarda um recurso/credencial Speech
   fornecido via ambiente; nenhum segredo entra no repositório. Até lá, o demo
   continua funcional com o stand-in humano existente.
-- **Próximo:** Parte D (Tasks 19 e 20: retiming adaptativo e springs). Parte F
+- **Próximo:** Parte E (Tasks 21 e 22: demo north-star e gate da P2). Parte F
   (re-spike) pode começar em paralelo a qualquer momento, sem bloquear nada.
-- **Bloqueio:** nenhum para o código; apenas a credencial Azure para trocar a
-  voz provisória e declarar o aceite final da Task 23.
-- **Última verificação:** 2026-08-19 — CI 8/8 em 895ac3e2 (build dos 10
-  pacotes, unitários nos 2 OS, lint, prettier, 28 goldens E2E, template mp4,
-  commitlint); demo mp4 com streams video+aac conferidos por ffprobe.
+- **Bloqueio:** nenhum para o código já entregue; a credencial Azure é
+  necessária para trocar a voz provisória, fechar a Task 23 e gerar a
+  narração temporária do north-star na Parte E.
+- **Última verificação:** 2026-08-19 — build dos 10 pacotes, 519 testes de
+  pacote, lint e prettier verdes localmente; CI 8/8 no commit de fechamento da
+  Parte D. O demo mp4 continua com streams video+aac conferidos por ffprobe.
 
 **Goal:** A `character.json` (rig + poses + art slots imported from SVG) becomes a
 first-class document citizen: a cast member is posed and gestured from the
@@ -1092,6 +1095,10 @@ the next one; Task 20 is the motion-quality step.
 
 ## Task 19: Adaptive durations (`dur: {fit}` / `{value, min}`)
 
+> **Concluída em 2026-08-19.** Tweens e poses aceitam as duas formas; a
+> segunda passagem resolve cada propriedade independentemente, e janelas de
+> bloco continuam estritamente numéricas.
+
 **Files:**
 - Modify: `packages/document/src/schema.ts`, `compiler/compile.ts`
 - Test: `packages/document/src/__tests__/adaptive-dur.test.ts`
@@ -1117,6 +1124,11 @@ compress a gesture instead of colliding with the next one.
 ---
 
 ## Task 20: Spring easing with compile-time entry-velocity baking
+
+> **Concluída em 2026-08-19.** A solução fechada usa o intervalo real entre
+> frames compilados, carrega velocidade somente entre springs contíguas e
+> zera o impulso quando há um hold. O sinal do pseudocódigo pré-batch foi
+> corrigido: `omega + v0n` invertia a derivada inicial.
 
 **Files:**
 - Modify: `packages/document/src/easings.ts`, `ir.ts`, `compiler/compile.ts`,
@@ -1156,17 +1168,20 @@ test('stays pure: same IR and frame ⇒ identical value', () => { /* … */ });
 - `EASING_NAMES` gains `'spring'`; **rewrite the module docstring**, which
   currently states springs are excluded for being iterative — that is exactly
   the claim this task overturns, and a stale comment here would mislead.
-- `TrackKey` gains `spring?: {omega: number; v0n: number}` (normalised entry
-  velocity, units s⁻¹).
+- `TrackKey` gains `spring?: {omega: number; v0n: number; norm: number}`
+  (normalised entry velocity, units s⁻¹, and the baked settle normaliser).
 - Compiler, per spring segment on a numeric prop, with `d = to − from`:
   `omega = 6 / dur` (≈98 % settled at `dur`), `v0n = v_prev / d` (0 when the
-  previous segment is not a spring, or when `d === 0` — Decision 7).
-  Bake, then compute this segment's exit velocity for the next one:
+  previous segment is not a contiguous spring, or when `d === 0` — Decision
+  7). Bake, then compute this segment's exit velocity for the next one. The
+  normaliser and coefficient are solved together so the *normalised* curve
+  starts at exactly `v0n`:
   ```
-  c      = omega + v0n
+  decay  = e^(−omega·dur)
+  norm   = (1 − (1 + omega·dur)·decay) / (1 − v0n·dur·decay)
+  c      = omega − v0n·norm
   p(t)   = 1 − (1 + c·t)·e^(−omega·t)
   p'(t)  = (omega·(1 + c·t) − c)·e^(−omega·t)
-  norm   = p(dur)                       // normalise so p̂(dur) === 1 exactly
   v_exit = d · p'(dur) / norm
   ```
 - Evaluator: when `next.easing === 'spring'`, elapsed seconds are
