@@ -544,7 +544,8 @@
                   "easeInOutBounce",
                   "easeInElastic",
                   "easeOutElastic",
-                  "easeInOutElastic"
+                  "easeInOutElastic",
+                  "spring"
                 ]
               }
             },
@@ -1391,7 +1392,8 @@
                   "easeInOutBounce",
                   "easeInElastic",
                   "easeOutElastic",
-                  "easeInOutElastic"
+                  "easeInOutElastic",
+                  "spring"
                 ]
               }
             },

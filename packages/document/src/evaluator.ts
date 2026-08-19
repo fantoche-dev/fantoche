@@ -40,7 +40,7 @@ import type {CodeRange, TimelineIR, Track} from './ir.js';
 import type {PropValue} from './schema.js';
 import {lastAtOrBefore} from './search.js';
 
-export const EASINGS: Record<EasingName, TimingFunction> = {
+export const EASINGS: Record<Exclude<EasingName, 'spring'>, TimingFunction> = {
   linear,
   easeInSine,
   easeOutSine,
@@ -73,6 +73,13 @@ export const EASINGS: Record<EasingName, TimingFunction> = {
   easeOutElastic,
   easeInOutElastic,
 };
+
+function standardEasing(easing: EasingName, progress: number): number {
+  if (easing === 'spring') {
+    throw new Error('spring easing requires baked scalar track metadata');
+  }
+  return EASINGS[easing](progress);
+}
 
 export interface CodeFrameState {
   /** Settled text, or an in-flight transition with eased progress. */
@@ -159,7 +166,11 @@ function cloneRanges(ranges: CodeRange[]): CodeRange[] {
   ]);
 }
 
-function evaluateTrack(track: Track, frame: number): PropValue | undefined {
+function evaluateTrack(
+  track: Track,
+  frame: number,
+  fps: number,
+): PropValue | undefined {
   const {keys, initial} = track;
   const index = lastAtOrBefore(keys, frame, key => key.tF);
   if (index === -1) {
@@ -172,9 +183,24 @@ function evaluateTrack(track: Track, frame: number): PropValue | undefined {
   if (next === undefined || next.easing === 'hold') {
     return cloneValue(current.value);
   }
+  if (next.easing === 'spring') {
+    if (next.spring === undefined) {
+      throw new Error('spring track key is missing baked coefficients');
+    }
+    const {omega, v0n, norm} = next.spring;
+    const elapsed = (frame - current.tF) / fps;
+    const c = omega - v0n * norm;
+    const progress =
+      (1 - (1 + c * elapsed) * Math.exp(-omega * elapsed)) / norm;
+    return lerpValue(current.value, next.value, progress);
+  }
   const span = next.tF - current.tF;
   const progress = span === 0 ? 1 : (frame - current.tF) / span;
-  return lerpValue(current.value, next.value, EASINGS[next.easing](progress));
+  return lerpValue(
+    current.value,
+    next.value,
+    standardEasing(next.easing, progress),
+  );
 }
 
 /**
@@ -188,7 +214,7 @@ function evaluateTrack(track: Track, frame: number): PropValue | undefined {
 export function evaluateFrame(ir: TimelineIR, frame: number): FrameState {
   const props = new Map<string, Map<string, PropValue>>();
   for (const track of ir.tracks) {
-    const value = evaluateTrack(track, frame);
+    const value = evaluateTrack(track, frame, ir.fps);
     if (value === undefined) {
       continue;
     }
@@ -245,7 +271,7 @@ export function evaluateFrame(ir: TimelineIR, frame: number): FrameState {
         codeState = {
           from: op.before,
           to: op.after,
-          progress: EASINGS[op.easing](progress),
+          progress: standardEasing(op.easing, progress),
         };
       }
     }
@@ -272,7 +298,7 @@ export function evaluateFrame(ir: TimelineIR, frame: number): FrameState {
         selection = {
           ranges: cloneRanges(op.after),
           from: cloneRanges(op.before),
-          progress: EASINGS[op.easing](progress),
+          progress: standardEasing(op.easing, progress),
         };
       }
     }

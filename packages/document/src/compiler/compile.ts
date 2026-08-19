@@ -579,6 +579,12 @@ export function compileDocument(
           `${path}/target`,
         );
       }
+      if (easing === 'spring') {
+        throw new CompileError(
+          'spring easing only supports scalar number props; code edits and selections are structural transitions',
+          `${path}/easing`,
+        );
+      }
       const ops = codeOps.get(target.id) ?? [];
       ops.push({
         itemIndex: index,
@@ -682,6 +688,7 @@ export function compileDocument(
     let running: PropValue | undefined = initial;
     let activeUntil = -Infinity;
     let activeItem = -1;
+    let springExit: {t1F: number; velocity: number} | undefined;
     const pushKey = (next: TrackKey) => {
       const last = keys[keys.length - 1];
       if (last !== undefined && last.tF === next.tF) {
@@ -707,9 +714,11 @@ export function compileDocument(
       if (event.kind === 'set') {
         pushKey({tF: toFrame(event.t0), value: event.value, easing: 'hold'});
         running = event.value;
+        springExit = undefined;
       } else {
         const from = event.from ?? running;
         const t0F = toFrame(event.t0);
+        const t1F = toFrame(event.t1);
         if (from === undefined) {
           warnings.push(
             `/timeline/${event.itemIndex}: tween of "${target}.${prop}" has ` +
@@ -721,14 +730,65 @@ export function compileDocument(
           // value AND the incoming easing (zero-gap tween chaining).
           pushKey({tF: t0F, value: from, easing: 'hold'});
         }
-        pushKey({
-          tF: toFrame(event.t1),
+        let spring: TrackKey['spring'];
+        let nextSpringExit: typeof springExit;
+        if (event.easing === 'spring') {
+          const actualFrom =
+            keys[keys.length - 1]?.tF === t0F
+              ? keys[keys.length - 1].value
+              : from;
+          if (
+            typeof actualFrom !== 'number' ||
+            typeof event.value !== 'number'
+          ) {
+            throw new CompileError(
+              `spring easing for "${target}.${prop}" requires a scalar number from-value and target`,
+              `/timeline/${event.itemIndex}/easing`,
+            );
+          }
+          const duration = (t1F - t0F) / fps;
+          if (duration <= 0) {
+            throw new CompileError(
+              `spring easing for "${target}.${prop}" needs a duration of at least one frame`,
+              `/timeline/${event.itemIndex}/dur`,
+            );
+          }
+          const delta = event.value - actualFrom;
+          const previousVelocity =
+            springExit?.t1F === t0F ? springExit.velocity : 0;
+          const v0n = delta === 0 ? 0 : previousVelocity / delta;
+          const omega = 6 / duration;
+          const decay = Math.exp(-omega * duration);
+          // q=p/norm must start at q'(0)=v0n. Solving
+          // c=omega-v0n*norm together with norm=p(duration) preserves that
+          // velocity exactly; omega+v0n would reverse its sign.
+          const denominator = 1 - v0n * duration * decay;
+          const norm = (1 - (1 + omega * duration) * decay) / denominator;
+          if (!Number.isFinite(norm) || Math.abs(norm) < Number.EPSILON) {
+            throw new CompileError(
+              `spring easing for "${target}.${prop}" produced unstable coefficients`,
+              `/timeline/${event.itemIndex}/easing`,
+            );
+          }
+          const c = omega - v0n * norm;
+          const derivative = (omega * (1 + c * duration) - c) * decay;
+          spring = {omega, v0n, norm};
+          nextSpringExit = {
+            t1F,
+            velocity: delta === 0 ? 0 : (delta * derivative) / norm,
+          };
+        }
+        const targetKey: TrackKey = {
+          tF: t1F,
           value: event.value,
           easing: event.easing,
-        });
+        };
+        if (spring !== undefined) targetKey.spring = spring;
+        pushKey(targetKey);
         running = event.value;
         activeUntil = event.t1;
         activeItem = event.itemIndex;
+        springExit = nextSpringExit;
       }
     }
     tracks.push({target, prop, initial, keys});

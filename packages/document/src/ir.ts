@@ -67,6 +67,14 @@ export interface TrackKey {
    * [previous.tF, this.tF]. 'hold' = keep the previous value and jump at tF.
    */
   easing: EasingName | 'hold';
+  /** Closed-form critically damped coefficients, present for spring keys. */
+  spring?: {
+    omega: number;
+    /** Entry velocity divided by this segment's scalar delta (s⁻¹). */
+    v0n: number;
+    /** p(duration), baked so the settle key is exactly the authored target. */
+    norm: number;
+  };
 }
 
 export interface Track {
