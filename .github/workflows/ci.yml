@@ -99,6 +99,25 @@ jobs:
         with:
           name: image-diffs
           path: packages/e2e/src/__image_snapshots__/__diff_output__
+  scaffold-smoke:
+    name: Scaffolder produces a project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm}
+      - run: npm ci
+      - run: npm run test:smoke -w packages/create -- "$RUNNER_TEMP/smoke" --default
+      - name: Assert the scaffold is complete and on our scope
+        run: |
+          set -euo pipefail
+          test -f "$RUNNER_TEMP/smoke/package.json"
+          test -f "$RUNNER_TEMP/smoke/src/project.ts"
+          test -f "$RUNNER_TEMP/smoke/src/render.ts"
+          # The fork rename must not regress in the template a new user gets.
+          grep -q '@fantoche-dev/core' "$RUNNER_TEMP/smoke/package.json"
+          ! grep -rqi 'revideo' "$RUNNER_TEMP/smoke"
+          echo "scaffolded project is complete and free of upstream scope names"
   commitlint:
     name: Commit names
     if: github.event_name == 'pull_request'
