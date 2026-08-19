@@ -4,6 +4,7 @@ import {Command} from 'commander';
 import {bindCharacter} from './character/bind';
 import {checkCharacter, printCharacterCheck} from './character/check';
 import {importCharacter} from './character/import';
+import {docCheck} from './doc-check/command';
 import {launchEditor} from './editor';
 import {lipsyncPreview} from './lipsync/command';
 import {lipsyncCompare} from './lipsync/compare';
@@ -225,6 +226,31 @@ lipsync
   .action(async (a, b, options) => {
     try {
       await lipsyncCompare(a, b, options);
+    } catch (error) {
+      console.error((error as Error).message);
+      process.exit(1);
+    }
+  });
+
+const doc = program
+  .command('doc')
+  .description('Document-level authoring checks.');
+
+doc
+  .command('check')
+  .description(
+    'Check a document against the content-quality technical floor ' +
+      '(docs/content-quality.md §2): audio master, viseme timing, segment ' +
+      'length and anchor warnings.',
+  )
+  .argument('<doc.json>', 'Document to check')
+  .option('--strict', 'Exit non-zero when anything is below the floor')
+  .option('--no-audio', 'Skip the ffmpeg/ffprobe audio measurement')
+  .option('--ffmpeg <path>', 'ffmpeg binary (default: bundled installer)')
+  .option('--ffprobe <path>', 'ffprobe binary (default: bundled installer)')
+  .action(async (docPath, options) => {
+    try {
+      await docCheck(docPath, options);
     } catch (error) {
       console.error((error as Error).message);
       process.exit(1);
