@@ -1,0 +1,24 @@
+{
+  "version": "0.1",
+  "centre": [160, 160],
+  "slots": {
+    "body": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"102 147 116 86\"><g id=\"body\" xmlns=\"http://www.w3.org/2000/svg\">\n    <ellipse cx=\"160\" cy=\"190\" rx=\"58\" ry=\"43\" fill=\"#2f7f78\"/>\n    <ellipse cx=\"176\" cy=\"195\" rx=\"32\" ry=\"24\" fill=\"#52a79d\"/>\n  </g></svg>",
+    "neck": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"140 108 40 132\"><g id=\"neck\" xmlns=\"http://www.w3.org/2000/svg\">\n    <path d=\"M146 174 C140 150 142 126 153 108 L174 112 C164 135 165 157 174 178 Z\" fill=\"#4b9a91\"/>\n  </g></svg>",
+    "head": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"132 71 68 68\"><g id=\"head\" xmlns=\"http://www.w3.org/2000/svg\">\n    <circle cx=\"166\" cy=\"105\" r=\"34\" fill=\"#64b8ad\"/>\n    <circle cx=\"177\" cy=\"96\" r=\"5\" fill=\"#172554\"/>\n  </g></svg>",
+    "beak": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"152 104 92 26\"><g id=\"beak\" xmlns=\"http://www.w3.org/2000/svg\">\n    <polygon points=\"197,104 244,118 198,128\" fill=\"#e6a700\"/>\n    <line x1=\"201\" y1=\"117\" x2=\"235\" y2=\"118\" stroke=\"#9a6200\" stroke-width=\"3\"/>\n  </g></svg>",
+    "wing-front": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"62 151 160 78\"><g id=\"wing_x5F_front\" xmlns=\"http://www.w3.org/2000/svg\">\n    <path d=\"M142 181 C104 151 75 163 62 201 C91 194 118 211 145 225 Z\" fill=\"#285f69\"/>\n    <path d=\"M128 188 L78 192\" stroke=\"#8bd0c7\" stroke-width=\"5\"/>\n  </g></svg>",
+    "tail": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"54 176 112 38\"><g id=\"tail\" xmlns=\"http://www.w3.org/2000/svg\">\n    <polygon points=\"110,195 54,177 76,214\" fill=\"#244f5a\"/>\n  </g></svg>",
+    "leg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"155 169 10 110\"><g id=\"leg\" xmlns=\"http://www.w3.org/2000/svg\">\n    <rect x=\"155\" y=\"222\" width=\"10\" height=\"57\" rx=\"5\" fill=\"#cc8a24\"/>\n  </g></svg>",
+    "foot": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"137 257 46 34\"><g id=\"foot\" xmlns=\"http://www.w3.org/2000/svg\">\n    <path d=\"M160 274 L137 291 M160 274 L181 291\" stroke=\"#9a6200\" stroke-width=\"7\" stroke-linecap=\"round\"/>\n  </g></svg>"
+  },
+  "pivots": {
+    "body": [160, 190],
+    "neck": [160, 174],
+    "head": [166, 105],
+    "beak": [198, 117],
+    "wing-front": [142, 190],
+    "tail": [110, 195],
+    "leg": [160, 224],
+    "foot": [160, 274]
+  }
+}

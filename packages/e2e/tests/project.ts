@@ -8,6 +8,8 @@ import {
 import {makeDocumentScene} from '@fantoche-dev/document/scene';
 import './fonts.css';
 
+import birdArtRaw from '../characters/bird/bird.art.json';
+import birdCharacterRaw from '../characters/bird/character.json';
 import teacherCharacterRaw from '../characters/teacher/character.json';
 import teacherArtRaw from '../characters/teacher/teacher.art.json';
 import firstSliceDoc from '../demo/first-slice/demo.json';
@@ -34,6 +36,10 @@ blocks['../tests/blocks/fx.tsx#slide'] = slide;
 // Parsed once here (defaults filled by the schemas): the compiler is pure
 // and receives resolved characters, never file paths.
 const characters = {
+  bird: {
+    character: characterSchema.parse(birdCharacterRaw),
+    art: characterArtSchema.parse(birdArtRaw),
+  },
   teacher: {
     character: characterSchema.parse(teacherCharacterRaw),
     art: characterArtSchema.parse(teacherArtRaw),
