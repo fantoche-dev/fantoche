@@ -1,5 +1,5 @@
 import {describe, expect, test} from 'vitest';
-import {splitArt} from '../character/split.js';
+import {listTopLevelGroupIds, splitArt} from '../character/split.js';
 
 const ART = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <g id="torso"><rect x="80" y="90" width="40" height="70"/></g>
@@ -8,6 +8,10 @@ const ART = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
 </svg>`;
 
 describe('splitArt', () => {
+  test('lists only top-level group ids for import scaffolding', () => {
+    expect(listTopLevelGroupIds(ART)).toEqual(['torso', 'arm_x5F_l']);
+  });
+
   test('extracts one sub-svg per slot, pivot-centred', () => {
     const out = splitArt(ART, {
       ['arm-l']: {element: 'arm_x5F_l', pivot: [122, 101]},

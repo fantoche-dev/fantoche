@@ -120,13 +120,15 @@ export function printCharacterCheck(
 }
 
 /**
- * Rank plausible orphan bindings. Only candidates within the plan's 40%
- * Levenshtein threshold survive; exact normalised matches come first.
+ * Rank orphan bindings with exact normalised matches first. Character check
+ * uses the plan's 40% Levenshtein threshold; the binder can request the full
+ * ordered list for an interactive choice.
  */
 export function rankBindingCandidates(
   slot: string,
   element: string,
   candidates: readonly string[],
+  maxRatio = 0.4,
 ): string[] {
   const needles = [
     ...new Set([normaliseBindingId(slot), normaliseBindingId(element)]),
@@ -146,7 +148,7 @@ export function rankBindingCandidates(
       )[0] ?? {distance: Infinity, ratio: Infinity};
       return {candidate, ...best};
     })
-    .filter(result => result.ratio <= 0.4)
+    .filter(result => result.ratio <= maxRatio)
     .sort(
       (a, b) =>
         a.ratio - b.ratio ||

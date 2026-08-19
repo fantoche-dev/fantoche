@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import {Command} from 'commander';
+import {bindCharacter} from './character/bind';
 import {checkCharacter, printCharacterCheck} from './character/check';
 import {importCharacter} from './character/import';
 import {launchEditor} from './editor';
@@ -118,15 +119,39 @@ character
   });
 
 character
+  .command('bind')
+  .description(
+    'Interactively repair missing slot bindings; writes character.json, never the SVG.',
+  )
+  .argument('<character.json>', 'Path to the character definition')
+  .option(
+    '--art <art.svg>',
+    'Source SVG when it does not share the *.art.json sidecar stem',
+  )
+  .action(async (characterPath: string, options: {art?: string}) => {
+    const report = await bindCharacter(characterPath, {
+      artPath: options.art,
+    });
+    console.log(
+      `updated ${report.updated.length} binding(s); skipped ${report.skipped.length}`,
+    );
+  });
+
+character
   .command('import')
   .description(
-    'Split character art into the render-ready *.art.json sidecar named by ' +
-      'character.art.src. Minimal and non-interactive; the SVG is never modified.',
+    'Scaffold character.json when absent, then split SVG art into its render-ready *.art.json sidecar.',
   )
   .argument('<art.svg>', 'Path to the character art SVG')
-  .argument('<character.json>', 'Path to the character definition')
-  .action((artPath: string, characterPath: string) => {
+  .argument(
+    '[character.json]',
+    'Existing definition, or scaffold target (default: sibling character.json)',
+  )
+  .action((artPath: string, characterPath?: string) => {
     const report = importCharacter(artPath, characterPath);
+    if (report.createdCharacter) {
+      console.log(`scaffolded ${report.characterPath}`);
+    }
     console.log(`wrote ${report.sidecarPath}`);
     if (report.orphans.length > 0) {
       console.log(`unbound art ids: ${report.orphans.join(', ')}`);

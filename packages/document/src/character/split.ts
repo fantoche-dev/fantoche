@@ -29,6 +29,39 @@ export interface SplitResult extends CharacterArt {
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 /**
+ * Discover the source art's direct child groups for `character import`
+ * scaffolding. Nested ids are implementation details of a slot and must not
+ * become independent bindings merely because the drawing tool named them.
+ */
+export function listTopLevelGroupIds(art: string): string[] {
+  const doc = new DOMParser().parseFromString(art, 'image/svg+xml');
+  const root = doc.documentElement as Element;
+  const ids: string[] = [];
+  const seen = new Set<string>();
+  for (let index = 0; index < root.childNodes.length; index++) {
+    const node = root.childNodes[index];
+    if (node.nodeType !== 1) {
+      continue;
+    }
+    const element = node as unknown as Element;
+    const id = element.getAttribute('id');
+    if (
+      element.tagName !== 'g' ||
+      id === null ||
+      id === '' ||
+      /^pivot-/.test(id) ||
+      element.getAttribute('data-fantoche-pivot') !== null ||
+      seen.has(id)
+    ) {
+      continue;
+    }
+    seen.add(id);
+    ids.push(id);
+  }
+  return ids;
+}
+
+/**
  * Split character art into one pivot-centred sub-SVG per slot.
  *
  * Never throws on a binding mismatch — misses and orphans are reported for
