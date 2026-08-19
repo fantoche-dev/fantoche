@@ -69,6 +69,10 @@ program
   .option('--out <file.mp4>', 'Output file name (default: <doc name>.mp4)')
   .option('--out-dir <dir>', 'Output directory', './output')
   .option('--workers <n>', 'Number of parallel render workers')
+  .option(
+    '--offline',
+    'Block external HTTP(S) while keeping the local render server available',
+  )
   .action(renderDoc);
 
 const narration = program

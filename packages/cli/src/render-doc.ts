@@ -7,6 +7,15 @@ export interface RenderDocOptions {
   out?: string;
   outDir?: string;
   workers?: string;
+  offline?: boolean;
+}
+
+/** Puppeteer flags for an honest offline render with loopback still usable. */
+export function offlinePuppeteerArgs(): string[] {
+  return [
+    '--proxy-server=http://127.0.0.1:9',
+    '--proxy-bypass-list=localhost;127.0.0.1;[::1]',
+  ];
 }
 
 /**
@@ -196,6 +205,7 @@ export async function renderDoc(
           Number.isNaN(Number.parseInt(options.workers, 10))
             ? undefined
             : Number.parseInt(options.workers, 10),
+        puppeteer: options.offline ? {args: offlinePuppeteerArgs()} : undefined,
         logProgress: true,
         projectSettings: {
           exporter: {name: '@fantoche-dev/core/wasm'},

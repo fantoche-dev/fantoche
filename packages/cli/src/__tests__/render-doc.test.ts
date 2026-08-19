@@ -1,5 +1,5 @@
 import {describe, expect, test} from 'vitest';
-import {generateShim} from '../render-doc';
+import {generateShim, offlinePuppeteerArgs} from '../render-doc';
 
 const doc = {
   version: '0.1',
@@ -113,5 +113,14 @@ describe('generateShim', () => {
     );
     expect(shim).not.toContain('import * as block');
     expect(shim).toContain('blocks: {');
+  });
+});
+
+describe('offline render', () => {
+  test('blocks external HTTP(S) without blocking the local Vite server', () => {
+    expect(offlinePuppeteerArgs()).toEqual([
+      '--proxy-server=http://127.0.0.1:9',
+      '--proxy-bypass-list=localhost;127.0.0.1;[::1]',
+    ]);
   });
 });
