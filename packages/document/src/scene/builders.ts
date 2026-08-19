@@ -1,4 +1,3 @@
-import type {Node} from '@fantoche-dev/2d';
 import {
   Circle,
   Code,
@@ -6,6 +5,7 @@ import {
   Latex,
   Layout,
   Line,
+  Node,
   Path,
   Polygon,
   Rect,
@@ -24,6 +24,8 @@ export type AssetMap = Record<string, {type: string; src: string}>;
 export function buildElement(element: CompiledElement, assets: AssetMap): Node {
   const props = {...element.props, key: element.id};
   switch (element.type) {
+    case 'cast':
+      return new Node(props);
     case 'text': {
       const {text, ...rest} = props as unknown as {text: string} & Record<
         string,

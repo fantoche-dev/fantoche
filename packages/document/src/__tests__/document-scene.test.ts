@@ -5,6 +5,7 @@ import {PlaybackManager, PlaybackStatus, Vector2} from '@fantoche-dev/core';
 import {beforeEach, describe, expect, test} from 'vitest';
 import type {DocumentScene, DocumentSceneConfig} from '../scene/index.js';
 import {makeDocumentScene} from '../scene/index.js';
+import {rigDocument, rigOptions} from './rig-fixture.js';
 
 const doc = {
   version: '0.1',
@@ -84,5 +85,41 @@ describe('DocumentScene', () => {
   test('the scene finishes exactly at its last frame', async () => {
     await scene.seekToFrame(119);
     expect(scene.isFinished()).toBe(false);
+  });
+});
+
+describe('DocumentScene with a character rig', () => {
+  test('threads resolved characters and applies FK/zIndex to ordinary SVG nodes', async () => {
+    const playback = new PlaybackManager();
+    const description = {
+      ...makeDocumentScene('rig-test', rigDocument, rigOptions),
+      size: new Vector2(320, 320),
+      resolutionScale: 1,
+      playback: new PlaybackStatus(playback),
+    } as unknown as FullSceneDescription<DocumentSceneConfig>;
+    const rigScene = new description.klass(description) as DocumentScene;
+    playback.setup([rigScene as never]);
+    await rigScene.recalculate(() => {});
+    await rigScene.reset();
+
+    const hand = rigScene.getNode('ana.hand') as unknown as {
+      x(): number;
+      y(): number;
+      rotation(): number;
+    };
+    const arm = rigScene.getNode('ana.arm') as unknown as {zIndex(): number};
+    expect(hand).not.toBeNull();
+    await rigScene.seekToFrame(59);
+    expect(arm.zIndex()).toBe(-1);
+    await rigScene.seekToFrame(60);
+    expect(hand.x()).toBeCloseTo(40, 6);
+    expect(hand.y()).toBeCloseTo(30, 6);
+    expect(hand.rotation()).toBeCloseTo(90, 6);
+    expect(arm.zIndex()).toBe(10);
+
+    await rigScene.seekToFrame(0);
+    expect(hand.x()).toBeCloseTo(80, 6);
+    expect(hand.y()).toBeCloseTo(-10, 6);
+    expect(arm.zIndex()).toBe(-1);
   });
 });

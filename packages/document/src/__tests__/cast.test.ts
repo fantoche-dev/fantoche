@@ -60,7 +60,7 @@ describe('document cast', () => {
     const ir = compile(base);
     const root = ir.elements.find(element => element.id === 'ana');
     const slots = ir.elements.filter(element => element.id.startsWith('ana.'));
-    expect(root).toMatchObject({type: 'layout', parentId: null});
+    expect(root).toMatchObject({type: 'cast', parentId: null});
     expect(root?.props).toMatchObject({x: 10, y: 20, scale: 1.2});
     expect(slots.map(slot => slot.id)).toEqual(['ana.arm-l', 'ana.torso']);
     expect(slots.every(slot => slot.type === 'svg')).toBe(true);
@@ -172,9 +172,13 @@ describe('document cast', () => {
         candidate.target === 'ana.mouth-F' && candidate.prop === 'opacity',
     );
     expect(b?.keys).toEqual([
+      {tF: 30, value: 0, easing: 'hold'},
       {tF: 36, value: 1, easing: 'hold'},
       {tF: 42, value: 0, easing: 'hold'},
     ]);
-    expect(f?.keys).toEqual([{tF: 42, value: 1, easing: 'hold'}]);
+    expect(f?.keys).toEqual([
+      {tF: 30, value: 0, easing: 'hold'},
+      {tF: 42, value: 1, easing: 'hold'},
+    ]);
   });
 });

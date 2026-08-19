@@ -34,6 +34,7 @@ import {
   map,
   type TimingFunction,
 } from '@fantoche-dev/core';
+import {composeRig, type JointPose} from './character/pose.js';
 import type {EasingName} from './easings.js';
 import type {CodeRange, TimelineIR, Track} from './ir.js';
 import type {PropValue} from './schema.js';
@@ -199,6 +200,38 @@ export function evaluateFrame(ir: TimelineIR, frame: number): FrameState {
     target.set(track.prop, value);
   }
 
+  // Joint tracks above are local. Compose them only after every property has
+  // been evaluated for this frame, then overwrite the flat SVG nodes with
+  // world transforms. No previous-frame state participates (ADR 0005/0006).
+  for (const rig of Object.values(ir.rigs ?? {})) {
+    const pose: Record<string, JointPose> = {};
+    for (const slot of rig.slots) {
+      const joint = props.get(slot.nodeId);
+      pose[slot.id] = {
+        x: numericProp(joint, 'x'),
+        y: numericProp(joint, 'y'),
+        rotation: numericProp(joint, 'rotation'),
+        scale: numericProp(joint, 'scale'),
+      };
+    }
+    const composed = composeRig(rig.slots, pose, rig.artCentre);
+    for (const slot of rig.slots) {
+      let target = props.get(slot.nodeId);
+      if (target === undefined) {
+        target = new Map();
+        props.set(slot.nodeId, target);
+      }
+      const world = composed[slot.id];
+      target.set('x', world.x);
+      target.set('y', world.y);
+      target.set('rotation', world.rotation);
+      target.set('scale', world.scale);
+      const depth = numericProp(target, 'depth') ?? slot.depth;
+      target.delete('depth');
+      target.set('zIndex', depth);
+    }
+  }
+
   const code = new Map<string, CodeFrameState>();
   for (const track of ir.codeTracks) {
     let codeState: CodeFrameState['code'] = track.initialCode;
@@ -261,6 +294,14 @@ export function evaluateFrame(ir: TimelineIR, frame: number): FrameState {
   }
 
   return {props, code, blocks};
+}
+
+function numericProp(
+  props: Map<string, PropValue> | undefined,
+  name: string,
+): number | undefined {
+  const value = props?.get(name);
+  return typeof value === 'number' ? value : undefined;
 }
 
 /** Seconds-based convenience wrapper over {@link evaluateFrame}. */

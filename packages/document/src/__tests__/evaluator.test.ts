@@ -1,15 +1,16 @@
 import {describe, expect, test} from 'vitest';
-import {compileDocument} from '../compiler/compile.js';
-import {evaluate, lerpValue} from '../evaluator.js';
+import {compileDocument, type CompileOptions} from '../compiler/compile.js';
+import {evaluate, evaluateFrame, lerpValue} from '../evaluator.js';
 import type {TimelineIR} from '../ir.js';
 import {validateDocument} from '../validate.js';
+import {rigDocument, rigOptions} from './rig-fixture.js';
 
-function compile(raw: unknown): TimelineIR {
+function compile(raw: unknown, options?: CompileOptions): TimelineIR {
   const result = validateDocument(raw);
   if (!result.ok) {
     throw new Error(JSON.stringify(result.errors));
   }
-  return compileDocument(result.doc).ir;
+  return compileDocument(result.doc, options).ir;
 }
 
 const doc = {
@@ -147,6 +148,52 @@ describe('evaluate', () => {
     );
     expect(longMs).toBeLessThan(1);
     expect(longMs).toBeLessThan(Math.max(shortMs * 20, 0.5));
+  });
+});
+
+describe('pose evaluation stage', () => {
+  const ir = compile(rigDocument, rigOptions);
+
+  test('writes composed transforms for every flat slot', () => {
+    const rest = evaluateFrame(ir, 0);
+    expect(rest.props.get('ana.torso')?.get('x')).toBeCloseTo(0, 6);
+    expect(rest.props.get('ana.torso')?.get('y')).toBeCloseTo(0, 6);
+    expect(rest.props.get('ana.arm')?.get('x')).toBeCloseTo(40, 6);
+    expect(rest.props.get('ana.arm')?.get('y')).toBeCloseTo(-10, 6);
+
+    const waved = evaluateFrame(ir, 60);
+    expect(waved.props.get('ana.hand')?.get('x')).toBeCloseTo(40, 6);
+    expect(waved.props.get('ana.hand')?.get('y')).toBeCloseTo(30, 6);
+    expect(waved.props.get('ana.hand')?.get('rotation')).toBeCloseTo(90, 6);
+  });
+
+  test('maps held depth to zIndex exactly at the destination keyframe', () => {
+    expect(evaluateFrame(ir, 59).props.get('ana.arm')?.get('zIndex')).toBe(-1);
+    expect(evaluateFrame(ir, 60).props.get('ana.arm')?.get('zIndex')).toBe(10);
+    expect(evaluateFrame(ir, 45).props.get('ana.arm')?.has('depth')).toBe(
+      false,
+    );
+  });
+
+  test('backward seeking to the same frame is state-identical', () => {
+    const direct = evaluateFrame(ir, 37);
+    evaluateFrame(ir, 100);
+    expect(evaluateFrame(ir, 37)).toEqual(direct);
+  });
+
+  test('rig work is independent of document duration', () => {
+    const long = {...ir, durationF: 600 * ir.fps};
+    expect(evaluateFrame(long, 45)).toEqual(evaluateFrame(ir, 45));
+    const bench = (input: TimelineIR) => {
+      evaluateFrame(input, 45);
+      const start = performance.now();
+      for (let i = 0; i < 1000; i++) evaluateFrame(input, 45);
+      return (performance.now() - start) / 1000;
+    };
+    const shortMs = bench(ir);
+    const longMs = bench(long);
+    expect(longMs).toBeLessThan(1);
+    expect(longMs).toBeLessThan(Math.max(shortMs * 10, 0.25));
   });
 });
 

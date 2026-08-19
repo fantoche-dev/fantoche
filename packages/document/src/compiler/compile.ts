@@ -188,7 +188,7 @@ export function compileDocument(
 
     const root: CompiledElement = {
       id: castId,
-      type: 'layout',
+      type: 'cast',
       props: {
         x: member.x,
         y: member.y,
@@ -450,6 +450,37 @@ export function compileDocument(
         }
         return byId.get(`${castId}.${slotId}`)!;
       };
+      // Every item starts from a known mouth state. This matters when a cast
+      // member has multiple clips: otherwise the last viseme of the previous
+      // clip can remain visible beside the first viseme of the next one.
+      for (const viseme of Object.keys(visemes) as Viseme[]) {
+        addPropEvent(
+          nodeFor(viseme),
+          'opacity',
+          {
+            itemIndex: index,
+            t0,
+            t1: t0,
+            kind: 'set',
+            value: 0,
+            easing: 'hold',
+          },
+          `${path}/lipsync`,
+        );
+      }
+      addPropEvent(
+        nodeFor('X'),
+        'opacity',
+        {
+          itemIndex: index,
+          t0,
+          t1: t0,
+          kind: 'set',
+          value: 1,
+          easing: 'hold',
+        },
+        `${path}/lipsync`,
+      );
       const switches: {t: number; viseme: Viseme}[] = [];
       for (const cue of track.cues) {
         const next = {t: t0 + cue.t, viseme: cue.viseme};

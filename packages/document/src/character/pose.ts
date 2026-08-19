@@ -16,6 +16,10 @@ export interface RigSlot {
   scale?: number;
 }
 
+export interface OrderedRigSlot extends RigSlot {
+  id: string;
+}
+
 /** Joint-space values evaluated from pose tracks at one frame. */
 export interface JointPose {
   x?: number;
@@ -33,14 +37,15 @@ export type RigPose = Record<string, JointPose | undefined>;
  * limb follows an arc rather than a chord (ADR 0006).
  */
 export function composeRig(
-  rig: RigDefinition,
+  rig: RigDefinition | readonly OrderedRigSlot[],
   pose: RigPose,
   artCentre: readonly [number, number] = [0, 0],
 ): Record<string, Decomposed2D> {
   const matrices: Record<string, Mat2D> = {};
+  const rests: Record<string, readonly [number, number]> = {};
   const output: Record<string, Decomposed2D> = {};
 
-  for (const [slotId, slot] of Object.entries(rig)) {
+  const composeSlot = (slotId: string, slot: RigSlot) => {
     const parent = slot.parent;
     const parentMatrix = parent === null ? undefined : matrices[parent];
     if (parent !== null && parentMatrix === undefined) {
@@ -48,7 +53,7 @@ export function composeRig(
         `rig slot "${slotId}" appears before parent "${parent}" — slots must be in topological order`,
       );
     }
-    const parentRest = parent === null ? artCentre : rig[parent].rest;
+    const parentRest = parent === null ? artCentre : rests[parent];
     const joint = pose[slotId] ?? {};
     const offsetX = slot.rest[0] - parentRest[0];
     const offsetY = slot.rest[1] - parentRest[1];
@@ -65,7 +70,16 @@ export function composeRig(
     const world =
       parentMatrix === undefined ? local : multiply(parentMatrix, local);
     matrices[slotId] = world;
+    rests[slotId] = slot.rest;
     output[slotId] = decompose(world);
+  };
+
+  if (Array.isArray(rig)) {
+    for (const slot of rig) composeSlot(slot.id, slot);
+  } else {
+    for (const [slotId, slot] of Object.entries(rig)) {
+      composeSlot(slotId, slot);
+    }
   }
 
   return output;
