@@ -84,12 +84,14 @@ narration
   .requiredOption('--language <tag>', 'Language tag, e.g. pt-BR')
   .option('--python <path>', 'Python with whisperx (default: $WHISPERX_PYTHON)')
   .option('--model-dir <dir>', 'Model cache (default: $WHISPERX_MODEL_DIR)')
+  .option('--script <path>', 'Override the bundled scripts/align.py')
   .action(async (docPath: string, options) => {
     await alignNarration(docPath, {
       audio: options.audio,
       language: options.language,
       python: options.python,
       modelDir: options.modelDir,
+      script: options.script,
     });
     console.log(`aligned ${docPath}`);
   });

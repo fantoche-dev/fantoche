@@ -55,6 +55,42 @@ describe('generateShim', () => {
     expect(shim).not.toContain("'x', evil:");
   });
 
+  test('inlines resolved characters and lipsync tracks as literals', () => {
+    const shim = generateShim(
+      doc,
+      'demo',
+      [],
+      '/work/videos',
+      '/work/node_modules/.fantoche',
+      {
+        characters: {
+          hero: {
+            character: {id: 'hero'} as never,
+            art: {centre: [100, 50]} as never,
+          },
+        },
+        lipsync: {mouth: {engine: 'manual'} as never},
+      },
+    );
+    expect(shim).toContain('"characters":');
+    expect(shim).toContain('"centre"');
+    expect(shim).toContain('"lipsync":');
+    expect(shim).toContain('"manual"');
+  });
+
+  test('omits the resolved-options keys entirely when nothing resolves', () => {
+    const shim = generateShim(
+      doc,
+      'demo',
+      [],
+      '/work/videos',
+      '/work/node_modules/.fantoche',
+      {characters: {}, lipsync: {}},
+    );
+    expect(shim).not.toContain('"characters":');
+    expect(shim).not.toContain('"lipsync":');
+  });
+
   test('block src escaping the document directory is rejected', () => {
     expect(() =>
       generateShim(

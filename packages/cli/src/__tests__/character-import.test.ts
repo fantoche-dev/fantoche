@@ -23,7 +23,10 @@ const CHARACTER = {
 };
 
 const dirs: string[] = [];
-function makeFixture(character: unknown = CHARACTER): {
+function makeFixture(
+  character: unknown = CHARACTER,
+  art = ART,
+): {
   artPath: string;
   characterPath: string;
   sidecarPath: string;
@@ -32,7 +35,7 @@ function makeFixture(character: unknown = CHARACTER): {
   dirs.push(dir);
   const artPath = path.join(dir, 'hero.svg');
   const characterPath = path.join(dir, 'character.json');
-  fs.writeFileSync(artPath, ART);
+  fs.writeFileSync(artPath, art);
   fs.writeFileSync(characterPath, `${JSON.stringify(character, null, 2)}\n`);
   return {artPath, characterPath, sidecarPath: path.join(dir, 'hero.art.json')};
 }
@@ -81,5 +84,52 @@ describe('importCharacter', () => {
     character.slots.torso.parent = 'ghost';
     const {artPath, characterPath} = makeFixture(character);
     expect(() => importCharacter(artPath, characterPath)).toThrow(/ghost/);
+  });
+
+  test.each([
+    ['source art', 'hero.svg'],
+    ['character definition', 'character.json'],
+  ])('never overwrites the %s when art.src collides', (_label, src) => {
+    const character = structuredClone(CHARACTER) as any;
+    character.art.src = src;
+    const {artPath, characterPath} = makeFixture(character);
+    const artBefore = fs.readFileSync(artPath, 'utf8');
+    const characterBefore = fs.readFileSync(characterPath, 'utf8');
+
+    expect(() => importCharacter(artPath, characterPath)).toThrow(
+      /refusing to overwrite/,
+    );
+    expect(fs.readFileSync(artPath, 'utf8')).toBe(artBefore);
+    expect(fs.readFileSync(characterPath, 'utf8')).toBe(characterBefore);
+  });
+
+  test('never overwrites an arbitrary non-sidecar file', () => {
+    const character = structuredClone(CHARACTER) as any;
+    character.art.src = 'notes.txt';
+    const {artPath, characterPath} = makeFixture(character);
+    const notesPath = path.join(path.dirname(characterPath), 'notes.txt');
+    fs.writeFileSync(notesPath, 'keep me\n');
+
+    expect(() => importCharacter(artPath, characterPath)).toThrow(
+      /non-sidecar/,
+    );
+    expect(fs.readFileSync(notesPath, 'utf8')).toBe('keep me\n');
+  });
+
+  test('accepts a valid single-quoted viewBox via splitArt centre measurement', () => {
+    const singleQuoted = ART.replace(
+      'viewBox="0 0 200 100"',
+      "viewBox='0 0 200 100'",
+    );
+    const {artPath, characterPath, sidecarPath} = makeFixture(
+      CHARACTER,
+      singleQuoted,
+    );
+
+    importCharacter(artPath, characterPath);
+    const sidecar = characterArtSchema.parse(
+      JSON.parse(fs.readFileSync(sidecarPath, 'utf8')),
+    );
+    expect(sidecar.centre).toEqual([100, 50]);
   });
 });

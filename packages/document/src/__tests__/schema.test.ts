@@ -64,4 +64,24 @@ describe('validateDocument', () => {
     };
     expect(validateDocument(doc).ok).toBe(false);
   });
+
+  test('allows dur/volume only on audio assets', () => {
+    expect(
+      validateDocument({
+        ...minimal,
+        assets: {
+          voice: {type: 'audio', src: 'voice.wav', dur: 2, volume: 0.5},
+        },
+      }).ok,
+    ).toBe(true);
+
+    for (const type of ['image', 'svg', 'lipsync']) {
+      expect(
+        validateDocument({
+          ...minimal,
+          assets: {bad: {type, src: 'asset.bin', dur: 2, volume: 0.5}},
+        }).ok,
+      ).toBe(false);
+    }
+  });
 });

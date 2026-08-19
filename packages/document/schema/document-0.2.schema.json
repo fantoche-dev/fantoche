@@ -62,36 +62,107 @@
         "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$"
       },
       "additionalProperties": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "image",
-              "audio",
-              "svg",
-              "lipsync"
-            ]
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "image"
+              },
+              "src": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "type",
+              "src"
+            ],
+            "additionalProperties": false
           },
-          "src": {
-            "type": "string",
-            "minLength": 1
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "svg"
+              },
+              "src": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "type",
+              "src"
+            ],
+            "additionalProperties": false
           },
-          "dur": {
-            "type": "number",
-            "exclusiveMinimum": 0
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "lipsync"
+              },
+              "src": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "type",
+              "src"
+            ],
+            "additionalProperties": false
           },
-          "volume": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 1
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "character"
+              },
+              "src": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "type",
+              "src"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "audio"
+              },
+              "src": {
+                "type": "string",
+                "minLength": 1
+              },
+              "dur": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "volume": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "required": [
+              "type",
+              "src"
+            ],
+            "additionalProperties": false
           }
-        },
-        "required": [
-          "type",
-          "src"
-        ],
-        "additionalProperties": false
+        ]
       }
     },
     "narration": {

@@ -324,14 +324,26 @@ const narrationSchema = z.strictObject({
   segments: z.array(segmentSchema),
 });
 
-const assetSchema = z.strictObject({
-  type: z.enum(['image', 'audio', 'svg', 'lipsync']),
-  src: z.string().min(1),
-  /** Audio only: media duration in seconds. Default: last segment's end. */
-  dur: positiveSeconds.optional(),
-  /** Audio only: mux volume, 0–1. */
-  volume: z.number().min(0).max(1).optional(),
-});
+const assetSchema = z.discriminatedUnion('type', [
+  z.strictObject({type: z.literal('image'), src: z.string().min(1)}),
+  z.strictObject({type: z.literal('svg'), src: z.string().min(1)}),
+  z.strictObject({type: z.literal('lipsync'), src: z.string().min(1)}),
+  /**
+   * A character.json this document's `cast` uses. The asset id must equal
+   * the character's own id. Dev-time resolvers (the render CLI, project
+   * files) read it and its art sidecar into `options.characters` — the pure
+   * compiler still never touches a file.
+   */
+  z.strictObject({type: z.literal('character'), src: z.string().min(1)}),
+  z.strictObject({
+    type: z.literal('audio'),
+    src: z.string().min(1),
+    /** Media duration in seconds. Default: last narration segment's end. */
+    dur: positiveSeconds.optional(),
+    /** Mux volume, 0–1. */
+    volume: z.number().min(0).max(1).optional(),
+  }),
+]);
 
 const castMemberSchema = z.strictObject({
   character: idSchema,

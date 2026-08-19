@@ -13,7 +13,8 @@
     "directory": "packages/cli"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node scripts/copy-align.mjs",
+    "prepack": "npm run build",
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "test": "vitest run"
@@ -38,6 +39,7 @@
     "commander": "^15.0.0",
     "cors": "^2.8.5",
     "express": "^5.2.1",
+    "jsonc-parser": "3.2.0",
     "uuid": "^14.0.1",
     "@fantoche-dev/document": "0.11.0"
   }

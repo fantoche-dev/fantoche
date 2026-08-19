@@ -25,8 +25,26 @@ export function importCharacter(
   artPath: string,
   characterPath: string,
 ): ImportReport {
-  const character = parseCharacter(characterPath);
-  const art = fs.readFileSync(artPath, 'utf8');
+  const resolvedArtPath = path.resolve(artPath);
+  const resolvedCharacterPath = path.resolve(characterPath);
+  const character = parseCharacter(resolvedCharacterPath);
+  const sidecarPath = path.resolve(
+    path.dirname(resolvedCharacterPath),
+    character.art.src,
+  );
+  refuseInputCollision(sidecarPath, resolvedArtPath, 'source art');
+  refuseInputCollision(
+    sidecarPath,
+    resolvedCharacterPath,
+    'character definition',
+  );
+  if (!/\.art\.json$/i.test(sidecarPath)) {
+    throw new Error(
+      `refusing to write non-sidecar path "${sidecarPath}" — character.art.src must end in *.art.json`,
+    );
+  }
+
+  const art = fs.readFileSync(resolvedArtPath, 'utf8');
 
   const split = splitArt(
     art,
@@ -40,7 +58,7 @@ export function importCharacter(
 
   if (split.missing.length > 0) {
     throw new Error(
-      `art "${path.basename(artPath)}" has no element for ` +
+      `art "${path.basename(resolvedArtPath)}" has no element for ` +
         `slot(s): ${split.missing
           .map(
             slotId =>
@@ -55,15 +73,11 @@ export function importCharacter(
 
   const sidecar: CharacterArt = characterArtSchema.parse({
     version: CHARACTER_ART_VERSION,
-    centre: viewBoxCentre(art, artPath),
+    centre: split.centre,
     slots: split.slots,
     pivots: split.pivots,
   });
 
-  const sidecarPath = path.resolve(
-    path.dirname(characterPath),
-    character.art.src,
-  );
   fs.writeFileSync(sidecarPath, `${JSON.stringify(sidecar, null, 2)}\n`);
   return {sidecarPath, orphans: split.orphans};
 }
@@ -80,20 +94,18 @@ function parseCharacter(characterPath: string): Character {
   return result.data;
 }
 
-function viewBoxCentre(art: string, artPath: string): [number, number] {
-  const match = /viewBox\s*=\s*"([^"]+)"/.exec(art);
-  const values = match?.[1]
-    .trim()
-    .split(/[\s,]+/)
-    .map(Number);
-  if (
-    values === undefined ||
-    values.length !== 4 ||
-    values.some(Number.isNaN)
-  ) {
+function refuseInputCollision(
+  sidecarPath: string,
+  inputPath: string,
+  inputLabel: string,
+): void {
+  const canonical = (candidate: string) =>
+    fs.existsSync(candidate)
+      ? fs.realpathSync.native(candidate)
+      : path.resolve(candidate);
+  if (canonical(sidecarPath) === canonical(inputPath)) {
     throw new Error(
-      `art "${path.basename(artPath)}" has no usable viewBox — the sidecar's centre comes from it`,
+      `refusing to overwrite ${inputLabel} "${inputPath}" — character.art.src must name a separate *.art.json sidecar`,
     );
   }
-  return [values[0] + values[2] / 2, values[1] + values[3] / 2];
 }
