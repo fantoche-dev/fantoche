@@ -189,6 +189,21 @@ describe('alignNarration', () => {
     }
   });
 
+  test('refuses aligned words outside the segment window, naming the fix', async () => {
+    const doc = structuredClone(DOC) as any;
+    // "hoje" aligns at ~1.9 s — declaring the window after it must refuse
+    // rather than silently writing words a `body.start` anchor would sit
+    // after. Segment fields are the user's; the error names the fix.
+    doc.narration.segments[1].start = 2.5;
+    const docPath = writeDoc(doc);
+    await expect(alignNarration(docPath, {align: alignedById})).rejects.toThrow(
+      /segment "body" declares .* its aligned words span/,
+    );
+    // The refusal happens before any write.
+    const untouched = JSON.parse(fs.readFileSync(docPath, 'utf8'));
+    expect(untouched.narration.segments[1].words).toBeUndefined();
+  });
+
   test('refuses a document with no narration', async () => {
     const docPath = writeDoc({...DOC, narration: undefined});
     await expect(alignNarration(docPath, {align})).rejects.toThrow(/narration/);

@@ -47,6 +47,8 @@ export interface AlignNarrationOptions {
 }
 
 interface DocumentSegment extends AlignSegmentInput {
+  start?: unknown;
+  dur?: unknown;
   words?: unknown;
 }
 
@@ -140,6 +142,29 @@ export async function alignNarration(
           alignedSegment.words.length - tokens.length
         } extra word(s) beyond the transcript`,
       );
+    }
+    // Containment: `segment.start`/`dur` are the user's fields and anchors
+    // resolve against words, so words landing outside the declared window
+    // make `<segment>.start` fire after `<segment>.word:*`. Retiming the
+    // user's fields silently would be a decision of its own (they stay
+    // theirs) — refuse with the minimal window named instead.
+    if (
+      words.length > 0 &&
+      typeof segment.start === 'number' &&
+      typeof segment.dur === 'number'
+    ) {
+      const first = words[0].start;
+      const last = words[words.length - 1];
+      const lastEnd = last.start + (last.dur ?? 0);
+      const windowEnd = segment.start + segment.dur;
+      if (first < segment.start - 0.001 || lastEnd > windowEnd + 0.001) {
+        throw new Error(
+          `segment "${segment.id}" declares ${segment.start}–${round3(windowEnd)} s ` +
+            `but its aligned words span ${first}–${round3(lastEnd)} s — widen the ` +
+            `window (e.g. "start": ${first}, "dur": ${round3(lastEnd - first)}) ` +
+            `or re-cut the segments; word timings are the audio's truth`,
+        );
+      }
     }
     writes.push({index, words});
   }

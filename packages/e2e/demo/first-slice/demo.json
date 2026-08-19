@@ -11,8 +11,15 @@
       "type": "character",
       "src": "../../characters/teacher/character.json"
     },
-    "voice": {"type": "audio", "src": "narration.wav", "dur": 9.64},
-    "mouth": {"type": "lipsync", "src": "mouth.viseme.json"}
+    "voice": {
+      "type": "audio",
+      "src": "narration.wav",
+      "dur": 9.64
+    },
+    "mouth": {
+      "type": "lipsync",
+      "src": "mouth.viseme.json"
+    }
   },
   "narration": {
     "audio": "voice",
@@ -23,16 +30,28 @@
         "start": 0,
         "dur": 1.6,
         "words": [
-          {"text": "bom", "start": 0.12, "dur": 0.12},
-          {"text": "dia", "start": 0.321, "dur": 0.24},
-          {"text": "pessoal", "start": 0.742, "dur": 0.821}
+          {
+            "text": "bom",
+            "start": 0.12,
+            "dur": 0.12
+          },
+          {
+            "text": "dia",
+            "start": 0.321,
+            "dur": 0.24
+          },
+          {
+            "text": "pessoal",
+            "start": 0.742,
+            "dur": 0.821
+          }
         ]
       },
       {
         "id": "corpo",
         "text": "Hoje vamos falar de busca binária, com um exemplo bem simples.",
-        "start": 1.9,
-        "dur": 3.9,
+        "start": 1.5,
+        "dur": 5.074,
         "words": [
           {
             "text": "hoje",
@@ -94,8 +113,8 @@
       {
         "id": "fecho",
         "text": "Você olha o meio, compara, e descarta metade.",
-        "start": 6.5,
-        "dur": 3.14,
+        "start": 6.574,
+        "dur": 3.066,
         "words": [
           {
             "text": "você",
@@ -141,17 +160,36 @@
       }
     ]
   },
-  "cast": {"ana": {"character": "teacher", "y": 10, "scale": 0.55}},
+  "cast": {
+    "ana": {
+      "character": "teacher",
+      "y": 10,
+      "scale": 0.55
+    }
+  },
   "elements": [],
   "timeline": [
-    {"at": "corpo.word:vamos", "target": "ana", "pose": "wave", "dur": 0.5},
+    {
+      "at": "corpo.word:vamos",
+      "target": "ana",
+      "pose": "wave",
+      "dur": 0.5
+    },
     {
       "at": "corpo.word:binária",
       "target": "ana",
       "pose": "arm-front",
       "dur": 0.5
     },
-    {"at": "fecho.word:descarta", "target": "ana", "pose": "rest", "dur": 0.4},
-    {"target": "ana", "lipsync": "mouth"}
+    {
+      "at": "fecho.word:descarta",
+      "target": "ana",
+      "pose": "rest",
+      "dur": 0.4
+    },
+    {
+      "target": "ana",
+      "lipsync": "mouth"
+    }
   ]
 }
