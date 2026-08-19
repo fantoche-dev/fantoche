@@ -82,11 +82,14 @@ jobs:
       - run: npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
       - run: npx lerna run build --ignore @fantoche-dev/docs
       # TEMP (drop after doc-character-poses goldens are committed, restoring
-      # the plain `npm run e2e:test`): --update writes the new scene's Linux
-      # goldens (unsetting CI is not enough — vitest also reads
-      # GITHUB_ACTIONS). Existing goldens get rewritten too; only the new
-      # files are committed, after verifying the rest came back identical.
-      - run: npm run e2e:test -- --update
+      # the plain `npm run e2e:test`): an explicit --update writes the new
+      # scene's Linux goldens (unsetting CI is not enough — vitest also reads
+      # GITHUB_ACTIONS — and flags don't survive the nested npm script chain,
+      # hence the direct vitest invocation). Existing goldens get rewritten
+      # in the same pass; only the new files are committed, after verifying
+      # the rest came back byte-identical.
+      - run: npx vitest run --update
+        working-directory: packages/e2e
       - uses: actions/upload-artifact@v4
         if: always()
         with:
