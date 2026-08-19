@@ -1,23 +1,23 @@
-Hoje vamos entender busca binária com um exemplo visual. Ela usa somente três ideias: ordem, comparação e descarte.
+Today we will understand binary search with a visual example. It uses only three ideas: ordering, comparison, and elimination.
 
-Primeiro, precisamos de uma lista ordenada. Aqui estão quinze números. Nosso objetivo é encontrar o número trinta e sete.
+First, we need a sorted list. Here are fifteen numbers. Our goal is to find number thirty-seven.
 
-Em vez de testar cada posição, olhamos direto para o meio. Nesta lista, o primeiro meio é o número trinta e um.
+Instead of checking every position, we look directly at the middle. In this list, the first middle value is thirty-one.
 
-Comparamos trinta e sete com trinta e um. Como o alvo é maior, nenhuma posição à esquerda serve. Descartamos aquela metade.
+We compare thirty-seven with thirty-one. Because the target is larger, no position on the left can work. We eliminate that half.
 
-Agora restam os números maiores. Escolhemos novamente o centro, que desta vez é quarenta e sete.
+Now only the larger numbers remain. We choose the center again, and this time it is forty-seven.
 
-O alvo é menor que quarenta e sete, então descartamos a metade direita. A cada comparação, o intervalo fica duas vezes menor.
+The target is smaller than forty-seven, so we eliminate the right half. With every comparison, the interval becomes twice as small.
 
-O próximo meio é trinta e sete. Encontramos o valor sem visitar quase toda a lista.
+The next middle value is thirty-seven. We found it without visiting almost the entire list.
 
-No código, começamos com dois limites: baixo no início e alto no fim. Enquanto baixo não ultrapassar alto, calculamos o meio.
+In the code, we start with two boundaries: low at the beginning and high at the end. While low does not pass high, we calculate the middle.
 
-Se o valor central for igual ao alvo, devolvemos sua posição. Se for menor, movemos baixo. Caso contrário, reduzimos alto.
+If the middle value equals the target, we return its position. If it is smaller, we move low. Otherwise, we reduce high.
 
-Perceba o padrão: quinze posições viraram sete, depois três e finalmente uma. Por isso o custo cresce como logaritmo do tamanho da lista.
+Notice the pattern: fifteen positions became seven, then three, and finally one. That is why the cost grows like the logarithm of the list size.
 
-Com um milhão de itens, precisamos de cerca de vinte comparações. Mas a lista precisa estar ordenada antes da busca.
+With one million items, we need about twenty comparisons. But the list must already be sorted before the search.
 
-Esse é o coração da busca binária: olhar o meio, comparar e eliminar metade. Com dados ordenados, uma decisão pequena economiza muito trabalho.
+This is the heart of binary search: look at the middle, compare, and eliminate half. With sorted data, one small decision saves a great deal of work.

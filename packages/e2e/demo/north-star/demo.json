@@ -4,7 +4,7 @@
     "fps": 30,
     "size": [1920, 1080],
     "background": "#0b1020",
-    "duration": 91.608
+    "duration": 90.48
   },
   "assets": {
     "teacher": {
@@ -14,7 +14,7 @@
     "voice": {
       "type": "audio",
       "src": "narration.wav",
-      "dur": 91.608
+      "dur": 90.48
     },
     "mouth": {
       "type": "lipsync",
@@ -26,1302 +26,1347 @@
     "segments": [
       {
         "id": "intro",
-        "text": "Hoje vamos entender busca binária com um exemplo visual. Ela usa somente três ideias: ordem, comparação e descarte.",
-        "start": 0.18,
-        "dur": 7.781,
+        "text": "Today we will understand binary search with a visual example. It uses only three ideas: ordering, comparison, and elimination.",
+        "start": 0.22,
+        "dur": 8.322,
         "words": [
           {
-            "text": "hoje",
-            "start": 0.18,
-            "dur": 0.28
-          },
-          {
-            "text": "vamos",
-            "start": 0.52,
-            "dur": 0.26
-          },
-          {
-            "text": "entender",
-            "start": 0.82,
-            "dur": 0.4
-          },
-          {
-            "text": "busca",
-            "start": 1.3,
+            "text": "today",
+            "start": 0.22,
             "dur": 0.3
           },
           {
-            "text": "binária",
-            "start": 1.64,
-            "dur": 0.44
-          },
-          {
-            "text": "com",
-            "start": 2.14,
-            "dur": 0.12
-          },
-          {
-            "text": "um",
-            "start": 2.28,
+            "text": "we",
+            "start": 0.58,
             "dur": 0.08
           },
           {
-            "text": "exemplo",
-            "start": 2.4,
-            "dur": 0.38
+            "text": "will",
+            "start": 0.68,
+            "dur": 0.16
           },
           {
-            "text": "visual",
-            "start": 2.84,
-            "dur": 0.46
+            "text": "understand",
+            "start": 0.9,
+            "dur": 0.48
           },
           {
-            "text": "ela",
-            "start": 3.66,
-            "dur": 0.18
-          },
-          {
-            "text": "usa",
-            "start": 3.96,
-            "dur": 0.2
-          },
-          {
-            "text": "somente",
-            "start": 4.24,
+            "text": "binary",
+            "start": 1.46,
             "dur": 0.42
           },
           {
-            "text": "três",
-            "start": 4.74,
+            "text": "search",
+            "start": 1.92,
+            "dur": 0.3
+          },
+          {
+            "text": "with",
+            "start": 2.281,
+            "dur": 0.14
+          },
+          {
+            "text": "a",
+            "start": 2.461,
+            "dur": 0.02
+          },
+          {
+            "text": "visual",
+            "start": 2.541,
+            "dur": 0.3
+          },
+          {
+            "text": "example",
+            "start": 2.881,
+            "dur": 0.44
+          },
+          {
+            "text": "it",
+            "start": 3.861,
+            "dur": 0.06
+          },
+          {
+            "text": "uses",
+            "start": 4.001,
             "dur": 0.24
           },
           {
-            "text": "ideias",
-            "start": 5,
-            "dur": 0.56
+            "text": "only",
+            "start": 4.361,
+            "dur": 0.22
           },
           {
-            "text": "ordem",
-            "start": 5.821,
-            "dur": 0.34
+            "text": "three",
+            "start": 4.641,
+            "dur": 0.22
           },
           {
-            "text": "comparação",
-            "start": 6.281,
-            "dur": 0.6
+            "text": "ideas",
+            "start": 4.901,
+            "dur": 0.4
           },
           {
-            "text": "e",
-            "start": 6.921,
-            "dur": 0.04
+            "text": "ordering",
+            "start": 5.761,
+            "dur": 0.4
           },
           {
-            "text": "descarte",
-            "start": 6.981,
-            "dur": 0.98
+            "text": "comparison",
+            "start": 6.301,
+            "dur": 0.701
+          },
+          {
+            "text": "and",
+            "start": 7.202,
+            "dur": 0.1
+          },
+          {
+            "text": "elimination",
+            "start": 7.382,
+            "dur": 1.16
           }
         ]
       },
       {
         "id": "lista",
-        "text": "Primeiro, precisamos de uma lista ordenada. Aqui estão quinze números. Nosso objetivo é encontrar o número trinta e sete.",
-        "start": 7.961,
-        "dur": 7.66,
+        "text": "First, we need a sorted list. Here are fifteen numbers. Our goal is to find number thirty-seven.",
+        "start": 8.542,
+        "dur": 6.181,
         "words": [
           {
-            "text": "primeiro",
-            "start": 7.961,
-            "dur": 0.44
-          },
-          {
-            "text": "precisamos",
-            "start": 8.481,
-            "dur": 0.6
-          },
-          {
-            "text": "de",
-            "start": 9.121,
-            "dur": 0.06
-          },
-          {
-            "text": "uma",
-            "start": 9.221,
-            "dur": 0.12
-          },
-          {
-            "text": "lista",
-            "start": 9.421,
-            "dur": 0.28
-          },
-          {
-            "text": "ordenada",
-            "start": 9.761,
-            "dur": 0.58
-          },
-          {
-            "text": "aqui",
-            "start": 10.701,
-            "dur": 0.24
-          },
-          {
-            "text": "estão",
-            "start": 10.961,
-            "dur": 0.24
-          },
-          {
-            "text": "quinze",
-            "start": 11.281,
+            "text": "first",
+            "start": 8.542,
             "dur": 0.3
           },
           {
-            "text": "números",
-            "start": 11.641,
-            "dur": 0.52
+            "text": "we",
+            "start": 9.042,
+            "dur": 0.12
           },
           {
-            "text": "nosso",
-            "start": 12.501,
-            "dur": 0.22
+            "text": "need",
+            "start": 9.202,
+            "dur": 0.12
           },
           {
-            "text": "objetivo",
-            "start": 12.761,
-            "dur": 0.64
+            "text": "a",
+            "start": 9.362,
+            "dur": 0.06
           },
           {
-            "text": "é",
-            "start": 13.441,
-            "dur": 0.04
+            "text": "sorted",
+            "start": 9.462,
+            "dur": 0.26
           },
           {
-            "text": "encontrar",
-            "start": 13.521,
-            "dur": 0.46
-          },
-          {
-            "text": "o",
-            "start": 14.001,
-            "dur": 0.04
-          },
-          {
-            "text": "número",
-            "start": 14.121,
+            "text": "list",
+            "start": 9.762,
             "dur": 0.28
           },
           {
-            "text": "trinta",
-            "start": 14.481,
+            "text": "here",
+            "start": 10.602,
+            "dur": 0.16
+          },
+          {
+            "text": "are",
+            "start": 10.802,
+            "dur": 0.1
+          },
+          {
+            "text": "fifteen",
+            "start": 10.942,
+            "dur": 0.32
+          },
+          {
+            "text": "numbers",
+            "start": 11.302,
+            "dur": 0.341
+          },
+          {
+            "text": "our",
+            "start": 12.243,
+            "dur": 0.1
+          },
+          {
+            "text": "goal",
+            "start": 12.383,
+            "dur": 0.28
+          },
+          {
+            "text": "is",
+            "start": 12.743,
+            "dur": 0.1
+          },
+          {
+            "text": "to",
+            "start": 12.883,
+            "dur": 0.08
+          },
+          {
+            "text": "find",
+            "start": 13.003,
+            "dur": 0.22
+          },
+          {
+            "text": "number",
+            "start": 13.283,
             "dur": 0.24
           },
           {
-            "text": "e",
-            "start": 14.741,
-            "dur": 0.04
-          },
-          {
-            "text": "sete",
-            "start": 14.881,
-            "dur": 0.74
+            "text": "thirty-seven",
+            "start": 13.583,
+            "dur": 1.14
           }
         ]
       },
       {
         "id": "primeiro_meio",
-        "text": "Em vez de testar cada posição, olhamos direto para o meio. Nesta lista, o primeiro meio é o número trinta e um.",
-        "start": 15.621,
-        "dur": 6.981,
+        "text": "Instead of checking every position, we look directly at the middle. In this list, the first middle value is thirty-one.",
+        "start": 14.723,
+        "dur": 7.282,
         "words": [
           {
-            "text": "em",
-            "start": 15.621,
-            "dur": 0.1
-          },
-          {
-            "text": "vez",
-            "start": 15.781,
-            "dur": 0.18
-          },
-          {
-            "text": "de",
-            "start": 15.981,
-            "dur": 0.08
-          },
-          {
-            "text": "testar",
-            "start": 16.121,
-            "dur": 0.32
-          },
-          {
-            "text": "cada",
-            "start": 16.541,
-            "dur": 0.22
-          },
-          {
-            "text": "posição",
-            "start": 16.821,
-            "dur": 0.561
-          },
-          {
-            "text": "olhamos",
-            "start": 17.702,
-            "dur": 0.4
-          },
-          {
-            "text": "direto",
-            "start": 18.142,
-            "dur": 0.34
-          },
-          {
-            "text": "para",
-            "start": 18.542,
-            "dur": 0.1
-          },
-          {
-            "text": "o",
-            "start": 18.662,
-            "dur": 0.04
-          },
-          {
-            "text": "meio",
-            "start": 18.762,
-            "dur": 0.28
-          },
-          {
-            "text": "nesta",
-            "start": 19.362,
-            "dur": 0.32
-          },
-          {
-            "text": "lista",
-            "start": 19.742,
-            "dur": 0.38
-          },
-          {
-            "text": "o",
-            "start": 20.302,
-            "dur": 0.04
-          },
-          {
-            "text": "primeiro",
-            "start": 20.382,
+            "text": "instead",
+            "start": 14.723,
             "dur": 0.36
           },
           {
-            "text": "meio",
-            "start": 20.842,
-            "dur": 0.3
-          },
-          {
-            "text": "é",
-            "start": 21.222,
+            "text": "of",
+            "start": 15.103,
             "dur": 0.06
           },
           {
-            "text": "o",
-            "start": 21.302,
-            "dur": 0.02
-          },
-          {
-            "text": "número",
-            "start": 21.402,
+            "text": "checking",
+            "start": 15.223,
             "dur": 0.3
           },
           {
-            "text": "trinta",
-            "start": 21.782,
-            "dur": 0.24
+            "text": "every",
+            "start": 15.623,
+            "dur": 0.18
           },
           {
-            "text": "e",
-            "start": 22.042,
+            "text": "position",
+            "start": 15.823,
+            "dur": 0.441
+          },
+          {
+            "text": "we",
+            "start": 16.604,
             "dur": 0.08
           },
           {
-            "text": "um",
-            "start": 22.162,
+            "text": "look",
+            "start": 16.724,
+            "dur": 0.18
+          },
+          {
+            "text": "directly",
+            "start": 16.924,
             "dur": 0.44
+          },
+          {
+            "text": "at",
+            "start": 17.424,
+            "dur": 0.06
+          },
+          {
+            "text": "the",
+            "start": 17.504,
+            "dur": 0.1
+          },
+          {
+            "text": "middle",
+            "start": 17.624,
+            "dur": 0.26
+          },
+          {
+            "text": "in",
+            "start": 18.404,
+            "dur": 0.06
+          },
+          {
+            "text": "this",
+            "start": 18.504,
+            "dur": 0.16
+          },
+          {
+            "text": "list",
+            "start": 18.744,
+            "dur": 0.28
+          },
+          {
+            "text": "the",
+            "start": 19.384,
+            "dur": 0.14
+          },
+          {
+            "text": "first",
+            "start": 19.644,
+            "dur": 0.3
+          },
+          {
+            "text": "middle",
+            "start": 20.044,
+            "dur": 0.24
+          },
+          {
+            "text": "value",
+            "start": 20.304,
+            "dur": 0.401
+          },
+          {
+            "text": "is",
+            "start": 20.845,
+            "dur": 0.08
+          },
+          {
+            "text": "thirty-one",
+            "start": 21.005,
+            "dur": 1
           }
         ]
       },
       {
         "id": "descarta_esquerda",
-        "text": "Comparamos trinta e sete com trinta e um. Como o alvo é maior, nenhuma posição à esquerda serve. Descartamos aquela metade.",
-        "start": 22.602,
-        "dur": 7.801,
+        "text": "We compare thirty-seven with thirty-one. Because the target is larger, no position on the left can work. We eliminate that half.",
+        "start": 22.005,
+        "dur": 7.762,
         "words": [
           {
-            "text": "comparamos",
-            "start": 22.602,
-            "dur": 0.58
-          },
-          {
-            "text": "trinta",
-            "start": 23.242,
-            "dur": 0.24
-          },
-          {
-            "text": "e",
-            "start": 23.502,
-            "dur": 0.02
-          },
-          {
-            "text": "sete",
-            "start": 23.642,
-            "dur": 0.28
-          },
-          {
-            "text": "com",
-            "start": 24.002,
+            "text": "we",
+            "start": 22.005,
             "dur": 0.12
           },
           {
-            "text": "trinta",
-            "start": 24.222,
-            "dur": 0.22
-          },
-          {
-            "text": "e",
-            "start": 24.462,
-            "dur": 0.06
-          },
-          {
-            "text": "um",
-            "start": 24.582,
-            "dur": 0.12
-          },
-          {
-            "text": "como",
-            "start": 25.042,
-            "dur": 0.2
-          },
-          {
-            "text": "o",
-            "start": 25.262,
-            "dur": 0.02
-          },
-          {
-            "text": "alvo",
-            "start": 25.342,
-            "dur": 0.22
-          },
-          {
-            "text": "é",
-            "start": 25.582,
-            "dur": 0.04
-          },
-          {
-            "text": "maior",
-            "start": 25.682,
-            "dur": 0.46
-          },
-          {
-            "text": "nenhuma",
-            "start": 26.222,
+            "text": "compare",
+            "start": 22.165,
             "dur": 0.34
           },
           {
-            "text": "posição",
-            "start": 26.642,
+            "text": "thirty-seven",
+            "start": 22.585,
+            "dur": 0.58
+          },
+          {
+            "text": "with",
+            "start": 23.205,
+            "dur": 0.12
+          },
+          {
+            "text": "thirty-one",
+            "start": 23.345,
             "dur": 0.44
           },
           {
-            "text": "à",
-            "start": 27.122,
-            "dur": 0.04
+            "text": "because",
+            "start": 24.285,
+            "dur": 0.28
           },
           {
-            "text": "esquerda",
-            "start": 27.202,
-            "dur": 0.44
+            "text": "the",
+            "start": 24.605,
+            "dur": 0.08
           },
           {
-            "text": "serve",
-            "start": 27.762,
-            "dur": 0.36
+            "text": "target",
+            "start": 24.725,
+            "dur": 0.341
           },
           {
-            "text": "descartamos",
-            "start": 28.462,
-            "dur": 0.701
+            "text": "is",
+            "start": 25.106,
+            "dur": 0.08
           },
           {
-            "text": "aquela",
-            "start": 29.223,
-            "dur": 0.26
+            "text": "larger",
+            "start": 25.226,
+            "dur": 0.38
           },
           {
-            "text": "metade",
-            "start": 29.523,
-            "dur": 0.88
+            "text": "no",
+            "start": 26.086,
+            "dur": 0.14
+          },
+          {
+            "text": "position",
+            "start": 26.266,
+            "dur": 0.4
+          },
+          {
+            "text": "on",
+            "start": 26.726,
+            "dur": 0.06
+          },
+          {
+            "text": "the",
+            "start": 26.826,
+            "dur": 0.08
+          },
+          {
+            "text": "left",
+            "start": 26.946,
+            "dur": 0.2
+          },
+          {
+            "text": "can",
+            "start": 27.186,
+            "dur": 0.14
+          },
+          {
+            "text": "work",
+            "start": 27.366,
+            "dur": 0.24
+          },
+          {
+            "text": "we",
+            "start": 28.166,
+            "dur": 0.1
+          },
+          {
+            "text": "eliminate",
+            "start": 28.306,
+            "dur": 0.42
+          },
+          {
+            "text": "that",
+            "start": 28.746,
+            "dur": 0.12
+          },
+          {
+            "text": "half",
+            "start": 28.886,
+            "dur": 0.881
           }
         ]
       },
       {
         "id": "segundo_meio",
-        "text": "Agora restam os números maiores. Escolhemos novamente o centro, que desta vez é quarenta e sete.",
-        "start": 30.403,
-        "dur": 6.24,
+        "text": "Now only the larger numbers remain. We choose the center again, and this time it is forty-seven.",
+        "start": 29.767,
+        "dur": 5.721,
         "words": [
           {
-            "text": "agora",
-            "start": 30.403,
-            "dur": 0.34
+            "text": "now",
+            "start": 29.767,
+            "dur": 0.18
           },
           {
-            "text": "restam",
-            "start": 30.843,
-            "dur": 0.34
+            "text": "only",
+            "start": 30.147,
+            "dur": 0.2
           },
           {
-            "text": "os",
-            "start": 31.203,
+            "text": "the",
+            "start": 30.387,
             "dur": 0.1
           },
           {
-            "text": "números",
-            "start": 31.363,
-            "dur": 0.34
+            "text": "larger",
+            "start": 30.527,
+            "dur": 0.28
           },
           {
-            "text": "maiores",
-            "start": 31.743,
-            "dur": 0.6
+            "text": "numbers",
+            "start": 30.867,
+            "dur": 0.28
           },
           {
-            "text": "escolhemos",
-            "start": 32.643,
-            "dur": 0.6
+            "text": "remain",
+            "start": 31.187,
+            "dur": 0.36
           },
           {
-            "text": "novamente",
-            "start": 33.263,
-            "dur": 0.48
-          },
-          {
-            "text": "o",
-            "start": 33.763,
-            "dur": 0.04
-          },
-          {
-            "text": "centro",
-            "start": 33.903,
-            "dur": 0.34
-          },
-          {
-            "text": "que",
-            "start": 34.503,
+            "text": "we",
+            "start": 32.087,
             "dur": 0.1
           },
           {
-            "text": "desta",
-            "start": 34.663,
-            "dur": 0.32
+            "text": "choose",
+            "start": 32.207,
+            "dur": 0.2
           },
           {
-            "text": "vez",
-            "start": 35.063,
-            "dur": 0.22
+            "text": "the",
+            "start": 32.427,
+            "dur": 0.08
           },
           {
-            "text": "é",
-            "start": 35.303,
+            "text": "center",
+            "start": 32.547,
+            "dur": 0.3
+          },
+          {
+            "text": "again",
+            "start": 32.867,
+            "dur": 0.26
+          },
+          {
+            "text": "and",
+            "start": 33.487,
+            "dur": 0.08
+          },
+          {
+            "text": "this",
+            "start": 33.607,
+            "dur": 0.16
+          },
+          {
+            "text": "time",
+            "start": 33.807,
+            "dur": 0.241
+          },
+          {
+            "text": "it",
+            "start": 34.108,
             "dur": 0.04
           },
           {
-            "text": "quarenta",
-            "start": 35.403,
-            "dur": 0.34
+            "text": "is",
+            "start": 34.208,
+            "dur": 0.08
           },
           {
-            "text": "e",
-            "start": 35.763,
-            "dur": 0.04
-          },
-          {
-            "text": "sete",
-            "start": 35.903,
-            "dur": 0.74
+            "text": "forty-seven",
+            "start": 34.368,
+            "dur": 1.12
           }
         ]
       },
       {
         "id": "descarta_direita",
-        "text": "O alvo é menor que quarenta e sete, então descartamos a metade direita. A cada comparação, o intervalo fica duas vezes menor.",
-        "start": 36.643,
-        "dur": 7.901,
+        "text": "The target is smaller than forty-seven, so we eliminate the right half. With every comparison, the interval becomes twice as small.",
+        "start": 35.488,
+        "dur": 7.602,
         "words": [
           {
-            "text": "o",
-            "start": 36.643,
-            "dur": 0.04
+            "text": "the",
+            "start": 35.488,
+            "dur": 0.1
           },
           {
-            "text": "alvo",
-            "start": 36.763,
-            "dur": 0.22
-          },
-          {
-            "text": "é",
-            "start": 37.003,
-            "dur": 0.04
-          },
-          {
-            "text": "menor",
-            "start": 37.083,
-            "dur": 0.36
-          },
-          {
-            "text": "que",
-            "start": 37.503,
-            "dur": 0.08
-          },
-          {
-            "text": "quarenta",
-            "start": 37.643,
+            "text": "target",
+            "start": 35.628,
             "dur": 0.34
           },
           {
-            "text": "e",
-            "start": 38.003,
-            "dur": 0.04
+            "text": "is",
+            "start": 36.028,
+            "dur": 0.06
           },
           {
-            "text": "sete",
-            "start": 38.143,
-            "dur": 0.36
+            "text": "smaller",
+            "start": 36.148,
+            "dur": 0.34
           },
           {
-            "text": "então",
-            "start": 38.623,
-            "dur": 0.24
+            "text": "than",
+            "start": 36.528,
+            "dur": 0.12
           },
           {
-            "text": "descartamos",
-            "start": 38.903,
-            "dur": 0.68
+            "text": "forty-seven",
+            "start": 36.688,
+            "dur": 0.56
           },
           {
-            "text": "a",
-            "start": 39.623,
-            "dur": 0.04
+            "text": "so",
+            "start": 37.488,
+            "dur": 0.12
           },
           {
-            "text": "metade",
-            "start": 39.703,
-            "dur": 0.421
+            "text": "we",
+            "start": 37.648,
+            "dur": 0.08
           },
           {
-            "text": "direita",
-            "start": 40.164,
-            "dur": 0.44
+            "text": "eliminate",
+            "start": 37.788,
+            "dur": 0.42
           },
           {
-            "text": "a",
-            "start": 40.944,
-            "dur": 0.04
+            "text": "the",
+            "start": 38.228,
+            "dur": 0.1
           },
           {
-            "text": "cada",
-            "start": 41.084,
-            "dur": 0.24
+            "text": "right",
+            "start": 38.368,
+            "dur": 0.141
           },
           {
-            "text": "comparação",
-            "start": 41.384,
-            "dur": 0.64
-          },
-          {
-            "text": "o",
-            "start": 42.184,
-            "dur": 0.04
-          },
-          {
-            "text": "intervalo",
-            "start": 42.264,
-            "dur": 0.54
-          },
-          {
-            "text": "fica",
-            "start": 42.884,
+            "text": "half",
+            "start": 38.549,
             "dur": 0.22
           },
           {
-            "text": "duas",
-            "start": 43.184,
-            "dur": 0.3
+            "text": "with",
+            "start": 39.329,
+            "dur": 0.14
           },
           {
-            "text": "vezes",
-            "start": 43.524,
+            "text": "every",
+            "start": 39.589,
+            "dur": 0.2
+          },
+          {
+            "text": "comparison",
+            "start": 39.849,
+            "dur": 0.6
+          },
+          {
+            "text": "the",
+            "start": 40.689,
+            "dur": 0.12
+          },
+          {
+            "text": "interval",
+            "start": 40.909,
+            "dur": 0.38
+          },
+          {
+            "text": "becomes",
+            "start": 41.329,
+            "dur": 0.34
+          },
+          {
+            "text": "twice",
+            "start": 41.769,
             "dur": 0.32
           },
           {
-            "text": "menor",
-            "start": 43.884,
-            "dur": 0.66
+            "text": "as",
+            "start": 42.149,
+            "dur": 0.06
+          },
+          {
+            "text": "small",
+            "start": 42.269,
+            "dur": 0.821
           }
         ]
       },
       {
         "id": "encontra",
-        "text": "O próximo meio é trinta e sete. Encontramos o valor sem visitar quase toda a lista.",
-        "start": 44.544,
-        "dur": 5.42,
+        "text": "The next middle value is thirty-seven. We found it without visiting almost the entire list.",
+        "start": 43.09,
+        "dur": 5.521,
         "words": [
           {
-            "text": "o",
-            "start": 44.544,
-            "dur": 0.04
+            "text": "the",
+            "start": 43.09,
+            "dur": 0.1
           },
           {
-            "text": "próximo",
-            "start": 44.664,
-            "dur": 0.4
+            "text": "next",
+            "start": 43.25,
+            "dur": 0.2
           },
           {
-            "text": "meio",
-            "start": 45.144,
-            "dur": 0.24
+            "text": "middle",
+            "start": 43.51,
+            "dur": 0.2
           },
           {
-            "text": "é",
-            "start": 45.424,
-            "dur": 0.04
+            "text": "value",
+            "start": 43.75,
+            "dur": 0.38
           },
           {
-            "text": "trinta",
-            "start": 45.564,
-            "dur": 0.22
+            "text": "is",
+            "start": 44.27,
+            "dur": 0.08
           },
           {
-            "text": "e",
-            "start": 45.824,
-            "dur": 0.04
-          },
-          {
-            "text": "sete",
-            "start": 45.964,
-            "dur": 0.4
-          },
-          {
-            "text": "encontramos",
-            "start": 46.704,
+            "text": "thirty-seven",
+            "start": 44.43,
             "dur": 0.6
           },
           {
-            "text": "o",
-            "start": 47.344,
-            "dur": 0.04
-          },
-          {
-            "text": "valor",
-            "start": 47.424,
-            "dur": 0.34
-          },
-          {
-            "text": "sem",
-            "start": 47.884,
+            "text": "we",
+            "start": 45.57,
             "dur": 0.12
           },
           {
-            "text": "visitar",
-            "start": 48.064,
-            "dur": 0.42
+            "text": "found",
+            "start": 45.73,
+            "dur": 0.24
           },
           {
-            "text": "quase",
-            "start": 48.564,
-            "dur": 0.3
+            "text": "it",
+            "start": 45.99,
+            "dur": 0.06
           },
           {
-            "text": "toda",
-            "start": 48.964,
-            "dur": 0.22
+            "text": "without",
+            "start": 46.09,
+            "dur": 0.24
           },
           {
-            "text": "a",
-            "start": 49.204,
-            "dur": 0.02
+            "text": "visiting",
+            "start": 46.37,
+            "dur": 0.36
           },
           {
-            "text": "lista",
-            "start": 49.264,
-            "dur": 0.7
+            "text": "almost",
+            "start": 46.89,
+            "dur": 0.28
+          },
+          {
+            "text": "the",
+            "start": 47.21,
+            "dur": 0.08
+          },
+          {
+            "text": "entire",
+            "start": 47.33,
+            "dur": 0.381
+          },
+          {
+            "text": "list",
+            "start": 47.751,
+            "dur": 0.86
           }
         ]
       },
       {
         "id": "codigo_limites",
-        "text": "No código, começamos com dois limites: baixo no início e alto no fim. Enquanto baixo não ultrapassar alto, calculamos o meio.",
-        "start": 49.964,
-        "dur": 8.061,
+        "text": "In the code, we start with two boundaries: low at the beginning and high at the end. While low does not pass high, we calculate the middle.",
+        "start": 48.611,
+        "dur": 8.442,
         "words": [
           {
-            "text": "no",
-            "start": 49.964,
-            "dur": 0.1
-          },
-          {
-            "text": "código",
-            "start": 50.144,
-            "dur": 0.44
-          },
-          {
-            "text": "começamos",
-            "start": 50.644,
-            "dur": 0.54
-          },
-          {
-            "text": "com",
-            "start": 51.224,
-            "dur": 0.12
-          },
-          {
-            "text": "dois",
-            "start": 51.424,
-            "dur": 0.221
-          },
-          {
-            "text": "limites",
-            "start": 51.685,
-            "dur": 0.54
-          },
-          {
-            "text": "baixo",
-            "start": 52.525,
-            "dur": 0.3
-          },
-          {
-            "text": "no",
-            "start": 52.865,
+            "text": "in",
+            "start": 48.611,
             "dur": 0.06
           },
           {
-            "text": "início",
-            "start": 52.965,
-            "dur": 0.42
-          },
-          {
-            "text": "e",
-            "start": 53.425,
+            "text": "the",
+            "start": 48.711,
             "dur": 0.06
           },
           {
-            "text": "alto",
-            "start": 53.565,
-            "dur": 0.18
+            "text": "code",
+            "start": 48.831,
+            "dur": 0.32
           },
           {
-            "text": "no",
-            "start": 53.785,
-            "dur": 0.08
+            "text": "we",
+            "start": 49.451,
+            "dur": 0.14
           },
           {
-            "text": "fim",
-            "start": 53.945,
+            "text": "start",
+            "start": 49.631,
+            "dur": 0.24
+          },
+          {
+            "text": "with",
+            "start": 49.911,
+            "dur": 0.14
+          },
+          {
+            "text": "two",
+            "start": 50.171,
             "dur": 0.2
           },
           {
-            "text": "enquanto",
-            "start": 54.465,
-            "dur": 0.42
+            "text": "boundaries",
+            "start": 50.431,
+            "dur": 0.5
           },
           {
-            "text": "baixo",
-            "start": 54.965,
-            "dur": 0.36
+            "text": "low",
+            "start": 51.371,
+            "dur": 0.22
           },
           {
-            "text": "não",
-            "start": 55.405,
+            "text": "at",
+            "start": 51.631,
+            "dur": 0.06
+          },
+          {
+            "text": "the",
+            "start": 51.731,
+            "dur": 0.06
+          },
+          {
+            "text": "beginning",
+            "start": 51.831,
+            "dur": 0.421
+          },
+          {
+            "text": "and",
+            "start": 52.452,
+            "dur": 0.1
+          },
+          {
+            "text": "high",
+            "start": 52.632,
+            "dur": 0.2
+          },
+          {
+            "text": "at",
+            "start": 52.852,
+            "dur": 0.06
+          },
+          {
+            "text": "the",
+            "start": 52.952,
+            "dur": 0.08
+          },
+          {
+            "text": "end",
+            "start": 53.132,
+            "dur": 0.2
+          },
+          {
+            "text": "while",
+            "start": 53.872,
+            "dur": 0.2
+          },
+          {
+            "text": "low",
+            "start": 54.112,
+            "dur": 0.18
+          },
+          {
+            "text": "does",
+            "start": 54.312,
+            "dur": 0.14
+          },
+          {
+            "text": "not",
+            "start": 54.492,
             "dur": 0.16
           },
           {
-            "text": "ultrapassar",
-            "start": 55.585,
-            "dur": 0.54
+            "text": "pass",
+            "start": 54.692,
+            "dur": 0.26
           },
           {
-            "text": "alto",
-            "start": 56.205,
-            "dur": 0.28
+            "text": "high",
+            "start": 54.972,
+            "dur": 0.26
           },
           {
-            "text": "calculamos",
-            "start": 56.565,
-            "dur": 0.62
+            "text": "we",
+            "start": 55.512,
+            "dur": 0.1
           },
           {
-            "text": "o",
-            "start": 57.225,
-            "dur": 0.04
+            "text": "calculate",
+            "start": 55.652,
+            "dur": 0.48
           },
           {
-            "text": "meio",
-            "start": 57.305,
-            "dur": 0.72
+            "text": "the",
+            "start": 56.152,
+            "dur": 0.08
+          },
+          {
+            "text": "middle",
+            "start": 56.272,
+            "dur": 0.781
           }
         ]
       },
       {
         "id": "codigo_ramos",
-        "text": "Se o valor central for igual ao alvo, devolvemos sua posição. Se for menor, movemos baixo. Caso contrário, reduzimos alto.",
-        "start": 58.025,
-        "dur": 8.181,
+        "text": "If the middle value equals the target, we return its position. If it is smaller, we move low. Otherwise, we reduce high.",
+        "start": 57.053,
+        "dur": 7.981,
         "words": [
           {
-            "text": "se",
-            "start": 58.025,
+            "text": "if",
+            "start": 57.053,
             "dur": 0.08
           },
           {
-            "text": "o",
-            "start": 58.145,
-            "dur": 0.04
-          },
-          {
-            "text": "valor",
-            "start": 58.225,
-            "dur": 0.3
-          },
-          {
-            "text": "central",
-            "start": 58.605,
-            "dur": 0.4
-          },
-          {
-            "text": "for",
-            "start": 59.065,
-            "dur": 0.16
-          },
-          {
-            "text": "igual",
-            "start": 59.245,
-            "dur": 0.32
-          },
-          {
-            "text": "ao",
-            "start": 59.605,
+            "text": "the",
+            "start": 57.153,
             "dur": 0.1
           },
           {
-            "text": "alvo",
-            "start": 59.825,
+            "text": "middle",
+            "start": 57.293,
+            "dur": 0.22
+          },
+          {
+            "text": "value",
+            "start": 57.553,
             "dur": 0.3
           },
           {
-            "text": "devolvemos",
-            "start": 60.185,
-            "dur": 0.58
+            "text": "equals",
+            "start": 57.953,
+            "dur": 0.3
           },
           {
-            "text": "sua",
-            "start": 60.805,
+            "text": "the",
+            "start": 58.293,
+            "dur": 0.1
+          },
+          {
+            "text": "target",
+            "start": 58.453,
+            "dur": 0.38
+          },
+          {
+            "text": "we",
+            "start": 59.273,
             "dur": 0.12
           },
           {
-            "text": "posição",
-            "start": 60.985,
-            "dur": 0.52
+            "text": "return",
+            "start": 59.453,
+            "dur": 0.38
           },
           {
-            "text": "se",
-            "start": 61.945,
-            "dur": 0.08
+            "text": "its",
+            "start": 59.873,
+            "dur": 0.12
           },
           {
-            "text": "for",
-            "start": 62.105,
-            "dur": 0.14
+            "text": "position",
+            "start": 60.033,
+            "dur": 0.48
           },
           {
-            "text": "menor",
-            "start": 62.285,
-            "dur": 0.4
+            "text": "if",
+            "start": 61.073,
+            "dur": 0.061
           },
           {
-            "text": "movemos",
-            "start": 62.765,
-            "dur": 0.441
+            "text": "it",
+            "start": 61.174,
+            "dur": 0.06
           },
           {
-            "text": "baixo",
-            "start": 63.266,
-            "dur": 0.42
+            "text": "is",
+            "start": 61.274,
+            "dur": 0.06
           },
           {
-            "text": "caso",
-            "start": 64.026,
-            "dur": 0.24
+            "text": "smaller",
+            "start": 61.374,
+            "dur": 0.38
           },
           {
-            "text": "contrário",
-            "start": 64.306,
-            "dur": 0.56
+            "text": "we",
+            "start": 61.894,
+            "dur": 0.12
           },
           {
-            "text": "reduzimos",
-            "start": 64.906,
-            "dur": 0.62
+            "text": "move",
+            "start": 62.074,
+            "dur": 0.16
           },
           {
-            "text": "alto",
-            "start": 65.586,
-            "dur": 0.62
+            "text": "low",
+            "start": 62.294,
+            "dur": 0.2
+          },
+          {
+            "text": "otherwise",
+            "start": 63.014,
+            "dur": 0.48
+          },
+          {
+            "text": "we",
+            "start": 63.754,
+            "dur": 0.12
+          },
+          {
+            "text": "reduce",
+            "start": 63.934,
+            "dur": 0.28
+          },
+          {
+            "text": "high",
+            "start": 64.234,
+            "dur": 0.8
           }
         ]
       },
       {
         "id": "complexidade",
-        "text": "Perceba o padrão: quinze posições viraram sete, depois três e finalmente uma. Por isso o custo cresce como logaritmo do tamanho da lista.",
-        "start": 66.206,
-        "dur": 8.581,
+        "text": "Notice the pattern: fifteen positions became seven, then three, and finally one. That is why the cost grows like the logarithm of the list size.",
+        "start": 65.034,
+        "dur": 9.242,
         "words": [
           {
-            "text": "perceba",
-            "start": 66.206,
-            "dur": 0.46
-          },
-          {
-            "text": "o",
-            "start": 66.686,
-            "dur": 0.04
-          },
-          {
-            "text": "padrão",
-            "start": 66.766,
-            "dur": 0.42
-          },
-          {
-            "text": "quinze",
-            "start": 67.366,
-            "dur": 0.32
-          },
-          {
-            "text": "posições",
-            "start": 67.766,
-            "dur": 0.54
-          },
-          {
-            "text": "viraram",
-            "start": 68.326,
-            "dur": 0.38
-          },
-          {
-            "text": "sete",
-            "start": 68.806,
-            "dur": 0.4
-          },
-          {
-            "text": "depois",
-            "start": 69.246,
-            "dur": 0.34
-          },
-          {
-            "text": "três",
-            "start": 69.666,
-            "dur": 0.24
-          },
-          {
-            "text": "e",
-            "start": 69.926,
-            "dur": 0.04
-          },
-          {
-            "text": "finalmente",
-            "start": 70.026,
-            "dur": 0.58
-          },
-          {
-            "text": "uma",
-            "start": 70.746,
-            "dur": 0.18
-          },
-          {
-            "text": "por",
-            "start": 71.246,
-            "dur": 0.12
-          },
-          {
-            "text": "isso",
-            "start": 71.426,
-            "dur": 0.22
-          },
-          {
-            "text": "o",
-            "start": 71.666,
-            "dur": 0.02
-          },
-          {
-            "text": "custo",
-            "start": 71.766,
+            "text": "notice",
+            "start": 65.034,
             "dur": 0.3
           },
           {
-            "text": "cresce",
-            "start": 72.146,
-            "dur": 0.32
-          },
-          {
-            "text": "como",
-            "start": 72.546,
-            "dur": 0.2
-          },
-          {
-            "text": "logaritmo",
-            "start": 72.786,
-            "dur": 0.6
-          },
-          {
-            "text": "do",
-            "start": 73.426,
-            "dur": 0.06
-          },
-          {
-            "text": "tamanho",
-            "start": 73.546,
-            "dur": 0.36
-          },
-          {
-            "text": "da",
-            "start": 73.946,
+            "text": "the",
+            "start": 65.374,
             "dur": 0.08
           },
           {
-            "text": "lista",
-            "start": 74.086,
-            "dur": 0.701
+            "text": "pattern",
+            "start": 65.494,
+            "dur": 0.381
+          },
+          {
+            "text": "fifteen",
+            "start": 66.355,
+            "dur": 0.36
+          },
+          {
+            "text": "positions",
+            "start": 66.755,
+            "dur": 0.5
+          },
+          {
+            "text": "became",
+            "start": 67.335,
+            "dur": 0.32
+          },
+          {
+            "text": "seven",
+            "start": 67.755,
+            "dur": 0.38
+          },
+          {
+            "text": "then",
+            "start": 68.515,
+            "dur": 0.2
+          },
+          {
+            "text": "three",
+            "start": 68.775,
+            "dur": 0.32
+          },
+          {
+            "text": "and",
+            "start": 69.495,
+            "dur": 0.12
+          },
+          {
+            "text": "finally",
+            "start": 69.715,
+            "dur": 0.36
+          },
+          {
+            "text": "one",
+            "start": 70.216,
+            "dur": 0.12
+          },
+          {
+            "text": "that",
+            "start": 70.856,
+            "dur": 0.16
+          },
+          {
+            "text": "is",
+            "start": 71.096,
+            "dur": 0.06
+          },
+          {
+            "text": "why",
+            "start": 71.196,
+            "dur": 0.14
+          },
+          {
+            "text": "the",
+            "start": 71.376,
+            "dur": 0.1
+          },
+          {
+            "text": "cost",
+            "start": 71.516,
+            "dur": 0.26
+          },
+          {
+            "text": "grows",
+            "start": 71.816,
+            "dur": 0.3
+          },
+          {
+            "text": "like",
+            "start": 72.156,
+            "dur": 0.16
+          },
+          {
+            "text": "the",
+            "start": 72.356,
+            "dur": 0.06
+          },
+          {
+            "text": "logarithm",
+            "start": 72.476,
+            "dur": 0.5
+          },
+          {
+            "text": "of",
+            "start": 73.016,
+            "dur": 0.04
+          },
+          {
+            "text": "the",
+            "start": 73.096,
+            "dur": 0.06
+          },
+          {
+            "text": "list",
+            "start": 73.216,
+            "dur": 0.16
+          },
+          {
+            "text": "size",
+            "start": 73.396,
+            "dur": 0.88
           }
         ]
       },
       {
         "id": "milhao",
-        "text": "Com um milhão de itens, precisamos de cerca de vinte comparações. Mas a lista precisa estar ordenada antes da busca.",
-        "start": 74.787,
-        "dur": 7.36,
+        "text": "With one million items, we need about twenty comparisons. But the list must already be sorted before the search.",
+        "start": 74.276,
+        "dur": 6.682,
         "words": [
           {
-            "text": "com",
-            "start": 74.787,
+            "text": "with",
+            "start": 74.276,
+            "dur": 0.14
+          },
+          {
+            "text": "one",
+            "start": 74.556,
+            "dur": 0.101
+          },
+          {
+            "text": "million",
+            "start": 74.697,
+            "dur": 0.32
+          },
+          {
+            "text": "items",
+            "start": 75.137,
+            "dur": 0.3
+          },
+          {
+            "text": "we",
+            "start": 75.857,
             "dur": 0.12
           },
           {
-            "text": "um",
-            "start": 74.987,
-            "dur": 0.06
+            "text": "need",
+            "start": 76.017,
+            "dur": 0.14
           },
           {
-            "text": "milhão",
-            "start": 75.087,
+            "text": "about",
+            "start": 76.197,
+            "dur": 0.2
+          },
+          {
+            "text": "twenty",
+            "start": 76.497,
             "dur": 0.3
           },
           {
-            "text": "de",
-            "start": 75.447,
-            "dur": 0.1
+            "text": "comparisons",
+            "start": 76.837,
+            "dur": 0.62
           },
           {
-            "text": "itens",
-            "start": 75.667,
-            "dur": 0.38
+            "text": "but",
+            "start": 78.017,
+            "dur": 0.12
           },
           {
-            "text": "precisamos",
-            "start": 76.087,
-            "dur": 0.6
-          },
-          {
-            "text": "de",
-            "start": 76.707,
+            "text": "the",
+            "start": 78.157,
             "dur": 0.08
           },
           {
-            "text": "cerca",
-            "start": 76.887,
-            "dur": 0.3
+            "text": "list",
+            "start": 78.277,
+            "dur": 0.2
           },
           {
-            "text": "de",
-            "start": 77.227,
-            "dur": 0.08
+            "text": "must",
+            "start": 78.557,
+            "dur": 0.18
           },
           {
-            "text": "vinte",
-            "start": 77.387,
-            "dur": 0.22
-          },
-          {
-            "text": "comparações",
-            "start": 77.667,
-            "dur": 0.82
-          },
-          {
-            "text": "mas",
-            "start": 78.807,
-            "dur": 0.16
-          },
-          {
-            "text": "a",
-            "start": 79.027,
-            "dur": 0.04
-          },
-          {
-            "text": "lista",
-            "start": 79.107,
+            "text": "already",
+            "start": 78.857,
             "dur": 0.28
           },
           {
-            "text": "precisa",
-            "start": 79.447,
-            "dur": 0.48
+            "text": "be",
+            "start": 79.198,
+            "dur": 0.1
           },
           {
-            "text": "estar",
-            "start": 79.967,
-            "dur": 0.24
+            "text": "sorted",
+            "start": 79.358,
+            "dur": 0.3
           },
           {
-            "text": "ordenada",
-            "start": 80.287,
-            "dur": 0.58
+            "text": "before",
+            "start": 79.698,
+            "dur": 0.26
           },
           {
-            "text": "antes",
-            "start": 80.967,
-            "dur": 0.24
+            "text": "the",
+            "start": 79.998,
+            "dur": 0.06
           },
           {
-            "text": "da",
-            "start": 81.247,
-            "dur": 0.08
-          },
-          {
-            "text": "busca",
-            "start": 81.407,
-            "dur": 0.74
+            "text": "search",
+            "start": 80.098,
+            "dur": 0.86
           }
         ]
       },
       {
         "id": "fecho",
-        "text": "Esse é o coração da busca binária: olhar o meio, comparar e eliminar metade. Com dados ordenados, uma decisão pequena economiza muito trabalho.",
-        "start": 82.147,
-        "dur": 9.461,
+        "text": "This is the heart of binary search: look at the middle, compare, and eliminate half. With sorted data, one small decision saves a great deal of work.",
+        "start": 80.958,
+        "dur": 9.062,
         "words": [
           {
-            "text": "esse",
-            "start": 82.147,
+            "text": "this",
+            "start": 80.958,
             "dur": 0.18
           },
           {
-            "text": "é",
-            "start": 82.347,
-            "dur": 0.02
+            "text": "is",
+            "start": 81.218,
+            "dur": 0.08
           },
           {
-            "text": "o",
-            "start": 82.407,
-            "dur": 0.02
-          },
-          {
-            "text": "coração",
-            "start": 82.467,
-            "dur": 0.4
-          },
-          {
-            "text": "da",
-            "start": 82.907,
+            "text": "the",
+            "start": 81.338,
             "dur": 0.1
           },
           {
-            "text": "busca",
-            "start": 83.067,
-            "dur": 0.26
-          },
-          {
-            "text": "binária",
-            "start": 83.367,
-            "dur": 0.48
-          },
-          {
-            "text": "olhar",
-            "start": 84.107,
-            "dur": 0.26
-          },
-          {
-            "text": "o",
-            "start": 84.387,
-            "dur": 0.04
-          },
-          {
-            "text": "meio",
-            "start": 84.487,
-            "dur": 0.32
-          },
-          {
-            "text": "comparar",
-            "start": 84.907,
-            "dur": 0.48
-          },
-          {
-            "text": "e",
-            "start": 85.447,
-            "dur": 0.04
-          },
-          {
-            "text": "eliminar",
-            "start": 85.507,
-            "dur": 0.441
-          },
-          {
-            "text": "metade",
-            "start": 85.988,
-            "dur": 0.56
-          },
-          {
-            "text": "com",
-            "start": 86.868,
-            "dur": 0.14
-          },
-          {
-            "text": "dados",
-            "start": 87.088,
-            "dur": 0.3
-          },
-          {
-            "text": "ordenados",
-            "start": 87.448,
-            "dur": 0.7
-          },
-          {
-            "text": "uma",
-            "start": 88.308,
-            "dur": 0.12
-          },
-          {
-            "text": "decisão",
-            "start": 88.468,
-            "dur": 0.44
-          },
-          {
-            "text": "pequena",
-            "start": 88.968,
-            "dur": 0.34
-          },
-          {
-            "text": "economiza",
-            "start": 89.328,
-            "dur": 0.56
-          },
-          {
-            "text": "muito",
-            "start": 89.988,
+            "text": "heart",
+            "start": 81.518,
             "dur": 0.24
           },
           {
-            "text": "trabalho",
-            "start": 90.268,
-            "dur": 1.34
+            "text": "of",
+            "start": 81.798,
+            "dur": 0.06
+          },
+          {
+            "text": "binary",
+            "start": 81.918,
+            "dur": 0.42
+          },
+          {
+            "text": "search",
+            "start": 82.398,
+            "dur": 0.3
+          },
+          {
+            "text": "look",
+            "start": 83.118,
+            "dur": 0.12
+          },
+          {
+            "text": "at",
+            "start": 83.278,
+            "dur": 0.04
+          },
+          {
+            "text": "the",
+            "start": 83.358,
+            "dur": 0.06
+          },
+          {
+            "text": "middle",
+            "start": 83.458,
+            "dur": 0.241
+          },
+          {
+            "text": "compare",
+            "start": 83.939,
+            "dur": 0.5
+          },
+          {
+            "text": "and",
+            "start": 84.659,
+            "dur": 0.14
+          },
+          {
+            "text": "eliminate",
+            "start": 84.979,
+            "dur": 0.48
+          },
+          {
+            "text": "half",
+            "start": 85.499,
+            "dur": 0.24
+          },
+          {
+            "text": "with",
+            "start": 86.319,
+            "dur": 0.14
+          },
+          {
+            "text": "sorted",
+            "start": 86.519,
+            "dur": 0.32
+          },
+          {
+            "text": "data",
+            "start": 86.879,
+            "dur": 0.32
+          },
+          {
+            "text": "one",
+            "start": 87.699,
+            "dur": 0.12
+          },
+          {
+            "text": "small",
+            "start": 87.879,
+            "dur": 0.24
+          },
+          {
+            "text": "decision",
+            "start": 88.159,
+            "dur": 0.461
+          },
+          {
+            "text": "saves",
+            "start": 88.7,
+            "dur": 0.26
+          },
+          {
+            "text": "a",
+            "start": 89,
+            "dur": 0.04
+          },
+          {
+            "text": "great",
+            "start": 89.1,
+            "dur": 0.32
+          },
+          {
+            "text": "deal",
+            "start": 89.48,
+            "dur": 0.2
+          },
+          {
+            "text": "of",
+            "start": 89.72,
+            "dur": 0.06
+          },
+          {
+            "text": "work",
+            "start": 89.82,
+            "dur": 0.2
           }
         ]
       }
@@ -1340,7 +1385,7 @@
       "id": "title",
       "type": "text",
       "props": {
-        "text": "BUSCA BINÁRIA",
+        "text": "BINARY SEARCH",
         "fontSize": 82,
         "fontWeight": 800,
         "fill": "#f8fafc",
@@ -1353,7 +1398,7 @@
       "id": "subtitle",
       "type": "text",
       "props": {
-        "text": "ordem  •  comparação  •  descarte",
+        "text": "ordering  •  comparison  •  elimination",
         "fontSize": 38,
         "fontWeight": 500,
         "fill": "#93c5fd",
@@ -1366,12 +1411,12 @@
       "id": "target",
       "type": "text",
       "props": {
-        "text": "alvo: 37",
+        "text": "target: 37",
         "fontSize": 48,
         "fontWeight": 700,
         "fill": "#fbbf24",
         "x": 170,
-        "y": -225,
+        "y": -290,
         "scale": 1,
         "opacity": 0
       }
@@ -1399,7 +1444,7 @@
       "id": "pointer_label",
       "type": "text",
       "props": {
-        "text": "MEIO",
+        "text": "MIDDLE",
         "fontSize": 28,
         "fontWeight": 800,
         "fill": "#fbbf24",
@@ -1852,7 +1897,7 @@
       "id": "explain",
       "type": "text",
       "props": {
-        "text": "A cada comparação, metade desaparece.",
+        "text": "With every comparison, half disappears.",
         "fontSize": 42,
         "fontWeight": 600,
         "fill": "#cbd5e1",
@@ -1881,7 +1926,7 @@
       "id": "snippet",
       "type": "code",
       "props": {
-        "code": "function buscaBinaria(lista, alvo) {\n  let baixo = 0;\n  let alto = lista.length - 1;\n  while (baixo <= alto) {\n    const meio = Math.floor((baixo + alto) / 2);\n    if (lista[meio] === alvo) return meio;\n    if (lista[meio] < alvo) baixo = meio + 1;\n    else alto = meio - 1;\n  }\n  return -1;\n}",
+        "code": "function binarySearch(list, target) {\n  let low = 0;\n  let high = list.length - 1;\n  while (low <= high) {\n    const middle = Math.floor((low + high) / 2);\n    if (list[middle] === target) return middle;\n    if (list[middle] < target) low = middle + 1;\n    else high = middle - 1;\n  }\n  return -1;\n}",
         "fontSize": 38,
         "fontFamily": "JetBrains Mono",
         "fill": "#e2e8f0",
@@ -1909,7 +1954,7 @@
       "id": "count_note",
       "type": "text",
       "props": {
-        "text": "crescimento logarítmico: O(log n)",
+        "text": "logarithmic growth: O(log n)",
         "fontSize": 48,
         "fontWeight": 600,
         "fill": "#f8fafc",
@@ -1923,7 +1968,7 @@
       "id": "million",
       "type": "text",
       "props": {
-        "text": "1.000.000 itens  ≈  20 comparações",
+        "text": "1,000,000 items  ≈  20 comparisons",
         "fontSize": 62,
         "fontWeight": 800,
         "fill": "#34d399",
@@ -1937,7 +1982,7 @@
       "id": "condition",
       "type": "text",
       "props": {
-        "text": "pré-condição: a lista precisa estar ordenada",
+        "text": "precondition: the list must already be sorted",
         "fontSize": 38,
         "fontWeight": 500,
         "fill": "#fbbf24",
@@ -1951,7 +1996,7 @@
       "id": "core",
       "type": "text",
       "props": {
-        "text": "MEIO  →  COMPARAR  →  ELIMINAR METADE",
+        "text": "MIDDLE  →  COMPARE  →  ELIMINATE HALF",
         "fontSize": 55,
         "fontWeight": 800,
         "fill": "#f8fafc",
@@ -1965,7 +2010,7 @@
       "id": "core_note",
       "type": "text",
       "props": {
-        "text": "uma decisão pequena economiza muito trabalho",
+        "text": "one small decision saves a great deal of work",
         "fontSize": 40,
         "fontWeight": 500,
         "fill": "#93c5fd",
@@ -2007,7 +2052,7 @@
       "easing": "spring"
     },
     {
-      "at": "intro.word:ideias",
+      "at": "intro.word:ideas",
       "target": "subtitle",
       "tween": {
         "opacity": {
@@ -2047,7 +2092,7 @@
       "dur": 0.4
     },
     {
-      "at": "lista.word:lista",
+      "at": "lista.word:list",
       "target": "target",
       "tween": {
         "opacity": {
@@ -2057,7 +2102,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_0",
       "tween": {
         "opacity": {
@@ -2067,7 +2112,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_0",
       "tween": {
         "opacity": {
@@ -2077,7 +2122,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_1",
       "tween": {
         "opacity": {
@@ -2087,7 +2132,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_1",
       "tween": {
         "opacity": {
@@ -2097,7 +2142,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_2",
       "tween": {
         "opacity": {
@@ -2107,7 +2152,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_2",
       "tween": {
         "opacity": {
@@ -2117,7 +2162,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_3",
       "tween": {
         "opacity": {
@@ -2127,7 +2172,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_3",
       "tween": {
         "opacity": {
@@ -2137,7 +2182,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_4",
       "tween": {
         "opacity": {
@@ -2147,7 +2192,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_4",
       "tween": {
         "opacity": {
@@ -2157,7 +2202,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_5",
       "tween": {
         "opacity": {
@@ -2167,7 +2212,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_5",
       "tween": {
         "opacity": {
@@ -2177,7 +2222,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_6",
       "tween": {
         "opacity": {
@@ -2187,7 +2232,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_6",
       "tween": {
         "opacity": {
@@ -2197,7 +2242,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_7",
       "tween": {
         "opacity": {
@@ -2207,7 +2252,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_7",
       "tween": {
         "opacity": {
@@ -2217,7 +2262,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_8",
       "tween": {
         "opacity": {
@@ -2227,7 +2272,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_8",
       "tween": {
         "opacity": {
@@ -2237,7 +2282,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_9",
       "tween": {
         "opacity": {
@@ -2247,7 +2292,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_9",
       "tween": {
         "opacity": {
@@ -2257,7 +2302,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_10",
       "tween": {
         "opacity": {
@@ -2267,7 +2312,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_10",
       "tween": {
         "opacity": {
@@ -2277,7 +2322,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_11",
       "tween": {
         "opacity": {
@@ -2287,7 +2332,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_11",
       "tween": {
         "opacity": {
@@ -2297,7 +2342,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_12",
       "tween": {
         "opacity": {
@@ -2307,7 +2352,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_12",
       "tween": {
         "opacity": {
@@ -2317,7 +2362,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_13",
       "tween": {
         "opacity": {
@@ -2327,7 +2372,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_13",
       "tween": {
         "opacity": {
@@ -2337,7 +2382,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "box_14",
       "tween": {
         "opacity": {
@@ -2347,7 +2392,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:ordenada",
+      "at": "lista.word:sorted",
       "target": "num_14",
       "tween": {
         "opacity": {
@@ -2357,7 +2402,7 @@
       "dur": 0.35
     },
     {
-      "at": "lista.word:objetivo",
+      "at": "lista.word:goal",
       "target": "target",
       "tween": {
         "scale": {
@@ -2368,7 +2413,7 @@
       "easing": "easeOutBack"
     },
     {
-      "at": "primeiro_meio.word:direto",
+      "at": "primeiro_meio.word:directly",
       "target": "pointer",
       "tween": {
         "opacity": {
@@ -2378,7 +2423,7 @@
       "dur": 0.25
     },
     {
-      "at": "primeiro_meio.word:direto",
+      "at": "primeiro_meio.word:directly",
       "target": "pointer_label",
       "tween": {
         "opacity": {
@@ -2388,14 +2433,14 @@
       "dur": 0.25
     },
     {
-      "at": "primeiro_meio.word:direto",
+      "at": "primeiro_meio.word:directly",
       "target": "box_7",
       "set": {
         "fill": "#b45309"
       }
     },
     {
-      "at": "primeiro_meio.word:direto",
+      "at": "primeiro_meio.word:directly",
       "target": "box_7",
       "tween": {
         "scale": {
@@ -2406,7 +2451,7 @@
       "easing": "easeOutBack"
     },
     {
-      "at": "primeiro_meio.word:direto",
+      "at": "primeiro_meio.word:directly",
       "target": "ana",
       "pose": "arm-front",
       "dur": {
@@ -2416,7 +2461,7 @@
       "easing": "spring"
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "box_0",
       "tween": {
         "opacity": {
@@ -2426,7 +2471,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "num_0",
       "tween": {
         "opacity": {
@@ -2436,7 +2481,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "box_1",
       "tween": {
         "opacity": {
@@ -2446,7 +2491,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "num_1",
       "tween": {
         "opacity": {
@@ -2456,7 +2501,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "box_2",
       "tween": {
         "opacity": {
@@ -2466,7 +2511,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "num_2",
       "tween": {
         "opacity": {
@@ -2476,7 +2521,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "box_3",
       "tween": {
         "opacity": {
@@ -2486,7 +2531,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "num_3",
       "tween": {
         "opacity": {
@@ -2496,7 +2541,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "box_4",
       "tween": {
         "opacity": {
@@ -2506,7 +2551,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "num_4",
       "tween": {
         "opacity": {
@@ -2516,7 +2561,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "box_5",
       "tween": {
         "opacity": {
@@ -2526,7 +2571,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "num_5",
       "tween": {
         "opacity": {
@@ -2536,7 +2581,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "box_6",
       "tween": {
         "opacity": {
@@ -2546,7 +2591,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "num_6",
       "tween": {
         "opacity": {
@@ -2556,7 +2601,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "box_7",
       "tween": {
         "opacity": {
@@ -2566,7 +2611,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:descartamos",
+      "at": "descarta_esquerda.word:eliminate",
       "target": "num_7",
       "tween": {
         "opacity": {
@@ -2576,7 +2621,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_esquerda.word:metade",
+      "at": "descarta_esquerda.word:half",
       "target": "explain",
       "tween": {
         "opacity": {
@@ -2586,7 +2631,7 @@
       "dur": 0.4
     },
     {
-      "at": "segundo_meio.word:centro",
+      "at": "segundo_meio.word:center",
       "target": "pointer",
       "tween": {
         "x": {
@@ -2597,7 +2642,7 @@
       "easing": "easeOutBack"
     },
     {
-      "at": "segundo_meio.word:centro",
+      "at": "segundo_meio.word:center",
       "target": "pointer_label",
       "tween": {
         "x": {
@@ -2608,21 +2653,21 @@
       "easing": "spring"
     },
     {
-      "at": "segundo_meio.word:centro",
+      "at": "segundo_meio.word:center",
       "target": "box_11",
       "set": {
         "fill": "#b45309"
       }
     },
     {
-      "at": "segundo_meio.word:novamente",
+      "at": "segundo_meio.word:again",
       "target": "ana",
       "pose": "rest",
       "dur": 0.5,
       "easing": "spring"
     },
     {
-      "at": "descarta_direita.word:direita",
+      "at": "descarta_direita.word:right",
       "target": "box_11",
       "tween": {
         "opacity": {
@@ -2632,7 +2677,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_direita.word:direita",
+      "at": "descarta_direita.word:right",
       "target": "num_11",
       "tween": {
         "opacity": {
@@ -2642,7 +2687,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_direita.word:direita",
+      "at": "descarta_direita.word:right",
       "target": "box_12",
       "tween": {
         "opacity": {
@@ -2652,7 +2697,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_direita.word:direita",
+      "at": "descarta_direita.word:right",
       "target": "num_12",
       "tween": {
         "opacity": {
@@ -2662,7 +2707,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_direita.word:direita",
+      "at": "descarta_direita.word:right",
       "target": "box_13",
       "tween": {
         "opacity": {
@@ -2672,7 +2717,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_direita.word:direita",
+      "at": "descarta_direita.word:right",
       "target": "num_13",
       "tween": {
         "opacity": {
@@ -2682,7 +2727,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_direita.word:direita",
+      "at": "descarta_direita.word:right",
       "target": "box_14",
       "tween": {
         "opacity": {
@@ -2692,7 +2737,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_direita.word:direita",
+      "at": "descarta_direita.word:right",
       "target": "num_14",
       "tween": {
         "opacity": {
@@ -2702,7 +2747,7 @@
       "dur": 0.45
     },
     {
-      "at": "descarta_direita.word:comparação",
+      "at": "descarta_direita.word:comparison",
       "target": "pointer",
       "tween": {
         "x": {
@@ -2713,7 +2758,7 @@
       "easing": "spring"
     },
     {
-      "at": "descarta_direita.word:comparação",
+      "at": "descarta_direita.word:comparison",
       "target": "pointer_label",
       "tween": {
         "x": {
@@ -2724,7 +2769,7 @@
       "easing": "spring"
     },
     {
-      "at": "encontra.word:encontramos",
+      "at": "encontra.word:found",
       "target": "box_9",
       "set": {
         "fill": "#047857",
@@ -2732,7 +2777,7 @@
       }
     },
     {
-      "at": "encontra.word:encontramos",
+      "at": "encontra.word:found",
       "target": "box_9",
       "tween": {
         "scale": {
@@ -2743,22 +2788,22 @@
       "easing": "easeOutBack"
     },
     {
-      "at": "encontra.word:encontramos",
+      "at": "encontra.word:found",
       "target": "target",
       "set": {
-        "text": "encontrado: 37",
+        "text": "found: 37",
         "fill": "#34d399"
       }
     },
     {
-      "at": "encontra.word:valor",
+      "at": "encontra.word:value",
       "target": "ana",
       "pose": "wave",
       "dur": 0.7,
       "easing": "spring"
     },
     {
-      "at": "codigo_limites.word:código",
+      "at": "codigo_limites.word:code",
       "target": "code_panel",
       "tween": {
         "opacity": {
@@ -2768,7 +2813,7 @@
       "dur": 0.45
     },
     {
-      "at": "codigo_limites.word:código",
+      "at": "codigo_limites.word:code",
       "target": "snippet",
       "tween": {
         "opacity": {
@@ -2778,7 +2823,7 @@
       "dur": 0.45
     },
     {
-      "at": "codigo_limites.word:código",
+      "at": "codigo_limites.word:code",
       "target": "snippet",
       "select": {
         "lines": [0, 4]
@@ -2786,7 +2831,7 @@
       "dur": 0.45
     },
     {
-      "at": "codigo_limites.word:limites",
+      "at": "codigo_limites.word:boundaries",
       "target": "snippet",
       "select": {
         "lines": [1, 2]
@@ -2794,7 +2839,7 @@
       "dur": 0.45
     },
     {
-      "at": "codigo_limites.word:enquanto",
+      "at": "codigo_limites.word:while",
       "target": "snippet",
       "select": {
         "lines": [3, 4]
@@ -2802,14 +2847,14 @@
       "dur": 0.45
     },
     {
-      "at": "codigo_limites.word:código",
+      "at": "codigo_limites.word:code",
       "target": "ana",
       "pose": "rest",
       "dur": 0.55,
       "easing": "spring"
     },
     {
-      "at": "codigo_ramos.word:igual",
+      "at": "codigo_ramos.word:equals",
       "target": "snippet",
       "select": {
         "lines": [5, 5]
@@ -2817,7 +2862,7 @@
       "dur": 0.45
     },
     {
-      "at": "codigo_ramos.word:menor",
+      "at": "codigo_ramos.word:smaller",
       "target": "snippet",
       "select": {
         "lines": [6, 6]
@@ -2825,7 +2870,7 @@
       "dur": 0.45
     },
     {
-      "at": "codigo_ramos.word:contrário",
+      "at": "codigo_ramos.word:otherwise",
       "target": "snippet",
       "select": {
         "lines": [7, 7]
@@ -2833,7 +2878,7 @@
       "dur": 0.45
     },
     {
-      "at": "complexidade.word:padrão",
+      "at": "complexidade.word:pattern",
       "target": "snippet",
       "tween": {
         "opacity": {
@@ -2843,7 +2888,7 @@
       "dur": 0.35
     },
     {
-      "at": "complexidade.word:padrão",
+      "at": "complexidade.word:pattern",
       "target": "count_title",
       "tween": {
         "opacity": {
@@ -2853,7 +2898,7 @@
       "dur": 0.5
     },
     {
-      "at": "complexidade.word:logaritmo",
+      "at": "complexidade.word:logarithm",
       "target": "count_note",
       "tween": {
         "opacity": {
@@ -2863,14 +2908,14 @@
       "dur": 0.45
     },
     {
-      "at": "complexidade.word:finalmente",
+      "at": "complexidade.word:finally",
       "target": "ana",
       "pose": "arm-front",
       "dur": 0.65,
       "easing": "spring"
     },
     {
-      "at": "milhao.word:milhão",
+      "at": "milhao.word:million",
       "target": "million",
       "tween": {
         "opacity": {
@@ -2880,7 +2925,7 @@
       "dur": 0.5
     },
     {
-      "at": "milhao.word:ordenada",
+      "at": "milhao.word:sorted",
       "target": "condition",
       "tween": {
         "opacity": {
@@ -2890,14 +2935,14 @@
       "dur": 0.45
     },
     {
-      "at": "milhao.word:comparações",
+      "at": "milhao.word:comparisons",
       "target": "ana",
       "pose": "wave",
       "dur": 0.65,
       "easing": "spring"
     },
     {
-      "at": "fecho.word:coração",
+      "at": "fecho.word:heart",
       "target": "count_title",
       "tween": {
         "opacity": {
@@ -2907,7 +2952,7 @@
       "dur": 0.3
     },
     {
-      "at": "fecho.word:coração",
+      "at": "fecho.word:heart",
       "target": "count_note",
       "tween": {
         "opacity": {
@@ -2917,7 +2962,7 @@
       "dur": 0.3
     },
     {
-      "at": "fecho.word:coração",
+      "at": "fecho.word:heart",
       "target": "million",
       "tween": {
         "opacity": {
@@ -2927,7 +2972,7 @@
       "dur": 0.3
     },
     {
-      "at": "fecho.word:coração",
+      "at": "fecho.word:heart",
       "target": "condition",
       "tween": {
         "opacity": {
@@ -2937,7 +2982,7 @@
       "dur": 0.3
     },
     {
-      "at": "fecho.word:coração",
+      "at": "fecho.word:heart",
       "target": "core",
       "tween": {
         "opacity": {
@@ -2947,7 +2992,7 @@
       "dur": 0.5
     },
     {
-      "at": "fecho.word:decisão",
+      "at": "fecho.word:decision",
       "target": "core_note",
       "tween": {
         "opacity": {
@@ -2957,7 +3002,7 @@
       "dur": 0.45
     },
     {
-      "at": "fecho.word:trabalho",
+      "at": "fecho.word:work",
       "target": "ana",
       "pose": "rest",
       "dur": 0.55,

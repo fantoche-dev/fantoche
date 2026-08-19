@@ -19,6 +19,11 @@ tools want, and small enough to commit (~300 KB each).
 | `pt-br-01.wav` | PT-BR    | the gate: what P2 is judged on | 9.6 s  | -5.7 dB | -26.54 dB |
 | `en-01.wav`    | EN       | the control                    | 9.4 s  | -2.1 dB | -26.46 dB |
 
+_These roles record the original spike as scored (ADR 0007). Since the
+2026-08-19 English-first content decision, a future re-spike weights EN as the
+primary content language, with PT-BR still scored as the control that keeps the
+map language-aware._
+
 The sentences are not arbitrary. Each carries bilabials (`p`/`b`/`m`), rounded
 vowels (`o`/`u`) and labiodentals (`f`/`v`) — the shapes a bad viseme mapping
 gets wrong in a way a viewer can see — and each runs past 8 s, because drift
