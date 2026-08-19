@@ -141,23 +141,84 @@ unreadable.
 - Zero compiler anchor warnings — a warned anchor means a gesture is landing on
   a word the author did not choose.
 
-### 2.6 Proposed enforcement
+### 2.6 Enforcement — `fantoche doc check`
 
-Most of §2 is mechanically checkable and belongs behind a document-level
-command, alongside the existing `fantoche character check`:
+Most of §2 is mechanically checkable and now ships behind a document-level
+command, alongside `fantoche character check`:
 
 ```sh
-fantoche doc check demo.json          # warn
-fantoche doc check demo.json --strict # fail (CI on our own demos)
+fantoche doc check demo.json           # warn (exit 0)
+fantoche doc check demo.json --strict  # fail (exit 1)
+fantoche doc check demo.json --no-audio  # skip the ffmpeg measurement
 ```
 
-Checkable today from committed inputs: audio sample rate, integrated loudness,
-true peak, trailing silence, viseme hold/closure/pause rules, segment length,
-anchor warnings. Frame-level checks (text size, contrast, safe area) need a
-render pass and can follow. Warn by default; `--strict` fails; our demos run
-strict in CI.
+ffmpeg and ffprobe are dev-time tools here, exactly as Rhubarb and WhisperX
+are — `doc check` is an authoring command, never a render-time dependency. A
+missing encoder skips the audio rules with a warning instead of turning the
+rest of the check off.
 
----
+**Shipped rules**
+
+| Rule | Threshold | Source |
+| --- | --- | --- |
+| `audio.sample-rate` | ≥ 48 kHz | §2.1 |
+| `audio.loudness` | −14 ±1 LUFS (ffmpeg `ebur128`) | §2.1 |
+| `audio.true-peak` | ≤ −1 dBFS | §2.1 |
+| `audio.trailing-silence` | ≤ 0.5 s after the last aligned word | §2.1 |
+| `lipsync.minimum-hold` | every cue held ≥ 0.100 s | §2.2 |
+| `lipsync.bilabial-closure` | every word spelled with p/b/m reaches a pressed A | §2.2 |
+| `narration.segment-length` | 5–10 s | §2.4 |
+| `document.anchor-warning` | zero compiler warnings | §2.5 |
+
+Holds are compared in whole milliseconds. Cue times are authored in ms and
+`4.101 - 4.001` is `0.09999999999999964` as a double, so comparing raw
+doubles reported all 26 exactly-on-the-floor holds in the north-star track as
+violations.
+
+`lipsync.bilabial-closure` is word-level, not phoneme-level: the committed
+document carries word alignment, not characters. It cannot say *which*
+bilabial in a word closed, and a word whose only `p` is silent is a false
+positive. The English north-star clears it 48/48 at zero tolerance, which is
+what makes it trustworthy enough to ship.
+
+**Deferred, with the reason**
+
+- **`lipsync.rest-on-pause`** (X only on measured pauses) was built, measured
+  and removed. At word granularity it has no discriminating power: the
+  reviewed manual track and the untouched automatic draft both put 16 rests
+  "inside" a word — the same 16 — because word ends from forced alignment
+  overshoot the last phoneme's release, and long compound tokens
+  ("thirty-seven", "forty-seven") span real articulation gaps. Deciding this
+  rule needs the character-level alignment the document does not carry. A
+  check that fires 54 times on a track ADR 0007 certified teaches authors to
+  ignore the checker.
+- **Frame-level rules** — text size, contrast, safe area (§2.3) — need a
+  render pass and follow later.
+
+**Our own demos are not strict-clean yet**, so `--strict` is deliberately not
+wired into CI. Measured 2026-08-19:
+
+| Document | Findings |
+| --- | --- |
+| `north-star/` (EN) | 2 — both the known §2.1 audio defect: 16 kHz, −20.7 LUFS |
+| `north-star-pt-br/` | 13 — the same 2, plus 11 `bilabial-closure` |
+| `first-slice/` | 11 — audio defect plus 3 `bilabial-closure` |
+
+The EN north-star clears every non-audio rule; its two findings are exactly
+the defect this document already recorded, found independently by the
+checker. Wiring `--strict` into CI is the natural gate to add *with* the
+narration replacement, not before it.
+
+The 11 PT-BR `bilabial-closure` findings are **not** edge artifacts — the
+nearest pressed A is 0.06–0.40 s away, outside any defensible tolerance —
+and they sit against ADR 0007's recorded "all 108 aligned bilabials on A"
+for that track. The two counts measure different populations (93 words
+spelled with p/b/m here, 108 aligned bilabial *characters* there), so the
+discrepancy needs the PT-BR character alignment to settle. Recorded as open.
+
+Encoding §1 policy in the tool is deliberately **not** done: policy is
+external, perishable and unappealable, and encoding it ages badly. Encoding
+the floor does not.
 
 ## 3. Craft rubric — informative *and* worth watching
 
