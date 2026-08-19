@@ -65,7 +65,7 @@ export function splitArt(
     const x = readNumber(el, 'cx') ?? readNumber(el, 'x');
     const y = readNumber(el, 'cy') ?? readNumber(el, 'y');
     if (x !== undefined && y !== undefined && !markers.has(slot)) {
-      markers.set(slot, [x, y]);
+      markers.set(slot, apply(elementMatrix(el), [x, y]));
     }
     const id = el.getAttribute('id');
     if (id !== null) {
@@ -153,16 +153,24 @@ function detach(source: Element): Element {
 }
 
 function* ancestorsOf(el: Element): Generator<Element> {
-  // Nearest ancestor first; stops below the root <svg>.
+  // Nearest ancestor first, including the root <svg>: presentation properties
+  // inherit from it too, and an SVG 2 root may itself carry a transform.
   let node = el.parentNode;
-  while (
-    node !== null &&
-    node.nodeType === 1 &&
-    (node as Element).tagName !== 'svg'
-  ) {
+  while (node !== null && node.nodeType === 1) {
     yield node as Element;
     node = node.parentNode;
   }
+}
+
+/** Compose an element's own transform and every ancestor transform. */
+function elementMatrix(el: Element): Affine {
+  let matrix = IDENTITY;
+  const chain = [...ancestorsOf(el)].reverse();
+  chain.push(el);
+  for (const member of chain) {
+    matrix = multiply(matrix, parseTransform(member.getAttribute('transform')));
+  }
+  return matrix;
 }
 
 function hasBoundAncestor(el: Element, bound: Set<string>): boolean {
@@ -296,6 +304,8 @@ function corners(
 ): [number, number][] {
   return [
     [x, y],
+    [x + width, y],
+    [x, y + height],
     [x + width, y + height],
   ];
 }
@@ -328,6 +338,9 @@ function pathPoints(d: string): [number, number][] {
   let y = 0;
   let startX = 0;
   let startY = 0;
+  let previous = '';
+  let cubicControl: [number, number] | undefined;
+  let quadraticControl: [number, number] | undefined;
   for (const command of commands) {
     const op = command[0];
     const args = numbersIn(command.slice(1));
@@ -339,8 +352,6 @@ function pathPoints(d: string): [number, number][] {
     };
     switch (op.toUpperCase()) {
       case 'M':
-      case 'L':
-      case 'T':
         for (let i = 0; i + 1 < args.length; i += 2) {
           push(
             relative ? x + args[i] : args[i],
@@ -350,55 +361,189 @@ function pathPoints(d: string): [number, number][] {
             startX = x;
             startY = y;
           }
+          previous = i === 0 ? 'M' : 'L';
         }
+        cubicControl = undefined;
+        quadraticControl = undefined;
+        break;
+      case 'L':
+        for (let i = 0; i + 1 < args.length; i += 2) {
+          push(
+            relative ? x + args[i] : args[i],
+            relative ? y + args[i + 1] : args[i + 1],
+          );
+        }
+        previous = 'L';
+        cubicControl = undefined;
+        quadraticControl = undefined;
         break;
       case 'H':
         for (const value of args) {
           push(relative ? x + value : value, y);
         }
+        previous = 'H';
+        cubicControl = undefined;
+        quadraticControl = undefined;
         break;
       case 'V':
         for (const value of args) {
           push(x, relative ? y + value : value);
         }
+        previous = 'V';
+        cubicControl = undefined;
+        quadraticControl = undefined;
         break;
       case 'C':
         for (let i = 0; i + 5 < args.length; i += 6) {
           const base: [number, number] = [x, y];
-          for (const j of [0, 2]) {
-            out.push(absolute(base, args[i + j], args[i + j + 1], relative));
-          }
+          const first = absolute(base, args[i], args[i + 1], relative);
+          const second = absolute(base, args[i + 2], args[i + 3], relative);
+          out.push(first, second);
           push(
             relative ? x + args[i + 4] : args[i + 4],
             relative ? y + args[i + 5] : args[i + 5],
           );
+          cubicControl = second;
+          previous = 'C';
         }
+        quadraticControl = undefined;
         break;
       case 'S':
-      case 'Q':
         for (let i = 0; i + 3 < args.length; i += 4) {
-          out.push(absolute([x, y], args[i], args[i + 1], relative));
+          const base: [number, number] = [x, y];
+          const first: [number, number] =
+            (previous === 'C' || previous === 'S') && cubicControl !== undefined
+              ? [2 * x - cubicControl[0], 2 * y - cubicControl[1]]
+              : [x, y];
+          const second = absolute(base, args[i], args[i + 1], relative);
+          out.push(first, second);
           push(
             relative ? x + args[i + 2] : args[i + 2],
             relative ? y + args[i + 3] : args[i + 3],
           );
+          cubicControl = second;
+          previous = 'S';
         }
+        quadraticControl = undefined;
+        break;
+      case 'Q':
+        for (let i = 0; i + 3 < args.length; i += 4) {
+          const base: [number, number] = [x, y];
+          const control = absolute(base, args[i], args[i + 1], relative);
+          out.push(control);
+          push(
+            relative ? x + args[i + 2] : args[i + 2],
+            relative ? y + args[i + 3] : args[i + 3],
+          );
+          quadraticControl = control;
+          previous = 'Q';
+        }
+        cubicControl = undefined;
+        break;
+      case 'T':
+        for (let i = 0; i + 1 < args.length; i += 2) {
+          const control: [number, number] =
+            (previous === 'Q' || previous === 'T') &&
+            quadraticControl !== undefined
+              ? [2 * x - quadraticControl[0], 2 * y - quadraticControl[1]]
+              : [x, y];
+          out.push(control);
+          push(
+            relative ? x + args[i] : args[i],
+            relative ? y + args[i + 1] : args[i + 1],
+          );
+          quadraticControl = control;
+          previous = 'T';
+        }
+        cubicControl = undefined;
         break;
       case 'A':
         for (let i = 0; i + 6 < args.length; i += 7) {
-          push(
+          const end: [number, number] = [
             relative ? x + args[i + 5] : args[i + 5],
             relative ? y + args[i + 6] : args[i + 6],
+          ];
+          out.push(
+            ...arcEnvelope(
+              [x, y],
+              end,
+              args[i],
+              args[i + 1],
+              args[i + 2],
+              args[i + 3] !== 0,
+              args[i + 4] !== 0,
+            ),
           );
+          push(...end);
+          previous = 'A';
         }
+        cubicControl = undefined;
+        quadraticControl = undefined;
         break;
       case 'Z':
         x = startX;
         y = startY;
+        previous = 'Z';
+        cubicControl = undefined;
+        quadraticControl = undefined;
         break;
     }
   }
   return out;
+}
+
+/**
+ * Conservative envelope for an SVG elliptical arc. The full corrected
+ * ellipse is used rather than only the selected arc: transparent padding is
+ * harmless, while an endpoint-only box can clip an entire semicircle.
+ */
+function arcEnvelope(
+  start: readonly [number, number],
+  end: readonly [number, number],
+  rawRx: number,
+  rawRy: number,
+  rotation: number,
+  largeArc: boolean,
+  sweep: boolean,
+): [number, number][] {
+  let rx = Math.abs(rawRx);
+  let ry = Math.abs(rawRy);
+  if ((start[0] === end[0] && start[1] === end[1]) || rx === 0 || ry === 0) {
+    return [start.slice() as [number, number], end.slice() as [number, number]];
+  }
+
+  const phi = (rotation * Math.PI) / 180;
+  const cos = Math.cos(phi);
+  const sin = Math.sin(phi);
+  const dx = (start[0] - end[0]) / 2;
+  const dy = (start[1] - end[1]) / 2;
+  const xPrime = cos * dx + sin * dy;
+  const yPrime = -sin * dx + cos * dy;
+
+  const radiiScale =
+    (xPrime * xPrime) / (rx * rx) + (yPrime * yPrime) / (ry * ry);
+  if (radiiScale > 1) {
+    const factor = Math.sqrt(radiiScale);
+    rx *= factor;
+    ry *= factor;
+  }
+
+  const numerator = Math.max(
+    0,
+    rx * rx * ry * ry - rx * rx * yPrime * yPrime - ry * ry * xPrime * xPrime,
+  );
+  const denominator = rx * rx * yPrime * yPrime + ry * ry * xPrime * xPrime;
+  const sign = largeArc === sweep ? -1 : 1;
+  const coefficient =
+    denominator === 0 ? 0 : sign * Math.sqrt(numerator / denominator);
+  const cxPrime = coefficient * ((rx * yPrime) / ry);
+  const cyPrime = coefficient * (-(ry * xPrime) / rx);
+  const cx = cos * cxPrime - sin * cyPrime + (start[0] + end[0]) / 2;
+  const cy = sin * cxPrime + cos * cyPrime + (start[1] + end[1]) / 2;
+
+  const extentX = Math.hypot(rx * cos, ry * sin);
+  const extentY = Math.hypot(rx * sin, ry * cos);
+  return corners(cx - extentX, cy - extentY, 2 * extentX, 2 * extentY);
 }
 
 function absolute(

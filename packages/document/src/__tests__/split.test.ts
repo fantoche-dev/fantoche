@@ -43,4 +43,60 @@ describe('splitArt', () => {
       splitArt(ART, {'arm-l': {element: 'arm_x5F_l', pivot: 'center'}}),
     );
   });
+
+  test('measures all transformed corners instead of clipping rotated shapes', () => {
+    const out = splitArt(
+      `<svg xmlns="http://www.w3.org/2000/svg">
+        <g id="diamond" transform="rotate(45)">
+          <rect x="-10" y="-10" width="20" height="20"/>
+        </g>
+      </svg>`,
+      {diamond: {element: 'diamond', pivot: [0, 0]}},
+    );
+    const [, , width, height] = /viewBox="([^"]+)"/
+      .exec(out.slots.diamond)![1]
+      .split(' ')
+      .map(Number);
+    expect(width).toBeCloseTo(Math.sqrt(800), 6);
+    expect(height).toBeCloseTo(Math.sqrt(800), 6);
+  });
+
+  test('resolves pivot markers in art coordinates through ancestor transforms', () => {
+    const out = splitArt(
+      `<svg xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(100 50)">
+          <g id="part"><rect x="-10" y="-5" width="20" height="10"/></g>
+          <circle id="pivot-part" cx="0" cy="0" r="1"/>
+        </g>
+      </svg>`,
+      {part: {element: 'part', pivot: 'center'}},
+    );
+    expect(out.pivots.part).toEqual([100, 50]);
+  });
+
+  test('keeps path arcs inside the measured window', () => {
+    const out = splitArt(
+      `<svg xmlns="http://www.w3.org/2000/svg">
+        <path id="arc" d="M0 0 A100 100 0 0 0 200 0"/>
+      </svg>`,
+      {arc: {element: 'arc', pivot: 'center'}},
+    );
+    const [, , width, height] = /viewBox="([^"]+)"/
+      .exec(out.slots.arc)![1]
+      .split(' ')
+      .map(Number);
+    expect(width).toBeGreaterThanOrEqual(200);
+    expect(height).toBeGreaterThanOrEqual(200);
+  });
+
+  test('carries presentation inherited from the root svg', () => {
+    const out = splitArt(
+      `<svg xmlns="http://www.w3.org/2000/svg" fill="#f00" stroke="#00f">
+        <g id="part"><rect width="10" height="10"/></g>
+      </svg>`,
+      {part: {element: 'part', pivot: 'center'}},
+    );
+    expect(out.slots.part).toContain('fill="#f00"');
+    expect(out.slots.part).toContain('stroke="#00f"');
+  });
 });
