@@ -143,9 +143,15 @@ Closure is therefore materially better in this control. Jitter is not: 632 of
 preserving 59/59 closures and 63 measured rests.
 
 This run was not blind, used synthetic voices, and does not revise ADR 0007 or
-replace the PT-BR gate. It narrows the re-spike: the English grapheme path can
+the recorded PT-BR gate. It narrows the re-spike: the English grapheme path can
 place closures, but a minimum-hold/timing layer remains necessary independent
 of language.
+
+Later the same day the project's content strategy became English-first
+(roadmap addendum, vision §5): the English document was promoted to primary
+north-star demo (`packages/e2e/demo/north-star/`) and the PT-BR original
+became the second-language control (`packages/e2e/demo/north-star-pt-br/`).
+The measurements above are unchanged by the rename.
 
 ## Honesty about blindness
 

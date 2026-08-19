@@ -22,6 +22,12 @@
   ou um asset Azure licenciado, seguidos de novo alinhamento e nova autoria da
   boca. O controle inglês pedido depois (`en-US-AvaNeural`, texto inglês) fica
   separado: prova 59/59 bilabiais automáticos, mas confirma que o jitter persiste.
+- **English-first (2026-08-19, mesmo dia):** o conteúdo do projeto passa a ser
+  english-first. O demo inglês foi promovido a north-star primário
+  (`packages/e2e/demo/north-star/`; renders normal e `--offline`
+  byte-idênticos, 90,565 s, zero anchor warnings) e o original PT-BR virou o
+  controle de segundo idioma (`packages/e2e/demo/north-star-pt-br/`).
+  Detalhes e evidência no adendo english-first do roadmap.
 - **Próximo:** Parte F (re-spike automático, não bloqueante) ou P3. A troca da
   voz pode ocorrer em paralelo sem alterar o runtime.
 - **Bloqueio:** nenhum para código/P3; somente a declaração formal da Task 21

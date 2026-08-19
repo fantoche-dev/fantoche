@@ -87,10 +87,12 @@ character layer is the differentiator no competitor has, not a prerequisite.
 > in under 10 minutes exports a 1080p video where the character talks in
 > sync (lipsync), gestures at the words she chose, and points at a diagram —
 > **and the same result is reproducible by an LLM writing the document
-> directly.** Works offline. Works in Portuguese.
+> directly.** Works offline. Works in English — and in Portuguese.
 
-"Works in Portuguese" is load-bearing: it forces the language-aware lipsync
-path (ADR 0004 caveat) and keeps us honest about "anyone".
+Content is English-first (decided 2026-08-19; the launch material and the
+primary north-star demo are English). "And in Portuguese" is still
+load-bearing: the PT-BR control demo forces the language-aware lipsync path
+(ADR 0004 caveat) and keeps us honest about "anyone".
 
 ## 6. Positioning
 

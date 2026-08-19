@@ -44,7 +44,9 @@
   Rhubarb (phonetic mode) vs WhisperX-phoneme→viseme mapping; pick by
   blind comparison on PT-BR and EN samples.
 - **Gate:** the north-star demo (vision §5) end-to-end in ugly-but-working
-  form, in Portuguese, offline.
+  form, in Portuguese, offline. *(Passed as written — evidence below. The
+  same-day English-first decision then promoted the English version to
+  primary north-star demo; see the addendum after the table.)*
 
 ### P2 gate evidence — 2026-08-19
 
@@ -59,8 +61,26 @@ track. That replacement does not block P3 code.
 | Character format and 2–3 references | `character.json` carries slots, FK parents, pivots, rest depth, poses, and A–H/X bindings. `teacher` and `bird` are two committed references with different FK topologies; both pass `character import → bind → check`. |
 | Narration and word anchors | The north-star transcript has 241 tokens in 12 segments. Local WhisperX forced alignment placed all 241/241 with absolute document times; the compiler reports zero anchor warnings. |
 | PT-BR lipsync decision | ADR 0007 records that neither automatic arm reached ≥3 on every PT-BR axis. Rhubarb scored closure/rounding/jitter/drift = 3/2/4/5; WhisperX = 2/3/2/4. The shipping path is manual: 455 reviewed cues, all 108 aligned bilabials on A, 40 measured rests, minimum hold 0.100 s. |
-| North-star, Portuguese, offline | The 1920×1080 render is 91.665 s with H.264 video and AAC audio. Normal and `fantoche render --offline` outputs are byte-identical: SHA-256 `574955261c39e8197249a54acc40b67331415a8d81f713538d000ec4a38b0c5e`. |
+| North-star, Portuguese, offline | The 1920×1080 render is 91.665 s with H.264 video and AAC audio. Normal and `fantoche render --offline` outputs are byte-identical: SHA-256 `735adb2c9dc9089d94cf15e85aae740b9623b01f49a174a6769ea263b67fb328` (re-measured after the 2026-08-19 label-collision fix; the gate-day hash was `57495526…`). |
 | O(1) seek with rigs | Five local runs over the same three-slot FK state measured a median 0.020 ms/seek for the 4 s rig and 0.016 ms/seek for a 600 s rig with 300 extra pose events. The test asserts the long document remains below both 20 ms and the short-run tolerance. |
+
+### English-first addendum — 2026-08-19
+
+Content is **English-first**: launch material, authoring examples, and the
+primary north-star demo are English. Portuguese does not leave the project —
+it becomes the second-language control that keeps the lipsync path
+language-aware (vision §5, ADR 0004 caveat). Concretely,
+`packages/e2e/demo/north-star/` is now the English lesson and
+`packages/e2e/demo/north-star-pt-br/` the matched PT-BR control (the document
+the table above was measured on; those rows remain its evidence).
+
+English north-star evidence, measured 2026-08-19 with the same method:
+
+| Clause | Evidence |
+| --- | --- |
+| Narration and word anchors | 250-token English transcript in 12 segments; local WhisperX English forced alignment placed 250/250 with absolute document times; the compiler reports zero anchor warnings. |
+| EN lipsync | The untouched adapter draft has 889 cues with all 59 aligned bilabials on A but 632 intervals under 0.100 s — better closure than the PT-BR draft (87/108), same jitter. The shipped track is the manual review: 403 cues, minimum hold 0.100 s, 59/59 closures on A, 63 measured rests (ADR 0007 rules). |
+| North-star, English, offline | The 1920×1080 render is 90.565 s with H.264 video and AAC audio. Normal and `fantoche render --offline` outputs are byte-identical: SHA-256 `72f401a3007e30f4f09fb1e40bb2d7711482e4f492a7bd3890fe59e4854e047e`. |
 
 Author workflow: [authoring-guide.md](authoring-guide.md). Ready-to-file
 contributor work: [P2 good-first issue drafts](good-first-issues-p2.md).

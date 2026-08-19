@@ -61,8 +61,8 @@ extra, or reordered tokens.
     "audio": "voice",
     "segments": [
       {
-        "id": "primeiro_meio",
-        "text": "Olhamos direto para o meio.",
+        "id": "first_middle",
+        "text": "We look directly at the middle.",
         "start": 12.4,
         "dur": 2.1
       }
@@ -77,7 +77,7 @@ known transcript locally:
 ```sh
 fantoche narration align demo.json \
   --audio narration.wav \
-  --language pt-BR \
+  --language en-US \
   --python .venv-whisperx/bin/python \
   --model-dir .cache/whisperx
 ```
@@ -92,7 +92,7 @@ Prefer semantic anchors over guessed seconds:
 
 ```json
 {
-  "at": "primeiro_meio.word:meio",
+  "at": "first_middle.word:middle",
   "target": "pointer",
   "tween": {"x": {"to": 400}},
   "dur": {"value": 0.65, "min": 0.3},
@@ -123,11 +123,11 @@ tween easing such as `easeOutBack`.
 Both draft generators write the same viseme-track format:
 
 ```sh
-fantoche lipsync rhubarb narration.wav --language pt-BR --out mouth.viseme.json
+fantoche lipsync rhubarb narration.wav --language en-US --out mouth.viseme.json
 
 fantoche lipsync whisperx alignment.json \
   --audio narration.wav \
-  --language pt-BR \
+  --language en-US \
   --out mouth.viseme.json
 ```
 
@@ -185,7 +185,8 @@ It never runs SVG import, WhisperX, Rhubarb, or a speech service. With the same
 document and committed assets, rendering with networking disabled must produce
 the same bytes.
 
-See `packages/e2e/demo/north-star/` for the complete PT-BR binary-search lesson
+See `packages/e2e/demo/north-star/` for the complete English binary-search
+lesson, `packages/e2e/demo/north-star-pt-br/` for its second-language control,
 and `packages/e2e/demo/first-slice/` for the smallest end-to-end example.
 
 ## 6. Before you publish

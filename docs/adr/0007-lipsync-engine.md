@@ -69,3 +69,14 @@ Two findings sharpen the re-spike beyond the plan's wording:
 - ADR 0004's Portuguese caveat is resolved in the negative for v1:
   lipsync-quality-in-Portuguese was not an assumption, and measuring it is
   what kept a not-good-enough engine out of the product's first demo.
+
+## Addendum — 2026-08-19 English-first content decision
+
+Later the same week, content became English-first (vision §5): the English
+north-star demo is now primary and the PT-BR document is the second-language
+control (`packages/e2e/demo/north-star-pt-br/`). This does not revise the
+decision above. The English north-star run confirmed the finding that framed
+it: the English grapheme path reaches all 59 aligned bilabial closures
+automatically, but 632 of its 889 cue intervals are under 0.100 s — closure
+improves, jitter does not, so manual authoring still ships and the re-spike
+target (timing/minimum-hold layer, language-independent) is unchanged.

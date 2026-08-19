@@ -172,8 +172,9 @@ complete import → align → pose → lipsync workflow.
 - Frame-controlled `video` and arbitrary audio **elements**. Narration audio is
   supported as a document asset and muxed into export.
 - `icon` (hits a CDN at render time — offline-first violation).
-- An automatic PT-BR lipsync engine. ADR 0007 keeps manually authored viseme
-  tracks on the shipping path until an automatic arm passes the quality gate.
+- An automatic lipsync engine (any language). ADR 0007 keeps manually authored
+  viseme tracks on the shipping path until an automatic arm passes the quality
+  gate; the English north-star confirmed jitter is language-independent.
 - Code syntax highlighting configuration — code renders unhighlighted (set
   `props.fill` for the token color) until a `language`/highlighter prop is
   designed.
