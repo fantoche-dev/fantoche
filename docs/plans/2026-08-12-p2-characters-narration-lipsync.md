@@ -2,22 +2,24 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-## Status — updated 2026-08-18 (reshape)
+## Status — updated 2026-08-19 (Part B complete in code)
 
-- **Agora:** Parte A (Tasks 1–7) completa e em PR (#1). O gate cego PT-BR
-  rodou duas vezes (a rodada 1 caiu por transcrição ≠ áudio; ver
-  `docs/lipsync-spike-results.md`) e **ADR 0007 registra o gate em risco**:
-  nenhum braço atinge ≥3 em todos os eixos; a P2 embarca autoria manual de
-  visemas. **Reshape decidido 2026-08-18:** Partes B–F reorganizadas —
-  Parte B é a menor fatia vertical até o primeiro demo ponta a ponta
-  (10–15 s, PT-BR, visemas manuais, Task 23); ergonomia de import (C),
-  retiming + springs (D) e o re-spike de lipsync (F, com os 4 should-fixes
-  da revisão como pré-requisitos, sem bloquear o gate) vêm depois do demo.
-- **Próximo:** Parte B (Tasks 8, 9, 10, 13, 14, 15, 16, 17, 18, 23).
-- **Bloqueio:** nenhum técnico. Daniel-manual: narração de 10–15 s
-  (Task 23; `pt-br-01.wav` serve de stand-in até lá).
-- **Última verificação:** 2026-08-18 — cli 40/40 testes; 2026-08-14 — build
-  dos 10 pacotes, 434 unitários (seriais), E2E 13 cenas + goldens, lint.
+- **Agora:** Partes A e B completas em código (Tasks 1–18 + 23). ADR 0006
+  e ADR 0007 registrados (gate de lipsync em risco → autoria manual é o
+  caminho). O demo da fatia vertical existe e renderiza:
+  `packages/e2e/demo/first-slice/` — teacher posado por âncoras de palavra,
+  boca em track manual de 64 cues, narração audível (vídeo + AAC). Goldens
+  Linux pinam poses, depth swap e boca (cenas `doc-character-poses` e
+  `doc-first-slice`).
+- **Próximo:** Daniel grava a narração real de 10–15 s (guia da Parte A) e
+  ela substitui o stand-in `pt-br-01.wav` no demo — só então a Task 23 se
+  declara pronta e o checkpoint da Parte B fecha. Depois: Parte C
+  (Tasks 11, 12, 24).
+- **Bloqueio:** apenas a narração (Daniel-manual). Parte F (re-spike) já
+  pode começar a qualquer momento, sem bloquear nada.
+- **Última verificação:** 2026-08-19 — CI 8/8 em 5eb50c55 (build 10
+  pacotes, unitários nos 2 OS, lint, prettier, 24 goldens E2E, template
+  mp4, commitlint); demo mp4 com streams video+aac conferidos por ffprobe.
 
 **Goal:** A `character.json` (rig + poses + art slots imported from SVG) becomes a
 first-class document citizen: a cast member is posed and gestured from the
