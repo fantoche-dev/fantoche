@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200">
+  <!-- E — AO, ER. Rounded and mid-sized: the "o" shape. Taller-to-wider than
+       C, far larger than F. Rounding is a scored axis, so these three must
+       never be mistaken for each other. -->
+  <ellipse cx="160" cy="100" rx="66" ry="56" fill="#c9606f" stroke="#5a2a36" stroke-width="4"/>
+  <ellipse cx="160" cy="100" rx="48" ry="38" fill="#34121c"/>
+  <ellipse cx="160" cy="100" rx="48" ry="38" fill="none" stroke="#5a2a36" stroke-width="3"/>
+</svg>

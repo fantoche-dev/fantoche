@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200">
+  <!-- G — F, V. Upper teeth biting the lower lip. The lip is drawn last so it
+       covers the lower half of the teeth: without that overlap this reads as
+       B (clenched teeth) and the sheet loses a viseme. -->
+  <ellipse cx="160" cy="102" rx="84" ry="40" fill="#c9606f" stroke="#5a2a36" stroke-width="4"/>
+  <ellipse cx="160" cy="102" rx="66" ry="24" fill="#34121c"/>
+  <ellipse cx="160" cy="90" rx="54" ry="13" fill="#f7f3ea"/>
+  <ellipse cx="160" cy="102" rx="66" ry="24" fill="none" stroke="#5a2a36" stroke-width="3"/>
+  <path d="M 96 106 Q 160 88 224 106 Q 160 140 96 106 Z" fill="#c9606f" stroke="#5a2a36" stroke-width="3" stroke-linejoin="round"/>
+</svg>

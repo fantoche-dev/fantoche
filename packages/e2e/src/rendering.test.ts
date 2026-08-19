@@ -7,17 +7,27 @@ import {start} from './app';
 expect.extend({toMatchImageSnapshot});
 
 describe('Rendering', () => {
-  let app: App;
+  let app: App | undefined;
 
   beforeAll(async () => {
     app = await start();
   });
 
   afterAll(async () => {
-    await app.stop();
+    // Optional, because `start()` throwing leaves this undefined: teardown
+    // then threw a TypeError of its own, and that second failure is the one
+    // that gets read. A Chrome that would not launch reported as
+    // "cannot read properties of undefined" sends whoever is on the failure
+    // looking in the wrong place entirely.
+    await app?.stop();
   });
 
   test('Animation renders correctly', async () => {
+    // For the type checker, not for the runtime: a failing `beforeAll` aborts
+    // the suite before any test body runs.
+    if (app === undefined) {
+      throw new Error('the app did not start — see the beforeAll failure');
+    }
     await app.page.click('#render');
     await app.page.waitForSelector('#render:not([data-rendering="true"])');
 
@@ -38,6 +48,8 @@ describe('Rendering', () => {
       'doc-block-escape',
       'doc-code-diff',
       'doc-gate',
+      'doc-character-poses',
+      'doc-first-slice',
     ];
     const rendered = images.map(image => image.name);
     for (const scene of expectedScenes) {
@@ -61,7 +73,7 @@ describe('Rendering', () => {
       failureThresholdType: 'pixel' as const,
     };
     for (const {name, content} of images) {
-      const base = name.replace(/-mid$/, '');
+      const base = name.replace(/-(mid|f\d+)$/, '');
       expect(content).toMatchImageSnapshot({
         customSnapshotIdentifier: name,
         ...(process.platform !== 'linux' && textScenes.has(base)
@@ -101,6 +113,25 @@ async function readOutputFiles() {
         content: await fs.promises.readFile(`./output/project/${file}/${mid}`),
       });
     }
+    // First+mid is too thin for the vertical-slice demo: its point is
+    // specific beats, so those beats get deterministic probes (30 fps).
+    for (const probe of PROBE_FRAMES.get(file) ?? []) {
+      if (probe < frames.length) {
+        images.push({
+          name: `${file}-f${probe}`,
+          content: await fs.promises.readFile(
+            `./output/project/${file}/${frames[probe]}`,
+          ),
+        });
+      }
+    }
   }
   return images;
 }
+
+const PROBE_FRAMES = new Map<string, number[]>([
+  // 0.8s pressed A on "pessoal"; 3.6s open-with-teeth C mid "binária" with
+  // wave + crossed arm; 7.2s pressed A on "meio", arm still in front;
+  // 9.5s back at rest pose with the arm behind again.
+  ['doc-first-slice', [24, 108, 216, 285]],
+]);

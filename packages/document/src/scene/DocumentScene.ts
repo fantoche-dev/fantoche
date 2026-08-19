@@ -194,10 +194,33 @@ export class DocumentScene
     return this.registeredNodes.get(key) ?? null;
   }
 
-  // -- media (v0: documents declare no playable media elements) -------------
+  // -- media ----------------------------------------------------------------
 
+  /**
+   * Mirrors `Scene2D.getMediaAssets`: one entry for the narration audio,
+   * every frame, with scene-local time on the document's own clock
+   * (`ir.fps`). Duration falls back to the last narration segment's end.
+   * Closes P1 good-first-issue #4 — the P2 gate requires audible narration.
+   */
   public override getMediaAssets(): Array<AssetInfo> {
-    return [];
+    const assetId = this.ir.narrationAudio;
+    if (assetId === null) {
+      return [];
+    }
+    // The compiler guarantees the asset exists and is audio.
+    const asset = this.assets[assetId];
+    const frame = this.playback.frame - this.firstFrame;
+    return [
+      {
+        key: `${this.name}/${assetId}`,
+        type: 'audio',
+        src: asset.src,
+        playbackRate: 1,
+        volume: asset.volume ?? 1,
+        currentTime: frame / this.ir.fps,
+        duration: asset.dur ?? this.ir.narrationEnd ?? 0,
+      },
+    ];
   }
 
   public adjustVolume(): void {}
@@ -281,7 +304,7 @@ export class DocumentScene
       code.code(state.code);
     } else {
       const {from, to, progress} = state.code;
-      const cacheKey = `${from} ${to}`;
+      const cacheKey = `${from}\u0000${to}`;
       let fragments = this.diffCache.get(cacheKey);
       if (fragments === undefined) {
         // Diff via the code signal's own tween machinery is generator-bound;

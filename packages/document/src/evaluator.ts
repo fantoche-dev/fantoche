@@ -34,11 +34,13 @@ import {
   map,
   type TimingFunction,
 } from '@fantoche-dev/core';
+import {composeRig, type JointPose} from './character/pose.js';
 import type {EasingName} from './easings.js';
 import type {CodeRange, TimelineIR, Track} from './ir.js';
 import type {PropValue} from './schema.js';
+import {lastAtOrBefore} from './search.js';
 
-export const EASINGS: Record<EasingName, TimingFunction> = {
+export const EASINGS: Record<Exclude<EasingName, 'spring'>, TimingFunction> = {
   linear,
   easeInSine,
   easeOutSine,
@@ -71,6 +73,13 @@ export const EASINGS: Record<EasingName, TimingFunction> = {
   easeOutElastic,
   easeInOutElastic,
 };
+
+function standardEasing(easing: EasingName, progress: number): number {
+  if (easing === 'spring') {
+    throw new Error('spring easing requires baked scalar track metadata');
+  }
+  return EASINGS[easing](progress);
+}
 
 export interface CodeFrameState {
   /** Settled text, or an in-flight transition with eased progress. */
@@ -157,28 +166,11 @@ function cloneRanges(ranges: CodeRange[]): CodeRange[] {
   ]);
 }
 
-/** Index of the last entry with time ≤ frame, or -1. */
-function lastAtOrBefore<T>(
-  entries: readonly T[],
+function evaluateTrack(
+  track: Track,
   frame: number,
-  time: (entry: T) => number,
-): number {
-  let low = 0;
-  let high = entries.length - 1;
-  let found = -1;
-  while (low <= high) {
-    const mid = (low + high) >> 1;
-    if (time(entries[mid]) <= frame) {
-      found = mid;
-      low = mid + 1;
-    } else {
-      high = mid - 1;
-    }
-  }
-  return found;
-}
-
-function evaluateTrack(track: Track, frame: number): PropValue | undefined {
+  fps: number,
+): PropValue | undefined {
   const {keys, initial} = track;
   const index = lastAtOrBefore(keys, frame, key => key.tF);
   if (index === -1) {
@@ -191,9 +183,24 @@ function evaluateTrack(track: Track, frame: number): PropValue | undefined {
   if (next === undefined || next.easing === 'hold') {
     return cloneValue(current.value);
   }
+  if (next.easing === 'spring') {
+    if (next.spring === undefined) {
+      throw new Error('spring track key is missing baked coefficients');
+    }
+    const {omega, v0n, norm} = next.spring;
+    const elapsed = (frame - current.tF) / fps;
+    const c = omega - v0n * norm;
+    const progress =
+      (1 - (1 + c * elapsed) * Math.exp(-omega * elapsed)) / norm;
+    return lerpValue(current.value, next.value, progress);
+  }
   const span = next.tF - current.tF;
   const progress = span === 0 ? 1 : (frame - current.tF) / span;
-  return lerpValue(current.value, next.value, EASINGS[next.easing](progress));
+  return lerpValue(
+    current.value,
+    next.value,
+    standardEasing(next.easing, progress),
+  );
 }
 
 /**
@@ -207,7 +214,7 @@ function evaluateTrack(track: Track, frame: number): PropValue | undefined {
 export function evaluateFrame(ir: TimelineIR, frame: number): FrameState {
   const props = new Map<string, Map<string, PropValue>>();
   for (const track of ir.tracks) {
-    const value = evaluateTrack(track, frame);
+    const value = evaluateTrack(track, frame, ir.fps);
     if (value === undefined) {
       continue;
     }
@@ -217,6 +224,38 @@ export function evaluateFrame(ir: TimelineIR, frame: number): FrameState {
       props.set(track.target, target);
     }
     target.set(track.prop, value);
+  }
+
+  // Joint tracks above are local. Compose them only after every property has
+  // been evaluated for this frame, then overwrite the flat SVG nodes with
+  // world transforms. No previous-frame state participates (ADR 0005/0006).
+  for (const rig of Object.values(ir.rigs ?? {})) {
+    const pose: Record<string, JointPose> = {};
+    for (const slot of rig.slots) {
+      const joint = props.get(slot.nodeId);
+      pose[slot.id] = {
+        x: numericProp(joint, 'x'),
+        y: numericProp(joint, 'y'),
+        rotation: numericProp(joint, 'rotation'),
+        scale: numericProp(joint, 'scale'),
+      };
+    }
+    const composed = composeRig(rig.slots, pose, rig.artCentre);
+    for (const slot of rig.slots) {
+      let target = props.get(slot.nodeId);
+      if (target === undefined) {
+        target = new Map();
+        props.set(slot.nodeId, target);
+      }
+      const world = composed[slot.id];
+      target.set('x', world.x);
+      target.set('y', world.y);
+      target.set('rotation', world.rotation);
+      target.set('scale', world.scale);
+      const depth = numericProp(target, 'depth') ?? slot.depth;
+      target.delete('depth');
+      target.set('zIndex', depth);
+    }
   }
 
   const code = new Map<string, CodeFrameState>();
@@ -232,7 +271,7 @@ export function evaluateFrame(ir: TimelineIR, frame: number): FrameState {
         codeState = {
           from: op.before,
           to: op.after,
-          progress: EASINGS[op.easing](progress),
+          progress: standardEasing(op.easing, progress),
         };
       }
     }
@@ -259,7 +298,7 @@ export function evaluateFrame(ir: TimelineIR, frame: number): FrameState {
         selection = {
           ranges: cloneRanges(op.after),
           from: cloneRanges(op.before),
-          progress: EASINGS[op.easing](progress),
+          progress: standardEasing(op.easing, progress),
         };
       }
     }
@@ -281,6 +320,14 @@ export function evaluateFrame(ir: TimelineIR, frame: number): FrameState {
   }
 
   return {props, code, blocks};
+}
+
+function numericProp(
+  props: Map<string, PropValue> | undefined,
+  name: string,
+): number | undefined {
+  const value = props?.get(name);
+  return typeof value === 'number' ? value : undefined;
 }
 
 /** Seconds-based convenience wrapper over {@link evaluateFrame}. */

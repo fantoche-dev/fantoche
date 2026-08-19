@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480">
+  <!-- Ugly on purpose (plan Task 16): a discrimination fixture, not art.
+       Drawn for this repo from plain primitives; MIT like the rest. -->
+  <g id="torso">
+    <rect x="120" y="180" width="80" height="140" rx="12" fill="#7a5c3e" />
+    <rect x="132" y="196" width="56" height="10" rx="5" fill="#5f462e" />
+  </g>
+  <g id="head">
+    <circle cx="160" cy="120" r="56" fill="#d9a066" />
+    <circle cx="140" cy="104" r="7" fill="#1f2937" />
+    <circle cx="180" cy="104" r="7" fill="#1f2937" />
+  </g>
+
+  <!-- Nine mouths, one per viseme letter, all on the same spot of the face.
+       Deliberately far apart in shape (pressed vs relaxed, open vs rounded
+       vs puckered) so a golden can tell them apart in a single frame. -->
+  <g id="mouth-a">
+    <rect x="140" y="147" width="40" height="7" rx="3.5" fill="#7c2d12" />
+  </g>
+  <g id="mouth-b">
+    <rect x="140" y="144" width="40" height="12" rx="3" fill="#7c2d12" />
+    <rect x="144" y="148" width="32" height="4" fill="#f8fafc" />
+  </g>
+  <g id="mouth-c">
+    <rect x="138" y="140" width="44" height="20" rx="6" fill="#4a0e0e" />
+    <rect x="143" y="142" width="34" height="5" fill="#f8fafc" />
+  </g>
+  <g id="mouth-d">
+    <ellipse cx="160" cy="152" rx="24" ry="16" fill="#4a0e0e" />
+    <ellipse cx="160" cy="160" rx="10" ry="6" fill="#f472b6" />
+  </g>
+  <g id="mouth-e">
+    <circle cx="160" cy="152" r="11" fill="#4a0e0e" />
+  </g>
+  <g id="mouth-f">
+    <circle cx="160" cy="152" r="9" fill="#7c2d12" />
+    <circle cx="160" cy="152" r="3.5" fill="#4a0e0e" />
+  </g>
+  <g id="mouth-g">
+    <rect x="140" y="146" width="40" height="9" rx="3" fill="#7c2d12" />
+    <rect x="144" y="145" width="32" height="5" fill="#f8fafc" />
+  </g>
+  <g id="mouth-h">
+    <rect x="138" y="141" width="44" height="18" rx="6" fill="#4a0e0e" />
+    <rect x="152" y="141" width="16" height="10" rx="4" fill="#f472b6" />
+  </g>
+  <g id="mouth-x">
+    <rect x="142" y="149" width="36" height="4" rx="2" fill="#9a3412" />
+  </g>
+
+  <!-- Left arm chain: shoulder pivot by id-marker, wrist pivot by data-attr
+       marker — both marker syntaxes stay exercised by a committed fixture.
+       The id is mangled on purpose: the binding table absorbs it. -->
+  <g id="arm_x5F_l">
+    <rect x="58" y="188" width="66" height="14" rx="7" fill="#d9a066" />
+  </g>
+  <circle id="pivot-arm-l" cx="118" cy="195" r="1" fill="#ff00ff" />
+  <g id="hand-l">
+    <circle cx="56" cy="195" r="11" fill="#e7b57f" />
+  </g>
+  <circle cx="66" cy="195" r="1" fill="#ff00ff" data-fantoche-pivot="hand-l" />
+
+  <!-- Right arm: the depth-swapping one (ADR 0006 payoff). Different tone
+       from the left arm so the swap reads instantly in a golden. -->
+  <g id="arm-r">
+    <rect x="196" y="188" width="66" height="14" rx="7" fill="#b0763f" />
+  </g>
+  <circle id="pivot-arm-r" cx="202" cy="195" r="1" fill="#ff00ff" />
+</svg>

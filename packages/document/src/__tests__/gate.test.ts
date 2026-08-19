@@ -10,8 +10,13 @@ import {PlaybackManager, PlaybackStatus, Vector2} from '@fantoche-dev/core';
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {describe, expect, test} from 'vitest';
-import type {DocumentScene, DocumentSceneConfig} from '../scene/index.js';
+import type {
+  DocumentScene,
+  DocumentSceneConfig,
+  MakeDocumentSceneOptions,
+} from '../scene/index.js';
 import {makeDocumentScene} from '../scene/index.js';
+import {rigDocument, rigOptions} from './rig-fixture.js';
 
 const gateDoc = JSON.parse(
   readFileSync(
@@ -32,14 +37,17 @@ function* slide(container: Node): ThreadGenerator {
 const blocks: Record<string, typeof slide> = {};
 blocks['../tests/blocks/fx.tsx#slide'] = slide;
 
-function makeScene(document: unknown = gateDoc): {
+function makeScene(
+  document: unknown = gateDoc,
+  options: MakeDocumentSceneOptions = {blocks},
+): {
   scene: DocumentScene;
   playback: PlaybackManager;
 } {
   const playback = new PlaybackManager();
   const status = new PlaybackStatus(playback);
   const description = {
-    ...makeDocumentScene('gate', document, {blocks}),
+    ...makeDocumentScene('gate', document, options),
     size: new Vector2(320, 320),
     resolutionScale: 1,
     playback: status,
@@ -154,6 +162,46 @@ describe('P1 gate', () => {
     const longMs = await time(long.scene, 230);
     console.log(
       `gate seek: 8s doc=${shortMs.toFixed(3)}ms 600s doc=${longMs.toFixed(3)}ms`,
+    );
+    expect(longMs).toBeLessThan(20);
+    expect(longMs).toBeLessThan(Math.max(shortMs * 10, 5));
+  }, 60000);
+
+  test('seek cost stays flat with a rig and hundreds of pose keys (measured)', async () => {
+    const longRig = JSON.parse(JSON.stringify(rigDocument));
+    // 150× the short rig's duration and 300 additional pose events. The
+    // three-slot FK chain stays fixed; only its indexed key history grows.
+    longRig.meta.duration = 600;
+    for (let i = 0; i < 300; i++) {
+      longRig.timeline.push({
+        at: 8 + i * 1.97,
+        target: 'ana',
+        pose: 'wave',
+        dur: 1,
+        easing: 'linear',
+      });
+    }
+
+    const short = makeScene(rigDocument, rigOptions);
+    await short.scene.recalculate(() => {});
+    await short.scene.reset();
+    const long = makeScene(longRig, rigOptions);
+    await long.scene.recalculate(() => {});
+    await long.scene.reset();
+
+    const time = async (scene: DocumentScene) => {
+      await scene.seekToFrame(110); // warmup, same visual state in both docs
+      const start = performance.now();
+      for (let i = 0; i < 100; i++) {
+        await scene.seekToFrame(110 - (i % 2));
+      }
+      return (performance.now() - start) / 100;
+    };
+
+    const shortMs = await time(short.scene);
+    const longMs = await time(long.scene);
+    console.log(
+      `rig gate seek: 4s rig=${shortMs.toFixed(3)}ms 600s rig=${longMs.toFixed(3)}ms`,
     );
     expect(longMs).toBeLessThan(20);
     expect(longMs).toBeLessThan(Math.max(shortMs * 10, 5));

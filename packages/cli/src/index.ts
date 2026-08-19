@@ -1,7 +1,16 @@
 #!/usr/bin/env node
 
 import {Command} from 'commander';
+import {bindCharacter} from './character/bind';
+import {checkCharacter, printCharacterCheck} from './character/check';
+import {importCharacter} from './character/import';
+import {docCheck} from './doc-check/command';
 import {launchEditor} from './editor';
+import {lipsyncPreview} from './lipsync/command';
+import {lipsyncCompare} from './lipsync/compare';
+import {generateRhubarbTrack, generateWhisperXTrack} from './lipsync/generate';
+import {holdTrack} from './lipsync/hold';
+import {alignNarration} from './narration/align';
 import {renderDoc} from './render-doc';
 import {createServer} from './server/index';
 
@@ -62,6 +71,210 @@ program
   .option('--out <file.mp4>', 'Output file name (default: <doc name>.mp4)')
   .option('--out-dir <dir>', 'Output directory', './output')
   .option('--workers <n>', 'Number of parallel render workers')
+  .option(
+    '--offline',
+    'Block external HTTP(S) while keeping the local render server available',
+  )
   .action(renderDoc);
+
+const narration = program
+  .command('narration')
+  .description('Dev-time narration tools. Never a render-time dependency.');
+
+narration
+  .command('align')
+  .description(
+    'Fill narration.segments[].words[] with forced-alignment timings. The ' +
+      "segments' text is the transcript and is aligned verbatim, never altered.",
+  )
+  .argument('<doc.json>', 'Document whose narration to align')
+  .requiredOption('--audio <wav>', 'Narration audio file')
+  .requiredOption('--language <tag>', 'Language tag, e.g. en-US')
+  .option('--python <path>', 'Python with whisperx (default: $WHISPERX_PYTHON)')
+  .option('--model-dir <dir>', 'Model cache (default: $WHISPERX_MODEL_DIR)')
+  .option('--script <path>', 'Override the bundled scripts/align.py')
+  .action(async (docPath: string, options) => {
+    await alignNarration(docPath, {
+      audio: options.audio,
+      language: options.language,
+      python: options.python,
+      modelDir: options.modelDir,
+      script: options.script,
+    });
+    console.log(`aligned ${docPath}`);
+  });
+
+const character = program
+  .command('character')
+  .description('Dev-time character rig tools. Never a render-time dependency.');
+
+character
+  .command('check')
+  .description(
+    'Compare character.json bindings with the current source SVG and suggest likely remaps.',
+  )
+  .argument('<character.json>', 'Path to the character definition')
+  .option(
+    '--art <art.svg>',
+    'Source SVG when it does not share the *.art.json sidecar stem',
+  )
+  .action((characterPath: string, options: {art?: string}) => {
+    process.exitCode = printCharacterCheck(
+      checkCharacter(characterPath, {artPath: options.art}),
+    );
+  });
+
+character
+  .command('bind')
+  .description(
+    'Interactively repair missing slot bindings; writes character.json, never the SVG.',
+  )
+  .argument('<character.json>', 'Path to the character definition')
+  .option(
+    '--art <art.svg>',
+    'Source SVG when it does not share the *.art.json sidecar stem',
+  )
+  .action(async (characterPath: string, options: {art?: string}) => {
+    const report = await bindCharacter(characterPath, {
+      artPath: options.art,
+    });
+    console.log(
+      `updated ${report.updated.length} binding(s); skipped ${report.skipped.length}`,
+    );
+  });
+
+character
+  .command('import')
+  .description(
+    'Scaffold character.json when absent, then split SVG art into its render-ready *.art.json sidecar.',
+  )
+  .argument('<art.svg>', 'Path to the character art SVG')
+  .argument(
+    '[character.json]',
+    'Existing definition, or scaffold target (default: sibling character.json)',
+  )
+  .action((artPath: string, characterPath?: string) => {
+    const report = importCharacter(artPath, characterPath);
+    if (report.createdCharacter) {
+      console.log(`scaffolded ${report.characterPath}`);
+    }
+    console.log(`wrote ${report.sidecarPath}`);
+    if (report.orphans.length > 0) {
+      console.log(`unbound art ids: ${report.orphans.join(', ')}`);
+    }
+  });
+
+const lipsync = program
+  .command('lipsync')
+  .description('Dev-time lipsync tools. Never a render-time dependency.');
+
+lipsync
+  .command('preview')
+  .description(
+    'Turn a viseme track (.json) into a renderable document: nine stacked ' +
+      'mouth SVGs whose opacity is hold-switched, one cue at a time.',
+  )
+  .argument('<track>', 'Path to the viseme track .json file')
+  .requiredOption('--mouths <dir>', 'Directory holding A.svg … X.svg')
+  .requiredOption('--out <doc.json>', 'Document file to write')
+  .option('--fps <n>', 'Frames per second of the preview', '30')
+  .option('--size <WxH>', 'Preview canvas size', '480x320')
+  .option('--render', 'Render the document to video once written')
+  .option('--out-dir <dir>', 'Output directory for --render', './output')
+  .option('--workers <n>', 'Number of parallel render workers for --render')
+  .action(lipsyncPreview);
+
+lipsync
+  .command('rhubarb')
+  .description('Generate a viseme track with dev-time Rhubarb phonetic mode.')
+  .argument('<wav>', 'Source WAV')
+  .requiredOption('--language <tag>', 'Language tag recorded in the track')
+  .requiredOption('--out <json>', 'Output viseme track')
+  .action((wav, options) => generateRhubarbTrack(wav, options));
+
+lipsync
+  .command('whisperx')
+  .description('Convert scripts/align.py output into a viseme track.')
+  .argument('<alignment>', 'Normalised word/character alignment JSON')
+  .requiredOption('--audio <wav>', 'Source WAV recorded in the track')
+  .requiredOption('--language <tag>', 'Language tag recorded in the track')
+  .requiredOption('--out <json>', 'Output viseme track')
+  .action((alignment, options) => generateWhisperXTrack(alignment, options));
+
+lipsync
+  .command('hold')
+  .description(
+    'Enforce the minimum-hold floor on a draft track: the language-independent ' +
+      'timing layer ADR 0007 names as the re-spike target. Never moves, merges ' +
+      'or invents a cue — it only drops cues that cannot clear the floor.',
+  )
+  .argument('<track>', 'Draft viseme track')
+  .requiredOption('--out <json>', 'Output viseme track')
+  .option('--min-hold <seconds>', 'Shortest allowed hold', '0.1')
+  .action(async (track, options) => {
+    try {
+      await holdTrack(track, options);
+    } catch (error) {
+      console.error((error as Error).message);
+      process.exit(1);
+    }
+  });
+
+lipsync
+  .command('compare')
+  .description(
+    'Render two tracks against the same mouth sheet and audio with a stable, hidden left/right assignment.',
+  )
+  .argument('<a>', 'First viseme track')
+  .argument('<b>', 'Second viseme track')
+  .requiredOption('--mouths <dir>', 'Directory holding A.svg … X.svg')
+  .requiredOption('--audio <wav>', 'Audio heard in both comparison videos')
+  .requiredOption(
+    '--out <dir>',
+    'Directory for left.mp4, right.mp4 and key.json',
+  )
+  .option('--fps <n>', 'Frames per second of both previews', '60')
+  .option('--size <WxH>', 'Preview canvas size', '480x320')
+  .option('--workers <n>', 'Number of parallel render workers')
+  .option(
+    '--timeout <seconds>',
+    'Deadline for any one render or mux before the run fails',
+    '900',
+  )
+  // Exit rather than reject: a wedged render is exactly the case where an
+  // unhandled rejection would leave the terminal holding an open handle.
+  .action(async (a, b, options) => {
+    try {
+      await lipsyncCompare(a, b, options);
+    } catch (error) {
+      console.error((error as Error).message);
+      process.exit(1);
+    }
+  });
+
+const doc = program
+  .command('doc')
+  .description('Document-level authoring checks.');
+
+doc
+  .command('check')
+  .description(
+    'Check a document against the content-quality technical floor ' +
+      '(docs/content-quality.md §2): audio master, viseme timing, segment ' +
+      'length and anchor warnings.',
+  )
+  .argument('<doc.json>', 'Document to check')
+  .option('--strict', 'Exit non-zero when anything is below the floor')
+  .option('--no-audio', 'Skip the ffmpeg/ffprobe audio measurement')
+  .option('--ffmpeg <path>', 'ffmpeg binary (default: bundled installer)')
+  .option('--ffprobe <path>', 'ffprobe binary (default: bundled installer)')
+  .action(async (docPath, options) => {
+    try {
+      await docCheck(docPath, options);
+    } catch (error) {
+      console.error((error as Error).message);
+      process.exit(1);
+    }
+  });
 
 program.parse(process.argv);

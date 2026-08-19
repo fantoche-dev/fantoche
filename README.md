@@ -3,12 +3,14 @@
 **Anyone — or any agent — can make a vector character explain something on
 video.** Open source (MIT), open document format, local-first, video-first.
 
-> **Status: P0 — fork & foundation.** This is a community fork of
+> **Status: P2 — characters, narration & lipsync.** This is a community fork of
 > [Revideo](https://github.com/midrender/revideo) (itself an MIT fork of
-> [Motion Canvas](https://github.com/motion-canvas/motion-canvas)). At this
-> stage it is Revideo with telemetry removed and a new identity; the product
-> layers (declarative document, characters, narration timeline, editor) land in
-> later phases — see [docs/05-roadmap.md](docs/05-roadmap.md).
+> [Motion Canvas](https://github.com/motion-canvas/motion-canvas)). P0 removed
+> telemetry and established the identity; P1 landed the declarative document
+> format, its compiler and evaluator, and headless rendering
+> (`fantoche render doc.json`). Characters, the narration timeline and the
+> editor land in this phase and later ones — see
+> [docs/05-roadmap.md](docs/05-roadmap.md).
 
 ## Why this exists
 

@@ -1,0 +1,2967 @@
+{
+  "version": "0.2",
+  "meta": {
+    "fps": 30,
+    "size": [1920, 1080],
+    "background": "#0b1020",
+    "duration": 91.608
+  },
+  "assets": {
+    "teacher": {
+      "type": "character",
+      "src": "../../characters/teacher/character.json"
+    },
+    "voice": {
+      "type": "audio",
+      "src": "narration.wav",
+      "dur": 91.608
+    },
+    "mouth": {
+      "type": "lipsync",
+      "src": "mouth.viseme.json"
+    }
+  },
+  "narration": {
+    "audio": "voice",
+    "segments": [
+      {
+        "id": "intro",
+        "text": "Hoje vamos entender busca binária com um exemplo visual. Ela usa somente três ideias: ordem, comparação e descarte.",
+        "start": 0.18,
+        "dur": 7.781,
+        "words": [
+          {
+            "text": "hoje",
+            "start": 0.18,
+            "dur": 0.28
+          },
+          {
+            "text": "vamos",
+            "start": 0.52,
+            "dur": 0.26
+          },
+          {
+            "text": "entender",
+            "start": 0.82,
+            "dur": 0.4
+          },
+          {
+            "text": "busca",
+            "start": 1.3,
+            "dur": 0.3
+          },
+          {
+            "text": "binária",
+            "start": 1.64,
+            "dur": 0.44
+          },
+          {
+            "text": "com",
+            "start": 2.14,
+            "dur": 0.12
+          },
+          {
+            "text": "um",
+            "start": 2.28,
+            "dur": 0.08
+          },
+          {
+            "text": "exemplo",
+            "start": 2.4,
+            "dur": 0.38
+          },
+          {
+            "text": "visual",
+            "start": 2.84,
+            "dur": 0.46
+          },
+          {
+            "text": "ela",
+            "start": 3.66,
+            "dur": 0.18
+          },
+          {
+            "text": "usa",
+            "start": 3.96,
+            "dur": 0.2
+          },
+          {
+            "text": "somente",
+            "start": 4.24,
+            "dur": 0.42
+          },
+          {
+            "text": "três",
+            "start": 4.74,
+            "dur": 0.24
+          },
+          {
+            "text": "ideias",
+            "start": 5,
+            "dur": 0.56
+          },
+          {
+            "text": "ordem",
+            "start": 5.821,
+            "dur": 0.34
+          },
+          {
+            "text": "comparação",
+            "start": 6.281,
+            "dur": 0.6
+          },
+          {
+            "text": "e",
+            "start": 6.921,
+            "dur": 0.04
+          },
+          {
+            "text": "descarte",
+            "start": 6.981,
+            "dur": 0.98
+          }
+        ]
+      },
+      {
+        "id": "lista",
+        "text": "Primeiro, precisamos de uma lista ordenada. Aqui estão quinze números. Nosso objetivo é encontrar o número trinta e sete.",
+        "start": 7.961,
+        "dur": 7.66,
+        "words": [
+          {
+            "text": "primeiro",
+            "start": 7.961,
+            "dur": 0.44
+          },
+          {
+            "text": "precisamos",
+            "start": 8.481,
+            "dur": 0.6
+          },
+          {
+            "text": "de",
+            "start": 9.121,
+            "dur": 0.06
+          },
+          {
+            "text": "uma",
+            "start": 9.221,
+            "dur": 0.12
+          },
+          {
+            "text": "lista",
+            "start": 9.421,
+            "dur": 0.28
+          },
+          {
+            "text": "ordenada",
+            "start": 9.761,
+            "dur": 0.58
+          },
+          {
+            "text": "aqui",
+            "start": 10.701,
+            "dur": 0.24
+          },
+          {
+            "text": "estão",
+            "start": 10.961,
+            "dur": 0.24
+          },
+          {
+            "text": "quinze",
+            "start": 11.281,
+            "dur": 0.3
+          },
+          {
+            "text": "números",
+            "start": 11.641,
+            "dur": 0.52
+          },
+          {
+            "text": "nosso",
+            "start": 12.501,
+            "dur": 0.22
+          },
+          {
+            "text": "objetivo",
+            "start": 12.761,
+            "dur": 0.64
+          },
+          {
+            "text": "é",
+            "start": 13.441,
+            "dur": 0.04
+          },
+          {
+            "text": "encontrar",
+            "start": 13.521,
+            "dur": 0.46
+          },
+          {
+            "text": "o",
+            "start": 14.001,
+            "dur": 0.04
+          },
+          {
+            "text": "número",
+            "start": 14.121,
+            "dur": 0.28
+          },
+          {
+            "text": "trinta",
+            "start": 14.481,
+            "dur": 0.24
+          },
+          {
+            "text": "e",
+            "start": 14.741,
+            "dur": 0.04
+          },
+          {
+            "text": "sete",
+            "start": 14.881,
+            "dur": 0.74
+          }
+        ]
+      },
+      {
+        "id": "primeiro_meio",
+        "text": "Em vez de testar cada posição, olhamos direto para o meio. Nesta lista, o primeiro meio é o número trinta e um.",
+        "start": 15.621,
+        "dur": 6.981,
+        "words": [
+          {
+            "text": "em",
+            "start": 15.621,
+            "dur": 0.1
+          },
+          {
+            "text": "vez",
+            "start": 15.781,
+            "dur": 0.18
+          },
+          {
+            "text": "de",
+            "start": 15.981,
+            "dur": 0.08
+          },
+          {
+            "text": "testar",
+            "start": 16.121,
+            "dur": 0.32
+          },
+          {
+            "text": "cada",
+            "start": 16.541,
+            "dur": 0.22
+          },
+          {
+            "text": "posição",
+            "start": 16.821,
+            "dur": 0.561
+          },
+          {
+            "text": "olhamos",
+            "start": 17.702,
+            "dur": 0.4
+          },
+          {
+            "text": "direto",
+            "start": 18.142,
+            "dur": 0.34
+          },
+          {
+            "text": "para",
+            "start": 18.542,
+            "dur": 0.1
+          },
+          {
+            "text": "o",
+            "start": 18.662,
+            "dur": 0.04
+          },
+          {
+            "text": "meio",
+            "start": 18.762,
+            "dur": 0.28
+          },
+          {
+            "text": "nesta",
+            "start": 19.362,
+            "dur": 0.32
+          },
+          {
+            "text": "lista",
+            "start": 19.742,
+            "dur": 0.38
+          },
+          {
+            "text": "o",
+            "start": 20.302,
+            "dur": 0.04
+          },
+          {
+            "text": "primeiro",
+            "start": 20.382,
+            "dur": 0.36
+          },
+          {
+            "text": "meio",
+            "start": 20.842,
+            "dur": 0.3
+          },
+          {
+            "text": "é",
+            "start": 21.222,
+            "dur": 0.06
+          },
+          {
+            "text": "o",
+            "start": 21.302,
+            "dur": 0.02
+          },
+          {
+            "text": "número",
+            "start": 21.402,
+            "dur": 0.3
+          },
+          {
+            "text": "trinta",
+            "start": 21.782,
+            "dur": 0.24
+          },
+          {
+            "text": "e",
+            "start": 22.042,
+            "dur": 0.08
+          },
+          {
+            "text": "um",
+            "start": 22.162,
+            "dur": 0.44
+          }
+        ]
+      },
+      {
+        "id": "descarta_esquerda",
+        "text": "Comparamos trinta e sete com trinta e um. Como o alvo é maior, nenhuma posição à esquerda serve. Descartamos aquela metade.",
+        "start": 22.602,
+        "dur": 7.801,
+        "words": [
+          {
+            "text": "comparamos",
+            "start": 22.602,
+            "dur": 0.58
+          },
+          {
+            "text": "trinta",
+            "start": 23.242,
+            "dur": 0.24
+          },
+          {
+            "text": "e",
+            "start": 23.502,
+            "dur": 0.02
+          },
+          {
+            "text": "sete",
+            "start": 23.642,
+            "dur": 0.28
+          },
+          {
+            "text": "com",
+            "start": 24.002,
+            "dur": 0.12
+          },
+          {
+            "text": "trinta",
+            "start": 24.222,
+            "dur": 0.22
+          },
+          {
+            "text": "e",
+            "start": 24.462,
+            "dur": 0.06
+          },
+          {
+            "text": "um",
+            "start": 24.582,
+            "dur": 0.12
+          },
+          {
+            "text": "como",
+            "start": 25.042,
+            "dur": 0.2
+          },
+          {
+            "text": "o",
+            "start": 25.262,
+            "dur": 0.02
+          },
+          {
+            "text": "alvo",
+            "start": 25.342,
+            "dur": 0.22
+          },
+          {
+            "text": "é",
+            "start": 25.582,
+            "dur": 0.04
+          },
+          {
+            "text": "maior",
+            "start": 25.682,
+            "dur": 0.46
+          },
+          {
+            "text": "nenhuma",
+            "start": 26.222,
+            "dur": 0.34
+          },
+          {
+            "text": "posição",
+            "start": 26.642,
+            "dur": 0.44
+          },
+          {
+            "text": "à",
+            "start": 27.122,
+            "dur": 0.04
+          },
+          {
+            "text": "esquerda",
+            "start": 27.202,
+            "dur": 0.44
+          },
+          {
+            "text": "serve",
+            "start": 27.762,
+            "dur": 0.36
+          },
+          {
+            "text": "descartamos",
+            "start": 28.462,
+            "dur": 0.701
+          },
+          {
+            "text": "aquela",
+            "start": 29.223,
+            "dur": 0.26
+          },
+          {
+            "text": "metade",
+            "start": 29.523,
+            "dur": 0.88
+          }
+        ]
+      },
+      {
+        "id": "segundo_meio",
+        "text": "Agora restam os números maiores. Escolhemos novamente o centro, que desta vez é quarenta e sete.",
+        "start": 30.403,
+        "dur": 6.24,
+        "words": [
+          {
+            "text": "agora",
+            "start": 30.403,
+            "dur": 0.34
+          },
+          {
+            "text": "restam",
+            "start": 30.843,
+            "dur": 0.34
+          },
+          {
+            "text": "os",
+            "start": 31.203,
+            "dur": 0.1
+          },
+          {
+            "text": "números",
+            "start": 31.363,
+            "dur": 0.34
+          },
+          {
+            "text": "maiores",
+            "start": 31.743,
+            "dur": 0.6
+          },
+          {
+            "text": "escolhemos",
+            "start": 32.643,
+            "dur": 0.6
+          },
+          {
+            "text": "novamente",
+            "start": 33.263,
+            "dur": 0.48
+          },
+          {
+            "text": "o",
+            "start": 33.763,
+            "dur": 0.04
+          },
+          {
+            "text": "centro",
+            "start": 33.903,
+            "dur": 0.34
+          },
+          {
+            "text": "que",
+            "start": 34.503,
+            "dur": 0.1
+          },
+          {
+            "text": "desta",
+            "start": 34.663,
+            "dur": 0.32
+          },
+          {
+            "text": "vez",
+            "start": 35.063,
+            "dur": 0.22
+          },
+          {
+            "text": "é",
+            "start": 35.303,
+            "dur": 0.04
+          },
+          {
+            "text": "quarenta",
+            "start": 35.403,
+            "dur": 0.34
+          },
+          {
+            "text": "e",
+            "start": 35.763,
+            "dur": 0.04
+          },
+          {
+            "text": "sete",
+            "start": 35.903,
+            "dur": 0.74
+          }
+        ]
+      },
+      {
+        "id": "descarta_direita",
+        "text": "O alvo é menor que quarenta e sete, então descartamos a metade direita. A cada comparação, o intervalo fica duas vezes menor.",
+        "start": 36.643,
+        "dur": 7.901,
+        "words": [
+          {
+            "text": "o",
+            "start": 36.643,
+            "dur": 0.04
+          },
+          {
+            "text": "alvo",
+            "start": 36.763,
+            "dur": 0.22
+          },
+          {
+            "text": "é",
+            "start": 37.003,
+            "dur": 0.04
+          },
+          {
+            "text": "menor",
+            "start": 37.083,
+            "dur": 0.36
+          },
+          {
+            "text": "que",
+            "start": 37.503,
+            "dur": 0.08
+          },
+          {
+            "text": "quarenta",
+            "start": 37.643,
+            "dur": 0.34
+          },
+          {
+            "text": "e",
+            "start": 38.003,
+            "dur": 0.04
+          },
+          {
+            "text": "sete",
+            "start": 38.143,
+            "dur": 0.36
+          },
+          {
+            "text": "então",
+            "start": 38.623,
+            "dur": 0.24
+          },
+          {
+            "text": "descartamos",
+            "start": 38.903,
+            "dur": 0.68
+          },
+          {
+            "text": "a",
+            "start": 39.623,
+            "dur": 0.04
+          },
+          {
+            "text": "metade",
+            "start": 39.703,
+            "dur": 0.421
+          },
+          {
+            "text": "direita",
+            "start": 40.164,
+            "dur": 0.44
+          },
+          {
+            "text": "a",
+            "start": 40.944,
+            "dur": 0.04
+          },
+          {
+            "text": "cada",
+            "start": 41.084,
+            "dur": 0.24
+          },
+          {
+            "text": "comparação",
+            "start": 41.384,
+            "dur": 0.64
+          },
+          {
+            "text": "o",
+            "start": 42.184,
+            "dur": 0.04
+          },
+          {
+            "text": "intervalo",
+            "start": 42.264,
+            "dur": 0.54
+          },
+          {
+            "text": "fica",
+            "start": 42.884,
+            "dur": 0.22
+          },
+          {
+            "text": "duas",
+            "start": 43.184,
+            "dur": 0.3
+          },
+          {
+            "text": "vezes",
+            "start": 43.524,
+            "dur": 0.32
+          },
+          {
+            "text": "menor",
+            "start": 43.884,
+            "dur": 0.66
+          }
+        ]
+      },
+      {
+        "id": "encontra",
+        "text": "O próximo meio é trinta e sete. Encontramos o valor sem visitar quase toda a lista.",
+        "start": 44.544,
+        "dur": 5.42,
+        "words": [
+          {
+            "text": "o",
+            "start": 44.544,
+            "dur": 0.04
+          },
+          {
+            "text": "próximo",
+            "start": 44.664,
+            "dur": 0.4
+          },
+          {
+            "text": "meio",
+            "start": 45.144,
+            "dur": 0.24
+          },
+          {
+            "text": "é",
+            "start": 45.424,
+            "dur": 0.04
+          },
+          {
+            "text": "trinta",
+            "start": 45.564,
+            "dur": 0.22
+          },
+          {
+            "text": "e",
+            "start": 45.824,
+            "dur": 0.04
+          },
+          {
+            "text": "sete",
+            "start": 45.964,
+            "dur": 0.4
+          },
+          {
+            "text": "encontramos",
+            "start": 46.704,
+            "dur": 0.6
+          },
+          {
+            "text": "o",
+            "start": 47.344,
+            "dur": 0.04
+          },
+          {
+            "text": "valor",
+            "start": 47.424,
+            "dur": 0.34
+          },
+          {
+            "text": "sem",
+            "start": 47.884,
+            "dur": 0.12
+          },
+          {
+            "text": "visitar",
+            "start": 48.064,
+            "dur": 0.42
+          },
+          {
+            "text": "quase",
+            "start": 48.564,
+            "dur": 0.3
+          },
+          {
+            "text": "toda",
+            "start": 48.964,
+            "dur": 0.22
+          },
+          {
+            "text": "a",
+            "start": 49.204,
+            "dur": 0.02
+          },
+          {
+            "text": "lista",
+            "start": 49.264,
+            "dur": 0.7
+          }
+        ]
+      },
+      {
+        "id": "codigo_limites",
+        "text": "No código, começamos com dois limites: baixo no início e alto no fim. Enquanto baixo não ultrapassar alto, calculamos o meio.",
+        "start": 49.964,
+        "dur": 8.061,
+        "words": [
+          {
+            "text": "no",
+            "start": 49.964,
+            "dur": 0.1
+          },
+          {
+            "text": "código",
+            "start": 50.144,
+            "dur": 0.44
+          },
+          {
+            "text": "começamos",
+            "start": 50.644,
+            "dur": 0.54
+          },
+          {
+            "text": "com",
+            "start": 51.224,
+            "dur": 0.12
+          },
+          {
+            "text": "dois",
+            "start": 51.424,
+            "dur": 0.221
+          },
+          {
+            "text": "limites",
+            "start": 51.685,
+            "dur": 0.54
+          },
+          {
+            "text": "baixo",
+            "start": 52.525,
+            "dur": 0.3
+          },
+          {
+            "text": "no",
+            "start": 52.865,
+            "dur": 0.06
+          },
+          {
+            "text": "início",
+            "start": 52.965,
+            "dur": 0.42
+          },
+          {
+            "text": "e",
+            "start": 53.425,
+            "dur": 0.06
+          },
+          {
+            "text": "alto",
+            "start": 53.565,
+            "dur": 0.18
+          },
+          {
+            "text": "no",
+            "start": 53.785,
+            "dur": 0.08
+          },
+          {
+            "text": "fim",
+            "start": 53.945,
+            "dur": 0.2
+          },
+          {
+            "text": "enquanto",
+            "start": 54.465,
+            "dur": 0.42
+          },
+          {
+            "text": "baixo",
+            "start": 54.965,
+            "dur": 0.36
+          },
+          {
+            "text": "não",
+            "start": 55.405,
+            "dur": 0.16
+          },
+          {
+            "text": "ultrapassar",
+            "start": 55.585,
+            "dur": 0.54
+          },
+          {
+            "text": "alto",
+            "start": 56.205,
+            "dur": 0.28
+          },
+          {
+            "text": "calculamos",
+            "start": 56.565,
+            "dur": 0.62
+          },
+          {
+            "text": "o",
+            "start": 57.225,
+            "dur": 0.04
+          },
+          {
+            "text": "meio",
+            "start": 57.305,
+            "dur": 0.72
+          }
+        ]
+      },
+      {
+        "id": "codigo_ramos",
+        "text": "Se o valor central for igual ao alvo, devolvemos sua posição. Se for menor, movemos baixo. Caso contrário, reduzimos alto.",
+        "start": 58.025,
+        "dur": 8.181,
+        "words": [
+          {
+            "text": "se",
+            "start": 58.025,
+            "dur": 0.08
+          },
+          {
+            "text": "o",
+            "start": 58.145,
+            "dur": 0.04
+          },
+          {
+            "text": "valor",
+            "start": 58.225,
+            "dur": 0.3
+          },
+          {
+            "text": "central",
+            "start": 58.605,
+            "dur": 0.4
+          },
+          {
+            "text": "for",
+            "start": 59.065,
+            "dur": 0.16
+          },
+          {
+            "text": "igual",
+            "start": 59.245,
+            "dur": 0.32
+          },
+          {
+            "text": "ao",
+            "start": 59.605,
+            "dur": 0.1
+          },
+          {
+            "text": "alvo",
+            "start": 59.825,
+            "dur": 0.3
+          },
+          {
+            "text": "devolvemos",
+            "start": 60.185,
+            "dur": 0.58
+          },
+          {
+            "text": "sua",
+            "start": 60.805,
+            "dur": 0.12
+          },
+          {
+            "text": "posição",
+            "start": 60.985,
+            "dur": 0.52
+          },
+          {
+            "text": "se",
+            "start": 61.945,
+            "dur": 0.08
+          },
+          {
+            "text": "for",
+            "start": 62.105,
+            "dur": 0.14
+          },
+          {
+            "text": "menor",
+            "start": 62.285,
+            "dur": 0.4
+          },
+          {
+            "text": "movemos",
+            "start": 62.765,
+            "dur": 0.441
+          },
+          {
+            "text": "baixo",
+            "start": 63.266,
+            "dur": 0.42
+          },
+          {
+            "text": "caso",
+            "start": 64.026,
+            "dur": 0.24
+          },
+          {
+            "text": "contrário",
+            "start": 64.306,
+            "dur": 0.56
+          },
+          {
+            "text": "reduzimos",
+            "start": 64.906,
+            "dur": 0.62
+          },
+          {
+            "text": "alto",
+            "start": 65.586,
+            "dur": 0.62
+          }
+        ]
+      },
+      {
+        "id": "complexidade",
+        "text": "Perceba o padrão: quinze posições viraram sete, depois três e finalmente uma. Por isso o custo cresce como logaritmo do tamanho da lista.",
+        "start": 66.206,
+        "dur": 8.581,
+        "words": [
+          {
+            "text": "perceba",
+            "start": 66.206,
+            "dur": 0.46
+          },
+          {
+            "text": "o",
+            "start": 66.686,
+            "dur": 0.04
+          },
+          {
+            "text": "padrão",
+            "start": 66.766,
+            "dur": 0.42
+          },
+          {
+            "text": "quinze",
+            "start": 67.366,
+            "dur": 0.32
+          },
+          {
+            "text": "posições",
+            "start": 67.766,
+            "dur": 0.54
+          },
+          {
+            "text": "viraram",
+            "start": 68.326,
+            "dur": 0.38
+          },
+          {
+            "text": "sete",
+            "start": 68.806,
+            "dur": 0.4
+          },
+          {
+            "text": "depois",
+            "start": 69.246,
+            "dur": 0.34
+          },
+          {
+            "text": "três",
+            "start": 69.666,
+            "dur": 0.24
+          },
+          {
+            "text": "e",
+            "start": 69.926,
+            "dur": 0.04
+          },
+          {
+            "text": "finalmente",
+            "start": 70.026,
+            "dur": 0.58
+          },
+          {
+            "text": "uma",
+            "start": 70.746,
+            "dur": 0.18
+          },
+          {
+            "text": "por",
+            "start": 71.246,
+            "dur": 0.12
+          },
+          {
+            "text": "isso",
+            "start": 71.426,
+            "dur": 0.22
+          },
+          {
+            "text": "o",
+            "start": 71.666,
+            "dur": 0.02
+          },
+          {
+            "text": "custo",
+            "start": 71.766,
+            "dur": 0.3
+          },
+          {
+            "text": "cresce",
+            "start": 72.146,
+            "dur": 0.32
+          },
+          {
+            "text": "como",
+            "start": 72.546,
+            "dur": 0.2
+          },
+          {
+            "text": "logaritmo",
+            "start": 72.786,
+            "dur": 0.6
+          },
+          {
+            "text": "do",
+            "start": 73.426,
+            "dur": 0.06
+          },
+          {
+            "text": "tamanho",
+            "start": 73.546,
+            "dur": 0.36
+          },
+          {
+            "text": "da",
+            "start": 73.946,
+            "dur": 0.08
+          },
+          {
+            "text": "lista",
+            "start": 74.086,
+            "dur": 0.701
+          }
+        ]
+      },
+      {
+        "id": "milhao",
+        "text": "Com um milhão de itens, precisamos de cerca de vinte comparações. Mas a lista precisa estar ordenada antes da busca.",
+        "start": 74.787,
+        "dur": 7.36,
+        "words": [
+          {
+            "text": "com",
+            "start": 74.787,
+            "dur": 0.12
+          },
+          {
+            "text": "um",
+            "start": 74.987,
+            "dur": 0.06
+          },
+          {
+            "text": "milhão",
+            "start": 75.087,
+            "dur": 0.3
+          },
+          {
+            "text": "de",
+            "start": 75.447,
+            "dur": 0.1
+          },
+          {
+            "text": "itens",
+            "start": 75.667,
+            "dur": 0.38
+          },
+          {
+            "text": "precisamos",
+            "start": 76.087,
+            "dur": 0.6
+          },
+          {
+            "text": "de",
+            "start": 76.707,
+            "dur": 0.08
+          },
+          {
+            "text": "cerca",
+            "start": 76.887,
+            "dur": 0.3
+          },
+          {
+            "text": "de",
+            "start": 77.227,
+            "dur": 0.08
+          },
+          {
+            "text": "vinte",
+            "start": 77.387,
+            "dur": 0.22
+          },
+          {
+            "text": "comparações",
+            "start": 77.667,
+            "dur": 0.82
+          },
+          {
+            "text": "mas",
+            "start": 78.807,
+            "dur": 0.16
+          },
+          {
+            "text": "a",
+            "start": 79.027,
+            "dur": 0.04
+          },
+          {
+            "text": "lista",
+            "start": 79.107,
+            "dur": 0.28
+          },
+          {
+            "text": "precisa",
+            "start": 79.447,
+            "dur": 0.48
+          },
+          {
+            "text": "estar",
+            "start": 79.967,
+            "dur": 0.24
+          },
+          {
+            "text": "ordenada",
+            "start": 80.287,
+            "dur": 0.58
+          },
+          {
+            "text": "antes",
+            "start": 80.967,
+            "dur": 0.24
+          },
+          {
+            "text": "da",
+            "start": 81.247,
+            "dur": 0.08
+          },
+          {
+            "text": "busca",
+            "start": 81.407,
+            "dur": 0.74
+          }
+        ]
+      },
+      {
+        "id": "fecho",
+        "text": "Esse é o coração da busca binária: olhar o meio, comparar e eliminar metade. Com dados ordenados, uma decisão pequena economiza muito trabalho.",
+        "start": 82.147,
+        "dur": 9.461,
+        "words": [
+          {
+            "text": "esse",
+            "start": 82.147,
+            "dur": 0.18
+          },
+          {
+            "text": "é",
+            "start": 82.347,
+            "dur": 0.02
+          },
+          {
+            "text": "o",
+            "start": 82.407,
+            "dur": 0.02
+          },
+          {
+            "text": "coração",
+            "start": 82.467,
+            "dur": 0.4
+          },
+          {
+            "text": "da",
+            "start": 82.907,
+            "dur": 0.1
+          },
+          {
+            "text": "busca",
+            "start": 83.067,
+            "dur": 0.26
+          },
+          {
+            "text": "binária",
+            "start": 83.367,
+            "dur": 0.48
+          },
+          {
+            "text": "olhar",
+            "start": 84.107,
+            "dur": 0.26
+          },
+          {
+            "text": "o",
+            "start": 84.387,
+            "dur": 0.04
+          },
+          {
+            "text": "meio",
+            "start": 84.487,
+            "dur": 0.32
+          },
+          {
+            "text": "comparar",
+            "start": 84.907,
+            "dur": 0.48
+          },
+          {
+            "text": "e",
+            "start": 85.447,
+            "dur": 0.04
+          },
+          {
+            "text": "eliminar",
+            "start": 85.507,
+            "dur": 0.441
+          },
+          {
+            "text": "metade",
+            "start": 85.988,
+            "dur": 0.56
+          },
+          {
+            "text": "com",
+            "start": 86.868,
+            "dur": 0.14
+          },
+          {
+            "text": "dados",
+            "start": 87.088,
+            "dur": 0.3
+          },
+          {
+            "text": "ordenados",
+            "start": 87.448,
+            "dur": 0.7
+          },
+          {
+            "text": "uma",
+            "start": 88.308,
+            "dur": 0.12
+          },
+          {
+            "text": "decisão",
+            "start": 88.468,
+            "dur": 0.44
+          },
+          {
+            "text": "pequena",
+            "start": 88.968,
+            "dur": 0.34
+          },
+          {
+            "text": "economiza",
+            "start": 89.328,
+            "dur": 0.56
+          },
+          {
+            "text": "muito",
+            "start": 89.988,
+            "dur": 0.24
+          },
+          {
+            "text": "trabalho",
+            "start": 90.268,
+            "dur": 1.34
+          }
+        ]
+      }
+    ]
+  },
+  "cast": {
+    "ana": {
+      "character": "teacher",
+      "x": -700,
+      "y": 190,
+      "scale": 1.7
+    }
+  },
+  "elements": [
+    {
+      "id": "title",
+      "type": "text",
+      "props": {
+        "text": "BUSCA BINÁRIA",
+        "fontSize": 82,
+        "fontWeight": 800,
+        "fill": "#f8fafc",
+        "x": 210,
+        "y": -450,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "subtitle",
+      "type": "text",
+      "props": {
+        "text": "ordem  •  comparação  •  descarte",
+        "fontSize": 38,
+        "fontWeight": 500,
+        "fill": "#93c5fd",
+        "x": 210,
+        "y": -355,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "target",
+      "type": "text",
+      "props": {
+        "text": "alvo: 37",
+        "fontSize": 48,
+        "fontWeight": 700,
+        "fill": "#fbbf24",
+        "x": 170,
+        "y": -290,
+        "scale": 1,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "pointer",
+      "type": "line",
+      "props": {
+        "points": [
+          [0, 0],
+          [0, 58]
+        ],
+        "x": 160,
+        "y": -185,
+        "stroke": "#fbbf24",
+        "lineWidth": 8,
+        "endArrow": true,
+        "arrowSize": 20,
+        "end": 1,
+        "opacity": 0,
+        "zIndex": 10
+      }
+    },
+    {
+      "id": "pointer_label",
+      "type": "text",
+      "props": {
+        "text": "MEIO",
+        "fontSize": 28,
+        "fontWeight": 800,
+        "fill": "#fbbf24",
+        "x": 160,
+        "y": -205,
+        "opacity": 0,
+        "zIndex": 10
+      }
+    },
+    {
+      "id": "box_0",
+      "type": "rect",
+      "props": {
+        "x": -260,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "scale": 1,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_0",
+      "type": "text",
+      "props": {
+        "text": "3",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": -260,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_1",
+      "type": "rect",
+      "props": {
+        "x": -200,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "scale": 1,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_1",
+      "type": "text",
+      "props": {
+        "text": "7",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": -200,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_2",
+      "type": "rect",
+      "props": {
+        "x": -140,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_2",
+      "type": "text",
+      "props": {
+        "text": "11",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": -140,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_3",
+      "type": "rect",
+      "props": {
+        "x": -80,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_3",
+      "type": "text",
+      "props": {
+        "text": "15",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": -80,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_4",
+      "type": "rect",
+      "props": {
+        "x": -20,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_4",
+      "type": "text",
+      "props": {
+        "text": "19",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": -20,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_5",
+      "type": "rect",
+      "props": {
+        "x": 40,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_5",
+      "type": "text",
+      "props": {
+        "text": "23",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 40,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_6",
+      "type": "rect",
+      "props": {
+        "x": 100,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_6",
+      "type": "text",
+      "props": {
+        "text": "27",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 100,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_7",
+      "type": "rect",
+      "props": {
+        "x": 160,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "scale": 1,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_7",
+      "type": "text",
+      "props": {
+        "text": "31",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 160,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_8",
+      "type": "rect",
+      "props": {
+        "x": 220,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_8",
+      "type": "text",
+      "props": {
+        "text": "35",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 220,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_9",
+      "type": "rect",
+      "props": {
+        "x": 280,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "scale": 1,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_9",
+      "type": "text",
+      "props": {
+        "text": "37",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 280,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_10",
+      "type": "rect",
+      "props": {
+        "x": 340,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_10",
+      "type": "text",
+      "props": {
+        "text": "43",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 340,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_11",
+      "type": "rect",
+      "props": {
+        "x": 400,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_11",
+      "type": "text",
+      "props": {
+        "text": "47",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 400,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_12",
+      "type": "rect",
+      "props": {
+        "x": 460,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_12",
+      "type": "text",
+      "props": {
+        "text": "51",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 460,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_13",
+      "type": "rect",
+      "props": {
+        "x": 520,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_13",
+      "type": "text",
+      "props": {
+        "text": "55",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 520,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "box_14",
+      "type": "rect",
+      "props": {
+        "x": 580,
+        "y": -65,
+        "width": 52,
+        "height": 68,
+        "radius": 10,
+        "fill": "#22304d",
+        "stroke": "#60a5fa",
+        "lineWidth": 3,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "num_14",
+      "type": "text",
+      "props": {
+        "text": "59",
+        "fontSize": 27,
+        "fontWeight": 700,
+        "fill": "#f8fafc",
+        "x": 580,
+        "y": -65,
+        "opacity": 0,
+        "zIndex": 2
+      }
+    },
+    {
+      "id": "explain",
+      "type": "text",
+      "props": {
+        "text": "A cada comparação, metade desaparece.",
+        "fontSize": 42,
+        "fontWeight": 600,
+        "fill": "#cbd5e1",
+        "x": 170,
+        "y": 90,
+        "opacity": 0
+      }
+    },
+    {
+      "id": "code_panel",
+      "type": "rect",
+      "props": {
+        "x": 280,
+        "y": 30,
+        "width": 1260,
+        "height": 850,
+        "radius": 34,
+        "fill": "#111827",
+        "stroke": "#334155",
+        "lineWidth": 4,
+        "opacity": 0,
+        "zIndex": 40
+      }
+    },
+    {
+      "id": "snippet",
+      "type": "code",
+      "props": {
+        "code": "function buscaBinaria(lista, alvo) {\n  let baixo = 0;\n  let alto = lista.length - 1;\n  while (baixo <= alto) {\n    const meio = Math.floor((baixo + alto) / 2);\n    if (lista[meio] === alvo) return meio;\n    if (lista[meio] < alvo) baixo = meio + 1;\n    else alto = meio - 1;\n  }\n  return -1;\n}",
+        "fontSize": 38,
+        "fontFamily": "JetBrains Mono",
+        "fill": "#e2e8f0",
+        "x": 250,
+        "y": 20,
+        "opacity": 0,
+        "zIndex": 41
+      }
+    },
+    {
+      "id": "count_title",
+      "type": "text",
+      "props": {
+        "text": "15  →  7  →  3  →  1",
+        "fontSize": 96,
+        "fontWeight": 800,
+        "fill": "#60a5fa",
+        "x": 250,
+        "y": -80,
+        "opacity": 0,
+        "zIndex": 42
+      }
+    },
+    {
+      "id": "count_note",
+      "type": "text",
+      "props": {
+        "text": "crescimento logarítmico: O(log n)",
+        "fontSize": 48,
+        "fontWeight": 600,
+        "fill": "#f8fafc",
+        "x": 250,
+        "y": 60,
+        "opacity": 0,
+        "zIndex": 42
+      }
+    },
+    {
+      "id": "million",
+      "type": "text",
+      "props": {
+        "text": "1.000.000 itens  ≈  20 comparações",
+        "fontSize": 62,
+        "fontWeight": 800,
+        "fill": "#34d399",
+        "x": 250,
+        "y": 180,
+        "opacity": 0,
+        "zIndex": 43
+      }
+    },
+    {
+      "id": "condition",
+      "type": "text",
+      "props": {
+        "text": "pré-condição: a lista precisa estar ordenada",
+        "fontSize": 38,
+        "fontWeight": 500,
+        "fill": "#fbbf24",
+        "x": 250,
+        "y": 270,
+        "opacity": 0,
+        "zIndex": 43
+      }
+    },
+    {
+      "id": "core",
+      "type": "text",
+      "props": {
+        "text": "MEIO  →  COMPARAR  →  ELIMINAR METADE",
+        "fontSize": 55,
+        "fontWeight": 800,
+        "fill": "#f8fafc",
+        "x": 250,
+        "y": -20,
+        "opacity": 0,
+        "zIndex": 44
+      }
+    },
+    {
+      "id": "core_note",
+      "type": "text",
+      "props": {
+        "text": "uma decisão pequena economiza muito trabalho",
+        "fontSize": 40,
+        "fontWeight": 500,
+        "fill": "#93c5fd",
+        "x": 250,
+        "y": 85,
+        "opacity": 0,
+        "zIndex": 44
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "target": "ana",
+      "lipsync": "mouth"
+    },
+    {
+      "at": "intro.start",
+      "target": "title",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": {
+        "value": 0.7,
+        "min": 0.3
+      },
+      "easing": "easeOutCubic"
+    },
+    {
+      "at": "intro.start",
+      "target": "title",
+      "tween": {
+        "y": {
+          "to": -420
+        }
+      },
+      "dur": 0.8,
+      "easing": "spring"
+    },
+    {
+      "at": "intro.word:ideias",
+      "target": "subtitle",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.5
+    },
+    {
+      "at": "intro.word:visual",
+      "target": "ana",
+      "pose": "wave",
+      "dur": {
+        "value": 0.7,
+        "min": 0.35
+      },
+      "easing": "spring"
+    },
+    {
+      "at": "lista.start",
+      "target": "title",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.4
+    },
+    {
+      "at": "lista.start",
+      "target": "subtitle",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.4
+    },
+    {
+      "at": "lista.word:lista",
+      "target": "target",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_0",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_0",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_1",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_1",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_2",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_2",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_3",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_3",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_4",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_4",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_5",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_5",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_6",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_6",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_7",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_7",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_8",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_8",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_9",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_9",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_10",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_10",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_11",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_11",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_12",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_12",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_13",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_13",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "box_14",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:ordenada",
+      "target": "num_14",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "lista.word:objetivo",
+      "target": "target",
+      "tween": {
+        "scale": {
+          "to": 1.12
+        }
+      },
+      "dur": 0.55,
+      "easing": "easeOutBack"
+    },
+    {
+      "at": "primeiro_meio.word:direto",
+      "target": "pointer",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.25
+    },
+    {
+      "at": "primeiro_meio.word:direto",
+      "target": "pointer_label",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.25
+    },
+    {
+      "at": "primeiro_meio.word:direto",
+      "target": "box_7",
+      "set": {
+        "fill": "#b45309"
+      }
+    },
+    {
+      "at": "primeiro_meio.word:direto",
+      "target": "box_7",
+      "tween": {
+        "scale": {
+          "to": 1.18
+        }
+      },
+      "dur": 0.55,
+      "easing": "easeOutBack"
+    },
+    {
+      "at": "primeiro_meio.word:direto",
+      "target": "ana",
+      "pose": "arm-front",
+      "dur": {
+        "value": 0.65,
+        "min": 0.3
+      },
+      "easing": "spring"
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "box_0",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "num_0",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "box_1",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "num_1",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "box_2",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "num_2",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "box_3",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "num_3",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "box_4",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "num_4",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "box_5",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "num_5",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "box_6",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "num_6",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "box_7",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:descartamos",
+      "target": "num_7",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_esquerda.word:metade",
+      "target": "explain",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.4
+    },
+    {
+      "at": "segundo_meio.word:centro",
+      "target": "pointer",
+      "tween": {
+        "x": {
+          "to": 400
+        }
+      },
+      "dur": 0.65,
+      "easing": "easeOutBack"
+    },
+    {
+      "at": "segundo_meio.word:centro",
+      "target": "pointer_label",
+      "tween": {
+        "x": {
+          "to": 400
+        }
+      },
+      "dur": 0.65,
+      "easing": "spring"
+    },
+    {
+      "at": "segundo_meio.word:centro",
+      "target": "box_11",
+      "set": {
+        "fill": "#b45309"
+      }
+    },
+    {
+      "at": "segundo_meio.word:novamente",
+      "target": "ana",
+      "pose": "rest",
+      "dur": 0.5,
+      "easing": "spring"
+    },
+    {
+      "at": "descarta_direita.word:direita",
+      "target": "box_11",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:direita",
+      "target": "num_11",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:direita",
+      "target": "box_12",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:direita",
+      "target": "num_12",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:direita",
+      "target": "box_13",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:direita",
+      "target": "num_13",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:direita",
+      "target": "box_14",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:direita",
+      "target": "num_14",
+      "tween": {
+        "opacity": {
+          "to": 0.14
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "descarta_direita.word:comparação",
+      "target": "pointer",
+      "tween": {
+        "x": {
+          "to": 280
+        }
+      },
+      "dur": 0.65,
+      "easing": "spring"
+    },
+    {
+      "at": "descarta_direita.word:comparação",
+      "target": "pointer_label",
+      "tween": {
+        "x": {
+          "to": 280
+        }
+      },
+      "dur": 0.65,
+      "easing": "spring"
+    },
+    {
+      "at": "encontra.word:encontramos",
+      "target": "box_9",
+      "set": {
+        "fill": "#047857",
+        "stroke": "#34d399"
+      }
+    },
+    {
+      "at": "encontra.word:encontramos",
+      "target": "box_9",
+      "tween": {
+        "scale": {
+          "to": 1.28
+        }
+      },
+      "dur": 0.65,
+      "easing": "easeOutBack"
+    },
+    {
+      "at": "encontra.word:encontramos",
+      "target": "target",
+      "set": {
+        "text": "encontrado: 37",
+        "fill": "#34d399"
+      }
+    },
+    {
+      "at": "encontra.word:valor",
+      "target": "ana",
+      "pose": "wave",
+      "dur": 0.7,
+      "easing": "spring"
+    },
+    {
+      "at": "codigo_limites.word:código",
+      "target": "code_panel",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_limites.word:código",
+      "target": "snippet",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_limites.word:código",
+      "target": "snippet",
+      "select": {
+        "lines": [0, 4]
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_limites.word:limites",
+      "target": "snippet",
+      "select": {
+        "lines": [1, 2]
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_limites.word:enquanto",
+      "target": "snippet",
+      "select": {
+        "lines": [3, 4]
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_limites.word:código",
+      "target": "ana",
+      "pose": "rest",
+      "dur": 0.55,
+      "easing": "spring"
+    },
+    {
+      "at": "codigo_ramos.word:igual",
+      "target": "snippet",
+      "select": {
+        "lines": [5, 5]
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_ramos.word:menor",
+      "target": "snippet",
+      "select": {
+        "lines": [6, 6]
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "codigo_ramos.word:contrário",
+      "target": "snippet",
+      "select": {
+        "lines": [7, 7]
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "complexidade.word:padrão",
+      "target": "snippet",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.35
+    },
+    {
+      "at": "complexidade.word:padrão",
+      "target": "count_title",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.5
+    },
+    {
+      "at": "complexidade.word:logaritmo",
+      "target": "count_note",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "complexidade.word:finalmente",
+      "target": "ana",
+      "pose": "arm-front",
+      "dur": 0.65,
+      "easing": "spring"
+    },
+    {
+      "at": "milhao.word:milhão",
+      "target": "million",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.5
+    },
+    {
+      "at": "milhao.word:ordenada",
+      "target": "condition",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "milhao.word:comparações",
+      "target": "ana",
+      "pose": "wave",
+      "dur": 0.65,
+      "easing": "spring"
+    },
+    {
+      "at": "fecho.word:coração",
+      "target": "count_title",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.3
+    },
+    {
+      "at": "fecho.word:coração",
+      "target": "count_note",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.3
+    },
+    {
+      "at": "fecho.word:coração",
+      "target": "million",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.3
+    },
+    {
+      "at": "fecho.word:coração",
+      "target": "condition",
+      "tween": {
+        "opacity": {
+          "to": 0
+        }
+      },
+      "dur": 0.3
+    },
+    {
+      "at": "fecho.word:coração",
+      "target": "core",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.5
+    },
+    {
+      "at": "fecho.word:decisão",
+      "target": "core_note",
+      "tween": {
+        "opacity": {
+          "to": 1
+        }
+      },
+      "dur": 0.45
+    },
+    {
+      "at": "fecho.word:trabalho",
+      "target": "ana",
+      "pose": "rest",
+      "dur": 0.55,
+      "easing": "spring"
+    }
+  ]
+}

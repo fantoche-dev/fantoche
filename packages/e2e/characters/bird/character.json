@@ -1,0 +1,67 @@
+{
+  "version": "0.1",
+  "id": "bird",
+  "art": {
+    "src": "bird.art.json"
+  },
+  "slots": {
+    "body": {
+      "element": "body"
+    },
+    "neck": {
+      "element": "neck",
+      "parent": "body",
+      "rest": {"depth": 2}
+    },
+    "head": {
+      "element": "head",
+      "parent": "neck",
+      "rest": {"depth": 3}
+    },
+    "beak": {
+      "element": "beak",
+      "parent": "head",
+      "rest": {"depth": 4}
+    },
+    "wing-front": {
+      "element": "wing_x5F_front",
+      "parent": "body",
+      "rest": {"depth": -5}
+    },
+    "tail": {
+      "element": "tail",
+      "parent": "body",
+      "rest": {"depth": -4}
+    },
+    "leg": {
+      "element": "leg",
+      "parent": "body",
+      "rest": {"depth": -2}
+    },
+    "foot": {
+      "element": "foot",
+      "parent": "leg",
+      "rest": {"depth": -1}
+    }
+  },
+  "poses": {
+    "look-up": {
+      "neck.rotation": -22,
+      "head.rotation": 12,
+      "beak.rotation": 4
+    },
+    "wing-front": {
+      "wing-front.rotation": -55,
+      "wing-front.depth": 10,
+      "tail.rotation": 12
+    },
+    "rest": {
+      "neck.rotation": 0,
+      "head.rotation": 0,
+      "beak.rotation": 0,
+      "wing-front.rotation": 0,
+      "wing-front.depth": -5,
+      "tail.rotation": 0
+    }
+  }
+}

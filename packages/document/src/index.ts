@@ -8,6 +8,15 @@
 
 export {DOCUMENT_FORMAT_VERSION} from './version.js';
 
+export {CHARACTER_ART_VERSION, characterArtSchema} from './character/art.js';
+export type {CharacterArt} from './character/art.js';
+export {
+  CHARACTER_FORMAT_VERSION,
+  PIVOT_PRESETS,
+  SLOT_PARAMS,
+  characterSchema,
+} from './character/schema.js';
+export type {Character, CharacterSlot, SlotParam} from './character/schema.js';
 export {
   applyInsert,
   applyReplace,
@@ -25,7 +34,11 @@ export {
   FULL_SELECTION,
   compileDocument,
 } from './compiler/compile.js';
-export type {CompileResult} from './compiler/compile.js';
+export type {
+  CompileOptions,
+  CompileResult,
+  ResolvedCharacter,
+} from './compiler/compile.js';
 export {DEFAULT_EASING, EASING_NAMES} from './easings.js';
 export type {EasingName} from './easings.js';
 export type {
@@ -34,17 +47,39 @@ export type {
   CodeRange,
   CodeTrack,
   CompiledElement,
+  CompiledRig,
+  CompiledRigSlot,
   EditOp,
   SelectOp,
   TimelineIR,
   Track,
   TrackKey,
 } from './ir.js';
-export {documentJsonSchema} from './json-schema.js';
+export {characterJsonSchema, documentJsonSchema} from './json-schema.js';
+export {buildVisemePreviewDocument} from './lipsync/preview-doc.js';
+export type {
+  VisemePreviewOptions,
+  VisemePreviewResult,
+} from './lipsync/preview-doc.js';
+// VISEME_TRACK_VERSION is *not* DOCUMENT_FORMAT_VERSION: the track format
+// versions independently of the document format (see visemes.ts).
+export {
+  VISEMES,
+  VISEME_TRACK_VERSION,
+  visemeAt,
+  visemeTrackSchema,
+} from './lipsync/visemes.js';
+export type {Viseme, VisemeTrack} from './lipsync/visemes.js';
 export {MigrationError, migrateDocument} from './migrate.js';
 export type {MigrateResult} from './migrate.js';
-export {documentSchema, elementSchema, timelineItemSchema} from './schema.js';
+export {
+  adaptiveDurationSchema,
+  documentSchema,
+  elementSchema,
+  timelineItemSchema,
+} from './schema.js';
 export type {
+  AdaptiveDuration,
   FantocheDocument,
   PropValue,
   RangeSpec,

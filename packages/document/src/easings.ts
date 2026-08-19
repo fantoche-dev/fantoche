@@ -1,10 +1,10 @@
 /**
- * Easing names accepted by the document format. Every name maps 1:1 onto a
- * pure timing function exported by `@fantoche-dev/core` (tweening/
- * timingFunctions.ts) — non-parametrized exports plus the pre-instantiated
- * back/bounce/elastic defaults. Springs are deliberately absent: they are
- * iterative, not closed-form, and cannot live behind a pure state(t).
- * Core's `sin`/`cos` are also excluded: they are waveform remappers, not
+ * Easing names accepted by the document format. Most map 1:1 onto a pure
+ * timing function exported by `@fantoche-dev/core` (tweening/
+ * timingFunctions.ts). `spring` is the deliberate exception: the compiler
+ * bakes a critically damped closed-form solution and its entry velocity into
+ * the IR, so evaluation remains pure and seekable without iterative state.
+ * Core's `sin`/`cos` remain excluded: they are waveform remappers, not
  * easings (they violate f(0)=0 / f(1)=1).
  */
 export const EASING_NAMES = [
@@ -39,6 +39,7 @@ export const EASING_NAMES = [
   'easeInElastic',
   'easeOutElastic',
   'easeInOutElastic',
+  'spring',
 ] as const;
 
 export type EasingName = (typeof EASING_NAMES)[number];

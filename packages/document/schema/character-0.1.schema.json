@@ -1,0 +1,163 @@
+{
+  "$id": "https://raw.githubusercontent.com/fantoche-dev/fantoche/main/packages/document/schema/character-0.1.schema.json",
+  "title": "Fantoche character format 0.1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "0.1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$"
+    },
+    "art": {
+      "type": "object",
+      "properties": {
+        "src": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "src"
+      ],
+      "additionalProperties": false
+    },
+    "slots": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "element": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parent": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$"
+          },
+          "pivot": {
+            "default": "center",
+            "anyOf": [
+              {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "items": false,
+                "minItems": 2,
+                "maxItems": 2
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "center",
+                  "top-center",
+                  "bottom-center",
+                  "left-center",
+                  "right-center"
+                ]
+              }
+            ]
+          },
+          "rest": {
+            "default": {
+              "rotation": 0,
+              "scale": 1,
+              "depth": 0
+            },
+            "type": "object",
+            "properties": {
+              "rotation": {
+                "default": 0,
+                "type": "number"
+              },
+              "scale": {
+                "default": 1,
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "depth": {
+                "default": 0,
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "element"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "poses": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "propertyNames": {
+          "type": "string",
+          "minLength": 1
+        },
+        "additionalProperties": {
+          "type": "number"
+        }
+      }
+    },
+    "visemes": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "enum": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "X"
+        ]
+      },
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      },
+      "required": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "X"
+      ]
+    }
+  },
+  "required": [
+    "version",
+    "id",
+    "art",
+    "slots",
+    "poses"
+  ],
+  "additionalProperties": false
+}

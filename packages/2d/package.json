@@ -14,7 +14,7 @@
     "build-lib": "tsc -p src/lib/tsconfig.build.json",
     "build-editor": "rollup -c rollup.editor.mjs",
     "bundle": "rollup -c rollup.config.mjs",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "sideEffects": false,
   "repository": {

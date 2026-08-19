@@ -2,7 +2,7 @@
  * timeline item kind. Kept in one place so schema, migrate and evaluator
  * tests all pin the same contract. */
 export const fullDocument = {
-  version: '0.1',
+  version: '0.2',
   meta: {fps: 30, size: [1920, 1080], background: '#0d0d12', duration: 12},
   assets: {
     diagram: {type: 'image', src: './diagram.png'},

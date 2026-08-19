@@ -1,3 +1,5 @@
+import type {CharacterArt} from '../character/art.js';
+import {SLOT_PARAMS, type Character} from '../character/schema.js';
 import {
   applyInsert,
   applyReplace,
@@ -5,18 +7,27 @@ import {
   resolveRangeSpec,
 } from '../code-text.js';
 import {DEFAULT_EASING, type EasingName} from '../easings.js';
+import {toFrame as roundToFrame} from '../frames.js';
 import type {
   BlockIR,
   CodeRange,
   CodeTrack,
   CompiledElement,
+  CompiledRig,
+  CompiledRigSlot,
   EditOp,
   SelectOp,
   TimelineIR,
   Track,
   TrackKey,
 } from '../ir.js';
-import type {FantocheDocument, PropValue, RangeSpec} from '../schema.js';
+import type {Viseme, VisemeTrack} from '../lipsync/visemes.js';
+import type {
+  AdaptiveDuration,
+  FantocheDocument,
+  PropValue,
+  RangeSpec,
+} from '../schema.js';
 import {AnchorError, buildNarrationIndex, resolveTimeRef} from './anchors.js';
 
 export class CompileError extends Error {
@@ -33,6 +44,19 @@ export class CompileError extends Error {
 export interface CompileResult {
   ir: TimelineIR;
   warnings: string[];
+}
+
+export interface ResolvedCharacter {
+  character: Character;
+  /** Parsed contents of `character.art.src` (`*.art.json`). */
+  art: CharacterArt;
+}
+
+export interface CompileOptions {
+  /** Character id → caller-resolved character definition + art sidecar. */
+  characters?: Record<string, ResolvedCharacter>;
+  /** Lipsync asset id → caller-parsed viseme track. */
+  lipsync?: Record<string, VisemeTrack>;
 }
 
 const TRANSFORM_PROPS = ['x', 'y', 'scale', 'rotation', 'opacity', 'zIndex'];
@@ -57,7 +81,16 @@ const ANIMATABLE: Record<string, ReadonlySet<string>> = Object.fromEntries(
     latex: [...SIZE_PROPS],
     code: ['fontSize', 'fill'],
     layout: ['gap', 'padding', ...SIZE_PROPS],
-  }).map(([type, props]) => [type, new Set([...TRANSFORM_PROPS, ...props])]),
+    cast: ['x', 'y', 'scale', 'rotation', 'opacity'],
+    slot: SLOT_PARAMS,
+  }).map(([type, props]) => [
+    type,
+    new Set(
+      type === 'cast' || type === 'slot'
+        ? props
+        : [...TRANSFORM_PROPS, ...props],
+    ),
+  ]),
 );
 
 /** The whole code is "selected" — nothing is dimmed. */
@@ -84,18 +117,29 @@ interface PropEvent {
   kind: 'set' | 'tween';
   value: PropValue;
   from?: PropValue;
-  easing: EasingName;
+  easing: EasingName | 'hold';
+  /** Present only for tweens; resolved to t1 after every start is known. */
+  duration?: AdaptiveDuration;
 }
 
-export function compileDocument(doc: FantocheDocument): CompileResult {
+export function compileDocument(
+  doc: FantocheDocument,
+  options: CompileOptions = {},
+): CompileResult {
   const warnings: string[] = [];
   const fps = doc.meta.fps;
-  const toFrame = (seconds: number) => Math.round(seconds * fps);
+  // Bound to this document's fps once; the rule itself lives in `frames.ts`,
+  // where the preview builder can share it (its cue collapse has to round the
+  // same way this does).
+  const toFrame = (seconds: number) => roundToFrame(seconds, fps);
   const narrationIndex = buildNarrationIndex(doc.narration);
 
   // -- elements ------------------------------------------------------------
   const elements: CompiledElement[] = [];
   const byId = new Map<string, CompiledElement>();
+  const animationTypes = new Map<string, 'cast' | 'slot'>();
+  const jointInitials = new Map<string, Record<string, PropValue>>();
+  const rigs: Record<string, CompiledRig> = {};
   let order = 0;
   const walk = (list: RawElement[], parentId: string | null, path: string) => {
     list.forEach((element, i) => {
@@ -121,6 +165,134 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
     });
   };
   walk(doc.elements as unknown as RawElement[], null, '/elements');
+
+  interface ResolvedCastMember {
+    bundle: ResolvedCharacter;
+    slotByElement: Map<string, string>;
+  }
+  const resolvedCast = new Map<string, ResolvedCastMember>();
+  for (const [castId, member] of Object.entries(doc.cast ?? {})) {
+    const path = `/cast/${castId}`;
+    if (byId.has(castId)) {
+      throw new CompileError(
+        `cast id "${castId}" duplicates an element id`,
+        path,
+      );
+    }
+    const bundle = options.characters?.[member.character];
+    if (bundle === undefined) {
+      throw new CompileError(
+        `character "${member.character}" is unresolved — pass options.characters["${member.character}"] as {character, art} with its *.art.json sidecar`,
+        `${path}/character`,
+      );
+    }
+    if (bundle.character.id !== member.character) {
+      throw new CompileError(
+        `resolved character id is "${bundle.character.id}", expected "${member.character}"`,
+        `${path}/character`,
+      );
+    }
+
+    const root: CompiledElement = {
+      id: castId,
+      type: 'cast',
+      props: {
+        x: member.x,
+        y: member.y,
+        scale: member.scale,
+        rotation: member.rotation,
+        opacity: member.opacity,
+      },
+      parentId: null,
+      order: order++,
+    };
+    elements.push(root);
+    byId.set(castId, root);
+    animationTypes.set(castId, 'cast');
+
+    const topologicalIds = topologicalSlotIds(bundle.character);
+    const sourceOrder = new Map(
+      Object.keys(bundle.character.slots).map((slotId, index) => [
+        slotId,
+        index,
+      ]),
+    );
+    const compiledSlots: CompiledRigSlot[] = [];
+    const slotByElement = new Map<string, string>();
+    for (const slotId of topologicalIds) {
+      const slot = bundle.character.slots[slotId];
+      const pivot = bundle.art.pivots[slotId];
+      const svg = bundle.art.slots[slotId];
+      if (pivot === undefined || svg === undefined) {
+        throw new CompileError(
+          `art sidecar "${bundle.character.art.src}" is missing ${
+            pivot === undefined ? 'pivot' : 'SVG'
+          } for slot "${slotId}"`,
+          `${path}/character`,
+        );
+      }
+      if (!slotByElement.has(slot.element)) {
+        slotByElement.set(slot.element, slotId);
+      }
+      const isMouth =
+        bundle.character.visemes !== undefined &&
+        Object.values(bundle.character.visemes).includes(slot.element);
+      const opacity =
+        isMouth && bundle.character.visemes?.X !== slot.element ? 0 : 1;
+      compiledSlots.push({
+        id: slotId,
+        nodeId: `${castId}.${slotId}`,
+        parent: slot.parent ?? null,
+        rest: [pivot[0], pivot[1]],
+        rotation: slot.rest.rotation,
+        scale: slot.rest.scale,
+        depth: slot.rest.depth,
+        opacity,
+      });
+    }
+
+    for (const slot of [...compiledSlots].sort(
+      (left, right) =>
+        left.depth - right.depth ||
+        sourceOrder.get(left.id)! - sourceOrder.get(right.id)!,
+    )) {
+      if (byId.has(slot.nodeId)) {
+        throw new CompileError(
+          `generated slot id "${slot.nodeId}" duplicates an element id`,
+          path,
+        );
+      }
+      const compiled: CompiledElement = {
+        id: slot.nodeId,
+        type: 'svg',
+        props: {
+          svg: bundle.art.slots[slot.id],
+          opacity: slot.opacity,
+          zIndex: slot.depth,
+        },
+        parentId: castId,
+        order: order++,
+      };
+      elements.push(compiled);
+      byId.set(compiled.id, compiled);
+      animationTypes.set(compiled.id, 'slot');
+      jointInitials.set(compiled.id, {
+        x: 0,
+        y: 0,
+        rotation: 0,
+        scale: 1,
+        opacity: slot.opacity,
+        depth: slot.depth,
+      });
+    }
+    rigs[castId] = {
+      castId,
+      characterId: bundle.character.id,
+      artCentre: [bundle.art.centre[0], bundle.art.centre[1]],
+      slots: compiledSlots,
+    };
+    resolvedCast.set(castId, {bundle, slotByElement});
+  }
   for (const element of elements) {
     if (element.type === 'svg' && element.props.src !== undefined) {
       throw new CompileError(
@@ -148,6 +320,7 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
   }
   const codeOps = new Map<string, RawCodeOp[]>();
   const blocks: BlockIR[] = [];
+  let blockEnd = -Infinity;
 
   const requireTarget = (item: RawItem, index: number): CompiledElement => {
     const target = byId.get(item.target as string);
@@ -158,6 +331,25 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
       );
     }
     return target;
+  };
+
+  const addPropEvent = (
+    target: CompiledElement,
+    prop: string,
+    event: PropEvent,
+    path: string,
+  ) => {
+    const animationType = animationTypes.get(target.id) ?? target.type;
+    if (!ANIMATABLE[animationType]?.has(prop)) {
+      throw new CompileError(
+        `"${prop}" is not an animatable prop of ${animationType} target "${target.id}"`,
+        path,
+      );
+    }
+    const key = `${target.id}\u0000${prop}`;
+    const events = propEvents.get(key) ?? [];
+    events.push(event);
+    propEvents.set(key, events);
   };
 
   (doc.timeline as unknown as RawItem[]).forEach((item, index) => {
@@ -175,10 +367,175 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
       }
       throw error;
     }
-    const dur = typeof item.dur === 'number' ? item.dur : 0;
+    const duration = item.dur as AdaptiveDuration | undefined;
+    const staticDur = typeof duration === 'number' ? duration : 0;
     const easing = (item.easing as EasingName | undefined) ?? DEFAULT_EASING;
 
-    if ('set' in item || 'tween' in item) {
+    if ('pose' in item) {
+      const castId = item.target as string;
+      const cast = resolvedCast.get(castId);
+      if (cast === undefined) {
+        throw new CompileError(
+          `unknown cast member "${castId}"`,
+          `${path}/target`,
+        );
+      }
+      const poseName = item.pose as string;
+      const pose = cast.bundle.character.poses[poseName];
+      if (pose === undefined) {
+        const available = Object.keys(cast.bundle.character.poses);
+        throw new CompileError(
+          `character "${cast.bundle.character.id}" has no pose "${poseName}"; available poses: ${available.join(', ') || '(none)'}`,
+          `${path}/pose`,
+        );
+      }
+      for (const [poseKey, value] of Object.entries(pose)) {
+        const split = poseKey.lastIndexOf('.');
+        const slotId = poseKey.slice(0, split);
+        const prop = poseKey.slice(split + 1);
+        const target = byId.get(`${castId}.${slotId}`)!;
+        addPropEvent(
+          target,
+          prop,
+          duration === undefined
+            ? {
+                itemIndex: index,
+                t0,
+                t1: t0,
+                kind: 'set',
+                value,
+                easing: 'hold',
+              }
+            : {
+                itemIndex: index,
+                t0,
+                t1: t0 + staticDur,
+                kind: 'tween',
+                value,
+                easing: prop === 'depth' ? 'hold' : easing,
+                duration,
+              },
+          `${path}/pose/${poseKey}`,
+        );
+      }
+    } else if ('lipsync' in item) {
+      const castId = item.target as string;
+      const cast = resolvedCast.get(castId);
+      if (cast === undefined) {
+        throw new CompileError(
+          `unknown cast member "${castId}"`,
+          `${path}/target`,
+        );
+      }
+      const lipsyncId = item.lipsync as string;
+      const asset = doc.assets?.[lipsyncId];
+      if (asset === undefined || asset.type !== 'lipsync') {
+        throw new CompileError(
+          `"${lipsyncId}" is not a declared lipsync asset`,
+          `${path}/lipsync`,
+        );
+      }
+      const track = options.lipsync?.[lipsyncId];
+      if (track === undefined) {
+        throw new CompileError(
+          `lipsync asset "${lipsyncId}" is unresolved — pass its parsed track in options.lipsync`,
+          `${path}/lipsync`,
+        );
+      }
+      const visemes = cast.bundle.character.visemes;
+      if (visemes === undefined) {
+        throw new CompileError(
+          `character "${cast.bundle.character.id}" has no viseme map`,
+          `${path}/target`,
+        );
+      }
+      const nodeFor = (viseme: Viseme): CompiledElement => {
+        const elementId = visemes[viseme];
+        const slotId = cast.slotByElement.get(elementId);
+        if (slotId === undefined) {
+          throw new CompileError(
+            `viseme "${viseme}" element "${elementId}" is not bound to a character slot`,
+            `${path}/target`,
+          );
+        }
+        return byId.get(`${castId}.${slotId}`)!;
+      };
+      // Every item starts from a known mouth state. This matters when a cast
+      // member has multiple clips: otherwise the last viseme of the previous
+      // clip can remain visible beside the first viseme of the next one.
+      for (const viseme of Object.keys(visemes) as Viseme[]) {
+        addPropEvent(
+          nodeFor(viseme),
+          'opacity',
+          {
+            itemIndex: index,
+            t0,
+            t1: t0,
+            kind: 'set',
+            value: 0,
+            easing: 'hold',
+          },
+          `${path}/lipsync`,
+        );
+      }
+      addPropEvent(
+        nodeFor('X'),
+        'opacity',
+        {
+          itemIndex: index,
+          t0,
+          t1: t0,
+          kind: 'set',
+          value: 1,
+          easing: 'hold',
+        },
+        `${path}/lipsync`,
+      );
+      const switches: {t: number; viseme: Viseme}[] = [];
+      for (const cue of track.cues) {
+        const next = {t: t0 + cue.t, viseme: cue.viseme};
+        const previous = switches.at(-1);
+        if (previous !== undefined && toFrame(previous.t) === toFrame(next.t)) {
+          switches[switches.length - 1] = next;
+        } else {
+          switches.push(next);
+        }
+      }
+      let held: Viseme = 'X';
+      for (const change of switches) {
+        const nextTarget = nodeFor(change.viseme);
+        addPropEvent(
+          nextTarget,
+          'opacity',
+          {
+            itemIndex: index,
+            t0: change.t,
+            t1: change.t,
+            kind: 'set',
+            value: 1,
+            easing: 'hold',
+          },
+          `${path}/lipsync`,
+        );
+        const heldTarget = nodeFor(held);
+        if (heldTarget.id !== nextTarget.id) {
+          addPropEvent(
+            heldTarget,
+            'opacity',
+            {
+              itemIndex: index,
+              t0: change.t,
+              t1: change.t,
+              kind: 'set',
+              value: 0,
+              easing: 'hold',
+            },
+            `${path}/lipsync`,
+          );
+        }
+        held = change.viseme;
+      }
+    } else if ('set' in item || 'tween' in item) {
       const target = requireTarget(item, index);
       const entries =
         'set' in item
@@ -189,16 +546,9 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
               item.tween as Record<string, {to: PropValue; from?: PropValue}>,
             ).map(([prop, spec]) => ({kind: 'tween', prop, ...spec}) as const);
       for (const entry of entries) {
-        if (!ANIMATABLE[target.type]?.has(entry.prop)) {
-          throw new CompileError(
-            `"${entry.prop}" is not an animatable prop of ${target.type} ` +
-              `element "${target.id}"`,
-            `${path}/${'set' in item ? 'set' : 'tween'}/${entry.prop}`,
-          );
-        }
-        const key = `${target.id}\u0000${entry.prop}`;
-        const events = propEvents.get(key) ?? [];
-        events.push(
+        addPropEvent(
+          target,
+          entry.prop,
           entry.kind === 'set'
             ? {
                 itemIndex: index,
@@ -211,14 +561,15 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
             : {
                 itemIndex: index,
                 t0,
-                t1: t0 + dur,
+                t1: t0 + staticDur,
                 kind: 'tween',
                 value: entry.to,
                 from: entry.from,
                 easing,
+                duration,
               },
+          `${path}/${'set' in item ? 'set' : 'tween'}/${entry.prop}`,
         );
-        propEvents.set(key, events);
       }
     } else if ('select' in item || 'edit' in item) {
       const target = requireTarget(item, index);
@@ -228,11 +579,17 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
           `${path}/target`,
         );
       }
+      if (easing === 'spring') {
+        throw new CompileError(
+          'spring easing only supports scalar number props; code edits and selections are structural transitions',
+          `${path}/easing`,
+        );
+      }
       const ops = codeOps.get(target.id) ?? [];
       ops.push({
         itemIndex: index,
         t0,
-        t1: t0 + dur,
+        t1: t0 + staticDur,
         easing,
         select:
           'select' in item
@@ -252,21 +609,86 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
         src: block.src.slice(0, hash),
         exportName: block.src.slice(hash + 1),
       });
+      blockEnd = Math.max(blockEnd, t0 + block.dur);
     }
   });
+
+  // Resolve adaptive tween windows only after all starts have been expanded
+  // into their real (target, prop) groups. This is the second compile pass:
+  // narration retiming can move a later anchor without making the earlier
+  // gesture overlap it.
+  const terminalFits = new Set<PropEvent>();
+  for (const events of propEvents.values()) {
+    events.sort((a, b) => a.t0 - b.t0 || a.itemIndex - b.itemIndex);
+    for (let i = 0; i < events.length; i++) {
+      const event = events[i];
+      if (event.kind !== 'tween') continue;
+      const duration = event.duration;
+      if (duration === undefined) continue;
+      if (typeof duration === 'number') {
+        event.t1 = event.t0 + duration;
+        continue;
+      }
+      const nextStart = events[i + 1]?.t0;
+      if ('fit' in duration) {
+        if (nextStart === undefined) {
+          terminalFits.add(event);
+          continue;
+        }
+        if (nextStart <= event.t0) {
+          throw new CompileError(
+            'dur: {fit: true} needs positive space before the next event on this property',
+            `/timeline/${event.itemIndex}/dur`,
+          );
+        }
+        event.t1 = nextStart;
+      } else {
+        const available =
+          nextStart === undefined ? Infinity : nextStart - event.t0;
+        event.t1 =
+          event.t0 +
+          Math.max(duration.min, Math.min(duration.value, available));
+      }
+    }
+  }
+  let documentEnd = doc.meta.duration ?? -Infinity;
+  for (const segment of narrationIndex.segments.values()) {
+    documentEnd = Math.max(documentEnd, segment.end);
+  }
+  documentEnd = Math.max(documentEnd, blockEnd);
+  for (const ops of codeOps.values()) {
+    for (const op of ops) documentEnd = Math.max(documentEnd, op.t1);
+  }
+  for (const events of propEvents.values()) {
+    for (const event of events) {
+      if (!terminalFits.has(event)) {
+        documentEnd = Math.max(documentEnd, event.t1);
+      }
+    }
+  }
+  for (const event of terminalFits) {
+    if (documentEnd <= event.t0) {
+      throw new CompileError(
+        'dur: {fit: true} needs a later event on this property or a known document end',
+        `/timeline/${event.itemIndex}/dur`,
+      );
+    }
+    event.t1 = documentEnd;
+  }
 
   // -- prop tracks ---------------------------------------------------------
   const tracks: Track[] = [];
   for (const [key, events] of propEvents) {
     const [target, prop] = key.split('\u0000');
     events.sort((a, b) => a.t0 - b.t0 || a.itemIndex - b.itemIndex);
-    const initial = (byId.get(target)!.props as Record<string, PropValue>)[
-      prop
-    ];
+    const initial =
+      jointInitials.get(target)?.[prop] ??
+      (byId.get(target)!.props as Record<string, PropValue>)[prop];
     const keys: TrackKey[] = [];
     let running: PropValue | undefined = initial;
     let activeUntil = -Infinity;
     let activeItem = -1;
+    let springExit: {t1F: number; velocity: number} | undefined;
     const pushKey = (next: TrackKey) => {
       const last = keys[keys.length - 1];
       if (last !== undefined && last.tF === next.tF) {
@@ -292,9 +714,11 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
       if (event.kind === 'set') {
         pushKey({tF: toFrame(event.t0), value: event.value, easing: 'hold'});
         running = event.value;
+        springExit = undefined;
       } else {
         const from = event.from ?? running;
         const t0F = toFrame(event.t0);
+        const t1F = toFrame(event.t1);
         if (from === undefined) {
           warnings.push(
             `/timeline/${event.itemIndex}: tween of "${target}.${prop}" has ` +
@@ -306,14 +730,65 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
           // value AND the incoming easing (zero-gap tween chaining).
           pushKey({tF: t0F, value: from, easing: 'hold'});
         }
-        pushKey({
-          tF: toFrame(event.t1),
+        let spring: TrackKey['spring'];
+        let nextSpringExit: typeof springExit;
+        if (event.easing === 'spring') {
+          const actualFrom =
+            keys[keys.length - 1]?.tF === t0F
+              ? keys[keys.length - 1].value
+              : from;
+          if (
+            typeof actualFrom !== 'number' ||
+            typeof event.value !== 'number'
+          ) {
+            throw new CompileError(
+              `spring easing for "${target}.${prop}" requires a scalar number from-value and target`,
+              `/timeline/${event.itemIndex}/easing`,
+            );
+          }
+          const duration = (t1F - t0F) / fps;
+          if (duration <= 0) {
+            throw new CompileError(
+              `spring easing for "${target}.${prop}" needs a duration of at least one frame`,
+              `/timeline/${event.itemIndex}/dur`,
+            );
+          }
+          const delta = event.value - actualFrom;
+          const previousVelocity =
+            springExit?.t1F === t0F ? springExit.velocity : 0;
+          const v0n = delta === 0 ? 0 : previousVelocity / delta;
+          const omega = 6 / duration;
+          const decay = Math.exp(-omega * duration);
+          // q=p/norm must start at q'(0)=v0n. Solving
+          // c=omega-v0n*norm together with norm=p(duration) preserves that
+          // velocity exactly; omega+v0n would reverse its sign.
+          const denominator = 1 - v0n * duration * decay;
+          const norm = (1 - (1 + omega * duration) * decay) / denominator;
+          if (!Number.isFinite(norm) || Math.abs(norm) < Number.EPSILON) {
+            throw new CompileError(
+              `spring easing for "${target}.${prop}" produced unstable coefficients`,
+              `/timeline/${event.itemIndex}/easing`,
+            );
+          }
+          const c = omega - v0n * norm;
+          const derivative = (omega * (1 + c * duration) - c) * decay;
+          spring = {omega, v0n, norm};
+          nextSpringExit = {
+            t1F,
+            velocity: delta === 0 ? 0 : (delta * derivative) / norm,
+          };
+        }
+        const targetKey: TrackKey = {
+          tF: t1F,
           value: event.value,
           easing: event.easing,
-        });
+        };
+        if (spring !== undefined) targetKey.spring = spring;
+        pushKey(targetKey);
         running = event.value;
         activeUntil = event.t1;
         activeItem = event.itemIndex;
+        springExit = nextSpringExit;
       }
     }
     tracks.push({target, prop, initial, keys});
@@ -438,6 +913,21 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
     );
   }
 
+  const narrationAudio = doc.narration?.audio ?? null;
+  if (narrationAudio !== null) {
+    const asset = doc.assets?.[narrationAudio];
+    if (asset === undefined || asset.type !== 'audio') {
+      throw new CompileError(
+        `narration.audio "${narrationAudio}" is not a declared audio asset`,
+        '/narration/audio',
+      );
+    }
+  }
+  let narrationEnd: number | null = null;
+  for (const segment of narrationIndex.segments.values()) {
+    narrationEnd = Math.max(narrationEnd ?? 0, segment.end);
+  }
+
   return {
     ir: {
       fps,
@@ -448,8 +938,25 @@ export function compileDocument(doc: FantocheDocument): CompileResult {
       tracks,
       codeTracks,
       blocks: sortedBlocks,
-      narrationAudio: doc.narration?.audio ?? null,
+      rigs,
+      narrationAudio,
+      narrationEnd,
     },
     warnings,
   };
+}
+
+/** Stable parent-before-child order, computed once at compile time. */
+function topologicalSlotIds(character: Character): string[] {
+  const ordered: string[] = [];
+  const visited = new Set<string>();
+  const visit = (slotId: string) => {
+    if (visited.has(slotId)) return;
+    const parent = character.slots[slotId].parent;
+    if (parent !== undefined) visit(parent);
+    visited.add(slotId);
+    ordered.push(slotId);
+  };
+  for (const slotId of Object.keys(character.slots)) visit(slotId);
+  return ordered;
 }

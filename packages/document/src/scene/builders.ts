@@ -1,4 +1,3 @@
-import type {Node} from '@fantoche-dev/2d';
 import {
   Circle,
   Code,
@@ -6,6 +5,7 @@ import {
   Latex,
   Layout,
   Line,
+  Node,
   Path,
   Polygon,
   Rect,
@@ -14,7 +14,10 @@ import {
 } from '@fantoche-dev/2d';
 import type {CompiledElement} from '../ir.js';
 
-export type AssetMap = Record<string, {type: string; src: string}>;
+export type AssetMap = Record<
+  string,
+  {type: string; src: string; dur?: number; volume?: number}
+>;
 
 /**
  * Construct the 2d node for a compiled element. Nodes get `key: element.id`
@@ -24,6 +27,8 @@ export type AssetMap = Record<string, {type: string; src: string}>;
 export function buildElement(element: CompiledElement, assets: AssetMap): Node {
   const props = {...element.props, key: element.id};
   switch (element.type) {
+    case 'cast':
+      return new Node(props);
     case 'text': {
       const {text, ...rest} = props as unknown as {text: string} & Record<
         string,

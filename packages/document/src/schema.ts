@@ -1,6 +1,7 @@
 import {z} from 'zod';
 import {EASING_NAMES} from './easings.js';
 import {ANCHOR_RE} from './timeref.js';
+import {DOCUMENT_FORMAT_VERSION} from './version.js';
 
 /** Entity ids: usable as node keys and anchor segment names. */
 export const idSchema = z
@@ -22,6 +23,14 @@ export const timeRefSchema = z.union([
 ]);
 
 const easingSchema = z.enum(EASING_NAMES);
+
+export const adaptiveDurationSchema = z.union([
+  positiveSeconds,
+  z.strictObject({fit: z.literal(true)}),
+  z.strictObject({value: positiveSeconds, min: positiveSeconds}),
+]);
+
+export type AdaptiveDuration = z.infer<typeof adaptiveDurationSchema>;
 
 /** Values carried by set/tween items: primitives, vectors, point lists. */
 const propValueSchema = z.union([
@@ -323,9 +332,34 @@ const narrationSchema = z.strictObject({
   segments: z.array(segmentSchema),
 });
 
-const assetSchema = z.strictObject({
-  type: z.enum(['image', 'audio', 'svg']),
-  src: z.string().min(1),
+const assetSchema = z.discriminatedUnion('type', [
+  z.strictObject({type: z.literal('image'), src: z.string().min(1)}),
+  z.strictObject({type: z.literal('svg'), src: z.string().min(1)}),
+  z.strictObject({type: z.literal('lipsync'), src: z.string().min(1)}),
+  /**
+   * A character.json this document's `cast` uses. The asset id must equal
+   * the character's own id. Dev-time resolvers (the render CLI, project
+   * files) read it and its art sidecar into `options.characters` — the pure
+   * compiler still never touches a file.
+   */
+  z.strictObject({type: z.literal('character'), src: z.string().min(1)}),
+  z.strictObject({
+    type: z.literal('audio'),
+    src: z.string().min(1),
+    /** Media duration in seconds. Default: last narration segment's end. */
+    dur: positiveSeconds.optional(),
+    /** Mux volume, 0–1. */
+    volume: z.number().min(0).max(1).optional(),
+  }),
+]);
+
+const castMemberSchema = z.strictObject({
+  character: idSchema,
+  x: z.number().finite().default(0),
+  y: z.number().finite().default(0),
+  scale: z.number().finite().positive().default(1),
+  rotation: z.number().finite().default(0),
+  opacity: z.number().min(0).max(1).default(1),
 });
 
 // ---------------------------------------------------------------------------
@@ -353,7 +387,7 @@ const tweenItem = z.strictObject({
     .refine(record => Object.keys(record).length > 0, {
       message: 'tween needs at least one property',
     }),
-  dur: positiveSeconds,
+  dur: adaptiveDurationSchema,
   easing: easingSchema.optional(),
 });
 
@@ -406,12 +440,29 @@ const blockItem = z.strictObject({
   }),
 });
 
+const poseItem = z.strictObject({
+  at: timeRefSchema,
+  target: idSchema,
+  pose: idSchema,
+  dur: adaptiveDurationSchema.optional(),
+  easing: easingSchema.optional(),
+});
+
+const lipsyncItem = z.strictObject({
+  at: timeRefSchema.default(0),
+  target: idSchema,
+  /** Asset id whose parsed track is supplied to the pure compiler. */
+  lipsync: idSchema,
+});
+
 export const timelineItemSchema = z.union([
   setItem,
   tweenItem,
   selectItem,
   editItem,
   blockItem,
+  poseItem,
+  lipsyncItem,
 ]);
 
 // ---------------------------------------------------------------------------
@@ -419,7 +470,7 @@ export const timelineItemSchema = z.union([
 // ---------------------------------------------------------------------------
 
 export const documentSchema = z.strictObject({
-  version: z.literal('0.1'),
+  version: z.literal(DOCUMENT_FORMAT_VERSION),
   meta: z.strictObject({
     fps: z.number().int().min(1).max(120),
     size: z.tuple([z.number().int().positive(), z.number().int().positive()]),
@@ -428,6 +479,7 @@ export const documentSchema = z.strictObject({
   }),
   assets: z.record(idSchema, assetSchema).optional(),
   narration: narrationSchema.optional(),
+  cast: z.record(idSchema, castMemberSchema).optional(),
   elements: z.array(elementSchema),
   timeline: z.array(timelineItemSchema),
 });

@@ -8,9 +8,15 @@ cheap parallel rendering.
 
 ```jsonc
 {
-  "version": "0.1",
+  "version": "0.2",
   "meta": {"fps": 30, "size": [1920, 1080], "background": "#0d0d12"},
+  "assets": {
+    "voice": {"type": "audio", "src": "narration.wav"},
+    "teacher": {"type": "character", "src": "teacher/character.json"},
+    "mouth": {"type": "lipsync", "src": "mouth.viseme.json"},
+  },
   "narration": {
+    "audio": "voice",
     "segments": [
       {
         "id": "intro",
@@ -20,6 +26,9 @@ cheap parallel rendering.
         "words": [{"text": "binária", "start": 3.1}],
       },
     ],
+  },
+  "cast": {
+    "ana": {"character": "teacher", "x": -700, "y": 190, "scale": 1.7},
   },
   "elements": [
     {
@@ -52,6 +61,14 @@ cheap parallel rendering.
       "dur": 0.4,
     },
     {
+      "at": "intro.word:entender",
+      "target": "ana",
+      "pose": "point",
+      "dur": {"value": 0.6, "min": 0.25},
+      "easing": "spring",
+    },
+    {"target": "ana", "lipsync": "mouth"},
+    {
       "at": "intro.end+0.5",
       "block": {"src": "./flourish.tsx#confetti", "dur": 1.2},
     },
@@ -81,28 +98,29 @@ export default makeDocumentProject(doc);
 | `@fantoche-dev/document/scene`     | `DocumentScene`, `makeDocumentScene`, `makeDocumentProject`      | browser (drives `@fantoche-dev/2d`)           |
 
 The published JSON Schema lives at
-[`schema/document-0.1.schema.json`](./schema/document-0.1.schema.json) — point
+[`schema/document-0.2.schema.json`](./schema/document-0.2.schema.json) — point
 editors and agent validators at it. A test pins it to the zod schema.
 
-## Format contract (v0.1)
+## Format contract (v0.2)
 
 - **Anchors**: `seg.start`, `seg.end`, `seg.word:<word>`, each with an optional
-  `+`/`-` seconds offset. Word timings are explicit in v0 (auto-alignment
-  arrives with the narration pipeline, P2). A word that itself ends in
-  `+/-<digits>` cannot be expressed — the compiler warns when it strips an
-  offset from a word anchor.
-- **Easings**: 31 named, pure functions (`linear`, `easeInOutCubic`, …,
-  `easeOutElastic`). No springs — they are iterative, not closed-form, and
-  cannot live behind a pure `state(t)`.
+  `+`/`-` seconds offset. Word timings remain explicit document data;
+  `fantoche narration align` fills them from a known transcript at authoring
+  time, never during render. A word that itself ends in `+/-<digits>` cannot be
+  expressed — the compiler warns when it strips an offset from a word anchor.
+- **Durations and easings**: a tween/pose duration may be fixed,
+  `{"fit": true}`, or `{"value": 0.6, "min": 0.25}`. Alongside the 31 ordinary
+  named easings, `spring` is a baked critically damped closed-form scalar
+  easing; both random access and monotone playback evaluate the same arithmetic.
 - **Elements**: `text`, `rect`, `circle`, `line`, `path`, `polygon`, `image`,
-  `svg` (inline markup only in v0), `latex` (renders via MathJax,
+  `svg` (inline markup or a declared SVG asset), `latex` (renders via MathJax,
   transforms/opacity animate; the TeX itself hard-swaps), `code`, `layout`
   (flexbox; children are layout-positioned, everything else is absolute).
 - **Timeline items**: `set` (jump), `tween` (`to`/optional `from`, `dur`,
   `easing`), code `select`/`edit` (0-based lines, end-exclusive columns, `null`
-  = to-the-end), and `block` — see below. Overlapping animations of the same
-  prop, edits of the same code element, or block windows are compile errors, not
-  last-wins.
+  = to-the-end), character `pose`, held `lipsync`, and `block` — see below.
+  Overlapping animations of the same prop, edits of the same code element, or
+  block windows are compile errors, not last-wins.
 - Animated prop names are compile-checked against a per-element allow-list; a
   typo'd or non-animatable prop is an error with a `/timeline/N` path.
 
@@ -117,7 +135,7 @@ export function* confetti(container: Node): ThreadGenerator {
 }
 ```
 
-Contract and limitations (v0):
+Contract and limitations:
 
 - The generator receives a container `Node` parented to the view; its nodes are
   disposed when the window exits.
@@ -132,15 +150,31 @@ Contract and limitations (v0):
 - Time-based tweens (`yield* tween(…)`) inside blocks are driven by the playback
   clock; frame-stepped logic is the reliable v0 idiom.
 
-## What is deliberately NOT in v0
+## Characters, narration, and rendering
 
-- Springs (see easings above).
-- `video` / `audio` elements — their play model is wall-clock-driven;
-  frame-exact document control is a v0.2 design item.
+Character definitions version independently from documents. A `character.json`
+contains slots, FK parent links, pivots, rest depth, poses, and an optional
+nine-viseme mapping; `fantoche character import` produces its render-ready
+`*.art.json` sidecar. The CLI resolves both files and the viseme track into
+literals before handing them to the pure compiler.
+
+An audio asset selected by `narration.audio` is muxed using the document clock.
+Its optional `dur` and `volume` are deterministic document inputs; when `dur` is
+absent, the final narration segment supplies the duration. Use
+`fantoche render --offline` to block external HTTP(S) while retaining the
+renderer’s local Vite connection.
+
+See [`../../docs/authoring-guide.md`](../../docs/authoring-guide.md) for the
+complete import → align → pose → lipsync workflow.
+
+## What is deliberately NOT in v0.2
+
+- Frame-controlled `video` and arbitrary audio **elements**. Narration audio is
+  supported as a document asset and muxed into export.
 - `icon` (hits a CDN at render time — offline-first violation).
-- svg asset files (`props.src`) — inline markup only for now.
-- Narration **audio** playback/muxing — the narration track today provides
-  timing anchors; audio wiring lands with the narration pipeline.
+- An automatic lipsync engine (any language). ADR 0007 keeps manually authored
+  viseme tracks on the shipping path until an automatic arm passes the quality
+  gate; the English north-star confirmed jitter is language-independent.
 - Code syntax highlighting configuration — code renders unhighlighted (set
   `props.fill` for the token color) until a `language`/highlighter prop is
   designed.

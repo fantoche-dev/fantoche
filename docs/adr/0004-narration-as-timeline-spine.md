@@ -33,6 +33,11 @@ route: derive visemes from language-aware phoneme alignment (WhisperX) with
 our own phoneme→viseme map. Treat lipsync-quality-in-Portuguese as an explicit
 P2 spike gate, not an assumption.
 
+*Update 2026-08-19:* content is now English-first (vision §5); PT-BR became
+the second-language control rather than the first audience. The caveat kept
+its force — the spike ran on PT-BR as the harder case and its outcome is
+recorded in ADR 0007.
+
 Absolute-time anchors remain valid (silent videos, music-driven pieces).
 
 ## Consequences

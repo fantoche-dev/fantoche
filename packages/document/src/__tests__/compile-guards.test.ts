@@ -10,7 +10,7 @@ function compile(raw: unknown) {
   return compileDocument(result.doc);
 }
 
-const base = {version: '0.1', meta: {fps: 30, size: [320, 320]}};
+const base = {version: '0.2', meta: {fps: 30, size: [320, 320]}};
 
 describe('compile guards (batch E+F review I8)', () => {
   test('non-animatable props are CompileErrors with the item path', () => {

@@ -13,7 +13,8 @@
     "directory": "packages/ffmpeg"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "vitest run"
   },
   "files": [
     "dist",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@types/ffprobe-static": "^2.0.3",
     "@types/fluent-ffmpeg": "^2.1.21",
-    "@types/uuid": "^10.0.0"
+    "@types/uuid": "^10.0.0",
+    "vitest": "^4.1.10"
   }
 }

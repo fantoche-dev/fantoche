@@ -1,5 +1,5 @@
 import type {SceneDescription} from '@fantoche-dev/core';
-import {compileDocument} from '../compiler/compile.js';
+import {compileDocument, type CompileOptions} from '../compiler/compile.js';
 import {migrateDocument} from '../migrate.js';
 import {validateDocument} from '../validate.js';
 import type {BlockFactory} from './blocks.js';
@@ -9,6 +9,10 @@ import {DocumentScene} from './DocumentScene.js';
 export interface MakeDocumentSceneOptions {
   /** Escape-hatch runners keyed by the document's `src#export` string. */
   blocks?: Record<string, BlockFactory>;
+  /** Caller-resolved character definitions and their `*.art.json` sidecars. */
+  characters?: CompileOptions['characters'];
+  /** Caller-resolved lipsync assets. */
+  lipsync?: CompileOptions['lipsync'];
 }
 
 /**
@@ -31,7 +35,10 @@ export function makeDocumentScene(
           .join('\n'),
     );
   }
-  const {ir, warnings} = compileDocument(validation.doc);
+  const {ir, warnings} = compileDocument(validation.doc, {
+    characters: options.characters,
+    lipsync: options.lipsync,
+  });
   return {
     klass: DocumentScene,
     name,

@@ -12,5 +12,6 @@
     "incremental": true,
     "rootDir": "src"
   },
-  "include": ["."]
+  "include": ["src"],
+  "exclude": ["test"]
 }

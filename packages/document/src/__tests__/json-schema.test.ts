@@ -1,7 +1,8 @@
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {describe, expect, test} from 'vitest';
-import {documentJsonSchema} from '../json-schema.js';
+import {CHARACTER_FORMAT_VERSION} from '../character/schema.js';
+import {characterJsonSchema, documentJsonSchema} from '../json-schema.js';
 import {DOCUMENT_FORMAT_VERSION} from '../version.js';
 
 describe('published JSON Schema artifact', () => {
@@ -16,6 +17,19 @@ describe('published JSON Schema artifact', () => {
       ),
     );
     expect(documentJsonSchema()).toEqual(committed);
+  });
+
+  test('the committed character artifact matches its zod schema (no drift)', () => {
+    const committed = JSON.parse(
+      readFileSync(
+        resolve(
+          import.meta.dirname,
+          `../../schema/character-${CHARACTER_FORMAT_VERSION}.schema.json`,
+        ),
+        'utf8',
+      ),
+    );
+    expect(characterJsonSchema()).toEqual(committed);
   });
 
   test('tuples carry exact lengths', () => {

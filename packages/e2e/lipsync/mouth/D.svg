@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200">
+  <!-- D — AA. Wide open, teeth and tongue both visible. -->
+  <ellipse cx="160" cy="100" rx="80" ry="74" fill="#c9606f" stroke="#5a2a36" stroke-width="4"/>
+  <ellipse cx="160" cy="100" rx="62" ry="56" fill="#34121c"/>
+  <ellipse cx="160" cy="58" rx="40" ry="10" fill="#f7f3ea"/>
+  <ellipse cx="160" cy="138" rx="42" ry="14" fill="#e2748c"/>
+  <ellipse cx="160" cy="100" rx="62" ry="56" fill="none" stroke="#5a2a36" stroke-width="3"/>
+</svg>
