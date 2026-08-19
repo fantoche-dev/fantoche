@@ -9,6 +9,7 @@ import {launchEditor} from './editor';
 import {lipsyncPreview} from './lipsync/command';
 import {lipsyncCompare} from './lipsync/compare';
 import {generateRhubarbTrack, generateWhisperXTrack} from './lipsync/generate';
+import {holdTrack} from './lipsync/hold';
 import {alignNarration} from './narration/align';
 import {renderDoc} from './render-doc';
 import {createServer} from './server/index';
@@ -199,6 +200,25 @@ lipsync
   .requiredOption('--language <tag>', 'Language tag recorded in the track')
   .requiredOption('--out <json>', 'Output viseme track')
   .action((alignment, options) => generateWhisperXTrack(alignment, options));
+
+lipsync
+  .command('hold')
+  .description(
+    'Enforce the minimum-hold floor on a draft track: the language-independent ' +
+      'timing layer ADR 0007 names as the re-spike target. Never moves, merges ' +
+      'or invents a cue — it only drops cues that cannot clear the floor.',
+  )
+  .argument('<track>', 'Draft viseme track')
+  .requiredOption('--out <json>', 'Output viseme track')
+  .option('--min-hold <seconds>', 'Shortest allowed hold', '0.1')
+  .action(async (track, options) => {
+    try {
+      await holdTrack(track, options);
+    } catch (error) {
+      console.error((error as Error).message);
+      process.exit(1);
+    }
+  });
 
 lipsync
   .command('compare')
