@@ -20,5 +20,8 @@ CHANGELOG.md
 # Generated artifact — byte-stable output of `npm run schema:emit`
 /packages/document/schema
 
+# Local alignment models and comparison artifacts are large, ignored scratch
+/packages/e2e/lipsync/scratch
+
 # nx build cache
 .nx
