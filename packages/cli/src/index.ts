@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import {Command} from 'commander';
+import {checkCharacter, printCharacterCheck} from './character/check';
 import {importCharacter} from './character/import';
 import {launchEditor} from './editor';
 import {lipsyncPreview} from './lipsync/command';
@@ -99,6 +100,22 @@ narration
 const character = program
   .command('character')
   .description('Dev-time character rig tools. Never a render-time dependency.');
+
+character
+  .command('check')
+  .description(
+    'Compare character.json bindings with the current source SVG and suggest likely remaps.',
+  )
+  .argument('<character.json>', 'Path to the character definition')
+  .option(
+    '--art <art.svg>',
+    'Source SVG when it does not share the *.art.json sidecar stem',
+  )
+  .action((characterPath: string, options: {art?: string}) => {
+    process.exitCode = printCharacterCheck(
+      checkCharacter(characterPath, {artPath: options.art}),
+    );
+  });
 
 character
   .command('import')
