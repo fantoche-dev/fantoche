@@ -24,6 +24,8 @@ export interface TimelineIR {
   rigs: Record<string, CompiledRig>;
   /** Narration audio asset id, when declared. */
   narrationAudio: string | null;
+  /** Last narration segment's end (seconds) — the audio-duration fallback. */
+  narrationEnd: number | null;
 }
 
 export interface CompiledRigSlot {

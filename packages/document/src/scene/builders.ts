@@ -14,7 +14,10 @@ import {
 } from '@fantoche-dev/2d';
 import type {CompiledElement} from '../ir.js';
 
-export type AssetMap = Record<string, {type: string; src: string}>;
+export type AssetMap = Record<
+  string,
+  {type: string; src: string; dur?: number; volume?: number}
+>;
 
 /**
  * Construct the 2d node for a compiled element. Nodes get `key: element.id`

@@ -327,6 +327,10 @@ const narrationSchema = z.strictObject({
 const assetSchema = z.strictObject({
   type: z.enum(['image', 'audio', 'svg', 'lipsync']),
   src: z.string().min(1),
+  /** Audio only: media duration in seconds. Default: last segment's end. */
+  dur: positiveSeconds.optional(),
+  /** Audio only: mux volume, 0–1. */
+  volume: z.number().min(0).max(1).optional(),
 });
 
 const castMemberSchema = z.strictObject({

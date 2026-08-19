@@ -24,11 +24,14 @@ const doc = {
   ],
 };
 
-function makeScene(): {scene: DocumentScene; playback: PlaybackManager} {
+function makeScene(document: unknown = doc): {
+  scene: DocumentScene;
+  playback: PlaybackManager;
+} {
   const playback = new PlaybackManager();
   const status = new PlaybackStatus(playback);
   const description = {
-    ...makeDocumentScene('doc-test', doc),
+    ...makeDocumentScene('doc-test', document as never),
     size: new Vector2(320, 320),
     resolutionScale: 1,
     playback: status,
@@ -121,5 +124,64 @@ describe('DocumentScene with a character rig', () => {
     expect(hand.x()).toBeCloseTo(80, 6);
     expect(hand.y()).toBeCloseTo(-10, 6);
     expect(arm.zIndex()).toBe(-1);
+  });
+});
+
+describe('narration media assets', () => {
+  const narratedDoc = {
+    version: '0.2',
+    meta: {fps: 30, size: [320, 320], duration: 4},
+    assets: {voice: {type: 'audio', src: 'voice.wav', dur: 9.6, volume: 0.9}},
+    narration: {
+      audio: 'voice',
+      segments: [{id: 'intro', text: 'olá', start: 0, dur: 2}],
+    },
+    elements: [],
+    timeline: [],
+  };
+
+  test('reports the narration audio with scene-local time, every frame', async () => {
+    const {scene, playback} = makeScene(narratedDoc);
+    await scene.recalculate(() => {});
+    await scene.reset();
+    await playback.seek(45); // t = 1.5s at the document's 30fps
+    expect(scene.getMediaAssets()).toEqual([
+      {
+        key: 'doc-test/voice',
+        type: 'audio',
+        src: 'voice.wav',
+        playbackRate: 1,
+        volume: 0.9,
+        currentTime: 1.5,
+        duration: 9.6,
+      },
+    ]);
+    await playback.seek(60);
+    expect(scene.getMediaAssets()[0].currentTime).toBe(2);
+  });
+
+  test('defaults duration to the last segment end and volume to 1', async () => {
+    const document = structuredClone(narratedDoc) as any;
+    delete document.assets.voice.dur;
+    delete document.assets.voice.volume;
+    document.narration.segments.push({
+      id: 'body',
+      text: 'mundo',
+      start: 2.5,
+      dur: 1,
+    });
+    const {scene} = makeScene(document);
+    await scene.recalculate(() => {});
+    await scene.reset();
+    const [asset] = scene.getMediaAssets();
+    expect(asset.duration).toBe(3.5);
+    expect(asset.volume).toBe(1);
+  });
+
+  test('a document without narration audio reports no media', async () => {
+    const {scene} = makeScene();
+    await scene.recalculate(() => {});
+    await scene.reset();
+    expect(scene.getMediaAssets()).toEqual([]);
   });
 });

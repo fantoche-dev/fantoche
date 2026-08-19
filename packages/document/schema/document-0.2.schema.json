@@ -76,6 +76,15 @@
           "src": {
             "type": "string",
             "minLength": 1
+          },
+          "dur": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "volume": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
           }
         },
         "required": [

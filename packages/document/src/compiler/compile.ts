@@ -778,6 +778,21 @@ export function compileDocument(
     );
   }
 
+  const narrationAudio = doc.narration?.audio ?? null;
+  if (narrationAudio !== null) {
+    const asset = doc.assets?.[narrationAudio];
+    if (asset === undefined || asset.type !== 'audio') {
+      throw new CompileError(
+        `narration.audio "${narrationAudio}" is not a declared audio asset`,
+        '/narration/audio',
+      );
+    }
+  }
+  let narrationEnd: number | null = null;
+  for (const segment of narrationIndex.segments.values()) {
+    narrationEnd = Math.max(narrationEnd ?? 0, segment.end);
+  }
+
   return {
     ir: {
       fps,
@@ -789,7 +804,8 @@ export function compileDocument(
       codeTracks,
       blocks: sortedBlocks,
       rigs,
-      narrationAudio: doc.narration?.audio ?? null,
+      narrationAudio,
+      narrationEnd,
     },
     warnings,
   };
