@@ -2,24 +2,26 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-## Status — updated 2026-08-19 (Part B complete in code)
+## Status — updated 2026-08-19 (Parts B–C complete in code)
 
-- **Agora:** Partes A e B completas em código (Tasks 1–18 + 23). ADR 0006
+- **Agora:** Partes A–C completas em código (Tasks 1–18, 23, 24). ADR 0006
   e ADR 0007 registrados (gate de lipsync em risco → autoria manual é o
   caminho). O demo da fatia vertical existe e renderiza:
   `packages/e2e/demo/first-slice/` — teacher posado por âncoras de palavra,
-  boca em track manual de 64 cues, narração audível (vídeo + AAC). Goldens
-  Linux pinam poses, depth swap e boca (cenas `doc-character-poses` e
-  `doc-first-slice`).
-- **Próximo:** Daniel grava a narração real de 10–15 s (guia da Parte A) e
-  ela substitui o stand-in `pt-br-01.wav` no demo — só então a Task 23 se
-  declara pronta e o checkpoint da Parte B fecha. Depois: Parte C
-  (Tasks 11, 12, 24).
-- **Bloqueio:** apenas a narração (Daniel-manual). Parte F (re-spike) já
-  pode começar a qualquer momento, sem bloquear nada.
-- **Última verificação:** 2026-08-19 — CI 8/8 em 5eb50c55 (build 10
-  pacotes, unitários nos 2 OS, lint, prettier, 24 goldens E2E, template
-  mp4, commitlint); demo mp4 com streams video+aac conferidos por ffprobe.
+  boca em track manual de 64 cues e narração audível (vídeo + AAC). A UX de
+  personagem cobre `import → check → bind → check`, e o segundo personagem
+  prova uma topologia FK diferente, com cadeia de profundidade 4.
+- **Narração provisória:** Azure TTS foi aceita para fechar formalmente a
+  Task 23. A geração do WAV oficial aguarda um recurso/credencial Speech
+  fornecido via ambiente; nenhum segredo entra no repositório. Até lá, o demo
+  continua funcional com o stand-in humano existente.
+- **Próximo:** Parte D (Tasks 19 e 20: retiming adaptativo e springs). Parte F
+  (re-spike) pode começar em paralelo a qualquer momento, sem bloquear nada.
+- **Bloqueio:** nenhum para o código; apenas a credencial Azure para trocar a
+  voz provisória e declarar o aceite final da Task 23.
+- **Última verificação:** 2026-08-19 — CI 8/8 em 895ac3e2 (build dos 10
+  pacotes, unitários nos 2 OS, lint, prettier, 28 goldens E2E, template mp4,
+  commitlint); demo mp4 com streams video+aac conferidos por ffprobe.
 
 **Goal:** A `character.json` (rig + poses + art slots imported from SVG) becomes a
 first-class document citizen: a cast member is posed and gestured from the
@@ -991,6 +993,9 @@ structurally different character.
 
 ## Task 11: `fantoche character check`
 
+> **Concluída em 2026-08-19.** Relatório estruturado, saída CLI, sugestões
+> fuzzy determinísticas e fixture real limpa (14/14 slots).
+
 **Files:**
 - Create: `packages/cli/src/character/check.ts`
 - Modify: `packages/cli/src/index.ts`
@@ -1016,6 +1021,10 @@ scoring.
 ---
 
 ## Task 12: `fantoche character bind` + `import`
+
+> **Concluída em 2026-08-19.** O bind é transacional e altera somente os
+> tokens de binding escolhidos; o import cria scaffolding conciso a partir dos
+> grupos de topo e nunca edita o SVG.
 
 **Files:**
 - Create: `packages/cli/src/character/bind.ts`
@@ -1045,6 +1054,10 @@ the SVG** — that is the design-notes §1 rule.
 ---
 
 ## Task 24: Second reference character through the full import UX
+
+> **Concluída em 2026-08-19.** A ave mecânica passou pelo CLI real, traz uma
+> cadeia `body → neck → head → beak`, e os goldens Linux fixam o repouso e a
+> asa cruzando da retaguarda para a frente do corpo.
 
 **Files:**
 - Create: `packages/e2e/characters/<name>/{character.json,<name>.svg}` — structurally different from the Task 16 character (different slot topology, at least one limb chain of depth ≥ 3)
@@ -1350,16 +1363,14 @@ may ride along with whichever task touches its area:
 - **Under-damped / vector springs**, IK, and the visual binder + pivot gizmo
   (P3 editor v0, per design notes §1 and §3).
 - **Canonical `serializeDocument()` + validator-level id uniqueness +
-  round-trip property tests** (agent review, 2026-08-19). Legitimate, with
-  one tension to decide first: the repo's stance is that *user-owned* files
-  (doc.json, character.json) get formatting-preserving writes (`narration
-  align`, Task 12's bind rule), while *machine-owned* artifacts (`*.art.json`,
-  viseme tracks) are canonical. A canonical serializer must not silently
-  reformat user files. Natural slot: alongside Part C's Task 12 (bind is the
-  next writer) — with episodes-as-corpus round-trip tests once Task 23/21
-  produce episodes. Schema strictness already holds (`z.strictObject`
-  throughout); "meta as escape hatch" would loosen it and needs its own
-  decision.
+  round-trip property tests** (agent review, 2026-08-19). Legitimate, but the
+  ownership boundary is now explicit: *user-owned* files (doc.json,
+  character.json) receive surgical, formatting-preserving writes (`narration
+  align`, Task 12's bind), while *machine-owned* artifacts (`*.art.json`,
+  viseme tracks) may be canonical. A future serializer must respect that
+  boundary; episodes can supply the round-trip corpus after Task 21. Schema
+  strictness already holds (`z.strictObject` throughout); "meta as escape
+  hatch" would loosen it and needs its own decision.
 - **`applyPatch(doc, ops)` mínimo** (set/insert/remove by id, not generic
   JSON-Patch) — the MCP/P5 enabler; not P2.
 - **`video` element + `fantoche import <gif>` transcode** (GIF→webm, alpha

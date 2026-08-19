@@ -81,16 +81,7 @@ jobs:
       - run: npx puppeteer browsers install chrome
       - run: npm install --no-save @ffmpeg-installer/ffmpeg @ffprobe-installer/ffprobe
       - run: npx lerna run build --ignore @fantoche-dev/docs
-      # TEMP (drop after the two-character goldens are committed): update on
-      # Linux directly; vitest refuses snapshot writes under GITHUB_ACTIONS
-      # unless --update is explicit, and flags do not survive the npm chain.
-      - run: npx vitest run --update
-        working-directory: packages/e2e
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: linux-goldens-part-c
-          path: packages/e2e/src/__image_snapshots__
+      - run: npm run e2e:test
       # Standalone-path smoke: the CLI render of the vertical-slice demo must
       # come out with an AAC audio stream (the /@fs→path fix stays honest).
       # Unlike the e2e app, the renderer launches Chrome without
