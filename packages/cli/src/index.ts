@@ -215,6 +215,20 @@ lipsync
   .option('--fps <n>', 'Frames per second of both previews', '60')
   .option('--size <WxH>', 'Preview canvas size', '480x320')
   .option('--workers <n>', 'Number of parallel render workers')
-  .action((a, b, options) => lipsyncCompare(a, b, options));
+  .option(
+    '--timeout <seconds>',
+    'Deadline for any one render or mux before the run fails',
+    '900',
+  )
+  // Exit rather than reject: a wedged render is exactly the case where an
+  // unhandled rejection would leave the terminal holding an open handle.
+  .action(async (a, b, options) => {
+    try {
+      await lipsyncCompare(a, b, options);
+    } catch (error) {
+      console.error((error as Error).message);
+      process.exit(1);
+    }
+  });
 
 program.parse(process.argv);

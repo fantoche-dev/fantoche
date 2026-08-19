@@ -2,7 +2,12 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import {afterEach, describe, expect, test, vi} from 'vitest';
-import {assignBlindSides, lipsyncCompare} from '../lipsync/compare';
+import {
+  assignBlindSides,
+  captureFfmpeg,
+  lipsyncCompare,
+  parseTimeoutSeconds,
+} from '../lipsync/compare';
 
 const temporaries: string[] = [];
 
@@ -180,5 +185,84 @@ describe('lipsync comparison harness', () => {
       ),
     ).rejects.toThrow(/increase --fps before scoring/);
     expect(render).not.toHaveBeenCalled();
+  });
+});
+
+describe('comparison deadline', () => {
+  test('accepts a whole or fractional number of seconds', () => {
+    expect(parseTimeoutSeconds('900')).toBe(900);
+    expect(parseTimeoutSeconds('0.5')).toBe(0.5);
+  });
+
+  test('refuses a value that is not a positive number of seconds', () => {
+    expect(() => parseTimeoutSeconds('0')).toThrow(/--timeout/);
+    expect(() => parseTimeoutSeconds('-1')).toThrow(/--timeout/);
+    expect(() => parseTimeoutSeconds('soon')).toThrow(/--timeout/);
+  });
+
+  test('fails the run instead of hanging when a render never returns', async () => {
+    const dir = scratch();
+    const a = writeTrack(dir, 'rhubarb.viseme.json', 'rhubarb');
+    const b = writeTrack(dir, 'whisperx.viseme.json', 'whisperx');
+    const render = vi.fn(() => new Promise<void>(() => {}));
+
+    await expect(
+      lipsyncCompare(
+        a,
+        b,
+        {
+          mouths: path.join(dir, 'mouths'),
+          audio: path.join(dir, 'voice.wav'),
+          out: path.join(dir, 'comparison'),
+          fps: '60',
+          size: '480x320',
+          timeout: '0.05',
+        },
+        {render: render as never},
+      ),
+    ).rejects.toThrow(/render.*timed out after 0\.05 s/i);
+  });
+
+  test('fails the run instead of hanging when the mux never returns', async () => {
+    const dir = scratch();
+    const a = writeTrack(dir, 'rhubarb.viseme.json', 'rhubarb');
+    const b = writeTrack(dir, 'whisperx.viseme.json', 'whisperx');
+    const render = vi.fn(
+      async (_doc: string, options: {out?: string; outDir?: string}) => {
+        fs.writeFileSync(
+          path.join(options.outDir!, options.out!),
+          'silent-video',
+        );
+      },
+    );
+    const mux = vi.fn(() => new Promise<void>(() => {}));
+
+    await expect(
+      lipsyncCompare(
+        a,
+        b,
+        {
+          mouths: path.join(dir, 'mouths'),
+          audio: path.join(dir, 'voice.wav'),
+          out: path.join(dir, 'comparison'),
+          fps: '60',
+          size: '480x320',
+          timeout: '0.05',
+        },
+        {render: render as never, mux},
+      ),
+    ).rejects.toThrow(/mux.*timed out after 0\.05 s/i);
+  });
+
+  test('kills a wedged child process rather than waiting on it', async () => {
+    const start = Date.now();
+    await expect(
+      captureFfmpeg(
+        ['-e', 'setTimeout(() => {}, 60000)'],
+        0.2,
+        process.execPath,
+      ),
+    ).rejects.toThrow(/timed out after 0\.2 s/i);
+    expect(Date.now() - start).toBeLessThan(10000);
   });
 });

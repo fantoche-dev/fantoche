@@ -13,6 +13,8 @@ export interface LipsyncCompareOptions {
   fps: string;
   size: string;
   workers?: string;
+  /** Seconds any one render or mux may take before the run is failed. */
+  timeout?: string;
 }
 
 export interface BlindSides {
@@ -50,15 +52,65 @@ export function assignBlindSides(a: string, b: string): BlindSides {
     : {left: named[1], right: named[0], hash};
 }
 
-function captureFfmpeg(args: string[]): Promise<void> {
+/**
+ * Parse the `--timeout` flag. A comparison shells out to a browser render and
+ * to ffmpeg; either can wedge, and a wedged scoring run used to hold the
+ * terminal open with no output rather than failing.
+ */
+export function parseTimeoutSeconds(value: string): number {
+  const trimmed = value.trim();
+  const seconds = /^\d+(?:\.\d+)?$/.test(trimmed) ? Number(trimmed) : NaN;
+  if (!Number.isFinite(seconds) || seconds <= 0) {
+    throw new Error(
+      `--timeout must be a positive number of seconds (got "${value}")`,
+    );
+  }
+  return seconds;
+}
+
+/** Reject when `work` outlives the deadline, naming the step that wedged. */
+async function withDeadline<T>(
+  work: Promise<T>,
+  seconds: number,
+  label: string,
+): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      work,
+      new Promise<never>((_resolve, reject) => {
+        timer = setTimeout(
+          () => reject(new Error(`${label} timed out after ${seconds} s`)),
+          seconds * 1000,
+        );
+      }),
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+export function captureFfmpeg(
+  args: string[],
+  timeoutSeconds: number,
+  binary = 'ffmpeg',
+): Promise<void> {
   return new Promise((resolve, reject) => {
-    const child = spawn('ffmpeg', args, {stdio: ['ignore', 'ignore', 'pipe']});
+    const child = spawn(binary, args, {stdio: ['ignore', 'ignore', 'pipe']});
     let stderr = '';
+    let timedOut = false;
+    // SIGKILL, not SIGTERM: a wedged encoder is precisely the process that
+    // ignores a polite signal, and the deadline exists to return.
+    const timer = setTimeout(() => {
+      timedOut = true;
+      child.kill('SIGKILL');
+    }, timeoutSeconds * 1000);
     child.stderr.setEncoding('utf8');
     child.stderr.on('data', chunk => {
       stderr += chunk;
     });
     child.once('error', error => {
+      clearTimeout(timer);
       reject(
         (error as NodeJS.ErrnoException).code === 'ENOENT'
           ? new Error(
@@ -68,6 +120,11 @@ function captureFfmpeg(args: string[]): Promise<void> {
       );
     });
     child.once('close', code => {
+      clearTimeout(timer);
+      if (timedOut) {
+        reject(new Error(`${binary} timed out after ${timeoutSeconds} s`));
+        return;
+      }
       if (code === 0) {
         resolve();
       } else {
@@ -88,24 +145,28 @@ export async function muxComparisonAudio(
   video: string,
   audio: string,
   out: string,
+  timeoutSeconds: number,
 ): Promise<void> {
-  await captureFfmpeg([
-    '-y',
-    '-i',
-    video,
-    '-i',
-    audio,
-    '-map',
-    '0:v:0',
-    '-map',
-    '1:a:0',
-    '-c:v',
-    'copy',
-    '-c:a',
-    'aac',
-    '-shortest',
-    out,
-  ]);
+  await captureFfmpeg(
+    [
+      '-y',
+      '-i',
+      video,
+      '-i',
+      audio,
+      '-map',
+      '0:v:0',
+      '-map',
+      '1:a:0',
+      '-c:v',
+      'copy',
+      '-c:a',
+      'aac',
+      '-shortest',
+      out,
+    ],
+    timeoutSeconds,
+  );
 }
 
 function readJson(file: string): unknown {
@@ -192,6 +253,7 @@ export async function lipsyncCompare(
   const mouths = readMouthSheet(options.mouths, VISEMES);
   const fps = parseFps(options.fps);
   const size = parseSize(options.size);
+  const timeoutSeconds = parseTimeoutSeconds(options.timeout ?? '900');
   fs.mkdirSync(outDir, {recursive: true});
 
   const previews = {
@@ -234,17 +296,23 @@ export async function lipsyncCompare(
       const silentPath = path.join(outDir, silentName);
       temporary.push(docPath, silentPath);
       fs.writeFileSync(docPath, `${JSON.stringify(preview.doc, null, 2)}\n`);
-      await (dependencies.render ?? renderDoc)(docPath, {
-        out: silentName,
-        outDir,
-        workers: options.workers,
-      });
+      await withDeadline(
+        (dependencies.render ?? renderDoc)(docPath, {
+          out: silentName,
+          outDir,
+          workers: options.workers,
+        }),
+        timeoutSeconds,
+        `${side} render`,
+      );
       const muxedPath = path.join(outDir, `.${side}.muxed.mp4`);
       temporary.push(muxedPath);
-      await (dependencies.mux ?? muxComparisonAudio)(
-        silentPath,
-        audio,
-        muxedPath,
+      await withDeadline(
+        dependencies.mux === undefined
+          ? muxComparisonAudio(silentPath, audio, muxedPath, timeoutSeconds)
+          : dependencies.mux(silentPath, audio, muxedPath),
+        timeoutSeconds,
+        `${side} audio mux`,
       );
       completedSides[side] = muxedPath;
       key[side] = {
