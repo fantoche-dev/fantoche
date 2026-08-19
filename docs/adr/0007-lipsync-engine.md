@@ -80,3 +80,40 @@ it: the English grapheme path reaches all 59 aligned bilabial closures
 automatically, but 632 of its 889 cue intervals are under 0.100 s — closure
 improves, jitter does not, so manual authoring still ships and the re-spike
 target (timing/minimum-hold layer, language-independent) is unchanged.
+
+## Addendum — 2026-08-19 timing layer built and measured (Part F, step 1)
+
+The re-spike target this ADR named — "a minimum-hold/timing layer,
+language-independent" — now exists as `fantoche lipsync hold`. It is a
+weighted selection over a draft's own cues: it never moves, merges or invents
+one, it only drops cues that cannot clear the floor, and survivors keep their
+aligned times.
+
+Measured on the English north-star draft, floor 0.100 s:
+
+| Track | Cues | Sub-0.100 s | Word-level closures | Measured rests |
+| --- | --- | --- | --- | --- |
+| Automatic draft | 889 | 598 | 48/48 | 63 |
+| Draft + hold layer | 470 | **0** | **48/48** | **63** |
+| Manual, shipped | 403 | 0 | 48/48 | 63 |
+
+Two findings shaped the implementation, and both were caught by measurement
+rather than by review:
+
+1. **Survivors must keep their own times.** The first version collapsed each
+   too-short run into its start time and lost 5 of 48 closures — a winning
+   `A` slid backwards out of the word it belonged to. Keeping original times
+   makes the choice a weighted selection, not a greedy scan.
+2. **Rests rank with closures.** §2.2 names exactly two hard rules — closure
+   on `p`/`b`/`m`, and `X` only where alignment measured a pause. Ranking
+   rests below neutral shapes kept only 35 of 63 measured pauses; ranking
+   them level with `A` keeps all 63 and all 48 closures.
+
+**This does not supersede the decision above.** The bar is ≥3 on every PT-BR
+axis under blind human scoring on the committed clips, through the Task
+25-hardened harness. What is established is that the mechanical
+preconditions — no one-frame shapes, no lost closure, no lost or invented
+rest — are now reachable automatically from a raw draft, on the axis
+(jitter) where both arms failed. Closure and rounding still have to be
+*seen*. Until that scoring runs, manual authoring remains the shipping path
+and this ADR stands.
