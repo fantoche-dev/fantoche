@@ -473,8 +473,43 @@
                 }
               },
               "dur": {
-                "type": "number",
-                "exclusiveMinimum": 0
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "fit": {
+                        "type": "boolean",
+                        "const": true
+                      }
+                    },
+                    "required": [
+                      "fit"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      },
+                      "min": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "min"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
               },
               "easing": {
                 "type": "string",
@@ -1285,8 +1320,43 @@
                 "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$"
               },
               "dur": {
-                "type": "number",
-                "exclusiveMinimum": 0
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "fit": {
+                        "type": "boolean",
+                        "const": true
+                      }
+                    },
+                    "required": [
+                      "fit"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      },
+                      "min": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "min"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
               },
               "easing": {
                 "type": "string",

@@ -72,8 +72,14 @@ export {
 export type {Viseme, VisemeTrack} from './lipsync/visemes.js';
 export {MigrationError, migrateDocument} from './migrate.js';
 export type {MigrateResult} from './migrate.js';
-export {documentSchema, elementSchema, timelineItemSchema} from './schema.js';
+export {
+  adaptiveDurationSchema,
+  documentSchema,
+  elementSchema,
+  timelineItemSchema,
+} from './schema.js';
 export type {
+  AdaptiveDuration,
   FantocheDocument,
   PropValue,
   RangeSpec,

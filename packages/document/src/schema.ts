@@ -24,6 +24,14 @@ export const timeRefSchema = z.union([
 
 const easingSchema = z.enum(EASING_NAMES);
 
+export const adaptiveDurationSchema = z.union([
+  positiveSeconds,
+  z.strictObject({fit: z.literal(true)}),
+  z.strictObject({value: positiveSeconds, min: positiveSeconds}),
+]);
+
+export type AdaptiveDuration = z.infer<typeof adaptiveDurationSchema>;
+
 /** Values carried by set/tween items: primitives, vectors, point lists. */
 const propValueSchema = z.union([
   z.number().finite(),
@@ -379,7 +387,7 @@ const tweenItem = z.strictObject({
     .refine(record => Object.keys(record).length > 0, {
       message: 'tween needs at least one property',
     }),
-  dur: positiveSeconds,
+  dur: adaptiveDurationSchema,
   easing: easingSchema.optional(),
 });
 
@@ -436,7 +444,7 @@ const poseItem = z.strictObject({
   at: timeRefSchema,
   target: idSchema,
   pose: idSchema,
-  dur: positiveSeconds.optional(),
+  dur: adaptiveDurationSchema.optional(),
   easing: easingSchema.optional(),
 });
 

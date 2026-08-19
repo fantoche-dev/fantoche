@@ -22,7 +22,12 @@ import type {
   TrackKey,
 } from '../ir.js';
 import type {Viseme, VisemeTrack} from '../lipsync/visemes.js';
-import type {FantocheDocument, PropValue, RangeSpec} from '../schema.js';
+import type {
+  AdaptiveDuration,
+  FantocheDocument,
+  PropValue,
+  RangeSpec,
+} from '../schema.js';
 import {AnchorError, buildNarrationIndex, resolveTimeRef} from './anchors.js';
 
 export class CompileError extends Error {
@@ -113,6 +118,8 @@ interface PropEvent {
   value: PropValue;
   from?: PropValue;
   easing: EasingName | 'hold';
+  /** Present only for tweens; resolved to t1 after every start is known. */
+  duration?: AdaptiveDuration;
 }
 
 export function compileDocument(
@@ -313,6 +320,7 @@ export function compileDocument(
   }
   const codeOps = new Map<string, RawCodeOp[]>();
   const blocks: BlockIR[] = [];
+  let blockEnd = -Infinity;
 
   const requireTarget = (item: RawItem, index: number): CompiledElement => {
     const target = byId.get(item.target as string);
@@ -359,7 +367,8 @@ export function compileDocument(
       }
       throw error;
     }
-    const dur = typeof item.dur === 'number' ? item.dur : 0;
+    const duration = item.dur as AdaptiveDuration | undefined;
+    const staticDur = typeof duration === 'number' ? duration : 0;
     const easing = (item.easing as EasingName | undefined) ?? DEFAULT_EASING;
 
     if ('pose' in item) {
@@ -388,7 +397,7 @@ export function compileDocument(
         addPropEvent(
           target,
           prop,
-          dur === 0
+          duration === undefined
             ? {
                 itemIndex: index,
                 t0,
@@ -400,10 +409,11 @@ export function compileDocument(
             : {
                 itemIndex: index,
                 t0,
-                t1: t0 + dur,
+                t1: t0 + staticDur,
                 kind: 'tween',
                 value,
                 easing: prop === 'depth' ? 'hold' : easing,
+                duration,
               },
           `${path}/pose/${poseKey}`,
         );
@@ -551,11 +561,12 @@ export function compileDocument(
             : {
                 itemIndex: index,
                 t0,
-                t1: t0 + dur,
+                t1: t0 + staticDur,
                 kind: 'tween',
                 value: entry.to,
                 from: entry.from,
                 easing,
+                duration,
               },
           `${path}/${'set' in item ? 'set' : 'tween'}/${entry.prop}`,
         );
@@ -572,7 +583,7 @@ export function compileDocument(
       ops.push({
         itemIndex: index,
         t0,
-        t1: t0 + dur,
+        t1: t0 + staticDur,
         easing,
         select:
           'select' in item
@@ -592,8 +603,72 @@ export function compileDocument(
         src: block.src.slice(0, hash),
         exportName: block.src.slice(hash + 1),
       });
+      blockEnd = Math.max(blockEnd, t0 + block.dur);
     }
   });
+
+  // Resolve adaptive tween windows only after all starts have been expanded
+  // into their real (target, prop) groups. This is the second compile pass:
+  // narration retiming can move a later anchor without making the earlier
+  // gesture overlap it.
+  const terminalFits = new Set<PropEvent>();
+  for (const events of propEvents.values()) {
+    events.sort((a, b) => a.t0 - b.t0 || a.itemIndex - b.itemIndex);
+    for (let i = 0; i < events.length; i++) {
+      const event = events[i];
+      if (event.kind !== 'tween') continue;
+      const duration = event.duration;
+      if (duration === undefined) continue;
+      if (typeof duration === 'number') {
+        event.t1 = event.t0 + duration;
+        continue;
+      }
+      const nextStart = events[i + 1]?.t0;
+      if ('fit' in duration) {
+        if (nextStart === undefined) {
+          terminalFits.add(event);
+          continue;
+        }
+        if (nextStart <= event.t0) {
+          throw new CompileError(
+            'dur: {fit: true} needs positive space before the next event on this property',
+            `/timeline/${event.itemIndex}/dur`,
+          );
+        }
+        event.t1 = nextStart;
+      } else {
+        const available =
+          nextStart === undefined ? Infinity : nextStart - event.t0;
+        event.t1 =
+          event.t0 +
+          Math.max(duration.min, Math.min(duration.value, available));
+      }
+    }
+  }
+  let documentEnd = doc.meta.duration ?? -Infinity;
+  for (const segment of narrationIndex.segments.values()) {
+    documentEnd = Math.max(documentEnd, segment.end);
+  }
+  documentEnd = Math.max(documentEnd, blockEnd);
+  for (const ops of codeOps.values()) {
+    for (const op of ops) documentEnd = Math.max(documentEnd, op.t1);
+  }
+  for (const events of propEvents.values()) {
+    for (const event of events) {
+      if (!terminalFits.has(event)) {
+        documentEnd = Math.max(documentEnd, event.t1);
+      }
+    }
+  }
+  for (const event of terminalFits) {
+    if (documentEnd <= event.t0) {
+      throw new CompileError(
+        'dur: {fit: true} needs a later event on this property or a known document end',
+        `/timeline/${event.itemIndex}/dur`,
+      );
+    }
+    event.t1 = documentEnd;
+  }
 
   // -- prop tracks ---------------------------------------------------------
   const tracks: Track[] = [];
