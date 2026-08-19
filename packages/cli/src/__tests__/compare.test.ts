@@ -7,6 +7,7 @@ import {
   captureFfmpeg,
   lipsyncCompare,
   parseTimeoutSeconds,
+  sha256File,
 } from '../lipsync/compare';
 
 const temporaries: string[] = [];
@@ -105,7 +106,7 @@ describe('lipsync comparison harness', () => {
         fps: '60',
         size: '480x320',
       },
-      {render: render as never, mux},
+      {render: render as never, mux, probeDuration: async () => 9.6},
     );
 
     expect(fs.readFileSync(path.join(out, 'left.mp4'), 'utf8')).toBe(
@@ -264,5 +265,138 @@ describe('comparison deadline', () => {
       ),
     ).rejects.toThrow(/timed out after 0\.2 s/i);
     expect(Date.now() - start).toBeLessThan(10000);
+  });
+});
+
+describe('audio content binding at compare time', () => {
+  function writeHashedTrack(
+    dir: string,
+    name: string,
+    engine: 'rhubarb' | 'whisperx',
+    audioSha256?: string,
+  ): string {
+    const file = path.join(dir, name);
+    fs.writeFileSync(
+      file,
+      JSON.stringify({
+        version: '0.1',
+        engine,
+        audio: 'voice.wav',
+        language: 'pt',
+        ...(audioSha256 === undefined ? {} : {audioSha256}),
+        cues: [
+          {t: 0, viseme: 'X'},
+          {t: 0.2, viseme: engine === 'rhubarb' ? 'B' : 'C'},
+        ],
+      }),
+    );
+    return file;
+  }
+
+  test('refuses a track whose recorded digest is not this audio', async () => {
+    const dir = scratch();
+    const a = writeHashedTrack(dir, 'rhubarb.json', 'rhubarb', 'b'.repeat(64));
+    const b = writeHashedTrack(dir, 'whisperx.json', 'whisperx');
+    await expect(
+      lipsyncCompare(a, b, {
+        mouths: path.join(dir, 'mouths'),
+        audio: path.join(dir, 'voice.wav'),
+        out: path.join(dir, 'comparison'),
+        fps: '60',
+        size: '480x320',
+      }),
+    ).rejects.toThrow(/was derived from audio with sha-256/);
+  });
+
+  test('accepts a track whose recorded digest matches the audio', async () => {
+    const dir = scratch();
+    const digest = sha256File(path.join(dir, 'voice.wav'));
+    const a = writeHashedTrack(dir, 'rhubarb.json', 'rhubarb', digest);
+    const b = writeHashedTrack(dir, 'whisperx.json', 'whisperx', digest);
+    const render = vi.fn(
+      async (_doc: string, options: {out?: string; outDir?: string}) => {
+        fs.writeFileSync(path.join(options.outDir!, options.out!), 'silent');
+      },
+    );
+    const mux = vi.fn(async (_v: string, _a: string, out: string) => {
+      fs.writeFileSync(out, 'muxed');
+    });
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+    await expect(
+      lipsyncCompare(
+        a,
+        b,
+        {
+          mouths: path.join(dir, 'mouths'),
+          audio: path.join(dir, 'voice.wav'),
+          out: path.join(dir, 'comparison'),
+          fps: '60',
+          size: '480x320',
+        },
+        {render: render as never, mux, probeDuration: async () => 9.6},
+      ),
+    ).resolves.toBeUndefined();
+  });
+});
+
+describe('equal scoring windows', () => {
+  function harness(dir: string) {
+    const render = vi.fn(
+      async (_doc: string, options: {out?: string; outDir?: string}) => {
+        fs.writeFileSync(path.join(options.outDir!, options.out!), 'silent');
+      },
+    );
+    const mux = vi.fn(async (_v: string, _a: string, out: string) => {
+      fs.writeFileSync(out, 'muxed');
+    });
+    return {
+      mouths: path.join(dir, 'mouths'),
+      audio: path.join(dir, 'voice.wav'),
+      out: path.join(dir, 'comparison'),
+      fps: '60',
+      size: '480x320',
+      render,
+      mux,
+    };
+  }
+
+  test('refuses to publish two videos a scorer would not see equally', async () => {
+    const dir = scratch();
+    const a = writeTrack(dir, 'rhubarb.viseme.json', 'rhubarb');
+    const b = writeTrack(dir, 'whisperx.viseme.json', 'whisperx');
+    const h = harness(dir);
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+    const probeDuration = vi
+      .fn<(file: string) => Promise<number>>()
+      .mockResolvedValueOnce(9.6)
+      .mockResolvedValueOnce(8.1);
+
+    await expect(
+      lipsyncCompare(a, b, h, {
+        render: h.render as never,
+        mux: h.mux,
+        probeDuration,
+      }),
+    ).rejects.toThrow(/differ in duration/);
+    expect(fs.existsSync(path.join(h.out, 'left.mp4'))).toBe(false);
+  });
+
+  test('publishes when both windows match within a frame', async () => {
+    const dir = scratch();
+    const a = writeTrack(dir, 'rhubarb.viseme.json', 'rhubarb');
+    const b = writeTrack(dir, 'whisperx.viseme.json', 'whisperx');
+    const h = harness(dir);
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+    const probeDuration = vi
+      .fn<(file: string) => Promise<number>>()
+      .mockResolvedValueOnce(9.6)
+      .mockResolvedValueOnce(9.61);
+
+    await lipsyncCompare(a, b, h, {
+      render: h.render as never,
+      mux: h.mux,
+      probeDuration,
+    });
+    expect(fs.existsSync(path.join(h.out, 'left.mp4'))).toBe(true);
   });
 });

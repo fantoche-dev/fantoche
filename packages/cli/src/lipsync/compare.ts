@@ -27,7 +27,16 @@ export interface BlindSides {
 export interface CompareDependencies {
   render?: typeof renderDoc;
   mux?: (video: string, audio: string, out: string) => Promise<void>;
+  probeDuration?: (file: string) => Promise<number>;
 }
+
+/**
+ * A scorer rates two clips side by side; unequal windows make one arm look
+ * worse for a reason that is not its mouth. One frame at the lowest rate the
+ * harness accepts (1 fps would be absurd — this is the render's 60 fps floor
+ * expressed generously).
+ */
+const WINDOW_TOLERANCE_SECONDS = 0.05;
 
 /** Stable under argument reversal: the command line cannot reveal the key. */
 export function assignBlindSides(a: string, b: string): BlindSides {
@@ -50,6 +59,49 @@ export function assignBlindSides(a: string, b: string): BlindSides {
   return Number.parseInt(hash.slice(0, 2), 16) % 2 === 0
     ? {left: named[0], right: named[1], hash}
     : {left: named[1], right: named[0], hash};
+}
+
+function captureStdout(
+  binary: string,
+  args: string[],
+  timeoutSeconds: number,
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const child = spawn(binary, args, {stdio: ['ignore', 'pipe', 'pipe']});
+    let stdout = '';
+    let stderr = '';
+    let timedOut = false;
+    const timer = setTimeout(() => {
+      timedOut = true;
+      child.kill('SIGKILL');
+    }, timeoutSeconds * 1000);
+    child.stdout.setEncoding('utf8');
+    child.stderr.setEncoding('utf8');
+    child.stdout.on('data', chunk => (stdout += chunk));
+    child.stderr.on('data', chunk => (stderr += chunk));
+    child.once('error', error => {
+      clearTimeout(timer);
+      reject(
+        (error as NodeJS.ErrnoException).code === 'ENOENT'
+          ? new Error(
+              `${binary} not found — it is required to verify equal scoring windows`,
+            )
+          : error,
+      );
+    });
+    child.once('close', code => {
+      clearTimeout(timer);
+      if (timedOut) {
+        reject(new Error(`${binary} timed out after ${timeoutSeconds} s`));
+      } else if (code === 0) {
+        resolve(stdout);
+      } else {
+        reject(
+          new Error(`${binary} exited with code ${code}: ${stderr.trim()}`),
+        );
+      }
+    });
+  });
 }
 
 /**
@@ -140,6 +192,31 @@ export function captureFfmpeg(
   });
 }
 
+/** Container duration in seconds, as ffprobe reports it. */
+export async function probeDurationSeconds(
+  file: string,
+  timeoutSeconds: number,
+): Promise<number> {
+  const out = await captureStdout(
+    'ffprobe',
+    [
+      '-v',
+      'error',
+      '-show_entries',
+      'format=duration',
+      '-of',
+      'default=nw=1:nk=1',
+      file,
+    ],
+    timeoutSeconds,
+  );
+  const seconds = Number(out.trim());
+  if (!Number.isFinite(seconds)) {
+    throw new Error(`ffprobe reported no duration for ${file}`);
+  }
+  return seconds;
+}
+
 /** Add the same source audio to one rendered mouth video. */
 export async function muxComparisonAudio(
   video: string,
@@ -167,6 +244,17 @@ export async function muxComparisonAudio(
     ],
     timeoutSeconds,
   );
+}
+
+/**
+ * Lowercase sha-256 of a file's bytes — the digest a track records so a
+ * comparison can bind to audio by content instead of by path.
+ */
+export function sha256File(file: string): string {
+  return crypto
+    .createHash('sha256')
+    .update(fs.readFileSync(file))
+    .digest('hex');
 }
 
 function readJson(file: string): unknown {
@@ -241,6 +329,17 @@ export async function lipsyncCompare(
     if (trackAudio !== audio) {
       throw new Error(
         `Blind comparison track ${index === 0 ? a : b} was derived from ${trackAudio}, not ${audio}`,
+      );
+    }
+  }
+  // Content, not path: a re-recorded WAV under the same name passes every
+  // check above and silently invalidates both tracks. Only tracks that
+  // recorded a digest can be checked; older ones fall back to the path rule.
+  const audioDigest = sha256File(audio);
+  for (const [index, track] of parsed.entries()) {
+    if (track.audioSha256 !== undefined && track.audioSha256 !== audioDigest) {
+      throw new Error(
+        `Blind comparison track ${index === 0 ? a : b} was derived from audio with sha-256 ${track.audioSha256}, but ${audio} hashes to ${audioDigest} — re-generate the track`,
       );
     }
   }
@@ -322,6 +421,22 @@ export async function lipsyncCompare(
         collapsed: preview.collapsed,
       };
     }
+    // The equal-window rule was recording discipline until now: -shortest
+    // silently trims whichever arm the audio outran, and a scorer cannot tell
+    // a short clip from a bad mouth.
+    const probe =
+      dependencies.probeDuration ??
+      (file => probeDurationSeconds(file, timeoutSeconds));
+    const durations = {
+      left: await probe(completedSides.left),
+      right: await probe(completedSides.right),
+    };
+    if (Math.abs(durations.left - durations.right) > WINDOW_TOLERANCE_SECONDS) {
+      throw new Error(
+        `Blind comparison arms differ in duration (${durations.left} s vs ${durations.right} s) — a scorer would not see them equally; re-cut the audio so both windows match`,
+      );
+    }
+
     const keyPath = path.join(outDir, '.key.json');
     temporary.push(keyPath);
     fs.writeFileSync(keyPath, `${JSON.stringify(key, null, 2)}\n`);
